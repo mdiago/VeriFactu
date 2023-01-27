@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32929.386
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeriFactu", "VeriFactu.csproj", "{27BBCBE0-0FDF-4989-B218-514388D81CE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27BBCBE0-0FDF-4989-B218-514388D81CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27BBCBE0-0FDF-4989-B218-514388D81CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27BBCBE0-0FDF-4989-B218-514388D81CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27BBCBE0-0FDF-4989-B218-514388D81CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30482C5D-1A4C-40B3-8313-C1822A04638B}
+	EndGlobalSection
+EndGlobal
