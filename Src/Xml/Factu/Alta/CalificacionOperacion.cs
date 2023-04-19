@@ -37,86 +37,35 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Xml.Serialization;
-
 namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Información del envío con la versión y 
-    /// los datos del obligado.
-    /// Datos de contexto de un suministro.
+    /// Clave de la operación sujeta y no exenta
+    /// o de la operación no sujeta. L9.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
-    public class Cabecera
+    public enum CalificacionOperacion
     {
 
-        #region Variables Privadas de Instancia
+        /// <summary>
+        ///  Operación Sujeta y No exenta - Sin inversión del sujeto pasivo.
+        /// </summary>
+        S1,
 
         /// <summary>
-        /// Versiones VeriFactu.
+        /// Operación Sujeta y No exenta - Con Inversión del sujeto pasivo.
         /// </summary>
-        string[] _IDVersions = new string[1]
-        {
-            // Versión 2023.01
-            "0.1"
-        };
+        S2,
 
         /// <summary>
-        /// Versión VER*FACTU.
+        /// Operación No Sujeta artículo 7, 14, otros.
         /// </summary>
-        string _Version;
-
-        #endregion
-
-        #region Propiedades Públicas de Instancia
+        N1,
 
         /// <summary>
-        /// <para>Identificación de la versión.</para>
-        /// <para>Alfanumérico(3)L15</para>
+        /// Operación No Sujeta por Reglas de localización.
         /// </summary>
-        [XmlElement("IDVersion")]
-        public string IDVersion
-        {
-            get
-            {
-                return _Version;
-            }
-            set
-            {
-
-                if (Array.IndexOf(_IDVersions, value) == -1)
-                    throw new ArgumentException($"Versión {value} no reconocida." +
-                        $"La versiones aceptada son {string.Join(", ", _IDVersions)}");
-
-                _Version = value;
-            }
-        }
-
-        /// <summary>
-        /// Obligado que suministra la información.
-        /// </summary>
-        public Interlocutor ObligadoEmision { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
-
-        /// <summary>
-        /// Representacioón textual de la instancia.
-        /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
-        public override string ToString()
-        {
-
-            return $"[{IDVersion}] {ObligadoEmision}";
-
-        }
-
-        #endregion
+        N2
 
     }
-
 }

@@ -156,6 +156,34 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         public EmitidaPorTercerosODestinatario EmitidaPorTercerosODestinatario { get; set; }
 
+        /// <summary>
+        /// Tercero que expide la factura.
+        /// </summary>
+        public Interlocutor Tercero { get; set; }
+
+        /// <summary>
+        /// Contarparte de la operación (cliente).
+        /// </summary>
+        public Interlocutor Contraparte { get; set; }
+
+        /// <summary>
+        /// Desglose de la factura.
+        /// </summary>
+        public Desglose Desglose { get; set; }
+
+        /// <summary>
+        /// <para>Importe total de la factura.</para>
+        /// <para>Decimal(12,2).</para>
+        /// </summary>
+        public string ImporteTotal { get; set; }
+
+        /// <summary>
+        /// Entidad sucedida como consecuencia
+        /// de una operación de reestructuración.
+        /// </summary>
+        public Interlocutor EntidadSucedida { get; set; }
+
+
         #endregion
 
         #region Métodos Públicos de Instancia

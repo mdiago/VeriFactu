@@ -37,85 +37,50 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Información del envío con la versión y 
-    /// los datos del obligado.
-    /// Datos de contexto de un suministro.
+    /// Causas de exención. L10.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
-    public class Cabecera
+    public enum CausaExencion
     {
 
-        #region Variables Privadas de Instancia
+        /// <summary>
+        /// Exenta sin especificar causa.
+        /// </summary>
+        E0,
 
         /// <summary>
-        /// Versiones VeriFactu.
+        /// Exenta por el artículo 20.
         /// </summary>
-        string[] _IDVersions = new string[1]
-        {
-            // Versión 2023.01
-            "0.1"
-        };
+        E1,
 
         /// <summary>
-        /// Versión VER*FACTU.
+        /// Exenta por el artículo 21.
         /// </summary>
-        string _Version;
-
-        #endregion
-
-        #region Propiedades Públicas de Instancia
+        E2,
 
         /// <summary>
-        /// <para>Identificación de la versión.</para>
-        /// <para>Alfanumérico(3)L15</para>
+        /// Exenta por el artículo 22.
         /// </summary>
-        [XmlElement("IDVersion")]
-        public string IDVersion
-        {
-            get
-            {
-                return _Version;
-            }
-            set
-            {
-
-                if (Array.IndexOf(_IDVersions, value) == -1)
-                    throw new ArgumentException($"Versión {value} no reconocida." +
-                        $"La versiones aceptada son {string.Join(", ", _IDVersions)}");
-
-                _Version = value;
-            }
-        }
+        E3,
 
         /// <summary>
-        /// Obligado que suministra la información.
+        /// Exenta por los artículos 23 y 24.
         /// </summary>
-        public Interlocutor ObligadoEmision { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        E4,
 
         /// <summary>
-        /// Representacioón textual de la instancia.
+        /// Exenta por el artículo 25.
         /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
-        public override string ToString()
-        {
+        E5,
 
-            return $"[{IDVersion}] {ObligadoEmision}";
-
-        }
-
-        #endregion
+        /// <summary>
+        /// Exenta por otros.
+        /// </summary>
+        E6
 
     }
 

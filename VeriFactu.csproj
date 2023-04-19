@@ -48,7 +48,12 @@
     <Compile Include="Doc\NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Xml\Factu\Alta\Cabecera.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\CalificacionOperacion.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\CausaExencion.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\ClaveRegimen.cs" />
     <Compile Include="Src\Xml\Factu\Alta\CodigoPais.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\Desglose.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\DetalleDesglose.cs" />
     <Compile Include="Src\Xml\Factu\Alta\EmitidaPorTercerosODestinatario.cs" />
     <Compile Include="Src\Xml\Factu\Alta\FacturaSinIdentifDestinatarioArticulo6_1_d.cs" />
     <Compile Include="Src\Xml\Factu\Alta\FacturaSimplificadaArticulos7_2_7_3.cs" />
@@ -56,7 +61,7 @@
     <Compile Include="Src\Xml\Factu\Alta\IDOtro.cs" />
     <Compile Include="Src\Xml\Factu\Alta\IDType.cs" />
     <Compile Include="Src\Xml\Factu\Alta\ImporteRectificacion.cs" />
-    <Compile Include="Src\Xml\Factu\Alta\ObligadoEmision.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\Interlocutor.cs" />
     <Compile Include="Src\Xml\Factu\Alta\Periodo.cs" />
     <Compile Include="Src\Xml\Factu\Alta\PeriodoLiquidacion.cs" />
     <Compile Include="Src\Xml\Factu\Alta\RegistroFacturacion.cs" />

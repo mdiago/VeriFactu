@@ -37,68 +37,23 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Información del envío con la versión y 
-    /// los datos del obligado.
-    /// Datos de contexto de un suministro.
+    /// Desglose de la factura.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
-    public class Cabecera
+    public class Desglose
     {
-
-        #region Variables Privadas de Instancia
-
-        /// <summary>
-        /// Versiones VeriFactu.
-        /// </summary>
-        string[] _IDVersions = new string[1]
-        {
-            // Versión 2023.01
-            "0.1"
-        };
-
-        /// <summary>
-        /// Versión VER*FACTU.
-        /// </summary>
-        string _Version;
-
-        #endregion
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Identificación de la versión.</para>
-        /// <para>Alfanumérico(3)L15</para>
+        /// Líneas de desglose de factura.
         /// </summary>
-        [XmlElement("IDVersion")]
-        public string IDVersion
-        {
-            get
-            {
-                return _Version;
-            }
-            set
-            {
-
-                if (Array.IndexOf(_IDVersions, value) == -1)
-                    throw new ArgumentException($"Versión {value} no reconocida." +
-                        $"La versiones aceptada son {string.Join(", ", _IDVersions)}");
-
-                _Version = value;
-            }
-        }
-
-        /// <summary>
-        /// Obligado que suministra la información.
-        /// </summary>
-        public Interlocutor ObligadoEmision { get; set; }
+        public List<DetalleDesglose> DetalleDesglose { get; set; }
 
         #endregion
 
@@ -111,12 +66,11 @@ namespace VeriFactu.Xml.Factu.Alta
         public override string ToString()
         {
 
-            return $"[{IDVersion}] {ObligadoEmision}";
+            return $"{DetalleDesglose.Count}";
 
         }
 
         #endregion
 
     }
-
 }

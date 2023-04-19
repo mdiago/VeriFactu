@@ -41,36 +41,75 @@ namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    ///  Obligado que suministra la información.
+    /// Línea de desglose de la factura.
     /// </summary>
-    public class ObligadoEmision
-    {     
+    public class DetalleDesglose
+    {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Nombre-razón social del obligado expedir.</para>
-        /// <para>Alfanumérico(120).</para>
+        /// <para>Clave que identificaráel tipo de régimen
+        /// del IVA o una operación con trascendencia tributaria.</para>
+        /// <para>Alfanumérico(2). L8.</para>
         /// </summary>
-        public string NombreRazon { get; set; }
+        public ClaveRegimen ClaveRegimen { get; set; }
 
         /// <summary>
-        /// <para>NIF del obligado a expedir.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// <para>Clave de la operación sujeta y
+        /// no exenta o de la operación no sujeta.</para>
+        /// <para>Alfanumérico(2). L9.</para>
         /// </summary>
-        public string NIF { get; set; }
+        public CalificacionOperacion CalificacionOperacion { get; set; }
+
 
         /// <summary>
-        /// <para>Nombre-razón del representante del obligado a expedir la factura.</para>
-        /// <para>Alfanumérico(120).</para>
+        /// <para>Campo que especifica la causa de exención.</para>
+        /// <para>Alfanumérico(2). L10.</para>
         /// </summary>
-        public string NombreRazonRepresentante { get; set; }
+        public CausaExencion OperacionExenta { get; set; }
 
         /// <summary>
-        /// <para>NIFRepresentante.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// <para>Porcentaje aplicado sobre la base
+        /// imponible para calcular la cuota.</para>
+        /// <para>Decimal(3,2).</para>
         /// </summary>
-        public string NIFRepresentante { get; set; }
+        public string TipoImpositivo { get; set; }
+
+        /// <summary>
+        /// <para>Magnitud dineraria sobre la que se
+        /// aplica el tipo impositivo / Importe no sujeto.</para>
+        /// <para>Decimal(12,2).</para>
+        /// </summary>
+        public string BaseImponibleOimporteNoSujeto { get; set; }
+
+        /// <summary>
+        /// <para>Magnitud dineraria sobre  la que se aplica
+        /// el tipo impositivo en régimen especial de grupos nivel avanzado.</para>
+        /// <para>Decimal(12,2).</para>
+        /// </summary>
+        public string BaseImponibleACoste { get; set; }
+
+        /// <summary>
+        /// <para>Cuota resultante de aplicar a la base
+        /// imponible el tipo impositivo.</para>
+        /// <para>Decimal(12,2).</para>
+        /// </summary>
+        public string CuotaRepercutida { get; set; }
+
+        /// <summary>
+        /// <para>Pocentaje asociado en función
+        /// del tipo de IVA .</para>
+        /// <para>Decimal(3,2).</para>
+        /// </summary>
+        public string TipoRecargoEquivalencia { get; set; }
+
+        /// <summary>
+        /// <para>Cuota resultante de aplicar a la base
+        /// imponible el tipo de recargo de equivalencia.</para>
+        /// <para>Decimal(12,2).</para>
+        /// </summary>
+        public string CuotaRecargoEquivalencia { get; set; }
 
         #endregion
 
@@ -83,7 +122,9 @@ namespace VeriFactu.Xml.Factu.Alta
         public override string ToString()
         {
 
-            return $"{NIF}, {NombreRazon} ";
+            return $"[{ClaveRegimen}, {CalificacionOperacion}]" +
+                $" {BaseImponibleOimporteNoSujeto} x {TipoImpositivo}" +
+                $" = {CuotaRepercutida}";
 
         }
 

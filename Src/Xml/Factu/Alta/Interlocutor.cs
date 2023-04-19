@@ -37,68 +37,45 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Xml.Serialization;
-
 namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Información del envío con la versión y 
-    /// los datos del obligado.
-    /// Datos de contexto de un suministro.
+    ///  Datos parte interviniente en algún modo en la facturación.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
-    public class Cabecera
-    {
-
-        #region Variables Privadas de Instancia
-
-        /// <summary>
-        /// Versiones VeriFactu.
-        /// </summary>
-        string[] _IDVersions = new string[1]
-        {
-            // Versión 2023.01
-            "0.1"
-        };
-
-        /// <summary>
-        /// Versión VER*FACTU.
-        /// </summary>
-        string _Version;
-
-        #endregion
+    public class Interlocutor
+    {     
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Identificación de la versión.</para>
-        /// <para>Alfanumérico(3)L15</para>
+        /// <para>Nombre-razón social.</para>
+        /// <para>Alfanumérico(120).</para>
         /// </summary>
-        [XmlElement("IDVersion")]
-        public string IDVersion
-        {
-            get
-            {
-                return _Version;
-            }
-            set
-            {
-
-                if (Array.IndexOf(_IDVersions, value) == -1)
-                    throw new ArgumentException($"Versión {value} no reconocida." +
-                        $"La versiones aceptada son {string.Join(", ", _IDVersions)}");
-
-                _Version = value;
-            }
-        }
+        public string NombreRazon { get; set; }
 
         /// <summary>
-        /// Obligado que suministra la información.
+        /// <para>NIF.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public Interlocutor ObligadoEmision { get; set; }
+        public string NIF { get; set; }
+
+        /// <summary>
+        /// Id. fiscal no español.
+        /// </summary>
+        public IDOtro IDOtro { get; set; }
+
+        /// <summary>
+        /// <para>Nombre-razón del representante.</para>
+        /// <para>Alfanumérico(120).</para>
+        /// </summary>
+        public string NombreRazonRepresentante { get; set; }
+
+        /// <summary>
+        /// <para>NIFRepresentante.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        public string NIFRepresentante { get; set; }
 
         #endregion
 
@@ -111,7 +88,7 @@ namespace VeriFactu.Xml.Factu.Alta
         public override string ToString()
         {
 
-            return $"[{IDVersion}] {ObligadoEmision}";
+            return $"{NIF}, {NombreRazon} ";
 
         }
 
