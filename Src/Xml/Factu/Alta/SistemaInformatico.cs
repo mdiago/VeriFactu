@@ -37,35 +37,66 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Información del sistema informático.
     /// </summary>
-    public class Namespaces
+    public class SistemaInformatico : Interlocutor
     {
 
-        #region Variables Privadas de Instancia
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// <para>Código ID del sistema informático de facturación utilizado.</para>
+        /// <para>Alfanumérico(2).</para>
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
+        public string IdSistemaInformatico { get; set; }
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// <para>Identificación de la Versión del sistema de facturación utilizado.</para>
+        /// <para>Alfanumérico(50).</para>
         /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
+        public string Version { get; set; }
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// <para>Número de instalación del sistema informático de facturación utilizado.</para>
+        /// <para>Alfanumérico(30).</para>
         /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
+        public string NumeroInstalacion { get; set; }
 
+        /// <summary>
+        /// <para>Especifica el tipo de uso del sistema informático de facturación.</para>
+        /// <para>Alfanumérico(2) L14.</para>
+        /// <para>'01': Solo funciona en modo VERIFACTU.</para>
+        /// <para>'02': Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).</para>
+        /// <para>'03': Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).</para>
+        /// <para>'04': Otros</para>
+        /// </summary>
+        public TipoUsoSistema TipoUsoSistema { get; set; }
 
         #endregion
 
-    }
+        #region Métodos Públicos de Instancia
 
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{IdSistemaInformatico} ({Version})";
+        }
+
+        #endregion
+
+
+    }
 }

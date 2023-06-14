@@ -37,32 +37,43 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System;
+using System.Xml.Serialization;
+
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Registro de alta de facturas.
     /// </summary>
-    public class Namespaces
+    [Serializable]
+    public class RegistroAltaFactura
     {
 
-        #region Variables Privadas de Instancia
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// Registro facturación.
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
+        public RegistroFacturacion RegistroFacturacion { get; set; }
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// Datos de control.
         /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
+        public DatosControl DatosControl { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// Representación textual de la instancia.
         /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
-
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{RegistroFacturacion}-{DatosControl})";
+        }
 
         #endregion
 

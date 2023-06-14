@@ -37,34 +37,42 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
-{
+using System.Xml.Serialization;
+
+namespace VeriFactu.Xml.Factu.Alta
+{   
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Clave que identifica el tipo de uso del
+    /// sistema informático de facturación. Alfanumérico(2) L14.
     /// </summary>
-    public class Namespaces
+    public enum TipoUsoSistema
     {
 
-        #region Variables Privadas de Instancia
+        /// <summary>
+        /// Solo funciona en modo VERIFACTU.
+        /// </summary>
+        [XmlEnum("01")]
+        Verifactu,
 
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
+        [XmlEnum("02")]
+        NoVerifactu,
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).
         /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
+        [XmlEnum("03")]
+        Ambos,
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// Otros.
         /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
+        [XmlEnum("04")]
+        Otros      
 
-
-        #endregion
 
     }
 

@@ -76,7 +76,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{NumSerieFacturaEmisor} ({FechaExpedicionFacturaEmisor})";
+            return $"{IDEmisorFactura}: {NumSerieFacturaEmisor} ({FechaExpedicionFacturaEmisor})";
         }
 
         #endregion

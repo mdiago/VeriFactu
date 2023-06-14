@@ -37,34 +37,23 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System.Xml.Serialization;
+
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Clave que identifica Tipo de hash aplicado para
+    /// obtener la huella. Alfanumérico(2) L12.
     /// </summary>
-    public class Namespaces
+    public enum TipoHash
     {
 
-        #region Variables Privadas de Instancia
-
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// SHA-256.
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
-
-        /// <summary>
-        /// Espacio de nombres SF
-        /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
-
-        /// <summary>
-        /// Espacio de nombres SF
-        /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
-
-
-        #endregion
+        [XmlEnum("01")]
+        Sha256
 
     }
 

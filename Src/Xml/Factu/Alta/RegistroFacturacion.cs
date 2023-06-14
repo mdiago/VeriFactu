@@ -75,6 +75,12 @@ namespace VeriFactu.Xml.Factu.Alta
         public TipoRectificativa TipoRectificativa { get; set; }
 
         /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool TipoRectificativaSpecified { get; set; }
+
+        /// <summary>
         /// El ID de las facturas rectificadas, únicamente se rellena
         /// en el caso de rectificación de facturas.
         /// </summary>
@@ -133,6 +139,12 @@ namespace VeriFactu.Xml.Factu.Alta
         public FacturaSimplificadaArticulos7_2_7_3 FacturaSimplificadaArticulos7_2_7_3 { get; set; }
 
         /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool FacturaSimplificadaArticulos7_2_7_3Specified { get; set; }
+
+        /// <summary>
         /// <para>Factura sin identificación destinatario artículo 6,1,d)
         /// RD 1616/2012. Si no se informa este campo se entenderá que
         /// tiene valor 'N'.</para>
@@ -140,6 +152,12 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         [XmlElement(ElementName = "FacturaSinIdentifDestinatarioArticulo6.1.d")]
         public FacturaSinIdentifDestinatarioArticulo6_1_d FacturaSinIdentifDestinatarioArticulo6_1_d { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool FacturaSinIdentifDestinatarioArticulo6_1_dSpecified { get; set; }
 
         /// <summary>
         /// <para>Identificador que especifica aquellas facturas con base
@@ -155,6 +173,12 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para>Alfanumérico(1). L6.</para>
         /// </summary>
         public EmitidaPorTercerosODestinatario EmitidaPorTercerosODestinatario { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool EmitidaPorTercerosODestinatarioSpecified { get; set; }
 
         /// <summary>
         /// Tercero que expide la factura.
@@ -183,6 +207,15 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         public Interlocutor EntidadSucedida { get; set; }
 
+        /// <summary>
+        /// Encadenamiento con la factura anterior..
+        /// </summary>
+        public EncadenamientoFacturaAnterior EncadenamientoFacturaAnterior { get; set; }
+
+        /// <summary>
+        ///  Información del sistema informático.
+        /// </summary>
+        public SistemaInformatico SistemaInformatico { get; set; }
 
         #endregion
 

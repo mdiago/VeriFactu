@@ -37,107 +37,84 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Línea de desglose de la factura.
+    /// Información del sistema informático.
     /// </summary>
-    public class DetalleDesglose
+    public class DatosControl : Interlocutor
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Clave que identificaráel tipo de régimen
-        /// del IVA o una operación con trascendencia tributaria.</para>
-        /// <para>Alfanumérico(2). L8.</para>
+        /// <para>Huella de la factura (Realizada sobre el nodo RegistroFacturacion).</para>
+        /// <para>Alfanumérico(64).</para>
         /// </summary>
-        public ClaveRegimen ClaveRegimen { get; set; }
+        public string Huella { get; set; }
 
         /// <summary>
-        /// <para>Clave de la operación sujeta y
-        /// no exenta o de la operación no sujeta.</para>
-        /// <para>Alfanumérico(2). L9.</para>
+        /// <para>Tipo de hash aplicado para obtener la huella.</para>
+        /// <para>Alfanumérico(2) L12.</para>
+        /// <para>'01': SHA-256.</para>
         /// </summary>
-        public CalificacionOperacion CalificacionOperacion { get; set; }
-
-
-        /// <summary>
-        /// <para>Campo que especifica la causa de exención.</para>
-        /// <para>Alfanumérico(2). L10.</para>
-        /// </summary>
-        public CausaExencion OperacionExenta { get; set; }
+        public TipoHash TipoHash { get; set; }
 
         /// <summary>
-        ///  Con true se serializa el dato, con false no.
+        /// <para>Fecha de generación del registro de facturación.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        [XmlIgnore]
-        public bool OperacionExentaSpecified { get; set; }
+        public string FechaGenRegistro { get; set; }
 
         /// <summary>
-        /// <para>Porcentaje aplicado sobre la base
-        /// imponible para calcular la cuota.</para>
-        /// <para>Decimal(3,2).</para>
+        /// <para>Hora de generación del registro de facturación.</para>
+        /// <para>Hora(hh:mm:ss).</para>
         /// </summary>
-        public string TipoImpositivo { get; set; }
+        public string HoraGenRegistro { get; set; }
 
         /// <summary>
-        /// <para>Magnitud dineraria sobre la que se
-        /// aplica el tipo impositivo / Importe no sujeto.</para>
-        /// <para>Decimal(12,2).</para>
+        /// <para>Huso horario que está usando el sistema informático de facturación
+        /// en el momento de generación del registro de facturación..</para>
+        /// <para>Alfanumérico(2) L13.</para>
+        /// <para>'01': GMT+0.</para>
+        /// <para>'02': GMT+1.</para>
+        /// <para>'03': GMT+2.</para>
         /// </summary>
-        public string BaseImponibleOimporteNoSujeto { get; set; }
+        public HusoHorarioGenRegistro HusoHorarioGenRegistro { get; set; }
 
         /// <summary>
-        /// <para>Magnitud dineraria sobre  la que se aplica
-        /// el tipo impositivo en régimen especial de grupos nivel avanzado.</para>
-        /// <para>Decimal(12,2).</para>
+        /// <para>Identificador que especifica si la generación del registro de
+        /// facturación se ha realizado durante algún tipo de incidencia
+        /// (por ej. no hay electricidad o fallo del sistema informático de facturación).
+        /// Si no se informa este campo se entenderá que tiene valor  “N”.</para>
+        /// <para>Alfanumérico(1) L11.</para>
+        /// <para>'S': Sí.</para>
+        /// <para>'N': No.</para>
         /// </summary>
-        public string BaseImponibleACoste { get; set; }
-
-        /// <summary>
-        /// <para>Cuota resultante de aplicar a la base
-        /// imponible el tipo impositivo.</para>
-        /// <para>Decimal(12,2).</para>
-        /// </summary>
-        public string CuotaRepercutida { get; set; }
-
-        /// <summary>
-        /// <para>Pocentaje asociado en función
-        /// del tipo de IVA .</para>
-        /// <para>Decimal(3,2).</para>
-        /// </summary>
-        public string TipoRecargoEquivalencia { get; set; }
-
-        /// <summary>
-        /// <para>Cuota resultante de aplicar a la base
-        /// imponible el tipo de recargo de equivalencia.</para>
-        /// <para>Decimal(12,2).</para>
-        /// </summary>
-        public string CuotaRecargoEquivalencia { get; set; }
+        public string Incidencia { get; set; }
 
         #endregion
 
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Representacioón textual de la instancia.
+        /// Representación textual de la instancia.
         /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
+        /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-
-            return $"[{ClaveRegimen}, {CalificacionOperacion}]" +
-                $" {BaseImponibleOimporteNoSujeto} x {TipoImpositivo}" +
-                $" = {CuotaRepercutida}";
-
+            return $"{TipoHash} ({FechaGenRegistro})";
         }
 
         #endregion
 
-    }
 
+    }
 }

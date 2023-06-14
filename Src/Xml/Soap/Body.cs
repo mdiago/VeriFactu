@@ -39,6 +39,7 @@
 
 using System;
 using System.Xml.Serialization;
+using VeriFactu.Xml.Factu.Alta;
 
 namespace VeriFactu.Xml.Soap
 {
@@ -48,7 +49,9 @@ namespace VeriFactu.Xml.Soap
     [Serializable]
     [XmlRoot("Body")]
     public class Body
-    {
+    {      
+
+        #region Construtores de Instancia
 
         /// <summary>
         /// Body del envelope.
@@ -56,6 +59,17 @@ namespace VeriFactu.Xml.Soap
         public Body()
         {
         }
+
+        #endregion
+
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Alta facturas.
+        /// </summary>
+        public SistemaFacturacionAltaFact SistemaFacturacionAltaFact { get; set; }
+
+        #endregion
 
     }
 

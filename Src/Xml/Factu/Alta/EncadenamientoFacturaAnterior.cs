@@ -37,35 +37,62 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Encadenamiento con la factura anterior.
     /// </summary>
-    public class Namespaces
+    public class EncadenamientoFacturaAnterior
     {
 
-        #region Variables Privadas de Instancia
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// <para>NIF del obligado que expide la factura anterior.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
+        public Interlocutor IDEmisorFacturaAnterior { get; set; }
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// <para>Nº Serie+Nº Factura que identifica a la  factura anterior.</para>
+        /// <para>Alfanumérico(60).</para>
         /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
+        public string NumSerieFacturaAnterior { get; set; }
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// <para>Fecha de expedición de  la  factura anterior.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
+        public string FechaExpedicionFacturaAnterior { get; set; }
 
+        /// <summary>
+        /// <para>Huella de la factura anterior.</para>
+        /// <para>Alfanumérico(64).</para>
+        /// </summary>
+        public string HuellaFacturaAnterior { get; set; }
 
         #endregion
 
-    }
+        #region Métodos Públicos de Instancia
 
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{NumSerieFacturaAnterior} ({FechaExpedicionFacturaAnterior})";
+        }
+
+        #endregion
+
+
+    }
 }

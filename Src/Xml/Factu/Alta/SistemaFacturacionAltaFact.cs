@@ -38,6 +38,9 @@
  */
 
 using System.Collections.Generic;
+using System;
+using System.Xml.Serialization;
+
 
 namespace VeriFactu.Xml.Factu.Alta
 {
@@ -45,6 +48,8 @@ namespace VeriFactu.Xml.Factu.Alta
     /// <summary>
     /// Sistemas de facturacion alta.
     /// </summary>
+    [Serializable]
+    [XmlRoot("SistemaFacturacionAltaFact", Namespace = Namespaces.NamespaceSF)]
     public class SistemaFacturacionAltaFact
     {
 
@@ -58,7 +63,8 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
-        List<RegistroFacturacion> RegistroFacturacion { get; set; }
+        [XmlElement("RegistroAltaFactura", Namespace = Namespaces.NamespaceSFLR)]
+        public List<RegistroAltaFactura> RegistroAltaFacturas { get; set; }
 
         #endregion
 
@@ -70,7 +76,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{Cabecera}-{RegistroFacturacion})";
+            return $"{Cabecera} ({RegistroAltaFacturas.Count})";
         }
 
         #endregion

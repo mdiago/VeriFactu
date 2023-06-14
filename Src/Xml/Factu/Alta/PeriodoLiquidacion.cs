@@ -59,6 +59,10 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para>Periodo Liquidación.</para>
         /// <para>Alfanumérico(2)</para>
         /// <para>L1.</para>
+        /// <para>'1T': 1º Trimestre.</para>
+        /// <para>'2T': 2º Trimestre.</para>
+        /// <para>'3T': 3º Trimestre.</para>
+        /// <para>'4T': 4º Trimestre.</para>
         /// </summary>
         public Periodo Periodo { get; set; }
 

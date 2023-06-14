@@ -37,34 +37,36 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System.Xml.Serialization;
+
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Clave que identifica el Huso horario que está usando
+    /// el sistema informático de facturación en el momento de
+    /// generación del registro de facturación. Alfanumérico(2) L13.
     /// </summary>
-    public class Namespaces
+    public enum HusoHorarioGenRegistro
     {
 
-        #region Variables Privadas de Instancia
+        /// <summary>
+        /// GMT+0.
+        /// </summary>
+        [XmlEnum("01")]
+        Gmt0,
 
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// GMT+1.
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
+        [XmlEnum("02")]
+        Gmt1,
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// GMT+2.
         /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
-
-        /// <summary>
-        /// Espacio de nombres SF
-        /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
-
-
-        #endregion
+        [XmlEnum("03")]
+        Gmt2
 
     }
 
