@@ -37,29 +37,40 @@
     address: info@irenesolutions.com
  */
 
-using System;
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Registro de alta de facturas.
+    /// Encadenamiento con la factura anterior.
     /// </summary>
-    [Serializable]
-    public class RegistroAltaFactura
+    public class EncadenamientoFacturaAnterior
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro facturación.
+        /// <para>NIF del obligado que expide la factura anterior.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public RegistroFacturacion RegistroFacturacion { get; set; }
+        public Interlocutor IDEmisorFacturaAnterior { get; set; }
 
         /// <summary>
-        /// Datos de control.
+        /// <para>Nº Serie+Nº Factura que identifica a la  factura anterior.</para>
+        /// <para>Alfanumérico(60).</para>
         /// </summary>
-        public DatosControl DatosControl { get; set; }
+        public string NumSerieFacturaAnterior { get; set; }
+
+        /// <summary>
+        /// <para>Fecha de expedición de  la  factura anterior.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
+        /// </summary>
+        public string FechaExpedicionFacturaAnterior { get; set; }
+
+        /// <summary>
+        /// <para>Huella de la factura anterior.</para>
+        /// <para>Alfanumérico(64).</para>
+        /// </summary>
+        public string HuellaFacturaAnterior { get; set; }
 
         #endregion
 
@@ -71,11 +82,11 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{RegistroFacturacion}-{DatosControl})";
+            return $"{NumSerieFacturaAnterior} ({FechaExpedicionFacturaAnterior})";
         }
 
         #endregion
 
-    }
 
+    }
 }

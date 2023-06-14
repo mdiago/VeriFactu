@@ -38,83 +38,85 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Información del sistema informático.
+    /// Información del envío con la versión y 
+    /// los datos del obligado.
+    /// Datos de contexto de un suministro.
     /// </summary>
-    public class DatosControl : Interlocutor
+    [Serializable]
+    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
+    public class Cabecera
     {
+
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// Versiones VeriFactu.
+        /// </summary>
+        string[] _IDVersions = new string[1]
+        {
+            // Versión 2023.01
+            "0.1"
+        };
+
+        /// <summary>
+        /// Versión VER*FACTU.
+        /// </summary>
+        string _Version;
+
+        #endregion
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Huella de la factura (Realizada sobre el nodo RegistroFacturacion).</para>
-        /// <para>Alfanumérico(64).</para>
+        /// <para>Identificación de la versión.</para>
+        /// <para>Alfanumérico(3)L15</para>
         /// </summary>
-        public string Huella { get; set; }
+        [XmlElement("IDVersion")]
+        public string IDVersion
+        {
+            get
+            {
+                return _Version;
+            }
+            set
+            {
+
+                if (Array.IndexOf(_IDVersions, value) == -1)
+                    throw new ArgumentException($"Versión {value} no reconocida." +
+                        $"La versiones aceptada son {string.Join(", ", _IDVersions)}");
+
+                _Version = value;
+            }
+        }
 
         /// <summary>
-        /// <para>Tipo de hash aplicado para obtener la huella.</para>
-        /// <para>Alfanumérico(2) L12.</para>
-        /// <para>'01': SHA-256.</para>
+        /// Obligado que suministra la información.
         /// </summary>
-        public TipoHash TipoHash { get; set; }
-
-        /// <summary>
-        /// <para>Fecha de generación del registro de facturación.</para>
-        /// <para>Fecha(dd-mm-yyyy).</para>
-        /// </summary>
-        public string FechaGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Hora de generación del registro de facturación.</para>
-        /// <para>Hora(hh:mm:ss).</para>
-        /// </summary>
-        public string HoraGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Huso horario que está usando el sistema informático de facturación
-        /// en el momento de generación del registro de facturación..</para>
-        /// <para>Alfanumérico(2) L13.</para>
-        /// <para>'01': GMT+0.</para>
-        /// <para>'02': GMT+1.</para>
-        /// <para>'03': GMT+2.</para>
-        /// </summary>
-        public HusoHorarioGenRegistro HusoHorarioGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Identificador que especifica si la generación del registro de
-        /// facturación se ha realizado durante algún tipo de incidencia
-        /// (por ej. no hay electricidad o fallo del sistema informático de facturación).
-        /// Si no se informa este campo se entenderá que tiene valor  “N”.</para>
-        /// <para>Alfanumérico(1) L11.</para>
-        /// <para>'S': Sí.</para>
-        /// <para>'N': No.</para>
-        /// </summary>
-        public string Incidencia { get; set; }
+        public Interlocutor ObligadoEmision { get; set; }
 
         #endregion
 
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Representacioón textual de la instancia.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
+        /// <returns>Representacioón textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{TipoHash} ({FechaGenRegistro})";
+
+            return $"[{IDVersion}] {ObligadoEmision}";
+
         }
 
         #endregion
 
-
     }
+
 }

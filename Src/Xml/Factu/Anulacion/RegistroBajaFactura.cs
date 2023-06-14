@@ -38,45 +38,28 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu.Anulacion
 {
 
     /// <summary>
-    /// Encadenamiento con la factura anterior.
+    /// Registro de alta de facturas.
     /// </summary>
-    public class EncadenamientoFacturaAnterior
+    [Serializable]
+    public class RegistroBajaFactura
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>NIF del obligado que expide la factura anterior.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// Registro facturación.
         /// </summary>
-        public Interlocutor IDEmisorFacturaAnterior { get; set; }
+        public RegistroFacturacion RegistroFacturacion { get; set; }
 
         /// <summary>
-        /// <para>Nº Serie+Nº Factura que identifica a la  factura anterior.</para>
-        /// <para>Alfanumérico(60).</para>
+        /// Datos de control.
         /// </summary>
-        public string NumSerieFacturaAnterior { get; set; }
-
-        /// <summary>
-        /// <para>Fecha de expedición de  la  factura anterior.</para>
-        /// <para>Fecha(dd-mm-yyyy).</para>
-        /// </summary>
-        public string FechaExpedicionFacturaAnterior { get; set; }
-
-        /// <summary>
-        /// <para>Huella de la factura anterior.</para>
-        /// <para>Alfanumérico(64).</para>
-        /// </summary>
-        public string HuellaFacturaAnterior { get; set; }
+        public DatosControl DatosControl { get; set; }
 
         #endregion
 
@@ -88,11 +71,11 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{NumSerieFacturaAnterior} ({FechaExpedicionFacturaAnterior})";
+            return $"{RegistroFacturacion}-{DatosControl})";
         }
 
         #endregion
 
-
     }
+
 }

@@ -37,29 +37,34 @@
     address: info@irenesolutions.com
  */
 
+using System.Collections.Generic;
 using System;
+using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Alta
+
+namespace VeriFactu.Xml.Factu.Anulacion
 {
 
     /// <summary>
-    /// Registro de alta de facturas.
+    /// Sistemas de facturacion baja.
     /// </summary>
     [Serializable]
-    public class RegistroAltaFactura
+    [XmlRoot("SistemaFacturacionBajaFact", Namespace = Namespaces.NamespaceSF)]
+    public class SistemaFacturacionBajaFact
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro facturación.
+        /// Datos de contexto de un suministro.
         /// </summary>
-        public RegistroFacturacion RegistroFacturacion { get; set; }
+        public Cabecera Cabecera { get; set; }
 
         /// <summary>
-        /// Datos de control.
+        /// Datos correspondientes a los registro de facturacion de baja.
         /// </summary>
-        public DatosControl DatosControl { get; set; }
+        [XmlElement("RegistroBajaFactura", Namespace = Namespaces.NamespaceSFLR)]
+        public List<RegistroBajaFactura> RegistroAnulacionFacturas { get; set; }
 
         #endregion
 
@@ -71,7 +76,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{RegistroFacturacion}-{DatosControl})";
+            return $"{Cabecera} ({RegistroAnulacionFacturas.Count})";
         }
 
         #endregion

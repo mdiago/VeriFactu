@@ -37,42 +37,49 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
-
-namespace VeriFactu.Xml.Factu.Alta
-{   
+namespace VeriFactu.Xml.Factu
+{
 
     /// <summary>
-    /// Clave que identifica el tipo de uso del
-    /// sistema informático de facturación. Alfanumérico(2) L14.
+    /// Período al que corresponden los apuntes. 
+    /// Todos los apuntes deben corresponder al mismo período impositivo
     /// </summary>
-    public enum TipoUsoSistema
+    public class PeriodoLiquidacion
     {
 
-        /// <summary>
-        /// Solo funciona en modo VERIFACTU.
-        /// </summary>
-        [XmlEnum("01")]
-        Verifactu,
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).
+        /// <para>Ejercicio</para>
+        /// <para>Numérico(4)</para>
         /// </summary>
-        [XmlEnum("02")]
-        NoVerifactu,
+        public string Ejercicio { get; set; }
 
         /// <summary>
-        /// Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).
+        /// <para>Periodo Liquidación.</para>
+        /// <para>Alfanumérico(2)</para>
+        /// <para>L1.</para>
+        /// <para>'1T': 1º Trimestre.</para>
+        /// <para>'2T': 2º Trimestre.</para>
+        /// <para>'3T': 3º Trimestre.</para>
+        /// <para>'4T': 4º Trimestre.</para>
         /// </summary>
-        [XmlEnum("03")]
-        Ambos,
+        public Periodo Periodo { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Otros.
+        /// Representación textual de la instancia.
         /// </summary>
-        [XmlEnum("04")]
-        Otros      
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Ejercicio}-{Periodo})";
+        }
 
+        #endregion
 
     }
 

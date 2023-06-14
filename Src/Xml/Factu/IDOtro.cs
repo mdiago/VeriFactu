@@ -37,23 +37,57 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Clave que identifica Tipo de hash aplicado para
-    /// obtener la huella. Alfanumérico(2) L12.
+    /// Indentificadores fiscales de países distintos
+    /// a España-
     /// </summary>
-    public enum TipoHash
+    public class IDOtro
     {
 
+        #region Propiedades Públicas de Instancia
+
         /// <summary>
-        /// SHA-256.
+        /// <para>Código del país del tercero que expida la factura.</para>
+        /// <para>Alfanumérico(2) (ISO 3166-1 alpha-2 codes)</para>
         /// </summary>
-        [XmlEnum("01")]
-        Sha256
+        public CodigoPais CodigoPais { get; set; }
+
+        /// <summary>
+        /// <para>Clave para establecer el tipo de
+        /// identificación en el pais de residencia.</para>
+        /// <para>Alfanumérico(2). L7.</para>
+        /// </summary>
+        public IDType IDType { get; set; }
+
+        /// <summary>
+        /// <para>Número de identificación en el país de residencia</para>
+        /// <para>Alfanumérico(20).</para>
+        /// </summary>
+        public string ID { get; set; }
+
+        /// <summary>
+        /// <para>NIF del representante del tercero que expida la factura.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        public string NIFRepresentante { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"[{CodigoPais}] {ID}";
+        }
+
+        #endregion
 
     }
 

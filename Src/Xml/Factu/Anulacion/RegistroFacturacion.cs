@@ -37,29 +37,44 @@
     address: info@irenesolutions.com
  */
 
-using System;
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu.Anulacion
 {
 
     /// <summary>
-    /// Registro de alta de facturas.
+    /// Datos correspondientes al registro de facturacion de baja.
     /// </summary>
-    [Serializable]
-    public class RegistroAltaFactura
+    public class RegistroFacturacion
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro facturación.
+        /// Período al que corresponden los apuntes. 
+        /// Todos los apuntes deben corresponder al mismo período impositivo.
         /// </summary>
-        public RegistroFacturacion RegistroFacturacion { get; set; }
+        public PeriodoLiquidacion PeriodoLiquidacion { get; set; }
 
         /// <summary>
-        /// Datos de control.
+        /// Datos de identificación de factura expedida para
+        /// operaciones de baja y consulta.
         /// </summary>
-        public DatosControl DatosControl { get; set; }
+        public IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// <para>Referencia Externa. Dato adicional de contenido libre.</para>
+        /// <para>Alfanumérico(60)</para>
+        /// </summary>
+        public string RefExterna { get; set; }
+
+        /// <summary>
+        /// Encadenamiento con la factura anterior..
+        /// </summary>
+        public EncadenamientoFacturaAnterior EncadenamientoFacturaAnterior { get; set; }
+
+        /// <summary>
+        ///  Información del sistema informático.
+        /// </summary>
+        public SistemaInformatico SistemaInformatico { get; set; }
 
         #endregion
 
@@ -71,7 +86,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{RegistroFacturacion}-{DatosControl})";
+            return $"{IDFactura}";
         }
 
         #endregion

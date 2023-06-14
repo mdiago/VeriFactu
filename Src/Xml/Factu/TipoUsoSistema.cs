@@ -37,42 +37,42 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Alta
-{
+namespace VeriFactu.Xml.Factu
+{   
 
     /// <summary>
-    /// Valores válidos para Periodo (L1).
+    /// Clave que identifica el tipo de uso del
+    /// sistema informático de facturación. Alfanumérico(2) L14.
     /// </summary>
-    [Serializable()]
-    public enum Periodo
+    public enum TipoUsoSistema
     {
 
         /// <summary>
-        /// 1º Trimestre.
+        /// Solo funciona en modo VERIFACTU.
         /// </summary>
-        [XmlEnum("1T")]
-        T1,
+        [XmlEnum("01")]
+        Verifactu,
 
         /// <summary>
-        /// 2º Trimestre.
+        /// Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).
         /// </summary>
-        [XmlEnum("2T")]
-        T2,
+        [XmlEnum("02")]
+        NoVerifactu,
 
         /// <summary>
-        /// 3º Trimestre.
+        /// Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).
         /// </summary>
-        [XmlEnum("3T")]
-        T3,
+        [XmlEnum("03")]
+        Ambos,
 
         /// <summary>
-        /// 4º Trimestre.
+        /// Otros.
         /// </summary>
-        [XmlEnum("4T")]
-        T4,
+        [XmlEnum("04")]
+        Otros      
+
 
     }
 

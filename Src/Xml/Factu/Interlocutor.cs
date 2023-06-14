@@ -37,41 +37,59 @@
     address: info@irenesolutions.com
  */
 
-using System;
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Registro de alta de facturas.
+    ///  Datos parte interviniente en algún modo en la facturación.
     /// </summary>
-    [Serializable]
-    public class RegistroAltaFactura
-    {
+    public class Interlocutor
+    {     
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro facturación.
+        /// <para>Nombre-razón social.</para>
+        /// <para>Alfanumérico(120).</para>
         /// </summary>
-        public RegistroFacturacion RegistroFacturacion { get; set; }
+        public string NombreRazon { get; set; }
 
         /// <summary>
-        /// Datos de control.
+        /// <para>NIF.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public DatosControl DatosControl { get; set; }
+        public string NIF { get; set; }
+
+        /// <summary>
+        /// Id. fiscal no español.
+        /// </summary>
+        public IDOtro IDOtro { get; set; }
+
+        /// <summary>
+        /// <para>Nombre-razón del representante.</para>
+        /// <para>Alfanumérico(120).</para>
+        /// </summary>
+        public string NombreRazonRepresentante { get; set; }
+
+        /// <summary>
+        /// <para>NIFRepresentante.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        public string NIFRepresentante { get; set; }
 
         #endregion
 
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Representacioón textual de la instancia.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
+        /// <returns>Representacioón textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{RegistroFacturacion}-{DatosControl})";
+
+            return $"{NIF}, {NombreRazon} ";
+
         }
 
         #endregion

@@ -37,7 +37,7 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>

@@ -37,59 +37,46 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    ///  Datos parte interviniente en algún modo en la facturación.
+    /// Datos de identificación de factura expedida para operaciones de baja y consulta.
     /// </summary>
-    public class Interlocutor
-    {     
+    public class IDFactura
+    {   
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Nombre-razón social.</para>
-        /// <para>Alfanumérico(120).</para>
-        /// </summary>
-        public string NombreRazon { get; set; }
-
-        /// <summary>
-        /// <para>NIF.</para>
+        /// <para>NIF del obligado a expedir la factura.</para>
         /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public string NIF { get; set; }
+        public string IDEmisorFactura { get; set; }
 
         /// <summary>
-        /// Id. fiscal no español.
+        /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
+        /// <para>Alfanumérico(60).</para>
         /// </summary>
-        public IDOtro IDOtro { get; set; }
+        public string NumSerieFacturaEmisor { get; set; }
 
         /// <summary>
-        /// <para>Nombre-razón del representante.</para>
-        /// <para>Alfanumérico(120).</para>
+        /// <para>Fecha de expedición de la factura.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        public string NombreRazonRepresentante { get; set; }
-
-        /// <summary>
-        /// <para>NIFRepresentante.</para>
-        /// <para>FormatoNIF(9).</para>
-        /// </summary>
-        public string NIFRepresentante { get; set; }
+        public string FechaExpedicionFacturaEmisor { get; set; }
 
         #endregion
 
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Representacioón textual de la instancia.
+        /// Representación textual de la instancia.
         /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
+        /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-
-            return $"{NIF}, {NombreRazon} ";
-
+            return $"{IDEmisorFactura}: {NumSerieFacturaEmisor} ({FechaExpedicionFacturaEmisor})";
         }
 
         #endregion

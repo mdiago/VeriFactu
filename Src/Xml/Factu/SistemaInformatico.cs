@@ -37,42 +37,44 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Indentificadores fiscales de países distintos
-    /// a España-
+    /// Información del sistema informático.
     /// </summary>
-    public class IDOtro
+    public class SistemaInformatico : Interlocutor
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Código del país del tercero que expida la factura.</para>
-        /// <para>Alfanumérico(2) (ISO 3166-1 alpha-2 codes)</para>
+        /// <para>Código ID del sistema informático de facturación utilizado.</para>
+        /// <para>Alfanumérico(2).</para>
         /// </summary>
-        public CodigoPais CodigoPais { get; set; }
+        public string IdSistemaInformatico { get; set; }
 
         /// <summary>
-        /// <para>Clave para establecer el tipo de
-        /// identificación en el pais de residencia.</para>
-        /// <para>Alfanumérico(2). L7.</para>
+        /// <para>Identificación de la Versión del sistema de facturación utilizado.</para>
+        /// <para>Alfanumérico(50).</para>
         /// </summary>
-        public IDType IDType { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
-        /// <para>Número de identificación en el país de residencia</para>
-        /// <para>Alfanumérico(20).</para>
+        /// <para>Número de instalación del sistema informático de facturación utilizado.</para>
+        /// <para>Alfanumérico(30).</para>
         /// </summary>
-        public string ID { get; set; }
+        public string NumeroInstalacion { get; set; }
 
         /// <summary>
-        /// <para>NIF del representante del tercero que expida la factura.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// <para>Especifica el tipo de uso del sistema informático de facturación.</para>
+        /// <para>Alfanumérico(2) L14.</para>
+        /// <para>'01': Solo funciona en modo VERIFACTU.</para>
+        /// <para>'02': Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).</para>
+        /// <para>'03': Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).</para>
+        /// <para>'04': Otros</para>
         /// </summary>
-        public string NIFRepresentante { get; set; }
+        public TipoUsoSistema TipoUsoSistema { get; set; }
 
         #endregion
 
@@ -84,11 +86,11 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"[{CodigoPais}] {ID}";
+            return $"{IdSistemaInformatico} ({Version})";
         }
 
         #endregion
 
-    }
 
+    }
 }

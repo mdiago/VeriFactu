@@ -37,49 +37,42 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu.Alta
+using System;
+using System.Xml.Serialization;
+
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Datos de identificación de factura expedida para operaciones de baja y consulta.
+    /// Valores válidos para Periodo (L1).
     /// </summary>
-    public class IDFactura
-    {   
-
-        #region Propiedades Públicas de Instancia
-
-        /// <summary>
-        /// <para>NIF del obligado a expedir la factura.</para>
-        /// <para>FormatoNIF(9).</para>
-        /// </summary>
-        public string IDEmisorFactura { get; set; }
+    [Serializable()]
+    public enum Periodo
+    {
 
         /// <summary>
-        /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
-        /// <para>Alfanumérico(60).</para>
+        /// 1º Trimestre.
         /// </summary>
-        public string NumSerieFacturaEmisor { get; set; }
+        [XmlEnum("1T")]
+        T1,
 
         /// <summary>
-        /// <para>Fecha de expedición de la factura.</para>
-        /// <para>Fecha(dd-mm-yyyy).</para>
+        /// 2º Trimestre.
         /// </summary>
-        public string FechaExpedicionFacturaEmisor { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        [XmlEnum("2T")]
+        T2,
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// 3º Trimestre.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{IDEmisorFactura}: {NumSerieFacturaEmisor} ({FechaExpedicionFacturaEmisor})";
-        }
+        [XmlEnum("3T")]
+        T3,
 
-        #endregion
+        /// <summary>
+        /// 4º Trimestre.
+        /// </summary>
+        [XmlEnum("4T")]
+        T4,
 
     }
 

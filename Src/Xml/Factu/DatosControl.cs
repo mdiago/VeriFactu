@@ -37,50 +37,62 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
     /// Información del sistema informático.
     /// </summary>
-    public class SistemaInformatico : Interlocutor
+    public class DatosControl : Interlocutor
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Código ID del sistema informático de facturación utilizado.</para>
-        /// <para>Alfanumérico(2).</para>
+        /// <para>Huella de la factura (Realizada sobre el nodo RegistroFacturacion).</para>
+        /// <para>Alfanumérico(64).</para>
         /// </summary>
-        public string IdSistemaInformatico { get; set; }
+        public string Huella { get; set; }
 
         /// <summary>
-        /// <para>Identificación de la Versión del sistema de facturación utilizado.</para>
-        /// <para>Alfanumérico(50).</para>
+        /// <para>Tipo de hash aplicado para obtener la huella.</para>
+        /// <para>Alfanumérico(2) L12.</para>
+        /// <para>'01': SHA-256.</para>
         /// </summary>
-        public string Version { get; set; }
+        public TipoHash TipoHash { get; set; }
 
         /// <summary>
-        /// <para>Número de instalación del sistema informático de facturación utilizado.</para>
-        /// <para>Alfanumérico(30).</para>
+        /// <para>Fecha de generación del registro de facturación.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        public string NumeroInstalacion { get; set; }
+        public string FechaGenRegistro { get; set; }
 
         /// <summary>
-        /// <para>Especifica el tipo de uso del sistema informático de facturación.</para>
-        /// <para>Alfanumérico(2) L14.</para>
-        /// <para>'01': Solo funciona en modo VERIFACTU.</para>
-        /// <para>'02': Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).</para>
-        /// <para>'03': Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).</para>
-        /// <para>'04': Otros</para>
+        /// <para>Hora de generación del registro de facturación.</para>
+        /// <para>Hora(hh:mm:ss).</para>
         /// </summary>
-        public TipoUsoSistema TipoUsoSistema { get; set; }
+        public string HoraGenRegistro { get; set; }
+
+        /// <summary>
+        /// <para>Huso horario que está usando el sistema informático de facturación
+        /// en el momento de generación del registro de facturación..</para>
+        /// <para>Alfanumérico(2) L13.</para>
+        /// <para>'01': GMT+0.</para>
+        /// <para>'02': GMT+1.</para>
+        /// <para>'03': GMT+2.</para>
+        /// </summary>
+        public HusoHorarioGenRegistro HusoHorarioGenRegistro { get; set; }
+
+        /// <summary>
+        /// <para>Identificador que especifica si la generación del registro de
+        /// facturación se ha realizado durante algún tipo de incidencia
+        /// (por ej. no hay electricidad o fallo del sistema informático de facturación).
+        /// Si no se informa este campo se entenderá que tiene valor  “N”.</para>
+        /// <para>Alfanumérico(1) L11.</para>
+        /// <para>'S': Sí.</para>
+        /// <para>'N': No.</para>
+        /// </summary>
+        public string Incidencia { get; set; }
 
         #endregion
 
@@ -92,7 +104,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{IdSistemaInformatico} ({Version})";
+            return $"{TipoHash} ({FechaGenRegistro})";
         }
 
         #endregion
