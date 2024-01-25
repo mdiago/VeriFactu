@@ -49,12 +49,6 @@ namespace VeriFactu.Xml.Factu.Anulacion
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Período al que corresponden los apuntes. 
-        /// Todos los apuntes deben corresponder al mismo período impositivo.
-        /// </summary>
-        public PeriodoLiquidacion PeriodoLiquidacion { get; set; }
-
-        /// <summary>
         /// Datos de identificación de factura expedida para
         /// operaciones de baja y consulta.
         /// </summary>
@@ -69,7 +63,7 @@ namespace VeriFactu.Xml.Factu.Anulacion
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
-        public EncadenamientoFacturaAnterior EncadenamientoFacturaAnterior { get; set; }
+        public EncadenamientoRegistroAnterior EncadenamientoFacturaAnterior { get; set; }
 
         /// <summary>
         ///  Información del sistema informático.

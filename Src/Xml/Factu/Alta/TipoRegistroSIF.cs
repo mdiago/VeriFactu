@@ -37,49 +37,37 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Período al que corresponden los apuntes. 
-    /// Todos los apuntes deben corresponder al mismo período impositivo
+    /// Tipo de registro (alta inicial, alta sustitutiva). Contiene la operación 
+    /// realizada en el sistema informático de facturación utilizado, lo que forma
+    /// parte del detalle de las circunstancias de generación del registro de facturación.
+    /// Alfanumérico (2)  L17.
     /// </summary>
-    public class PeriodoLiquidacion
+    public enum TipoRegistroSIF
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// Alta inicial del registro de facturación en el SIF.
+        /// </summary>
+        S0,
 
         /// <summary>
-        /// <para>Ejercicio</para>
-        /// <para>Numérico(4)</para>
+        /// Alta sustitutiva del registro de facturación en el SIF.
         /// </summary>
-        public string Ejercicio { get; set; }
+        S1,
 
         /// <summary>
-        /// <para>Periodo Liquidación.</para>
-        /// <para>Alfanumérico(2)</para>
-        /// <para>L1.</para>
-        /// <para>'1T': 1º Trimestre.</para>
-        /// <para>'2T': 2º Trimestre.</para>
-        /// <para>'3T': 3º Trimestre.</para>
-        /// <para>'4T': 4º Trimestre.</para>
+        /// Anulación inicial del registro de facturación en el SIF.
         /// </summary>
-        public Periodo Periodo { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        S2,
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Anulación sustitutiva del registro de facturación en el SIF.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{Ejercicio}-{Periodo})";
-        }
-
-        #endregion
+        S3     
 
     }
 

@@ -37,49 +37,36 @@
     address: info@irenesolutions.com
  */
 
-using System.Collections.Generic;
-using System;
 using System.Xml.Serialization;
 
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Sistemas de facturacion alta.
+    /// Huso horario que está usando el sistema informático de
+    /// facturación en el momento de generación del registro de facturación..
+    /// Alfanumérico (2) L13.
     /// </summary>
-    [Serializable]
-    [XmlRoot("SistemaFacturacionAltaFact", Namespace = Namespaces.NamespaceSF)]
-    public class SistemaFacturacionAltaFact
+    public enum HusoHorario
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// GMT+0.
+        /// </summary>
+        [XmlEnum("01")]
+        Gmt0,
 
         /// <summary>
-        /// Datos de contexto de un suministro.
+        /// GMT+1.
         /// </summary>
-        public Cabecera Cabecera { get; set; }
+        [XmlEnum("02")]
+        Gmt1,
 
         /// <summary>
-        /// Datos correspondientes a los registro de facturacion de alta.
+        /// GMT+2.
         /// </summary>
-        [XmlElement("RegistroAltaFactura", Namespace = Namespaces.NamespaceSFLR)]
-        public List<RegistroAltaFactura> RegistroAltaFacturas { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
-
-        /// <summary>
-        /// Representación textual de la instancia.
-        /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{Cabecera} ({RegistroAltaFacturas.Count})";
-        }
-
-        #endregion
+        [XmlEnum("03")]
+        Gmt2
 
     }
 

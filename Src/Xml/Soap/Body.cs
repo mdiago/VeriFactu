@@ -38,8 +38,10 @@
  */
 
 using System;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Factu.Anulacion;
 
 namespace VeriFactu.Xml.Soap
 {
@@ -65,9 +67,11 @@ namespace VeriFactu.Xml.Soap
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Alta facturas.
+        /// Registro.
         /// </summary>
-        public SistemaFacturacionAltaFact SistemaFacturacionAltaFact { get; set; }
+        [XmlElement("AltaFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Form = XmlSchemaForm.Unqualified)]
+        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Form = XmlSchemaForm.Unqualified)]        
+        public object Registro { get; set; }
 
         #endregion
 

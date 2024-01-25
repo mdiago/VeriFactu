@@ -52,16 +52,25 @@ namespace VeriFactu.Xml.Factu.Alta
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Período al que corresponden los apuntes. 
-        /// Todos los apuntes deben corresponder al mismo período impositivo.
-        /// </summary>
-        public PeriodoLiquidacion PeriodoLiquidacion { get; set; }
-
-        /// <summary>
         /// Datos de identificación de factura expedida para
         /// operaciones de baja y consulta.
         /// </summary>
         public IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// <para>Nombre-razón social del obligado a expedir la factura.</para>
+        /// <para>Alfanumérico (120)</para>
+        /// </summary>
+        public string NombreRazonEmisor { get; set; }
+
+        /// <summary>
+        /// <para>Tipo de registro (alta inicial, alta sustitutiva). 
+        /// Contiene la operación realizada en el sistema informático
+        /// de facturación utilizado, lo que forma parte del detalle de
+        /// las circunstancias de generación del registro de facturación.</para>
+        ///  <para>Alfanumérico (2)  L17.</para>
+        /// </summary>
+        public TipoRegistroSIF TipoRegistroSIF { get; set; }
 
         /// <summary>
         /// <para>Clave del tipo de factura (L2).</para>
@@ -105,64 +114,31 @@ namespace VeriFactu.Xml.Factu.Alta
         public string FechaOperacion { get; set; }
 
         /// <summary>
-        /// <para>Número de registro obtenido al enviar la autorización
-        /// en materia de facturación o de libros registro</para>
-        /// <para>Alfanumérico(15)</para>
-        /// </summary>
-        public string NumRegistroAcuerdoFacturacion { get; set; }
-
-        /// <summary>
-        /// <para>Identificación de la autorización a que se
-        /// refiere el artículo 5 del RD XX72022.</para>
-        /// <para>Alfanumérico(15).</para>
-        /// </summary>
-        public string NumRegistroAcuerdoSistemaInformatico { get; set; }
-
-        /// <summary>
         /// <para>Descripción del objeto de la factura.</para>
-        /// <para>Alfanumérico(500).</para>
+        /// <para>Alfanumérico (500)</para>
         /// </summary>
         public string DescripcionOperacion { get; set; }
 
         /// <summary>
-        /// <para>Referencia Externa. Dato adicional de contenido libre.</para>
-        /// <para>Alfanumérico(60)</para>
+        /// <para>Factura simplificada Articulo 7.2 Y 7.3 RD 1619/2012. 
+        /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
+        /// <para>Alfunumérico (1) L4</para>
         /// </summary>
-        public string RefExterna { get; set; }
+        [XmlElement("FacturaSimplificadaArticulos7.2_7.3")]
+        public string FacturaSimplificadaArticulos7_2_7_3 { get; set; }
 
         /// <summary>
-        /// <para>Factura simplificada Articulo 7,2 Y 7,3 RD 1619/2012.
-        /// Si no se informa este campo se entenderá que tiene valor 'N'.</para>
-        /// <para>L4</para>
+        /// <para>Factura simplificada Articulo 7.2 Y 7.3 RD 1619/2012. 
+        /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
+        /// <para>Alfunumérico (1) L4</para>
         /// </summary>
-        [XmlElement(ElementName = "FacturaSimplificadaArticulos7.2_7.3")]
-        public FacturaSimplificadaArticulos7_2_7_3 FacturaSimplificadaArticulos7_2_7_3 { get; set; }
+        [XmlElement("FacturaSinIdentifDestinatarioArticulo6.1.d")]
+        public string FacturaSinIdentifDestinatarioArticulo6_1_d { get; set; }
 
         /// <summary>
-        ///  Con true se serializa el dato, con false no.
-        /// </summary>
-        [XmlIgnore]
-        public bool FacturaSimplificadaArticulos7_2_7_3Specified { get; set; }
-
-        /// <summary>
-        /// <para>Factura sin identificación destinatario artículo 6,1,d)
-        /// RD 1616/2012. Si no se informa este campo se entenderá que
-        /// tiene valor 'N'.</para>
-        /// <para>L5</para>
-        /// </summary>
-        [XmlElement(ElementName = "FacturaSinIdentifDestinatarioArticulo6.1.d")]
-        public FacturaSinIdentifDestinatarioArticulo6_1_d FacturaSinIdentifDestinatarioArticulo6_1_d { get; set; }
-
-        /// <summary>
-        ///  Con true se serializa el dato, con false no.
-        /// </summary>
-        [XmlIgnore]
-        public bool FacturaSinIdentifDestinatarioArticulo6_1_dSpecified { get; set; }
-
-        /// <summary>
-        /// <para>Identificador que especifica aquellas facturas con base
-        /// o importe de la factura superior al umbral especificado.
-        /// Si no se informa este campo se entenderá que tiene valor 'N'.</para>
+        /// <para>Identificador que especifica aquellas facturas con base o
+        /// importe de la factura superior al umbral especificado.
+        /// Si no se informa este campo se entenderá que tiene valor  “N”..</para>
         /// <para>Alfanumérico(1).</para>
         /// </summary>
         public string Macrodato { get; set; }
@@ -186,10 +162,22 @@ namespace VeriFactu.Xml.Factu.Alta
         public Interlocutor Tercero { get; set; }
 
         /// <summary>
-        /// Contarparte de la operación (cliente).
+        /// Destinatarios de la factura.
         /// </summary>
-        public Interlocutor Contraparte { get; set; }
+        public List<Interlocutor> Destinatarios { get; set; }
 
+        /// <summary>
+        /// <para>Identificador que especifica si tiene minoración de la
+        /// base imponible por la concesión de cupones, bonificaciones o
+        /// descuentos cuando solo se expide el original de la factura.
+        /// Este campo es necesario porque contribuye a completar el detalle
+        /// de la tipología de la factura. Si no se informa este campo se
+        /// entenderá que tiene valor  “N”.</para>
+        /// <para>Alfanumérico (1) L11</para>
+        /// </summary>
+        public string Cupon { get; set; }
+
+       
         /// <summary>
         /// Desglose de la factura.
         /// </summary>
@@ -200,22 +188,67 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para>Decimal(12,2).</para>
         /// </summary>
         public string ImporteTotal { get; set; }
-
-        /// <summary>
-        /// Entidad sucedida como consecuencia
-        /// de una operación de reestructuración.
-        /// </summary>
-        public Interlocutor EntidadSucedida { get; set; }
-
+ 
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
-        public EncadenamientoFacturaAnterior EncadenamientoFacturaAnterior { get; set; }
+        public EncadenamientoRegistroAnterior EncadenamientoRegistroAnterior { get; set; }
 
         /// <summary>
         ///  Información del sistema informático.
         /// </summary>
         public SistemaInformatico SistemaInformatico { get; set; }
+
+        /// <summary>
+        /// <para>Número de registro obtenido al enviar la autorización
+        /// en materia de facturación o de libros registro</para>
+        /// <para>Alfanumérico(15)</para>
+        /// </summary>
+        public string FechaGenRegistro { get; set; }
+
+        /// <summary>
+        /// <para>Número de registro obtenido al enviar la autorización
+        /// en materia de facturación o de libros registro</para>
+        /// <para>Alfanumérico(15)</para>
+        /// </summary>
+        public string NumRegistroAcuerdoFacturacion { get; set; }
+
+        /// <summary>
+        /// <para>Número de registro obtenido al enviar la autorización
+        /// en materia de facturación o de libros registro</para>
+        /// <para>Alfanumérico(15)</para>
+        /// </summary>
+        public string HoraGenRegistro { get; set; }
+
+        /// <summary>
+        /// <para>Huso horario que está usando el sistema informático de
+        /// facturación en el momento de generación del registro de facturación.</para>
+        /// <para>Alfanumérico (2) L13</para>
+        /// </summary>
+        public HusoHorario HusoHorarioGenRegistro { get; set; }
+
+        /// <summary>
+        /// <para>Número de registro obtenido al enviar la autorización en materia
+        /// de facturación o de libros registro a que se refiere la disposición
+        /// adicional primera del Real Decreto que aprueba el Reglamento.
+        /// Este campo forma parte del detalle de las circunstancias de
+        /// generación del registro de facturación.</para>
+        /// <para>Alfanumérico(15).</para>
+        /// </summary>
+        public string NumRegistroAcuerdoSistemaInformatico { get; set; }
+
+        /// <summary>
+        /// <para>Identificación del acuerdo (resolución) a que se refiere
+        /// el artículo 5 del Reglamento. Este campo forma parte del detalle
+        /// de las circunstancias de generación del registro de facturación.</para>
+        /// <para>Alfanumérico (15)</para>
+        /// </summary>
+        public string IdAcuerdoSistemaInformatico { get; set; }
+
+
+     
+
+
 
         #endregion
 

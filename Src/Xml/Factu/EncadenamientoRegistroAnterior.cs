@@ -37,26 +37,56 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Factura sin identificación destinatario artículo 6,1,d)
-    /// RD 1616/2012. Si no se informa este campo se entenderá
-    /// que tiene valor 'N'. L5.
+    /// Encadenamiento con la factura anterior.
     /// </summary>
-    public enum FacturaSinIdentifDestinatarioArticulo6_1_d
+    public class EncadenamientoRegistroAnterior
     {
 
-        /// <summary>
-        /// Sí.
-        /// </summary>
-        S,
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// No.
+        /// <para>NIF del obligado que expide la factura anterior.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
-        N
+        public Interlocutor IDEmisorFacturaRegistroAnterior { get; set; }
+
+        /// <summary>
+        /// <para>Nº Serie+Nº Factura que identifica a la  factura anterior.</para>
+        /// <para>Alfanumérico(60).</para>
+        /// </summary>
+        public string NumSerieFacturaRegistroAnterior { get; set; }
+
+        /// <summary>
+        /// <para>Fecha de expedición de  la  factura anterior.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
+        /// </summary>
+        public string FechaExpedicionFacturaRegistroAnterior { get; set; }
+
+        /// <summary>
+        /// <para>Huella de la factura anterior.</para>
+        /// <para>Alfanumérico(64).</para>
+        /// </summary>
+        public string HuellaRegistroAnterior { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{NumSerieFacturaRegistroAnterior} ({FechaExpedicionFacturaRegistroAnterior})";
+        }
+
+        #endregion
+
 
     }
 }

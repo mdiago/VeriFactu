@@ -49,6 +49,13 @@ namespace VeriFactu.Xml.Factu
         #region Propiedades Públicas de Instancia
 
         /// <summary>
+        /// <para>Nombre dado por el productor al sistema
+        /// informático de facturación utilizado.</para>
+        /// <para>Alfanumérico (30).</para>
+        /// </summary>
+        public string NombreSistemaInformatico { get; set; }
+
+        /// <summary>
         /// <para>Código ID del sistema informático de facturación utilizado.</para>
         /// <para>Alfanumérico(2).</para>
         /// </summary>
@@ -67,14 +74,34 @@ namespace VeriFactu.Xml.Factu
         public string NumeroInstalacion { get; set; }
 
         /// <summary>
-        /// <para>Especifica el tipo de uso del sistema informático de facturación.</para>
-        /// <para>Alfanumérico(2) L14.</para>
-        /// <para>'01': Solo funciona en modo VERIFACTU.</para>
-        /// <para>'02': Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).</para>
-        /// <para>'03': Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).</para>
-        /// <para>'04': Otros</para>
+        /// <para>Especifica si para cumplir el Reglamento el sistema informático
+        /// de facturación solo puede funcionar exclusivamente como Veri*Factu.</para>
+        /// <para> Alfanumérico (1) L11.</para>
         /// </summary>
-        public TipoUsoSistema TipoUsoSistema { get; set; }
+        public string TipoUsoPosibleSoloVerifactu { get; set; }
+
+        /// <summary>
+        /// <para> Especifica si el sistema informático de facturación permite ser
+        /// configurado para facturar sin cumplir con el Reglamento ni con el SII
+        /// ni con los sistemas de facturación admitidos por las administraciones
+        /// tributarias forales.</para>
+        /// <para> Alfanumérico (1) L11.</para>
+        /// </summary>
+        public string TipoUsoPosibleOtros { get; set; }
+
+        /// <summary>
+        /// <para> Especifica si el sistema informático de facturación permite
+        /// llevar independientemente la facturación de varios obligados tributarios.</para>
+        /// <para> Alfanumérico (1) L11.</para>
+        /// </summary>
+        public string TipoUsoPosibleMultiOT { get; set; }
+
+        /// <summary>
+        /// <para> Número de obligados tributarios dados de alta en el sistema
+        /// informático sobre los que llevar independientemente su facturación.</para>
+        /// <para> Alfanumérico (1) L11.</para>
+        /// </summary>
+        public string NumeroOTAlta { get; set; }    
 
         #endregion
 
@@ -90,7 +117,6 @@ namespace VeriFactu.Xml.Factu
         }
 
         #endregion
-
 
     }
 }

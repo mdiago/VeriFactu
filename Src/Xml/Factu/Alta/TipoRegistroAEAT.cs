@@ -37,49 +37,45 @@
     address: info@irenesolutions.com
  */
 
-using System.Collections.Generic;
-using System;
-using System.Xml.Serialization;
-
-
-namespace VeriFactu.Xml.Factu.Anulacion
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Sistemas de facturacion baja.
+    /// Tipo de registro (alta inicial, alta sustitutiva). 
+    /// Contiene la operación a realizar en el sistema de.
+    /// la AEAT, lo que forma parte del detalle de las 
+    /// circunstancias de generación del registro de facturación.
+    /// Alfanumérico (2)  L16.
     /// </summary>
-    [Serializable]
-    [XmlRoot("SistemaFacturacionBajaFact", Namespace = Namespaces.NamespaceSF)]
-    public class SistemaFacturacionBajaFact
+    public enum TipoRegistroAEAT
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// Alta inicial del registro de facturación en la AEAT.
+        /// </summary>
+        T0,
 
         /// <summary>
-        /// Datos de contexto de un suministro.
+        ///Alta inicial del registro de facturación en la AEAT.
         /// </summary>
-        public Cabecera Cabecera { get; set; }
+        T1,
 
         /// <summary>
-        /// Datos correspondientes a los registro de facturacion de baja.
+        /// Anulación inicial del registro de facturación en la AEAT.
         /// </summary>
-        [XmlElement("RegistroBajaFactura", Namespace = Namespaces.NamespaceSFLR)]
-        public List<RegistroBajaFactura> RegistroAnulacionFacturas { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        T2,
 
         /// <summary>
-        /// Representación textual de la instancia.
+        ///Anulación inicial del registro de facturación en la AEAT.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{Cabecera} ({RegistroAnulacionFacturas.Count})";
-        }
+        T3,
 
-        #endregion
+        /// <summary>
+        /// Anulación inicial del registro de facturación cuando no existe
+        /// el registro de facturacion que se quiere anular en la AEAT.
+        /// </summary>
+        T4
+     
 
     }
 

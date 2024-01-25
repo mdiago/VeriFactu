@@ -43,7 +43,7 @@ namespace VeriFactu.Xml.Factu
     /// <summary>
     /// Información del sistema informático.
     /// </summary>
-    public class DatosControl : Interlocutor
+    public class DatosControl
     {
 
         #region Propiedades Públicas de Instancia
@@ -60,28 +60,6 @@ namespace VeriFactu.Xml.Factu
         /// <para>'01': SHA-256.</para>
         /// </summary>
         public TipoHash TipoHash { get; set; }
-
-        /// <summary>
-        /// <para>Fecha de generación del registro de facturación.</para>
-        /// <para>Fecha(dd-mm-yyyy).</para>
-        /// </summary>
-        public string FechaGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Hora de generación del registro de facturación.</para>
-        /// <para>Hora(hh:mm:ss).</para>
-        /// </summary>
-        public string HoraGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Huso horario que está usando el sistema informático de facturación
-        /// en el momento de generación del registro de facturación..</para>
-        /// <para>Alfanumérico(2) L13.</para>
-        /// <para>'01': GMT+0.</para>
-        /// <para>'02': GMT+1.</para>
-        /// <para>'03': GMT+2.</para>
-        /// </summary>
-        public HusoHorarioGenRegistro HusoHorarioGenRegistro { get; set; }
 
         /// <summary>
         /// <para>Identificador que especifica si la generación del registro de
@@ -104,7 +82,7 @@ namespace VeriFactu.Xml.Factu
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{TipoHash} ({FechaGenRegistro})";
+            return $"{TipoHash} ({Huella})";
         }
 
         #endregion

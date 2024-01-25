@@ -100,6 +100,28 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         public Interlocutor ObligadoEmision { get; set; }
 
+        /// <summary>
+        /// <para>Tipo de registro (alta inicial, alta sustitutiva). 
+        /// Contiene la operación a realizar en el sistema de la AEAT, 
+        /// lo que forma parte del detalle de las circunstancias de 
+        /// generación del registro.</para>
+        /// <para>Alfanumérico (2) L16</para>
+        /// </summary>
+        [XmlElement("TipoRegistroAEAT")]
+        public TipoRegistroAEAT TipoRegistroAEAT { get; set; }
+
+        /// <summary>
+        /// <para>Última fecha en la que el sistema informático actuará 
+        /// como VERIFACTU. Después de la misma, el sistema dejará de 
+        /// funcionar como VERI*FACTU. Este campo forma parte del detalle 
+        /// de las circunstancias de generación de los registros de 
+        /// facturación actuales y futuros.</para>
+        /// <para>Fecha (dd-mm-yyyy)</para>
+        /// </summary>
+        [XmlElement("FechaFinVeriFactu")]
+        public string FechaFinVeriFactu { get; set; }
+
+
         #endregion
 
         #region Métodos Públicos de Instancia

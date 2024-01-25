@@ -37,42 +37,49 @@
     address: info@irenesolutions.com
  */
 
+using System.Collections.Generic;
 using System;
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu
+
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Valores válidos para Periodo (L1).
+    /// Sistemas de facturacion alta.
     /// </summary>
-    [Serializable()]
-    public enum Periodo
+    [Serializable]
+    [XmlRoot("AltaFactuSistemaFacturacion", Namespace = Namespaces.NamespaceSF)]
+    public class AltaFactuSistemaFacturacion
     {
 
-        /// <summary>
-        /// 1º Trimestre.
-        /// </summary>
-        [XmlEnum("1T")]
-        T1,
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// 2º Trimestre.
+        /// Datos de contexto de un suministro.
         /// </summary>
-        [XmlEnum("2T")]
-        T2,
+        public Cabecera Cabecera { get; set; }
 
         /// <summary>
-        /// 3º Trimestre.
+        /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
-        [XmlEnum("3T")]
-        T3,
+        [XmlElement("RegistroAltaFactura", Namespace = Namespaces.NamespaceSFLR)]
+        public List<RegistroAltaFactura> RegistroAltaFacturas { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// 4º Trimestre.
+        /// Representación textual de la instancia.
         /// </summary>
-        [XmlEnum("4T")]
-        T4,
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Cabecera} ({RegistroAltaFacturas.Count})";
+        }
+
+        #endregion
 
     }
 
