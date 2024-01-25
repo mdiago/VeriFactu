@@ -64,8 +64,9 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
-        [XmlElement("RegistroAltaFacturas", Namespace = Namespaces.NamespaceSF)]
-        public List<RegistroAltaFactura> RegistroAltaFacturas { get; set; }
+        [XmlArray("RegistroAltaFacturas", Namespace = Namespaces.NamespaceSF)]
+        [XmlArrayItem("RegistroFacturacion", Namespace = Namespaces.NamespaceSF)]
+        public List<RegistroFacturacionAlta> RegistroAltaFacturas { get; set; }
 
         /// <summary>
         /// Datos de control.

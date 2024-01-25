@@ -62,7 +62,6 @@
     <Compile Include="Src\Xml\Factu\Alta\DetalleDesglose.cs" />
     <Compile Include="Src\Xml\Factu\Alta\EmitidaPorTercerosODestinatario.cs" />
     <Compile Include="Src\Xml\Factu\DatosControl.cs" />
-    <Compile Include="Src\Xml\Factu\Alta\RegistroAltaFactura.cs" />
     <Compile Include="Src\Xml\Factu\SistemaInformatico.cs" />
     <Compile Include="Src\Xml\Factu\EncadenamientoRegistroAnterior.cs" />
     <Compile Include="Src\Xml\Factu\IDFactura.cs" />
