@@ -37,12 +37,15 @@
     address: info@irenesolutions.com
  */
 
+using System.Xml.Serialization;
+
 namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
     /// Datos de identificación de factura expedida para operaciones de baja y consulta.
     /// </summary>
+    [XmlRoot("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
     public class IDFactura
     {   
 
@@ -52,7 +55,7 @@ namespace VeriFactu.Xml.Factu
         /// <para>NIF del obligado a expedir la factura.</para>
         /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public string IDEmisorFactura { get; set; }
+        public Interlocutor IDEmisorFactura { get; set; }
 
         /// <summary>
         /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>

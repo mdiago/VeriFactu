@@ -50,44 +50,44 @@ namespace VeriFactu.Xml.Factu.Alta
     {
 
         /// <summary>
-        /// Operación de régimen general.
+        /// Operación de régimen general ('01').
         /// </summary>
         [XmlEnum("01")]
         RegimenGeneral,
 
         /// <summary>
-        /// Exportación.
+        /// Exportación ('02').
         /// </summary>
         [XmlEnum("02")]
         Exportacion,
 
         /// <summary>
         /// Operaciones a las que se aplique el régimen especial de bienes usados, 
-        /// objetos de arte, antigüedades y objetos de colección.
+        /// objetos de arte, antigüedades y objetos de colección ('03').
         /// </summary>
         [XmlEnum("03")]
         Rebu,
 
         /// <summary>
-        /// Régimen especial del oro de inversión.
+        /// Régimen especial del oro de inversión ('04').
         /// </summary>
         [XmlEnum("04")]
         OroInversion,
 
         /// <summary>
-        /// Régimen especial de las agencias de viajes.
+        /// Régimen especial de las agencias de viajes ('05').
         /// </summary>
         [XmlEnum("05")]
         AgenciasViajes,
 
         /// <summary>
-        /// Régimen especial grupo de entidades en IVA (Nivel Avanzado).
+        /// Régimen especial grupo de entidades en IVA (Nivel Avanzado) ('06').
         /// </summary>
         [XmlEnum("06")]
         GrupoEntidades,
 
         /// <summary>
-        /// Régimen especial del criterio de caja..
+        /// Régimen especial del criterio de caja ('07').
         /// </summary>
         [XmlEnum("07")]
         Recc,
@@ -95,7 +95,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Operaciones sujetas al IPSI  / IGIC 
         /// (Impuesto sobre la Producción, los Servicios y la Importación
-        /// / Impuesto General Indirecto Canario).
+        /// / Impuesto General Indirecto Canario) ('08').
         /// </summary>
         [XmlEnum("08")]
         IpsiIgic,
@@ -103,7 +103,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Facturación de las prestaciones de servicios
         /// de agencias de viaje que actúan como mediadoras
-        /// en nombre y por cuenta ajena (D.A.4ª RD1619/2012).
+        /// en nombre y por cuenta ajena (D.A.4ª RD1619/2012) ('09').
         /// </summary>
         [XmlEnum("09")]
         MediadoresAgenciasViaje,
@@ -114,48 +114,47 @@ namespace VeriFactu.Xml.Factu.Alta
         /// de autor u otros por cuenta de sus socios,
         /// asociados o colegiados efectuados por sociedades,
         /// asociaciones, colegios profesionales u otras entidades
-        /// que realicen estas funciones de cobro.
+        /// que realicen estas funciones de cobro ('10').
         /// </summary>
         [XmlEnum("10")]
         CobroTerceros,
 
         /// <summary>
-        /// Operaciones de arrendamiento de local de negocio.
+        /// Operaciones de arrendamiento de local de negocio ('11').
         /// </summary>
         [XmlEnum("11")]
         ArrendamientoLocalNecocio,
 
         /// <summary>
         /// Factura con IVA pendiente de devengo en certificaciones
-        /// de obra cuyo destinatario sea una Administración Pública.
+        /// de obra cuyo destinatario sea una Administración Pública ('12').
         /// </summary>
         [XmlEnum("12")]
         ObraPteDevengoAdmonPublica,
 
         /// <summary>
-        /// Factura con IVA pendiente de devengo en operaciones de tracto sucesivo.
+        /// Factura con IVA pendiente de devengo en operaciones de tracto sucesivo ('13').
         /// </summary>
         [XmlEnum("13")]
         TractoSucesivoPteDevengo,
 
         /// <summary>
-        /// Régimen simplificado.
+        /// Régimen simplificado ('14').
         /// </summary>
         [XmlEnum("14")]
         RegimenSimplificado,
 
         /// <summary>
-        /// Recargo de equivalencia.
+        /// Recargo de equivalencia ('15').
         /// </summary>
         [XmlEnum("15")]
         RecargoEquivalencia,
 
         /// <summary>
-        /// Régimen especial de la agricultura.
+        /// Régimen especial de la agricultura ('16').
         /// </summary>
         [XmlEnum("16")]
-        RegimenEspecialAgricultura,
-
+        RegimenEspecialAgricultura
 
     }
 

@@ -54,12 +54,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Registro facturación.
         /// </summary>
-        public RegistroFacturacion RegistroFacturacion { get; set; }
-
-        /// <summary>
-        /// Datos de control.
-        /// </summary>
-        public DatosControl DatosControl { get; set; }
+        public RegistroFacturacionAlta RegistroFacturacion { get; set; }
 
         #endregion
 
@@ -71,7 +66,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{RegistroFacturacion}-{DatosControl})";
+            return $"{RegistroFacturacion}";
         }
 
         #endregion

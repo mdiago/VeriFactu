@@ -51,19 +51,19 @@ namespace VeriFactu.Xml.Factu
     {
 
         /// <summary>
-        /// GMT+0.
+        /// GMT+0 ('01').
         /// </summary>
         [XmlEnum("01")]
         Gmt0,
 
         /// <summary>
-        /// GMT+1.
+        /// GMT+1 ('02').
         /// </summary>
         [XmlEnum("02")]
         Gmt1,
 
         /// <summary>
-        /// GMT+2.
+        /// GMT+2 ('03').
         /// </summary>
         [XmlEnum("03")]
         Gmt2

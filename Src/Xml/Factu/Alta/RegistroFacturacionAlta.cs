@@ -46,7 +46,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// <summary>
     /// Datos correspondientes al registro de facturacion de alta.
     /// </summary>
-    public class RegistroFacturacion
+    public class RegistroFacturacionAlta
     {
 
         #region Propiedades Públicas de Instancia
@@ -55,12 +55,14 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Datos de identificación de factura expedida para
         /// operaciones de baja y consulta.
         /// </summary>
+        [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
         public IDFactura IDFactura { get; set; }
 
         /// <summary>
         /// <para>Nombre-razón social del obligado a expedir la factura.</para>
         /// <para>Alfanumérico (120)</para>
         /// </summary>
+        [XmlElement("NombreRazonEmisor", Namespace = Namespaces.NamespaceSFLR)]
         public string NombreRazonEmisor { get; set; }
 
         /// <summary>
@@ -70,17 +72,20 @@ namespace VeriFactu.Xml.Factu.Alta
         /// las circunstancias de generación del registro de facturación.</para>
         ///  <para>Alfanumérico (2)  L17.</para>
         /// </summary>
+        [XmlElement("TipoRegistroSIF", Namespace = Namespaces.NamespaceSFLR)]
         public TipoRegistroSIF TipoRegistroSIF { get; set; }
 
         /// <summary>
         /// <para>Clave del tipo de factura (L2).</para>
         /// </summary>
+        [XmlElement("TipoFactura", Namespace = Namespaces.NamespaceSFLR)]
         public TipoFactura TipoFactura { get; set; }
 
         /// <summary>
         ///  Identifica si el tipo de factura rectificativa
         ///  es por sustitución o por diferencia (L3).
         /// </summary>
+        [XmlElement("TipoRectificativa", Namespace = Namespaces.NamespaceSFLR)]
         public TipoRectificativa TipoRectificativa { get; set; }
 
         /// <summary>
@@ -93,17 +98,20 @@ namespace VeriFactu.Xml.Factu.Alta
         /// El ID de las facturas rectificadas, únicamente se rellena
         /// en el caso de rectificación de facturas.
         /// </summary>
+        [XmlElement("FacturasRectificadas", Namespace = Namespaces.NamespaceSFLR)]
         public List<IDFactura> FacturasRectificadas { get; set; }
 
         /// <summary>
         /// El ID de las facturas sustituidas, únicamente se rellena
         /// en el caso de facturas sustituidas.
         /// </summary>
+        [XmlElement("FacturasSustituidas", Namespace = Namespaces.NamespaceSFLR)]
         public List<IDFactura> FacturasSustituidas { get; set; }
 
         /// <summary>
         /// Información importes rectificados.
         /// </summary>
+        [XmlElement("ImporteRectificacion", Namespace = Namespaces.NamespaceSFLR)]
         public ImporteRectificacion ImporteRectificacion { get; set; }
 
         /// <summary>
@@ -111,12 +119,14 @@ namespace VeriFactu.Xml.Factu.Alta
         /// que sea diferente a la fecha de expedición.</para>
         /// <para>Fecha(dd-mm-yyyy)</para>
         /// </summary>
+        [XmlElement("FechaOperacion", Namespace = Namespaces.NamespaceSFLR)]
         public string FechaOperacion { get; set; }
 
         /// <summary>
         /// <para>Descripción del objeto de la factura.</para>
         /// <para>Alfanumérico (500)</para>
         /// </summary>
+        [XmlElement("DescripcionOperacion", Namespace = Namespaces.NamespaceSFLR)]
         public string DescripcionOperacion { get; set; }
 
         /// <summary>
@@ -124,7 +134,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
         /// <para>Alfunumérico (1) L4</para>
         /// </summary>
-        [XmlElement("FacturaSimplificadaArticulos7.2_7.3")]
+        [XmlElement("FacturaSimplificadaArticulos7.2_7.3", Namespace = Namespaces.NamespaceSFLR)]
         public string FacturaSimplificadaArticulos7_2_7_3 { get; set; }
 
         /// <summary>
@@ -132,7 +142,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
         /// <para>Alfunumérico (1) L4</para>
         /// </summary>
-        [XmlElement("FacturaSinIdentifDestinatarioArticulo6.1.d")]
+        [XmlElement("FacturaSinIdentifDestinatarioArticulo6.1.d", Namespace = Namespaces.NamespaceSFLR)]
         public string FacturaSinIdentifDestinatarioArticulo6_1_d { get; set; }
 
         /// <summary>
@@ -141,6 +151,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Si no se informa este campo se entenderá que tiene valor  “N”..</para>
         /// <para>Alfanumérico(1).</para>
         /// </summary>
+        [XmlElement("Macrodato", Namespace = Namespaces.NamespaceSFLR)]
         public string Macrodato { get; set; }
 
         /// <summary>
@@ -148,6 +159,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// sido emitida por un tercero o por el destinatario. </para>
         /// <para>Alfanumérico(1). L6.</para>
         /// </summary>
+        [XmlElement("EmitidaPorTercerosODestinatario", Namespace = Namespaces.NamespaceSFLR)]
         public EmitidaPorTercerosODestinatario EmitidaPorTercerosODestinatario { get; set; }
 
         /// <summary>
@@ -159,11 +171,14 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Tercero que expide la factura.
         /// </summary>
+        [XmlElement("Tercero", Namespace = Namespaces.NamespaceSFLR)]
         public Interlocutor Tercero { get; set; }
 
         /// <summary>
         /// Destinatarios de la factura.
         /// </summary>
+        [XmlArray("Destinatarios", Namespace = Namespaces.NamespaceSFLR)]
+        [XmlArrayItem("IDDestinatario", Namespace = Namespaces.NamespaceSFLR)]
         public List<Interlocutor> Destinatarios { get; set; }
 
         /// <summary>
@@ -175,28 +190,32 @@ namespace VeriFactu.Xml.Factu.Alta
         /// entenderá que tiene valor  “N”.</para>
         /// <para>Alfanumérico (1) L11</para>
         /// </summary>
+        [XmlElement("Cupon", Namespace = Namespaces.NamespaceSFLR)]
         public string Cupon { get; set; }
 
-       
         /// <summary>
         /// Desglose de la factura.
         /// </summary>
+        [XmlElement("Desglose", Namespace = Namespaces.NamespaceSFLR)]
         public Desglose Desglose { get; set; }
 
         /// <summary>
         /// <para>Importe total de la factura.</para>
         /// <para>Decimal(12,2).</para>
         /// </summary>
+        [XmlElement("ImporteTotal", Namespace = Namespaces.NamespaceSFLR)]
         public string ImporteTotal { get; set; }
- 
+
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
+        [XmlElement("EncadenamientoRegistroAnterior", Namespace = Namespaces.NamespaceSFLR)]
         public EncadenamientoRegistroAnterior EncadenamientoRegistroAnterior { get; set; }
 
         /// <summary>
         ///  Información del sistema informático.
         /// </summary>
+        [XmlElement("SistemaInformatico", Namespace = Namespaces.NamespaceSFLR)]
         public SistemaInformatico SistemaInformatico { get; set; }
 
         /// <summary>
@@ -204,6 +223,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// en materia de facturación o de libros registro</para>
         /// <para>Alfanumérico(15)</para>
         /// </summary>
+        [XmlElement("FechaGenRegistro", Namespace = Namespaces.NamespaceSFLR)]
         public string FechaGenRegistro { get; set; }
 
         /// <summary>
@@ -211,6 +231,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// en materia de facturación o de libros registro</para>
         /// <para>Alfanumérico(15)</para>
         /// </summary>
+        [XmlElement("NumRegistroAcuerdoFacturacion", Namespace = Namespaces.NamespaceSFLR)]
         public string NumRegistroAcuerdoFacturacion { get; set; }
 
         /// <summary>
@@ -218,6 +239,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// en materia de facturación o de libros registro</para>
         /// <para>Alfanumérico(15)</para>
         /// </summary>
+        [XmlElement("HoraGenRegistro", Namespace = Namespaces.NamespaceSFLR)]
         public string HoraGenRegistro { get; set; }
 
         /// <summary>
@@ -225,6 +247,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// facturación en el momento de generación del registro de facturación.</para>
         /// <para>Alfanumérico (2) L13</para>
         /// </summary>
+        [XmlElement("HusoHorarioGenRegistro", Namespace = Namespaces.NamespaceSFLR)]
         public HusoHorario HusoHorarioGenRegistro { get; set; }
 
         /// <summary>
@@ -235,6 +258,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// generación del registro de facturación.</para>
         /// <para>Alfanumérico(15).</para>
         /// </summary>
+        [XmlElement("NumRegistroAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSFLR)]
         public string NumRegistroAcuerdoSistemaInformatico { get; set; }
 
         /// <summary>
@@ -243,12 +267,8 @@ namespace VeriFactu.Xml.Factu.Alta
         /// de las circunstancias de generación del registro de facturación.</para>
         /// <para>Alfanumérico (15)</para>
         /// </summary>
+        [XmlElement("IdAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSFLR)]
         public string IdAcuerdoSistemaInformatico { get; set; }
-
-
-     
-
-
 
         #endregion
 

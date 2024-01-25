@@ -49,7 +49,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// Datos de contexto de un suministro.
     /// </summary>
     [Serializable]
-    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
+    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSFLR)]
     public class Cabecera
     {
 
@@ -60,8 +60,8 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         string[] _IDVersions = new string[1]
         {
-            // Versión 2023.01
-            "0.1"
+            // Versión 2024.01
+            "1.0"
         };
 
         /// <summary>

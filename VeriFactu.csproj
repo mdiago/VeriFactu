@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Doc\NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Net\Wsd.cs" />
+    <Compile Include="Src\Settings.cs" />
     <Compile Include="Src\Xml\Factu\Alta\Cabecera.cs" />
     <Compile Include="Src\Xml\Factu\Alta\CalificacionOperacion.cs" />
     <Compile Include="Src\Xml\Factu\Alta\CausaExencion.cs" />
@@ -68,7 +70,7 @@
     <Compile Include="Src\Xml\Factu\IDType.cs" />
     <Compile Include="Src\Xml\Factu\Alta\ImporteRectificacion.cs" />
     <Compile Include="Src\Xml\Factu\Interlocutor.cs" />
-    <Compile Include="Src\Xml\Factu\Alta\RegistroFacturacion.cs" />
+    <Compile Include="Src\Xml\Factu\Alta\RegistroFacturacionAlta.cs" />
     <Compile Include="Src\Xml\Factu\Alta\AltaFactuSistemaFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\Alta\TipoFactura.cs" />
     <Compile Include="Src\Xml\Factu\Alta\TipoRectificativa.cs" />
@@ -77,7 +79,7 @@
     <Compile Include="Src\Xml\Factu\Anulacion\RegistroBajaFactura.cs" />
     <Compile Include="Src\Xml\Factu\Anulacion\RegistroFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\Anulacion\BajaFactuSistemaFacturacion.cs" />
-    <Compile Include="Src\Xml\Factu\Cabecera.cs" />
+    <Compile Include="Src\Xml\Factu\_Cabecera.cs" />
     <Compile Include="Src\Xml\Factu\Namespaces.cs" />
     <Compile Include="Src\Xml\Soap\Body.cs" />
     <Compile Include="Src\Xml\Soap\Envelope.cs" />

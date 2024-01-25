@@ -50,7 +50,7 @@ namespace VeriFactu.Xml.Factu
     {
 
         /// <summary>
-        /// SHA-256.
+        /// SHA-256 ('01').
         /// </summary>
         [XmlEnum("01")]
         Sha256

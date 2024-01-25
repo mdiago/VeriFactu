@@ -40,6 +40,7 @@
 using System;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
 
@@ -69,8 +70,8 @@ namespace VeriFactu.Xml.Soap
         /// <summary>
         /// Registro.
         /// </summary>
-        [XmlElement("AltaFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Form = XmlSchemaForm.Unqualified)]
-        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Form = XmlSchemaForm.Unqualified)]        
+        [XmlElement("AltaFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSF)]
+        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSF)]
         public object Registro { get; set; }
 
         #endregion

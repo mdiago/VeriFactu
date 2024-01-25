@@ -50,7 +50,7 @@ namespace VeriFactu.Xml.Factu
     /// </summary>
     [Serializable]
     [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
-    public class Cabecera
+    public class _Cabecera
     {
 
         #region Variables Privadas de Instancia
