@@ -49,10 +49,9 @@ namespace VeriFactu
     /// Configuración.
     /// </summary>
     [Serializable]
-    [XmlRoot("VeriFactuSettings")]
+    [XmlRoot("Settings")]
     public class Settings
     {
-
 
         #region Variables Privadas Estáticas
 
@@ -84,7 +83,7 @@ namespace VeriFactu
         /// Ruta al directorio de configuración.
         /// </summary>
         internal static string Path = System.Environment.GetFolderPath(
-            Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}EasySII{_PathSep}";
+            Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
 
         /// <summary>
         /// Nombre del fichero de configuración.
@@ -157,31 +156,18 @@ namespace VeriFactu
 
             return new Settings()
             {
-                IDVersion = "1.1",
+                IDVersion = "0.1",
                 InboxPath = $"{Path}Inbox{_PathSep}",
                 OutboxPath = $"{Path}Outbox{_PathSep}",
                 CertificateSerial = "",
                 CertificateThumbprint = "",
                 CertificatePath = "",
                 CertificatePassword = "",
-                VerifactuEndPointPrefix = ""
+                VeriFactuEndPointPrefix = VeriFactuEndPointPrefixes.Test,
+                VeriFactuHashAlgorithm = "01",
+                VeriFactuHashInputEncoding = "UTF-8",
             };
 
-        }
-
-        /// <summary>
-        /// Aseguro existencia de directorios de trabajo.
-        /// </summary>
-        private static void CheckDirectories()
-        {
-            if (!Directory.Exists(Path))
-                Directory.CreateDirectory(Path);
-
-            if (!Directory.Exists(_Current.InboxPath))
-                Directory.CreateDirectory(_Current.InboxPath);
-
-            if (!Directory.Exists(_Current.OutboxPath))
-                Directory.CreateDirectory(_Current.OutboxPath);
         }
 
         #endregion
@@ -203,6 +189,7 @@ namespace VeriFactu
             }
         }
 
+
         #endregion
 
         #region Propiedades Públicas de Instancia
@@ -216,6 +203,7 @@ namespace VeriFactu
         /// <summary>
         /// Ruta al directorio que actuará como bandeja de entrada.
         /// En este directorio se almacenarán todos los mensajes
+        /// recibidos de la AEAT mediante el VeriFactu.
         /// recibidos de la AEAT mediante el SII.
         /// </summary>
         [XmlElement("InboxPath")]
@@ -224,6 +212,7 @@ namespace VeriFactu
         /// <summary>
         /// Ruta al directorio que actuará como bandeja de salida.
         /// En este directorio se almacenará una copia de cualquier
+        /// envío realizado a la AEAT mediante el VeriFactu.
         /// envío realizado a la AEAT mediante el SII.
         /// </summary>
         [XmlElement("OutboxPath")]
@@ -258,8 +247,20 @@ namespace VeriFactu
         /// <summary>
         /// EndPoint del web service de la AEAT.
         /// </summary>
-        [XmlElement("VerifactuEndPointPrefix")]
-        public string VerifactuEndPointPrefix { get; set; }
+        [XmlElement("VeriFactuEndPointPrefix")]
+        public string VeriFactuEndPointPrefix { get; set; }
+
+        /// <summary>
+        /// Algoritmo para el cálculo de hash.
+        /// </summary>
+        [XmlElement("VeriFactuHashAlgorithm")]
+        public string VeriFactuHashAlgorithm { get; set; }
+
+        /// <summary>
+        /// Codificación del texto de entrada para el hash.
+        /// </summary>
+        [XmlElement("VeriFactuHashInputEncoding")]
+        public string VeriFactuHashInputEncoding { get; set; }
 
         #endregion
 
@@ -284,6 +285,21 @@ namespace VeriFactu
 
         }
 
+        /// <summary>
+        /// Aseguro existencia de directorios de trabajo.
+        /// </summary>
+        private static void CheckDirectories()
+        {
+            if (!Directory.Exists(Path))
+                Directory.CreateDirectory(Path);
+
+            if (!Directory.Exists(_Current.InboxPath))
+                Directory.CreateDirectory(_Current.InboxPath);
+
+            if (!Directory.Exists(_Current.OutboxPath))
+                Directory.CreateDirectory(_Current.OutboxPath);
+        }
+ 
         /// <summary>
         /// Esteblece el archivo de configuración con el cual trabajar.
         /// </summary>

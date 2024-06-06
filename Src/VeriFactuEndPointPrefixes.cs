@@ -37,56 +37,25 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+namespace VeriFactu
 {
 
     /// <summary>
-    /// Encadenamiento con la factura anterior.
+    /// Prefijos de los endpoints para los web service del
+    /// SII de la AEAT: Pruebas y producción.
     /// </summary>
-    public class EncadenamientoRegistroAnterior
+    public class VeriFactuEndPointPrefixes
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// Prefijo del endpoint de pruebas.
+        /// </summary>
+        public const string Test = "https://prewww1.aeat.es/wlpl/SSII-FACT/ws";
 
         /// <summary>
-        /// <para>NIF del obligado que expide la factura anterior.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// Prefijo del endpoint de producción.
         /// </summary>
-        public Interlocutor IDEmisorFacturaRegistroAnterior { get; set; }
-
-        /// <summary>
-        /// <para>Nº Serie+Nº Factura que identifica a la  factura anterior.</para>
-        /// <para>Alfanumérico(60).</para>
-        /// </summary>
-        public string NumSerieFacturaRegistroAnterior { get; set; }
-
-        /// <summary>
-        /// <para>Fecha de expedición de  la  factura anterior.</para>
-        /// <para>Fecha(dd-mm-yyyy).</para>
-        /// </summary>
-        public string FechaExpedicionFacturaRegistroAnterior { get; set; }
-
-        /// <summary>
-        /// <para>Huella de la factura anterior.</para>
-        /// <para>Alfanumérico(64).</para>
-        /// </summary>
-        public string HuellaRegistroAnterior { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
-
-        /// <summary>
-        /// Representación textual de la instancia.
-        /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{NumSerieFacturaRegistroAnterior} ({FechaExpedicionFacturaRegistroAnterior})";
-        }
-
-        #endregion
-
+        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/SSII-FACT/ws"; 
 
     }
 }

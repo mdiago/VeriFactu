@@ -37,23 +37,39 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
-
-namespace VeriFactu.Xml.Factu
+namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Clave que identifica Tipo de hash aplicado para
-    /// obtener la huella. Alfanumérico(2) L12.
+    /// Tipo de registro (alta inicial, alta sustitutiva). Contiene la operación 
+    /// realizada en el sistema informático de facturación utilizado, lo que forma
+    /// parte del detalle de las circunstancias de generación del registro de facturación.
+    /// Alfanumérico (2)  L17.
     /// </summary>
-    public enum TipoHash
+    public enum RechazoPrevio
     {
 
         /// <summary>
-        /// SHA-256 ('01').
+        /// No ha habido rechazo previo por la AEAT.
         /// </summary>
-        [XmlEnum("01")]
-        Sha256
+        N,
+
+        /// <summary>
+        /// Ha habido rechazo previo por la AEAT. 
+        /// No deberían existir operaciones de alta con valores ('Subsanacion'="N" y 'RechazoPrevio'="S"),
+        /// por lo que no se admiten.
+        /// </summary>
+        S,
+
+        /// <summary>
+        /// Independientemente de si ha habido o no algún rechazo previo por la AEAT, el registro de
+        /// facturación no existe en la AEAT (registro existente en ese sistema informático o en algún
+        /// sistema informático del obligado tributario y que no se remitió a la AEAT, por ejemplo, al
+        /// acogerse a la modalidad «VERI*FACTU» desde la modalidad «NO VERI*FACTU»).
+        /// No deberían existir operaciones de alta con valores ('Subsanacion'="N" y 'RechazoPrevio'="X"),
+        /// por lo que no se admiten. 
+        /// </summary>
+        X
 
     }
 

@@ -46,10 +46,40 @@ namespace VeriFactu.Xml.Factu.Alta
     /// <summary>
     /// Datos correspondientes al registro de facturacion de alta.
     /// </summary>
-    public class RegistroFacturacionAlta
-    {
+    public class RegistroAlta : Record 
+    { 
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Devuelve la cadena de entrada para el cálculo
+        /// del hash previa conversión mediante UTF-8.
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetHashTextInput()
+        {
+
+            return $"IDEmisorFactura={IDFactura.IDEmisorFactura}" +
+                $"&NumSerieFactura={IDFactura.NumSerieFactura}" +
+                $"&FechaExpedicionFactura={IDFactura.FechaExpedicionFactura}" +
+                $"&TipoFactura={TipoFactura}" +
+                $"&CuotaTotal={CuotaTotal}" +
+                $"&ImporteTotal={ImporteTotal}" +
+                $"&Huella={Encadenamiento.RegistroAnterior.Huella}" +
+                $"&FechaHoraHusoGenRegistro={FechaHoraHusoGenRegistro}";
+
+        }
+
+        #endregion
 
         #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// <para>Identificación de la versión.</para>
+        /// <para>Alfanumérico(3)L15</para>
+        /// </summary>
+        [XmlElement("IDVersion")]
+        public string IDVersion { get; set; }
 
         /// <summary>
         /// Datos de identificación de factura expedida para
@@ -66,20 +96,46 @@ namespace VeriFactu.Xml.Factu.Alta
         public string NombreRazonEmisor { get; set; }
 
         /// <summary>
-        /// <para>Tipo de registro (alta inicial, alta sustitutiva). 
-        /// Contiene la operación realizada en el sistema informático
-        /// de facturación utilizado, lo que forma parte del detalle de
-        /// las circunstancias de generación del registro de facturación.</para>
-        ///  <para>Alfanumérico (2)  L17.</para>
+        /// <para>Indicador que especifica que se trata de una subsanación
+        /// de un registro de facturación de alta previamente generado,
+        /// por lo que el contenido de este nuevo registro de facturación
+        /// es el correcto y el que deberá tenerse en cuenta.
+        /// Si no se informa este campo se entenderá que tiene valor "N" (Alta Normal-Inicial).
+        /// Este campo forma parte del detalle de las circunstancias de generación de los
+        /// registros de facturación.</para>
+        /// <para>Alfanumérico (1) L4</para>
         /// </summary>
-        [XmlElement("TipoRegistroSIF", Namespace = Namespaces.NamespaceSFLR)]
-        public TipoRegistroSIF TipoRegistroSIF { get; set; }
+        public string Subsanacion { get; set; }
+
+        /// <summary>
+        /// <para>Indicador que especifica que se está generando -para volverlo a remitir-
+        /// un nuevo registro de facturación de alta subsanado tras haber sido rechazado
+        /// en su remisión inmediatamente anterior, es decir, en el último envío que contenía
+        /// ese registro de facturación de alta rechazado. Si no se informa este campo se
+        /// entenderá que tiene valor "N". Solo es necesario informarlo en caso de remisión
+        /// voluntaria «VERI*FACTU». Este campo forma parte del detalle de las circunstancias
+        /// de generación de los registros de facturación.</para>
+        /// <para>Alfanumérico (1) L17</para>
+        /// </summary>
+        public RechazoPrevio RechazoPrevio { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool RechazoPrevioSpecified { get; set; }
 
         /// <summary>
         /// <para>Clave del tipo de factura (L2).</para>
         /// </summary>
         [XmlElement("TipoFactura", Namespace = Namespaces.NamespaceSFLR)]
         public TipoFactura TipoFactura { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool TipoFacturaSpecified { get; set; }
 
         /// <summary>
         ///  Identifica si el tipo de factura rectificativa
@@ -134,16 +190,14 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
         /// <para>Alfunumérico (1) L4</para>
         /// </summary>
-        [XmlElement("FacturaSimplificadaArticulos7.2_7.3", Namespace = Namespaces.NamespaceSFLR)]
-        public string FacturaSimplificadaArticulos7_2_7_3 { get; set; }
+        public string FacturaSimplificadaArt7273 { get; set; }
 
         /// <summary>
         /// <para>Factura simplificada Articulo 7.2 Y 7.3 RD 1619/2012. 
         /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
         /// <para>Alfunumérico (1) L4</para>
         /// </summary>
-        [XmlElement("FacturaSinIdentifDestinatarioArticulo6.1.d", Namespace = Namespaces.NamespaceSFLR)]
-        public string FacturaSinIdentifDestinatarioArticulo6_1_d { get; set; }
+        public string FacturaSinIdentifDestinatarioArt61d { get; set; }
 
         /// <summary>
         /// <para>Identificador que especifica aquellas facturas con base o
@@ -200,6 +254,13 @@ namespace VeriFactu.Xml.Factu.Alta
         public Desglose Desglose { get; set; }
 
         /// <summary>
+        /// <para>Importe total de la cuota (sumatorio de la Cuota Repercutida
+        /// y Cuota de Recargo de Equivalencia).</para>
+        /// <para>Decimal(12,2).</para>
+        /// </summary>
+        public string CuotaTotal { get; set; }
+
+        /// <summary>
         /// <para>Importe total de la factura.</para>
         /// <para>Decimal(12,2).</para>
         /// </summary>
@@ -209,8 +270,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
-        [XmlElement("EncadenamientoRegistroAnterior", Namespace = Namespaces.NamespaceSFLR)]
-        public EncadenamientoRegistroAnterior EncadenamientoRegistroAnterior { get; set; }
+        public Encadenamiento Encadenamiento { get; set; }
 
         /// <summary>
         ///  Información del sistema informático.
@@ -219,12 +279,12 @@ namespace VeriFactu.Xml.Factu.Alta
         public SistemaInformatico SistemaInformatico { get; set; }
 
         /// <summary>
-        /// <para>Número de registro obtenido al enviar la autorización
-        /// en materia de facturación o de libros registro</para>
-        /// <para>Alfanumérico(15)</para>
+        /// <para>Fecha, hora y huso horario de generación del registro de facturación.
+        /// El huso horario es el que está usando el sistema informático de facturación
+        /// en el momento de generación del registro de facturación.</para>
+        /// <para>DateTime. Formato: YYYY-MM-DDThh:mm:ssTZD (ej: 2024-01-01T19:20:30+01:00) (ISO 8601)</para>
         /// </summary>
-        [XmlElement("FechaGenRegistro", Namespace = Namespaces.NamespaceSFLR)]
-        public string FechaGenRegistro { get; set; }
+        public string FechaHoraHusoGenRegistro { get; set; }
 
         /// <summary>
         /// <para>Número de registro obtenido al enviar la autorización
@@ -235,33 +295,6 @@ namespace VeriFactu.Xml.Factu.Alta
         public string NumRegistroAcuerdoFacturacion { get; set; }
 
         /// <summary>
-        /// <para>Número de registro obtenido al enviar la autorización
-        /// en materia de facturación o de libros registro</para>
-        /// <para>Alfanumérico(15)</para>
-        /// </summary>
-        [XmlElement("HoraGenRegistro", Namespace = Namespaces.NamespaceSFLR)]
-        public string HoraGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Huso horario que está usando el sistema informático de
-        /// facturación en el momento de generación del registro de facturación.</para>
-        /// <para>Alfanumérico (2) L13</para>
-        /// </summary>
-        [XmlElement("HusoHorarioGenRegistro", Namespace = Namespaces.NamespaceSFLR)]
-        public HusoHorario HusoHorarioGenRegistro { get; set; }
-
-        /// <summary>
-        /// <para>Número de registro obtenido al enviar la autorización en materia
-        /// de facturación o de libros registro a que se refiere la disposición
-        /// adicional primera del Real Decreto que aprueba el Reglamento.
-        /// Este campo forma parte del detalle de las circunstancias de
-        /// generación del registro de facturación.</para>
-        /// <para>Alfanumérico(15).</para>
-        /// </summary>
-        [XmlElement("NumRegistroAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSFLR)]
-        public string NumRegistroAcuerdoSistemaInformatico { get; set; }
-
-        /// <summary>
         /// <para>Identificación del acuerdo (resolución) a que se refiere
         /// el artículo 5 del Reglamento. Este campo forma parte del detalle
         /// de las circunstancias de generación del registro de facturación.</para>
@@ -269,6 +302,27 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         [XmlElement("IdAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSFLR)]
         public string IdAcuerdoSistemaInformatico { get; set; }
+
+        /// <summary>
+        ///  Tipo de algoritmo aplicado a cierto contenido del registro
+        ///  de facturación para obtener la huella o «hash».
+        /// <para>Alfanumérico (2) L12</para> 
+        /// </summary>
+        public TipoHuella TipoHuella { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool TipoHuellaSpecified { get; set; }
+
+        /// <summary>
+        /// <para>Huella o «hash» de cierto contenido de este registro
+        /// de facturación. Dicho contenido se detallará en la documentación
+        /// correspondiente en la sede electrónica de la AEAT (documento de huella...).</para>
+        /// <para>Alfanumérico (64)</para>
+        /// </summary>
+        public string Huella { get; set; }
 
         #endregion
 

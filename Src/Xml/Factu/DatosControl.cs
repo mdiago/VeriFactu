@@ -59,7 +59,7 @@ namespace VeriFactu.Xml.Factu
         /// <para>Alfanumérico(2) L12.</para>
         /// <para>'01': SHA-256.</para>
         /// </summary>
-        public TipoHash TipoHash { get; set; }
+        public TipoHuella TipoHuella { get; set; }
 
         /// <summary>
         /// <para>Identificador que especifica si la generación del registro de
@@ -82,7 +82,7 @@ namespace VeriFactu.Xml.Factu
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{TipoHash} ({Huella})";
+            return $"{TipoHuella} ({Huella})";
         }
 
         #endregion

@@ -43,30 +43,17 @@ namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Huso horario que está usando el sistema informático de
-    /// facturación en el momento de generación del registro de facturación..
-    /// Alfanumérico (2) L13.
+    /// Clave que identifica Tipo de hash aplicado para
+    /// obtener la huella. Alfanumérico(2) L12.
     /// </summary>
-    public enum HusoHorario
+    public enum TipoHuella
     {
 
         /// <summary>
-        /// GMT+0 ('01').
+        /// SHA-256 ('01').
         /// </summary>
         [XmlEnum("01")]
-        Gmt0,
-
-        /// <summary>
-        /// GMT+1 ('02').
-        /// </summary>
-        [XmlEnum("02")]
-        Gmt1,
-
-        /// <summary>
-        /// GMT+2 ('03').
-        /// </summary>
-        [XmlEnum("03")]
-        Gmt2
+        Sha256
 
     }
 

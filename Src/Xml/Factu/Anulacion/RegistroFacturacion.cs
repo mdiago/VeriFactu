@@ -63,7 +63,7 @@ namespace VeriFactu.Xml.Factu.Anulacion
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
-        public EncadenamientoRegistroAnterior EncadenamientoFacturaAnterior { get; set; }
+        public Encadenamiento Encadenamiento { get; set; }
 
         /// <summary>
         ///  Información del sistema informático.

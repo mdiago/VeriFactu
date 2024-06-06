@@ -61,13 +61,13 @@ namespace VeriFactu.Xml.Factu
         /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
         /// <para>Alfanumérico(60).</para>
         /// </summary>
-        public string NumSerieFacturaEmisor { get; set; }
+        public string NumSerieFactura { get; set; }
 
         /// <summary>
         /// <para>Fecha de expedición de la factura.</para>
         /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        public string FechaExpedicionFacturaEmisor { get; set; }
+        public string FechaExpedicionFactura { get; set; }
 
         #endregion
 
@@ -79,7 +79,7 @@ namespace VeriFactu.Xml.Factu
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{IDEmisorFactura}: {NumSerieFacturaEmisor} ({FechaExpedicionFacturaEmisor})";
+            return $"{IDEmisorFactura}: {NumSerieFactura} ({FechaExpedicionFactura})";
         }
 
         #endregion

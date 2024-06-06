@@ -37,38 +37,48 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Tipo de registro (alta inicial, alta sustitutiva). Contiene la operación 
-    /// realizada en el sistema informático de facturación utilizado, lo que forma
-    /// parte del detalle de las circunstancias de generación del registro de facturación.
-    /// Alfanumérico (2)  L17.
+    /// Encadenamiento con la factura anterior.
     /// </summary>
-    public enum TipoRegistroSIF
+    public class Encadenamiento
     {
 
-        /// <summary>
-        /// Alta inicial del registro de facturación en el SIF.
-        /// </summary>
-        S0,
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Alta sustitutiva del registro de facturación en el SIF.
+        /// <para>Indicador que especifica que no existe registro de facturación anterior
+        /// en este sistema informático por tratarse del primer registro de facturación
+        /// generado en él. En este caso, se informará con el valor "S".
+        /// Si no se informa este campo se entenderá que no es el primer registro de
+        /// facturación, en cuyo caso es obligatorio informar los campos de que consta
+        /// «RegistroAnterior».</para>
+        /// <para>Alfanumérico (1).</para>
         /// </summary>
-        S1,
+        public string PrimerRegistro { get; set; }
 
         /// <summary>
-        /// Anulación inicial del registro de facturación en el SIF.
+        /// Datos registro anterior.
         /// </summary>
-        S2,
+        public RegistroAnterior RegistroAnterior { get; set; }      
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Anulación sustitutiva del registro de facturación en el SIF.
+        /// Representación textual de la instancia.
         /// </summary>
-        S3     
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{RegistroAnterior}";
+        }
+
+        #endregion
+
 
     }
-
 }
