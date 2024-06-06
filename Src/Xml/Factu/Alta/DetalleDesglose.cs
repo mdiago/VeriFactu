@@ -64,7 +64,6 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         public CalificacionOperacion CalificacionOperacion { get; set; }
 
-
         /// <summary>
         /// <para>Campo que especifica la causa de exención.</para>
         /// <para>Alfanumérico(2). L10.</para>

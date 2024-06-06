@@ -49,7 +49,7 @@ namespace VeriFactu.Xml
     /// <summary>
     /// Representa un registro de Verifactu: Alta, baja, evento...
     /// </summary>
-    public class Record
+    public class Registro
     {
 
         #region Variables Privadas Estáticas
@@ -91,15 +91,10 @@ namespace VeriFactu.Xml
         /// <summary>
         /// Constructor estático clase.
         /// </summary>
-        static Record()
+        static Registro()
         {
 
-            TipoHuella tipoHuella;
-            var tipoHuellaOK = false;
-
-            tipoHuellaOK = Enum.TryParse<TipoHuella>(Settings.Current.VeriFactuHashAlgorithm, out tipoHuella);
-
-            if (!tipoHuellaOK)
+            if (!_HashAlgorithms.ContainsKey(Settings.Current.VeriFactuHashAlgorithm))
                 throw new ArgumentException($"El valor de la variable de configuración 'VeriFactuHashAlgorithm'" +
                     $" no puede ser '{Settings.Current.VeriFactuHashAlgorithm}'.");
 
@@ -107,7 +102,7 @@ namespace VeriFactu.Xml
                 throw new ArgumentException($"El valor de la variable de configuración 'VeriFactuHashInputEncoding'" +
                     $" no puede ser '{Settings.Current.VeriFactuHashInputEncoding}'.");
 
-            HashAlgorithm = _HashAlgorithms[tipoHuella];
+            HashAlgorithm = _HashAlgorithms[Settings.Current.VeriFactuHashAlgorithm];
             Encoding = _Encodings[Settings.Current.VeriFactuHashInputEncoding];
 
         }
@@ -157,11 +152,15 @@ namespace VeriFactu.Xml
 
         }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Devuelve la representación del hash en formato hexadecimal.
         /// </summary>
         /// <returns>Hash en formato hexadecimal</returns>
-        protected string GetHashOutput()
+        public string GetHashOutput()
         {
 
             var hash = GetHash();

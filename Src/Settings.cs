@@ -41,6 +41,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
+using VeriFactu.Xml.Factu;
 
 namespace VeriFactu
 {
@@ -164,7 +165,7 @@ namespace VeriFactu
                 CertificatePath = "",
                 CertificatePassword = "",
                 VeriFactuEndPointPrefix = VeriFactuEndPointPrefixes.Test,
-                VeriFactuHashAlgorithm = "01",
+                VeriFactuHashAlgorithm = TipoHuella.Sha256,
                 VeriFactuHashInputEncoding = "UTF-8",
             };
 
@@ -254,7 +255,7 @@ namespace VeriFactu
         /// Algoritmo para el cálculo de hash.
         /// </summary>
         [XmlElement("VeriFactuHashAlgorithm")]
-        public string VeriFactuHashAlgorithm { get; set; }
+        public TipoHuella VeriFactuHashAlgorithm { get; set; }
 
         /// <summary>
         /// Codificación del texto de entrada para el hash.

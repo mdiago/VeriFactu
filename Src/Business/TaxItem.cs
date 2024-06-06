@@ -37,63 +37,58 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using VeriFactu.Xml.Factu.Alta;
+
+namespace VeriFactu.Business
 {
 
     /// <summary>
-    ///  Datos parte interviniente en algún modo en la facturación.
+    /// Representa una línea de impuesto.
     /// </summary>
-    public class Interlocutor
-    {     
-
-        #region Propiedades Públicas de Instancia
+    public class TaxItem
+    {
 
         /// <summary>
-        /// <para>Nombre-razón social.</para>
-        /// <para>Alfanumérico(120).</para>
-        /// </summary>
-        public string NombreRazon { get; set; }
+        /// Esquema impositivo.
+        /// </summary>        
+        public ClaveRegimen TaxScheme { get; set; }
 
         /// <summary>
-        /// <para>NIF.</para>
-        /// <para>FormatoNIF(9).</para>
-        /// </summary>
-        public string NIF { get; set; }
+        /// Identificador la categoría de impuestos.
+        /// </summary>        
+        public CalificacionOperacion TaxType { get; set; }
 
         /// <summary>
-        /// Id. fiscal no español.
+        /// <para>Campo que especifica la causa de exención.</para>
+        /// <para>Alfanumérico(2). L10.</para>
         /// </summary>
-        public IDOtro IDOtro { get; set; }
+        public CausaExencion TaxException { get; set; }
 
         /// <summary>
-        /// <para>Nombre-razón del representante.</para>
-        /// <para>Alfanumérico(120).</para>
+        /// Base imponible.
         /// </summary>
-        public string NombreRazonRepresentante { get; set; }
+        public decimal TaxBase { get; set; }
 
         /// <summary>
-        /// <para>NIFRepresentante.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// Tipo impositivo.
         /// </summary>
-        public string NIFRepresentante { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        public decimal TaxRate { get; set; }
 
         /// <summary>
-        /// Representacioón textual de la instancia.
+        /// Importe cuota impuesto.
         /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
-        public override string ToString()
-        {
+        public decimal TaxAmount { get; set; }
 
-            return $"{NIF}{IDOtro?.ID}";
+        /// <summary>
+        /// Tipo impositivo recargo.
+        /// </summary>
+        public decimal TaxRateSurcharge { get; set; }
 
-        }
+        /// <summary>
+        /// Importe cuota recargo impuesto.
+        /// </summary>
+        public decimal TaxAmountSurcharge { get; set; }
 
-        #endregion
 
     }
-
 }

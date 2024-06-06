@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.Xml;
@@ -52,6 +53,46 @@ namespace VeriFactu.Xml
     /// </summary>
     public class XmlParser
     {
+
+        /// <summary>
+        /// Devuelve una fecha formateada para un campo FechaHoraHuso
+        /// de la especificación de VeriFactu.
+        /// </summary>
+        /// <param name="date">fecha a formatear</param>
+        /// <returns>Fecha formateada  (ej: 2024-01-01T19:20:30+01:00) (ISO 8601).</returns>
+        public static string GetXmlDateTimeIso8601(DateTime? date)
+        {
+
+            var input = date ?? new DateTime(1, 1, 1);
+            var local = new DateTime(input.Year, input.Month, input.Day,
+                input.Hour, input.Minute, input.Second, DateTimeKind.Local);
+
+            return local.ToString("yyyy-MM-ddTHH:mm:ssK");
+
+        }
+
+        /// <summary>
+        /// Devuelve una fecha formateada para un campo de fecha
+        /// de la especificación de VeriFactu.
+        /// </summary>
+        /// <param name="date">fecha a formatear</param>
+        /// <returns>Fecha formateada.</returns>
+        public static string GetXmlDate(DateTime? date)
+        {
+            return (date ?? new DateTime(1, 1, 1)).ToString("dd-MM-yyyy");
+        }
+
+        /// <summary>
+        /// Devuelve un importe formateado para un campo decimal
+        /// de la especificación de VeriFactu.
+        /// </summary>
+        /// <param name="amount">Impote a formatear</param>
+        /// <returns>Importe formateado.</returns>
+        public static string GetXmlDecimal(decimal amount)
+        {
+            return amount.ToString(Settings.DefaultNumberFormatInfo);
+        }
+
 
         #region Construtores de Instancia
 

@@ -46,7 +46,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// <summary>
     /// Datos correspondientes al registro de facturacion de alta.
     /// </summary>
-    public class RegistroAlta : Record 
+    public class RegistroAlta : Registro
     { 
 
         #region Métodos Privados de Instancia
@@ -59,13 +59,13 @@ namespace VeriFactu.Xml.Factu.Alta
         protected override string GetHashTextInput()
         {
 
-            return $"IDEmisorFactura={IDFactura.IDEmisorFactura}" +
-                $"&NumSerieFactura={IDFactura.NumSerieFactura}" +
-                $"&FechaExpedicionFactura={IDFactura.FechaExpedicionFactura}" +
+            return $"IDEmisorFactura={IDFactura?.IDEmisorFactura}" +
+                $"&NumSerieFactura={IDFactura?.NumSerieFactura}" +
+                $"&FechaExpedicionFactura={IDFactura?.FechaExpedicionFactura}" +
                 $"&TipoFactura={TipoFactura}" +
                 $"&CuotaTotal={CuotaTotal}" +
                 $"&ImporteTotal={ImporteTotal}" +
-                $"&Huella={Encadenamiento.RegistroAnterior.Huella}" +
+                $"&Huella={Encadenamiento?.RegistroAnterior?.Huella}" +
                 $"&FechaHoraHusoGenRegistro={FechaHoraHusoGenRegistro}";
 
         }
