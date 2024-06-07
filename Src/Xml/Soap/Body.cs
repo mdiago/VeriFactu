@@ -38,7 +38,6 @@
  */
 
 using System;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;

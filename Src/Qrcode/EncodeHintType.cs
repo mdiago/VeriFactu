@@ -1,4 +1,4 @@
-﻿/*
+/*
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,35 +37,29 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu
+namespace VeriFactu.Qrcode 
 {
-
-    /// <summary>
-    /// Prefijos de los endpoints para los web service del
-    /// SII de la AEAT: Pruebas y producción.
-    /// </summary>
-    public class VeriFactuEndPointPrefixes
+    
+    /// <summary>These are a set of hints that you may pass to Writers to specify their behavior.</summary>
+    /// <author>dswitkin@google.com (Daniel Switkin)</author>
+    public sealed class EncodeHintType 
     {
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas.
-        /// </summary>
-        public const string Test = "https://prewww1.aeat.es/wlpl/SSII-FACT/ws";
+        /// <summary>Specifies what degree of error correction to use, for example in QR Codes (type Integer).</summary>
+        public static readonly EncodeHintType ERROR_CORRECTION = new EncodeHintType
+            ();
 
-        /// <summary>
-        /// Prefijo del endpoint de producción.
-        /// </summary>
-        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/SSII-FACT/ws";
+        /// <summary>Specifies what character encoding to use where applicable (type String)</summary>
+        public static readonly EncodeHintType CHARACTER_SET = new EncodeHintType
+            ();
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas de validación.
-        /// </summary>
-        public const string TestValidate = "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR";
+        /// <summary>Specifies the minimal version level to use, for example in QR Codes (type Integer).</summary>
+        public static readonly EncodeHintType MIN_VERSION_NR = new EncodeHintType
+            ();
 
-        /// <summary>
-        /// Prefijo del endpoint de producción de validación.
-        /// </summary>
-        public const string ProdValidate = "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR";
+        private EncodeHintType() {
+        }
 
     }
+
 }

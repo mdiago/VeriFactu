@@ -165,6 +165,7 @@ namespace VeriFactu
                 CertificatePath = "",
                 CertificatePassword = "",
                 VeriFactuEndPointPrefix = VeriFactuEndPointPrefixes.Test,
+                VeriFactuEndPointValidatePrefix = VeriFactuEndPointPrefixes.TestValidate,
                 VeriFactuHashAlgorithm = TipoHuella.Sha256,
                 VeriFactuHashInputEncoding = "UTF-8",
             };
@@ -250,6 +251,12 @@ namespace VeriFactu
         /// </summary>
         [XmlElement("VeriFactuEndPointPrefix")]
         public string VeriFactuEndPointPrefix { get; set; }
+
+        /// <summary>
+        /// EndPoint del web service de la AEAT de validación.
+        /// </summary>
+        [XmlElement("VeriFactuEndPointValidatePrefix")]
+        public string VeriFactuEndPointValidatePrefix { get; set; }
 
         /// <summary>
         /// Algoritmo para el cálculo de hash.

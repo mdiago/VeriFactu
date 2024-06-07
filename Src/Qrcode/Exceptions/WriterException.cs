@@ -1,4 +1,4 @@
-﻿/*
+/*
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,35 +37,30 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu
+using System;
+
+namespace VeriFactu.Qrcode.Exceptions
 {
 
     /// <summary>
-    /// Prefijos de los endpoints para los web service del
-    /// SII de la AEAT: Pruebas y producción.
+    /// A base class which covers the range of exceptions which may occur when encoding a barcode using
+    /// the Writer framework.
     /// </summary>
-    public class VeriFactuEndPointPrefixes
+    /// <author>dswitkin@google.com (Daniel Switkin)</author>
+    public sealed class WriterException : Exception 
     {
+        
+        /// <summary>Creates a WriterException.</summary>
+        public WriterException()
+            : base() {
+        }
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas.
-        /// </summary>
-        public const string Test = "https://prewww1.aeat.es/wlpl/SSII-FACT/ws";
-
-        /// <summary>
-        /// Prefijo del endpoint de producción.
-        /// </summary>
-        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/SSII-FACT/ws";
-
-        /// <summary>
-        /// Prefijo del endpoint de pruebas de validación.
-        /// </summary>
-        public const string TestValidate = "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR";
-
-        /// <summary>
-        /// Prefijo del endpoint de producción de validación.
-        /// </summary>
-        public const string ProdValidate = "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR";
+        /// <summary>Creates a WriterException with a message.</summary>
+        /// <param name="message">message of the exception</param>
+        public WriterException(String message)
+            : base(message) {
+        }
 
     }
+
 }

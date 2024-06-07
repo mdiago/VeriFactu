@@ -39,8 +39,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
+using VeriFactu.Qrcode;
+using VeriFactu.Qrcode.Exceptions;
 using VeriFactu.Xml.Factu;
 
 namespace VeriFactu.Xml
@@ -115,11 +118,28 @@ namespace VeriFactu.Xml
         /// Devuelve la cadena de entrada para el cálculo
         /// del hash previa conversión mediante UTF-8.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>La cadena de entrada para el cálculo
+        /// del hash previa conversión mediante UTF-8.</returns>
         protected virtual string GetHashTextInput()
         {
 
             throw new NotImplementedException("La clase base record no implmenta el método GetHashInput.\n" +
+                "Este método debe implementarse en las clases derivadas.");
+
+        }
+
+        /// <summary>
+        /// Devuelve la cadena de parámetros para la url
+        /// del servicio de validación con los valores
+        /// de los parámetro urlencoded.
+        /// </summary>
+        /// <returns>Cadena de parámetros para la url
+        /// del servicio de validación con los valores
+        /// de los parámetro urlencoded.</returns>
+        protected virtual string GetValidateUrlParams()
+        {
+
+            throw new NotImplementedException("La clase base record no implmenta el método GetValidateUrlParams.\n" +
                 "Este método debe implementarse en las clases derivadas.");
 
         }
@@ -152,6 +172,44 @@ namespace VeriFactu.Xml
 
         }
 
+        /// <summary>
+        /// Obtiene un bitmap con el contenido
+        /// codificado en un código QR.
+        /// </summary>
+        /// <param name="content">Contenido a incluir en el Bitmap.</param>
+        /// <returns>Bitmap con el contenido
+        /// codificado en un código QR.</returns>
+        private Bitmap GetQr(string content) 
+        {
+
+            Bitmap result = null;
+
+            Dictionary<EncodeHintType, object> hints = new Dictionary<EncodeHintType, object>();
+            hints.Add(EncodeHintType.CHARACTER_SET, "ISO-8859-1");
+            hints.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+
+            try
+            {
+
+                QRCodeWriter qc = new QRCodeWriter();
+                ByteMatrix bm = qc.Encode(content, 1, 1, hints);
+
+                QrBitmap qrBm = new QrBitmap(bm);
+
+                result = qrBm.GetBitmap();              
+
+            }
+            catch (WriterException ex)
+            {
+                
+                throw new ArgumentException(ex.Message, ex.InnerException);
+
+            }
+
+            return result;
+
+        }
+
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -167,6 +225,32 @@ namespace VeriFactu.Xml
             var output = BitConverter.ToString(hash);
 
             return output.Replace("-", "");
+
+        }
+
+        /// <summary>
+        /// Devuelve la url para la validación del documento.
+        /// </summary>
+        /// <returns>Url para la validación del documento.</returns>
+        public string GetUrlValidate() 
+        {
+
+            var urlParams = GetValidateUrlParams();
+            return $"{Settings.Current.VeriFactuEndPointValidatePrefix}?{urlParams}";
+        
+        }
+
+        /// <summary>
+        /// Obtiene un bitmap con la url de validación
+        /// codificada en un código QR.
+        /// </summary>
+        /// <returns>Bitmap con la url de validación
+        /// codificada en un código QR.</returns>
+        public Bitmap GetValidateQr() 
+        {
+
+            var content = GetUrlValidate();
+            return GetQr(content);
 
         }
 

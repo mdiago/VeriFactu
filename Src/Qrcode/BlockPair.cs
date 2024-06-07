@@ -1,4 +1,4 @@
-﻿/*
+/*
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,35 +37,35 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu
+namespace VeriFactu.Qrcode 
 {
 
     /// <summary>
-    /// Prefijos de los endpoints para los web service del
-    /// SII de la AEAT: Pruebas y producción.
+    /// Helper class that groups a block of databytes with its corresponding block of error correction block.
     /// </summary>
-    public class VeriFactuEndPointPrefixes
+    /// <author>bruno@lowagie.com (Bruno Lowagie, Paulo Soares, et al.) - creator</author>
+    internal sealed class BlockPair 
     {
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas.
-        /// </summary>
-        public const string Test = "https://prewww1.aeat.es/wlpl/SSII-FACT/ws";
+        private readonly ByteArray dataBytes;
 
-        /// <summary>
-        /// Prefijo del endpoint de producción.
-        /// </summary>
-        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/SSII-FACT/ws";
+        private readonly ByteArray errorCorrectionBytes;
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas de validación.
-        /// </summary>
-        public const string TestValidate = "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR";
+        internal BlockPair(ByteArray data, ByteArray errorCorrection) {
+            dataBytes = data;
+            errorCorrectionBytes = errorCorrection;
+        }
 
-        /// <summary>
-        /// Prefijo del endpoint de producción de validación.
-        /// </summary>
-        public const string ProdValidate = "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR";
+        /// <returns>data block of the pair</returns>
+        public ByteArray GetDataBytes() {
+            return dataBytes;
+        }
+
+        /// <returns>error correction block of the pair</returns>
+        public ByteArray GetErrorCorrectionBytes() {
+            return errorCorrectionBytes;
+        }
 
     }
+
 }

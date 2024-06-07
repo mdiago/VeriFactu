@@ -38,6 +38,7 @@
  */
 
 using System.Collections.Generic;
+using System.Web;
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Alta
@@ -47,7 +48,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// Datos correspondientes al registro de facturacion de alta.
     /// </summary>
     public class RegistroAlta : Registro
-    { 
+    {
 
         #region Métodos Privados de Instancia
 
@@ -55,7 +56,8 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Devuelve la cadena de entrada para el cálculo
         /// del hash previa conversión mediante UTF-8.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Cadena de entrada para el cálculo
+        /// del hash</returns>
         protected override string GetHashTextInput()
         {
 
@@ -67,6 +69,26 @@ namespace VeriFactu.Xml.Factu.Alta
                 $"&ImporteTotal={ImporteTotal}" +
                 $"&Huella={Encadenamiento?.RegistroAnterior?.Huella}" +
                 $"&FechaHoraHusoGenRegistro={FechaHoraHusoGenRegistro}";
+
+        }
+
+        /// <summary>
+        /// Devuelve la cadena de parámetros para la url
+        /// del servicio de validación con los valores
+        /// de los parámetro urlencoded.
+        /// </summary>
+        /// <returns>Cadena de parámetros para la url
+        /// del servicio de validación con los valores
+        /// de los parámetro urlencoded.</returns>
+        protected override string GetValidateUrlParams()
+        {
+
+            var nif = HttpUtility.UrlEncode($"{IDFactura?.IDEmisorFactura}");
+            var numserie = HttpUtility.UrlEncode($"{IDFactura?.NumSerieFactura}");
+            var fecha = HttpUtility.UrlEncode($"{IDFactura?.FechaExpedicionFactura}");
+            var importe = HttpUtility.UrlEncode($"{ImporteTotal}");
+
+            return $"nif={nif}&numserie={numserie}&fecha={fecha}&importe={importe}";
 
         }
 

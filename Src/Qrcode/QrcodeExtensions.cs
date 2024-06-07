@@ -1,4 +1,4 @@
-﻿/*
+/*
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,35 +37,62 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu
+
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+
+namespace VeriFactu.Qrcode 
 {
 
     /// <summary>
-    /// Prefijos de los endpoints para los web service del
-    /// SII de la AEAT: Pruebas y producción.
+    /// Extensiones para la portabilidad de iText desde javascript a C#.
     /// </summary>
-    public class VeriFactuEndPointPrefixes
+    /// <author>bruno@lowagie.com (Bruno Lowagie, Paulo Soares, et al.) - creator</author>
+    internal static class QrcodeExtensions
     {
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas.
-        /// </summary>
-        public const string Test = "https://prewww1.aeat.es/wlpl/SSII-FACT/ws";
+        public static byte[] GetBytes(this String str, String encoding) {
+            return Encoding.GetEncoding(encoding).GetBytes(str);
+        }
 
-        /// <summary>
-        /// Prefijo del endpoint de producción.
-        /// </summary>
-        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/SSII-FACT/ws";
+        public static String JSubstring(this String str, int beginIndex, int endIndex) {
+            return str.Substring(beginIndex, endIndex - beginIndex);
+        }
 
-        /// <summary>
-        /// Prefijo del endpoint de pruebas de validación.
-        /// </summary>
-        public const string TestValidate = "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR";
+        public static T JRemoveAt<T>(this IList<T> list, int index) {
+            T value = list[index];
+            list.RemoveAt(index);
 
-        /// <summary>
-        /// Prefijo del endpoint de producción de validación.
-        /// </summary>
-        public const string ProdValidate = "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR";
+            return value;
+        }
 
+        public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> col, TKey key) {
+            TValue value = default(TValue);
+            if (key != null) {
+                col.TryGetValue(key, out value);
+            }
+
+            return value;
+        }
+
+        public static TValue Put<TKey, TValue>(this IDictionary<TKey, TValue> col, TKey key, TValue value) {
+            TValue oldVal = col.Get(key);
+            col[key] = value;
+            return oldVal;
+        }
+        
+        public static byte[] GetBytes(this String str) {
+            return System.Text.Encoding.UTF8.GetBytes(str);
+        }
+
+        public static Assembly GetAssembly(this Type type) {
+#if !NETSTANDARD2_0
+            return type.Assembly;
+#else
+            return type.GetTypeInfo().Assembly;
+#endif
+        }
     }
 }
