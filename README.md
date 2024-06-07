@@ -40,5 +40,39 @@ var hash = registro.GetHashOutput(); // 3C464DAF61ACB827C65FDA19F352A4E3BDC2C640
 
 ```
 
+## 2. Obtención de la «URL» de cotejo o remisión de información de la factura contenida en el código «QR»
+
+En este ejemplo obtendremos la url para el servicio de validación de una factura de las especificaciones técnicas de la AEAT.
+
+![image](https://github.com/mdiago/VeriFactu/assets/22330809/2f11a627-b446-46a2-a36c-8e77127eb839)
+
+> [!NOTE]  
+> En la documentación técnica de la AEAT el último carácter debería se '1' pero por error consta '4'.
+
+```C#
+          
+// Creamos una instacia de la clase factura
+var invoice = new Invoice()
+{
+    InvoiceType = TipoFactura.F1,
+    InvoiceID = "12345678&G33",
+    InvoiceDate = new DateTime(2024, 1, 1),
+    SellerID = "89890001K",
+    TotalAmount = 241.1m
+};
+
+// Obtenemos una instancia de la clase RegistroAlta a partir de
+// la instancia del objeto de negocio Invoice
+var registro = invoice.GetRegistroAlta();
+
+// Obtenemos el valor de la huella
+var urlValidacion = registro.GetUrlValidate(); // https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=89890001K&numserie=12345678%26G33&fecha=01-01-2024&importe=241.1
+
+
+```
+
+
+
+
 
 info@irenesolutions.com
