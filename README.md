@@ -4,6 +4,14 @@
 
 La finalidad de esta biblioteca es la generación, conservación y envío de registros relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU.
 
+En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas...
+
+Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente cualquier tipo de colaboración o sugerencia. 
+
+Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
+
+[Irene Solutions](http://www.irenesolutions.com)
+
 # Ejemplos
 
 ## 1. Generación de la huella o hash de un registro de alta de factura
@@ -75,10 +83,6 @@ var urlValidacion = registro.GetUrlValidate(); // https://prewww2.aeat.es/wlpl/T
 
 En este ejemplo obtendremos la imágen del QR de la url para el servicio de validación de una factura de las especificaciones técnicas de la AEAT, que hemos visto en el ejemplo anterior.
 
-
-> [!NOTE]  
-> En la documentación técnica de la AEAT el último carácter debería se '1' pero por error consta '4'.
-
 ```C#
           
 // Creamos una instacia de la clase factura
@@ -102,8 +106,17 @@ bmQr.Save(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp");
 
 
 ```
+El bitmap obtenido:
+
+![image](https://github.com/mdiago/VeriFactu/assets/22330809/d91e9202-78f0-4c33-9c1e-578a5c5dd3e1)
+
+Url que consta en el QR:
+
+https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=89890001K&numserie=12345678%26G33&fecha=01-01-2024&importe=241.1
 
 
 
 
-info@irenesolutions.com
+
+
+
