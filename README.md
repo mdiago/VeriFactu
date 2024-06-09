@@ -75,10 +75,6 @@ var urlValidacion = registro.GetUrlValidate(); // https://prewww2.aeat.es/wlpl/T
 
 En este ejemplo obtendremos la imágen del QR de la url para el servicio de validación de una factura de las especificaciones técnicas de la AEAT, que hemos visto en el ejemplo anterior.
 
-
-> [!NOTE]  
-> En la documentación técnica de la AEAT el último carácter debería se '1' pero por error consta '4'.
-
 ```C#
           
 // Creamos una instacia de la clase factura
