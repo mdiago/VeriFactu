@@ -37,107 +37,96 @@
     address: info@irenesolutions.com
  */
 
+using System;
+
 namespace VeriFactu.Qrcode
 {
 
     /// <summary>
-    /// Representa un mapa de bits obtenido a partir de una
-    /// matriz de bytes de código QR.
+    /// Representa un bitmap 8-bit RGB color.
     /// </summary>
-    public class QrBitmap
+    public class QrRawBm
     {
-
-        #region Variables Privadas de Instancia
-
-        ByteMatrix _ByteMatrix;
-        QrRawBm _Bitmap;
-
-        #endregion
-
-        #region Propiedades Privadas Estáticas
-
-        private static byte[] BLACK = new byte[] { 0, 0, 0 };
-        private static byte[] WHITE = new byte[] { 255, 255, 255 };
-
-        #endregion
 
         #region Propiedades Privadas de Instacia
 
-        private int SquareSideLenth = 4;
+        /// <summary>
+        /// Bytes de la imágen.
+        /// </summary>
+        private readonly byte[] ImageBytes;
 
         #endregion
 
         #region Construtores de Instancia
 
         /// <summary>
-        /// Consturctor.
+        /// Constructor.
         /// </summary>
-        /// <param name="byteMatrix">Matriz de bytes QR.</param>
-        public QrBitmap(ByteMatrix byteMatrix)
+        /// <param name="width">Ancho en pixels.</param>
+        /// <param name="height">Alto en pixels.</param>
+        public QrRawBm(int width, int height)
         {
 
-            _ByteMatrix = byteMatrix;
-            _Bitmap = GetRenderedBm();
+            Width = width;
+            Height = height;
+            ImageBytes = new byte[width * height * 4];
 
         }
 
         #endregion
 
-        #region Métodos Privados de Instancia
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obtiene un bitmap con la representacióndel QR.
+        /// Alto en pixels
         /// </summary>
-        /// <returns>Bitmap con la representacióndel QR.</returns>
-        private QrRawBm GetRenderedBm()
-        {
-
-            int bmWidth = _ByteMatrix.GetWidth();
-            int bmHeight = _ByteMatrix.GetHeight();
-
-            int width = bmWidth * SquareSideLenth;
-            int height = bmHeight * SquareSideLenth;
-
-            var bm = new QrRawBm(width, height);
-
-            for (int x = 0; x < bmWidth; x++)
-            {
-                for (int y = 0; y < bmHeight; y++)
-                {
-                    var color = _ByteMatrix.Get(x, y) == 0 ?
-                    new byte[]{0, 0, 0 } : new byte[] { 255, 255, 255 };
-
-                    for (int r = 0; r < SquareSideLenth; r++)
-                    {
-                        var rY = SquareSideLenth * y + r;
-
-                        for (int c = 0; c < SquareSideLenth; c++)
-                        {
-                            var cX = SquareSideLenth * x + c;
-                            bm.SetPixel(rY, cX, color[0], color[1], color[2]);
-                        }
-                    }
-                }
-            }
-
-            return bm;
-
-        }
+        public readonly int Width;
+        
+        /// <summary>
+        /// Ancho en pixels.
+        /// </summary>
+        public readonly int Height;
 
         #endregion
 
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Obtiene el bitmap correspondiente al la
-        /// matriz de bytes QR.
+        /// Establece el color de un pixel.
         /// </summary>
-        /// <returns>Bitmap correspondiente al la
-        /// matriz de bytes QR.</returns>
-        public byte[] GetBytes()
+        /// <param name="x">Posición del pixel horizontal.</param>
+        /// <param name="y">Posición del pixel vertical.</param>
+        /// <param name="r">Valor del rojo.</param>
+        /// <param name="g">Valor del verde.</param>
+        /// <param name="b">Valor del azul.</param>
+        public void SetPixel(int x, int y, byte r, byte g, byte b)
+        {
+            int offset = ((Height - y - 1) * Width + x) * 4;
+            ImageBytes[offset + 0] = b;
+            ImageBytes[offset + 1] = g;
+            ImageBytes[offset + 2] = r;
+        }
+
+        /// <summary>
+        /// Obtiene los bytes de la imágen.
+        /// </summary>
+        /// <returns>Bytes de la imágen.</returns>
+        public byte[] GetBitmapBytes()
         {
 
-            return _Bitmap.GetBitmapBytes();
+            const int imageHeaderSize = 54;
+            byte[] bmpBytes = new byte[ImageBytes.Length + imageHeaderSize];
+            bmpBytes[0] = (byte)'B';
+            bmpBytes[1] = (byte)'M';
+            bmpBytes[14] = 40;
+            Array.Copy(BitConverter.GetBytes(bmpBytes.Length), 0, bmpBytes, 2, 4);
+            Array.Copy(BitConverter.GetBytes(imageHeaderSize), 0, bmpBytes, 10, 4);
+            Array.Copy(BitConverter.GetBytes(Width), 0, bmpBytes, 18, 4);
+            Array.Copy(BitConverter.GetBytes(Height), 0, bmpBytes, 22, 4);
+            Array.Copy(BitConverter.GetBytes(32), 0, bmpBytes, 28, 2);
+            Array.Copy(BitConverter.GetBytes(ImageBytes.Length), 0, bmpBytes, 34, 4);
+            Array.Copy(ImageBytes, 0, bmpBytes, imageHeaderSize, ImageBytes.Length);
+            return bmpBytes;
 
         }
 

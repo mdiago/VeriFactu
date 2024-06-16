@@ -179,10 +179,10 @@ namespace VeriFactu.Xml
         /// <param name="content">Contenido a incluir en el Bitmap.</param>
         /// <returns>Bitmap con el contenido
         /// codificado en un código QR.</returns>
-        private Bitmap GetQr(string content) 
+        private byte[] GetQr(string content) 
         {
 
-            Bitmap result = null;
+            byte[] result = null;
 
             Dictionary<EncodeHintType, object> hints = new Dictionary<EncodeHintType, object>();
             hints.Add(EncodeHintType.CHARACTER_SET, "ISO-8859-1");
@@ -196,7 +196,7 @@ namespace VeriFactu.Xml
 
                 QrBitmap qrBm = new QrBitmap(bm);
 
-                result = qrBm.GetBitmap();              
+                result = qrBm.GetBytes();              
 
             }
             catch (WriterException ex)
@@ -246,7 +246,7 @@ namespace VeriFactu.Xml
         /// </summary>
         /// <returns>Bitmap con la url de validación
         /// codificada en un código QR.</returns>
-        public Bitmap GetValidateQr() 
+        public byte[] GetValidateQr() 
         {
 
             var content = GetUrlValidate();
