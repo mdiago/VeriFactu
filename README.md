@@ -102,8 +102,7 @@ var registro = invoice.GetRegistroAlta();
 // Obtenemos la imágen del QR
 var bmQr = registro.GetValidateQr();
 
-bmQr.Save(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp");
-
+File.WriteAllBytes(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp", bmQr);
 
 ```
 El bitmap obtenido:
