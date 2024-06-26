@@ -205,8 +205,7 @@ namespace VeriFactu
         /// <summary>
         /// Ruta al directorio que actuará como bandeja de entrada.
         /// En este directorio se almacenarán todos los mensajes
-        /// recibidos de la AEAT mediante el VeriFactu.
-        /// recibidos de la AEAT mediante el SII.
+        /// recibidos de la AEAT mediante VERI*FACTU.
         /// </summary>
         [XmlElement("InboxPath")]
         public string InboxPath { get; set; }
@@ -214,8 +213,7 @@ namespace VeriFactu
         /// <summary>
         /// Ruta al directorio que actuará como bandeja de salida.
         /// En este directorio se almacenará una copia de cualquier
-        /// envío realizado a la AEAT mediante el VeriFactu.
-        /// envío realizado a la AEAT mediante el SII.
+        /// envío realizado a la AEAT mediante el VERI*FACTU.
         /// </summary>
         [XmlElement("OutboxPath")]
         public string OutboxPath { get; set; }

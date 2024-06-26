@@ -42,7 +42,7 @@ namespace VeriFactu
 
     /// <summary>
     /// Prefijos de los endpoints para los web service del
-    /// SII de la AEAT: Pruebas y producción.
+    /// VERI*FACTU de la AEAT: Pruebas y producción.
     /// </summary>
     public class VeriFactuEndPointPrefixes
     {
@@ -50,12 +50,12 @@ namespace VeriFactu
         /// <summary>
         /// Prefijo del endpoint de pruebas.
         /// </summary>
-        public const string Test = "https://prewww1.aeat.es/wlpl/SSII-FACT/ws";
+        public const string Test = "https://XXXXXX";
 
         /// <summary>
         /// Prefijo del endpoint de producción.
         /// </summary>
-        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/SSII-FACT/ws";
+        public const string Prod = "https://XXXXXX";
 
         /// <summary>
         /// Prefijo del endpoint de pruebas de validación.
@@ -68,4 +68,5 @@ namespace VeriFactu
         public const string ProdValidate = "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR";
 
     }
+
 }
