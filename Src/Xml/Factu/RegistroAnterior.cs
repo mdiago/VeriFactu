@@ -60,7 +60,7 @@ namespace VeriFactu.Xml.Factu
         /// NIF tras fusiones, absorciones, etc.</para>
         /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public Interlocutor IDEmisorFactura { get; set; }
+        public string IDEmisorFactura { get; set; }
 
         /// <summary>
         /// <para>Nº Serie+Nº Factura que identifica a la factura a que

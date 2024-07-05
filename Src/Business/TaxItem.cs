@@ -46,7 +46,9 @@ namespace VeriFactu.Business
     /// Representa una línea de impuesto.
     /// </summary>
     public class TaxItem
-    {
+    { 
+
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
         /// Esquema impositivo.
@@ -89,6 +91,21 @@ namespace VeriFactu.Business
         /// </summary>
         public decimal TaxAmountSurcharge { get; set; }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"{TaxBase}, {TaxRate}, {TaxAmount}";
+        }
+
+        #endregion
 
     }
+
 }

@@ -58,7 +58,7 @@ namespace VeriFactu.Xml.Factu.Anulacion
         /// <summary>
         /// Datos de contexto de un suministro.
         /// </summary>
-        public _Cabecera Cabecera { get; set; }
+        public object Cabecera { get; set; }
 
         /// <summary>
         /// Datos correspondientes a los registro de facturacion de baja.

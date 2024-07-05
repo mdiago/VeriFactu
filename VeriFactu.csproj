@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Doc\NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Blockchain\Blockchain.cs" />
     <Compile Include="Src\Business\Invoice.cs" />
     <Compile Include="Src\Business\TaxItem.cs" />
     <Compile Include="Src\Net\Wsd.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Src\Xml\Factu\Anulacion\RegistroFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\Anulacion\BajaFactuSistemaFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\Namespaces.cs" />
-    <Compile Include="Src\Xml\Factu\_Cabecera.cs" />
     <Compile Include="Src\Xml\Registro.cs" />
     <Compile Include="Src\Xml\Soap\Body.cs" />
     <Compile Include="Src\Xml\Soap\Envelope.cs" />
