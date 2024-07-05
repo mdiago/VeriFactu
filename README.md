@@ -114,6 +114,71 @@ Url que consta en el QR:
 https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=89890001K&numserie=12345678%26G33&fecha=01-01-2024&importe=241.1
 
 
+## 4. Inicializción de la cadena de bloques para un vendedor
+
+Es este ejemplo iniciaremos la cadena de bloques de el vendedor ue figura en los ejemplos de la AEAT con NIF '89890001K'. Iniciaremos
+la cadena de bloques con el primer ejemplo y luego anñadiremos a la cadena el segundo ejemplo:
+
+![image](https://github.com/mdiago/VeriFactu/assets/22330809/3ac3e2dc-5279-4702-9bda-ac028d167689)
+
+![image](https://github.com/mdiago/VeriFactu/assets/22330809/0ef57803-edba-4705-adcb-0c79e6275453)
+
+```C#
+          
+// Creamos una instacia de la clase factura (primera factura)
+var invoiceFirst = new Invoice()
+{
+    InvoiceType = TipoFactura.F1,
+    InvoiceID = "12345678/G33",
+    InvoiceDate = new DateTime(2024, 1, 1),
+    SellerID = "89890001K",
+    TotalTaxOutput = 12.35m,
+    TotalAmount = 123.45m
+};
+
+// Obtenemos una instancia de la clase RegistroAlta a partir de
+// la instancia del objeto de negocio Invoice
+var registroFirst = invoiceFirst.GetRegistroAlta();
+
+// El registro no ha sido envíado, pero forzamos el valor de
+// FechaHoraHusoGenRegistro para que coincida con el ejemplo de la AEAT
+var fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 30); //2024-01-01T19:20:30+01:00 en España peninsula
+registroFirst.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
+
+// Ahora obtenemos el controlador de la cadena de bloques del vendedor
+var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID);
+            
+// Añadimos el registro de alta
+blockchain.Add(registroFirst);
+
+// Creamos una instacia de la clase factura (primera segunda)
+var invoiceSecond = new Invoice()
+{
+    InvoiceType = TipoFactura.F1,
+    InvoiceID = "12345679/G34",
+    InvoiceDate = new DateTime(2024, 1, 1),
+    SellerID = "89890001K",
+    TotalTaxOutput = 12.35m,
+    TotalAmount = 123.45m
+};
+
+// Obtenemos una instancia de la clase RegistroAlta a partir de
+// la instancia del objeto de negocio Invoice
+var registroSecond = invoiceSecond.GetRegistroAlta();
+
+// El registro no ha sido envíado, pero forzamos el valor de
+// FechaHoraHusoGenRegistro para que coincida con el ejemplo de la AEAT
+fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 35); //2024-01-01T19:20:35+01:00 en España peninsula
+registroSecond.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
+
+// Añadimos el registro de alta
+blockchain.Add(registroSecond);
+
+Debug.Print($"La huella de la primera factura es: {registroFirst.GetHashOutput()}");
+Debug.Print($"La huella de la segunda factura es: {registroSecond.GetHashOutput()}");
+
+
+```
 
 
 
