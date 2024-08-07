@@ -117,7 +117,7 @@ https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=89890001K&numserie=12345678
 ## 4. Inicialización de la cadena de bloques para un vendedor
 
 Es este ejemplo iniciaremos la cadena de bloques del vendedor que figura en los ejemplos de la AEAT con NIF '89890001K'. Iniciaremos
-la cadena de bloques con el primer ejemplo y luego anñadiremos a la cadena el segundo ejemplo:
+la cadena de bloques con el primer ejemplo y luego añadiremos a la cadena el segundo ejemplo:
 
 ![image](https://github.com/mdiago/VeriFactu/assets/22330809/3ac3e2dc-5279-4702-9bda-ac028d167689)
 
