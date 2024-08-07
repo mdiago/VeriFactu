@@ -151,7 +151,7 @@ var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID);
 // Añadimos el registro de alta
 blockchain.Add(registroFirst);
 
-// Creamos una instacia de la clase factura (primera segunda)
+// Creamos una instacia de la clase factura (segunda factura)
 var invoiceSecond = new Invoice()
 {
     InvoiceType = TipoFactura.F1,
