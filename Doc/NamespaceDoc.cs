@@ -40,63 +40,129 @@
 namespace VeriFactu
 {
 
-    namespace VeriFactu
+    /// <summary>
+    /// <para>Este espacio de nombres contiene los componentes generales para el trabajo
+    /// con la libreria VeriFactu para el envío de registros de facturación a la AEAT
+    /// mediante servicios web.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
     {
-
-        /// <summary>
-        /// <para>Este espacio de nombres contiene los componentes generales para el trabajo
-        /// con la libreria VeriFactu para el envío de registros de facturación a la AEAT
-        /// mediante servicios web.</para> 
-        /// </summary>
-        [System.Runtime.CompilerServices.CompilerGenerated]
-        class NamespaceDoc
-        {
-        }
-
     }
 
-    namespace VeriFactu.Xml
+}
+
+namespace VeriFactu.Blockchain
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la gestión de la cadena de bloques del sistema.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
     {
-
-        /// <summary>
-        /// <para>Este espacio contine todos los plain data objects
-        /// empleados para la serialización xml; así como los
-        /// componentes necesarios para ello.</para> 
-        /// </summary>
-        [System.Runtime.CompilerServices.CompilerGenerated]
-        class NamespaceDoc
-        {
-        }
-
     }
 
-    namespace VeriFactu.Xml.Factu
+}
+
+namespace VeriFactu.Business
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
     {
-
-        /// <summary>
-        /// <para>Este espacio contine todos los plain data objects
-        /// empleados para la serialización xml del documentos de
-        /// alta de factura.</para> 
-        /// </summary>
-        [System.Runtime.CompilerServices.CompilerGenerated]
-        class NamespaceDoc
-        {
-        }
-
     }
 
-    namespace VeriFactu.Xml.Soap
+}
+
+namespace VeriFactu.Net
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para las comunicaciones.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
     {
+    }
 
-        /// <summary>
-        /// <para>Este espacio contine todos los plain data objects
-        /// empleados para la serialización xml SOAP (Envelope, Body...).</para> 
-        /// </summary>
-        [System.Runtime.CompilerServices.CompilerGenerated]
-        class NamespaceDoc
-        {
-        }
+}
 
+namespace VeriFactu.Qrcode
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la generación de códigos QR.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Qrcode.Exceptions
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la gestión de excepciones en la generación
+    /// de códigos QR.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml; así como los
+    /// componentes necesarios para ello.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml.Factu
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml del documentos de
+    /// alta de factura.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml.Soap
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml SOAP (Envelope, Body...).</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
     }
 
 }
