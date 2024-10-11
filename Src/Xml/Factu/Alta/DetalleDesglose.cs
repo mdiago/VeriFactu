@@ -51,9 +51,65 @@ namespace VeriFactu.Xml.Factu.Alta
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Clave que identificaráel tipo de régimen
-        /// del IVA o una operación con trascendencia tributaria.</para>
-        /// <para>Alfanumérico(2). L8.</para>
+        /// <para>Impuesto de aplicación. Si no se informa este campo
+        /// se entenderá que el impuesto de aplicación es el IVA.
+        /// Este campo es necesario porque contribuye a completar el
+        /// detalle de la tipología de la factura.</para>
+        /// <para>Alfanumérico (1) L1:</para>
+        /// <para>01: Impuesto sobre el Valor Añadido (IVA)</para>
+        /// <para>02: Impuesto sobre la Producción, los Servicios y la Importación (IPSI) de Ceuta y Melilla</para>
+        /// <para>03: Impuesto General Indirecto Canario (IGIC)</para>
+        /// <para>05: Otros</para>
+        /// </summary>
+        public Impuesto Impuesto { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool ImpuestoSpecified { get; set; }
+
+        /// <summary>
+        /// <para>Clave que identificará el tipo de régimen del
+        /// impuesto o una operación con trascendencia tributaria.</para>
+        /// <para>Alfanumérico (2) L8A/L8B.</para>
+        /// <para>L8A DESCRIPCIÓN DE LA CLAVE DE RÉGIMEN PARA DESGLOSES DONDE EL IMPUESTO DE APLICACIÓN ES EL IVA: </para>
+        /// <para>01: Operación de régimen general.</para>
+        /// <para>02: Exportación.</para>
+        /// <para>03: Operaciones a las que se aplique el régimen especial de bienes usados, objetos de arte, antigüedades y objetos de colección.</para>
+        /// <para>04: Régimen especial del oro de inversión.</para>
+        /// <para>05: Régimen especial de las agencias de viajes.</para>
+        /// <para>06: Régimen especial grupo de entidades en IVA (Nivel Avanzado).</para>
+        /// <para>07: Régimen especial del criterio de caja.</para>
+        /// <para>08: Operaciones sujetas al IPSI  / IGIC (Impuesto sobre la Producción, los Servicios y la Importación  / Impuesto General Indirecto Canario).</para>
+        /// <para>09: Facturación de las prestaciones de servicios de agencias de viaje que actúan como mediadoras en nombre y por cuenta ajena (D.A.4ª RD1619/2012).</para>
+        /// <para>10: Cobros por cuenta de terceros de honorarios profesionales o de derechos derivados de la propiedad industrial, de autor u otros por cuenta de sus socios,
+        /// asociados o colegiados efectuados por sociedades, asociaciones, colegios profesionales u otras entidades que realicen estas funciones de cobro.</para>
+        /// <para>11: Operaciones de arrendamiento de local de negocio.</para>
+        /// <para>14: Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
+        /// <para>15: Factura con IVA pendiente de devengo en operaciones de tracto sucesivo.</para>
+        /// <para>17: Operación acogida a alguno de los regímenes previstos en el Capítulo XI del Título IX (OSS e IOSS).</para>
+        /// <para>18: Recargo de equivalencia.</para>
+        /// <para>19: Operaciones de actividades incluidas en el Régimen Especial de Agricultura, Ganadería y Pesca (REAGYP).</para>
+        /// <para>20: Régimen simplificado.</para>
+        /// <para>L8B DESCRIPCIÓN DE LA CLAVE DE RÉGIMEN PARA DESGLOSES DONDE EL IMPUESTO DE APLICACIÓN ES EL IGIC</para>
+        /// <para>01: Operación de régimen general.</para>
+        /// <para>02: Exportación.</para>
+        /// <para>03: Operaciones a las que se aplique el régimen especial de bienes usados, objetos de arte, antigüedades y objetos de colección.</para>
+        /// <para>04: Régimen especial del oro de inversión.</para>
+        /// <para>05: Régimen especial de las agencias de viajes.</para>
+        /// <para>06: Régimen especial grupo de entidades en IGIC (Nivel Avanzado).</para>
+        /// <para>07: Régimen especial del criterio de caja.</para>
+        /// <para>08: Operaciones sujetas al IPSI / IVA (Impuesto sobre la Producción, los Servicios y la Importación / Impuesto sobre el Valor Añadido).</para>
+        /// <para>09: Facturación de las prestaciones de servicios de agencias de viaje que actúan como mediadoras en nombre y por cuenta ajena (D.A.4ª RD1619/2012.</para>
+        /// <para>10: Cobros por cuenta de terceros de honorarios profesionales o de derechos derivados de la propiedad industrial, de autor u otros por cuenta de sus socios,
+        /// asociados o colegiados efectuados por sociedades, asociaciones, colegios profesionales u otras entidades que realicen estas funciones de cobro..</para>
+        /// <para>11: Operaciones de arrendamiento de local de negocio.</para>
+        /// <para>14: Factura con IGIC pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
+        /// <para>15: Factura con IGIC pendiente de devengo en operaciones de tracto sucesivo.</para>
+        /// <para>17: Régimen especial de comerciante minorista.</para>
+        /// <para>18: Régimen especial del pequeño empresario o profesional.</para>
+        /// <para>19: Operaciones interiores exentas por aplicación artículo 25 Ley 19/1994.</para>
         /// </summary>
         public ClaveRegimen ClaveRegimen { get; set; }
 
@@ -105,8 +161,7 @@ namespace VeriFactu.Xml.Factu.Alta
         public string CuotaRepercutida { get; set; }
 
         /// <summary>
-        /// <para>Pocentaje asociado en función
-        /// del tipo de IVA .</para>
+        /// <para>Porcentaje asociado en función del impuesto y tipo impositivo.</para>
         /// <para>Decimal(3,2).</para>
         /// </summary>
         public string TipoRecargoEquivalencia { get; set; }

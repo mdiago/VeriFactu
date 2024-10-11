@@ -43,8 +43,8 @@ namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// Clave que identifica el tipo de régimen del IVA
-    /// o una operación con trascendencia tributaria. L8.
+    /// Clave que identifica el tipo de régimen del IVA o IGIC
+    /// o una operación con trascendencia tributaria. L8A/L8B.
     /// </summary>
     public enum ClaveRegimen
     {
@@ -81,7 +81,7 @@ namespace VeriFactu.Xml.Factu.Alta
         AgenciasViajes,
 
         /// <summary>
-        /// Régimen especial grupo de entidades en IVA (Nivel Avanzado) ('06').
+        /// Régimen especial grupo de entidades en IVA/IGIC (Nivel Avanzado) ('06').
         /// </summary>
         [XmlEnum("06")]
         GrupoEntidades,
@@ -93,9 +93,9 @@ namespace VeriFactu.Xml.Factu.Alta
         Recc,
 
         /// <summary>
-        /// Operaciones sujetas al IPSI  / IGIC 
-        /// (Impuesto sobre la Producción, los Servicios y la Importación
-        /// / Impuesto General Indirecto Canario) ('08').
+        /// <para> L8A: Operaciones sujetas al IPSI  / IGIC (Impuesto sobre la Producción, los Servicios y la Importación  / Impuesto General Indirecto Canario)</para>
+        /// <para> L8B: Operaciones sujetas al IPSI / IVA (Impuesto sobre la Producción, los Servicios y la Importación / Impuesto sobre el Valor Añadido).</para>
+        /// ('08').
         /// </summary>
         [XmlEnum("08")]
         IpsiIgic,
@@ -126,35 +126,50 @@ namespace VeriFactu.Xml.Factu.Alta
         ArrendamientoLocalNecocio,
 
         /// <summary>
-        /// Factura con IVA pendiente de devengo en certificaciones
-        /// de obra cuyo destinatario sea una Administración Pública ('12').
+        /// <para> L8A: Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
+        /// <para> L8B: Factura con IGIC pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
+        /// <para> ('14')</para>
         /// </summary>
-        [XmlEnum("12")]
+        [XmlEnum("14")]
         ObraPteDevengoAdmonPublica,
 
         /// <summary>
-        /// Factura con IVA pendiente de devengo en operaciones de tracto sucesivo ('13').
+        /// <para> L8A: Factura con IVA pendiente de devengo en operaciones de tracto sucesivo.</para>
+        /// <para> L8B: Factura con IGIC pendiente de devengo en operaciones de tracto sucesivo.</para>
+        /// <para> ('15')</para>
         /// </summary>
-        [XmlEnum("13")]
+        [XmlEnum("15")]
         TractoSucesivoPteDevengo,
 
         /// <summary>
-        /// Régimen simplificado ('14').
+        /// <para> L8A: OSS e IOSS IVA.</para>
+        /// <para> L8B: Régimen especial de comerciante minorista.</para>
+        /// <para> ('17')</para>
         /// </summary>
-        [XmlEnum("14")]
-        RegimenSimplificado,
+        [XmlEnum("17")]
+        IossRegEspMin,
 
         /// <summary>
-        /// Recargo de equivalencia ('15').
+        /// <para> L8A: Recargo de equivalencia.</para>
+        /// <para> L8B: Régimen especial del pequeño empresario o profesional.</para>
+        /// <para> ('18')</para>
         /// </summary>
-        [XmlEnum("15")]
-        RecargoEquivalencia,
+        [XmlEnum("18")]
+        RecEquivPeqEmp,
 
         /// <summary>
-        /// Régimen especial de la agricultura ('16').
+        /// <para> L8A: Operaciones de actividades incluidas en el Régimen Especial de Agricultura, Ganadería y Pesca (REAGYP).</para>
+        /// <para> L8B: Operaciones interiores exentas por aplicación artículo 25 Ley 19/1994.</para>
+        /// <para> ('19')</para>
         /// </summary>
-        [XmlEnum("16")]
-        RegimenEspecialAgricultura
+        [XmlEnum("19")]
+        RegimenEspecialAgriculturaArt25Ley19_1994,
+
+        /// <summary>
+        /// Régimen simplificado sólo para IVA ('14').
+        /// </summary>
+        [XmlEnum("20")]
+        RegimenSimplificado
 
     }
 

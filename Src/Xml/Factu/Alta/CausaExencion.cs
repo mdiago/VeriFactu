@@ -48,11 +48,6 @@ namespace VeriFactu.Xml.Factu.Alta
     {
 
         /// <summary>
-        /// Exenta sin especificar causa.
-        /// </summary>
-        E0,
-
-        /// <summary>
         /// Exenta por el artículo 20.
         /// </summary>
         E1,

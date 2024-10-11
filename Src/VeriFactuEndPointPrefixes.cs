@@ -50,7 +50,7 @@ namespace VeriFactu
         /// <summary>
         /// Prefijo del endpoint de pruebas.
         /// </summary>
-        public const string Test = "https://XXXXXX";
+        public const string Test = "https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP";
 
         /// <summary>
         /// Prefijo del endpoint de producción.

@@ -104,6 +104,7 @@
     <Compile Include="Src\Xml\Factu\Alta\AltaFactuSistemaFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\Alta\TipoFactura.cs" />
     <Compile Include="Src\Xml\Factu\Alta\TipoRectificativa.cs" />
+    <Compile Include="Src\Xml\Factu\Impuesto.cs" />
     <Compile Include="Src\Xml\Factu\TipoUsoSistema.cs" />
     <Compile Include="Src\Xml\Factu\Anulacion\RegistroBajaFactura.cs" />
     <Compile Include="Src\Xml\Factu\Anulacion\RegistroFacturacion.cs" />
