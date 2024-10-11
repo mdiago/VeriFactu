@@ -50,7 +50,9 @@ namespace VeriFactu.Business
     /// Representa un factura en el sistema VeriFactu.
     /// </summary>
     public class Invoice
-    {
+    {  
+
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
         /// <para>Clave del tipo de factura (L2).</para>
@@ -119,23 +121,23 @@ namespace VeriFactu.Business
         /// </summary>
         public List<TaxItem> TaxItems { get; set; }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Obtiene el registro de alta para verifactu.
         /// </summary>
         /// <returns>Registro de alta para verifactu</returns>
-        public RegistroAlta GetRegistroAlta() 
+        public RegistroAlta GetRegistroAlta()
         {
 
-            var registroAlta = new RegistroAlta() 
+            var registroAlta = new RegistroAlta()
             {
                 TipoFactura = InvoiceType,
-                IDFactura = new IDFactura() 
+                IDFactura = new IDFactura()
                 {
-                    IDEmisorFactura = new Interlocutor() 
-                    { 
-                         NIF = SellerID,
-                         NombreRazon = SellerName
-                    },
+                    IDEmisorFactura = SellerID,
                     FechaExpedicionFactura = XmlParser.GetXmlDate(InvoiceDate),
                     NumSerieFactura = InvoiceID
                 },
@@ -146,6 +148,8 @@ namespace VeriFactu.Business
             return registroAlta;
 
         }
+
+        #endregion
 
     }
 

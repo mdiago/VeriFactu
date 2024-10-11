@@ -58,7 +58,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         /// <returns>Cadena de entrada para el cálculo
         /// del hash</returns>
-        protected override string GetHashTextInput()
+        internal protected override string GetHashTextInput()
         {
 
             return $"IDEmisorFactura={IDFactura?.IDEmisorFactura}" +
@@ -97,7 +97,11 @@ namespace VeriFactu.Xml.Factu.Alta
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Identificación de la versión.</para>
+        /// <para>Identificación de la versión actual del esquema o
+        /// estructura de información utilizada para la generación y
+        /// conservación / remisión de los registros de facturación.
+        /// Este campo forma parte del detalle de las circunstancias
+        /// de generación de los registros de facturación.</para>
         /// <para>Alfanumérico(3)L15</para>
         /// </summary>
         [XmlElement("IDVersion")]
@@ -108,7 +112,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// operaciones de baja y consulta.
         /// </summary>
         [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
-        public IDFactura IDFactura { get; set; }
+        public override IDFactura IDFactura { get; set; }
 
         /// <summary>
         /// <para>Nombre-razón social del obligado a expedir la factura.</para>
@@ -292,7 +296,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
-        public Encadenamiento Encadenamiento { get; set; }
+        public override Encadenamiento Encadenamiento { get; set; }
 
         /// <summary>
         ///  Información del sistema informático.
@@ -344,7 +348,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// correspondiente en la sede electrónica de la AEAT (documento de huella...).</para>
         /// <para>Alfanumérico (64)</para>
         /// </summary>
-        public string Huella { get; set; }
+        public override string Huella { get; set; }
 
         #endregion
 

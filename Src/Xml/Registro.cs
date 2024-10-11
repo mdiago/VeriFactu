@@ -119,7 +119,7 @@ namespace VeriFactu.Xml
         /// </summary>
         /// <returns>La cadena de entrada para el cálculo
         /// del hash previa conversión mediante UTF-8.</returns>
-        protected virtual string GetHashTextInput()
+        internal protected virtual string GetHashTextInput()
         {
 
             throw new NotImplementedException("La clase base record no implmenta el método GetHashInput.\n" +
@@ -211,6 +211,29 @@ namespace VeriFactu.Xml
 
         #endregion
 
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Datos de identificación de factura expedida para
+        /// operaciones de baja y consulta.
+        /// </summary>
+        public virtual IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// <para>Primeros 64 caracteres de la huella o «hash» del registro
+        /// de facturación anterior (sea de alta o de anulación) generado
+        /// en este sistema informático.</para>
+        /// <para>Alfanumérico(64).</para>
+        /// </summary>
+        public virtual string Huella { get; set; }
+
+        /// <summary>
+        /// Encadenamiento con la factura anterior..
+        /// </summary>
+        public virtual Encadenamiento Encadenamiento { get; set; }
+
+        #endregion
+
         #region Métodos Públicos de Instancia
 
         /// <summary>
@@ -251,7 +274,7 @@ namespace VeriFactu.Xml
             var content = GetUrlValidate();
             return GetQr(content);
 
-        }
+        }  
 
         #endregion
 

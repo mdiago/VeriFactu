@@ -55,14 +55,20 @@ namespace VeriFactu.Net
     public class Wsd
     {
 
+        #region Variables Privadas Estáticas
+
         /// <summary>
         /// Operaciones disponibles en el webservice por tipo de registro.
         /// </summary>
-        static Dictionary<Type, string> _Operations = new Dictionary<Type, string>() 
+        static Dictionary<Type, string> _Operations = new Dictionary<Type, string>()
         {
             { typeof(AltaFactuSistemaFacturacion),  "AltaFactuSistemaFacturacion"},
             { typeof(BajaFactuSistemaFacturacion),  "BajaFactuSistemaFacturacion"}
         };
+
+        #endregion
+
+        #region Métodos Privados Estáticos
 
         /// <summary>
         /// Llama a al web service de la AEAT para el VeriFactu seleccionado.
@@ -113,6 +119,31 @@ namespace VeriFactu.Net
             return responseFromServer;
 
         }
+
+        /// <summary>
+        /// Crea la instancia WebRequest para enviar la petición
+        /// al web service de la AEAT.
+        /// </summary>
+        /// <param name="url">Url del web service.</param>
+        /// <param name="action">Acción del web service.</param>
+        /// <returns></returns>
+        private static HttpWebRequest CreateWebRequest(string url, string action)
+        {
+
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+
+            webRequest.Headers.Add("SOAPAction", action);
+
+            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
+            webRequest.Accept = "text/xml";
+            webRequest.Method = "POST";
+            return webRequest;
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
 
         /// <summary>
         /// Devuelve el certificado configurado siguiendo la siguiente
@@ -211,26 +242,7 @@ namespace VeriFactu.Net
 
         }
 
-        /// <summary>
-        /// Crea la instancia WebRequest para enviar la petición
-        /// al web service de la AEAT.
-        /// </summary>
-        /// <param name="url">Url del web service.</param>
-        /// <param name="action">Acción del web service.</param>
-        /// <returns></returns>
-        private static HttpWebRequest CreateWebRequest(string url, string action)
-        {
-
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-
-            webRequest.Headers.Add("SOAPAction", action);
-
-            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-            webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
-            return webRequest;
-
-        }
+        #endregion
 
     }
 

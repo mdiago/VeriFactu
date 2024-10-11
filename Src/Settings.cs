@@ -160,6 +160,7 @@ namespace VeriFactu
                 IDVersion = "0.1",
                 InboxPath = $"{Path}Inbox{_PathSep}",
                 OutboxPath = $"{Path}Outbox{_PathSep}",
+                BlockchainPath = $"{Path}Blockchains{_PathSep}",
                 CertificateSerial = "",
                 CertificateThumbprint = "",
                 CertificatePath = "",
@@ -205,8 +206,7 @@ namespace VeriFactu
         /// <summary>
         /// Ruta al directorio que actuará como bandeja de entrada.
         /// En este directorio se almacenarán todos los mensajes
-        /// recibidos de la AEAT mediante el VeriFactu.
-        /// recibidos de la AEAT mediante el SII.
+        /// recibidos de la AEAT mediante VERI*FACTU.
         /// </summary>
         [XmlElement("InboxPath")]
         public string InboxPath { get; set; }
@@ -214,11 +214,17 @@ namespace VeriFactu
         /// <summary>
         /// Ruta al directorio que actuará como bandeja de salida.
         /// En este directorio se almacenará una copia de cualquier
-        /// envío realizado a la AEAT mediante el VeriFactu.
-        /// envío realizado a la AEAT mediante el SII.
+        /// envío realizado a la AEAT mediante el VERI*FACTU.
         /// </summary>
         [XmlElement("OutboxPath")]
         public string OutboxPath { get; set; }
+
+        /// <summary>
+        /// Ruta al directorio que actuará almacenamiento
+        /// de las distintas cadenas de bloques por emisor.
+        /// </summary>
+        [XmlElement("BlockchainPath")]
+        public string BlockchainPath { get; set; }
 
         /// <summary>
         /// Número de serie del certificado a utilizar. Mediante este número
@@ -306,8 +312,12 @@ namespace VeriFactu
 
             if (!Directory.Exists(_Current.OutboxPath))
                 Directory.CreateDirectory(_Current.OutboxPath);
+
+            if (!Directory.Exists(_Current.BlockchainPath))
+                Directory.CreateDirectory(_Current.BlockchainPath);
+
         }
- 
+
         /// <summary>
         /// Esteblece el archivo de configuración con el cual trabajar.
         /// </summary>

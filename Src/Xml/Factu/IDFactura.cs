@@ -47,15 +47,15 @@ namespace VeriFactu.Xml.Factu
     /// </summary>
     [XmlRoot("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
     public class IDFactura
-    {   
+    {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>NIF del obligado a expedir la factura.</para>
+        /// <para>Número de identificación fiscal (NIF) del obligado a expedir la factura.</para>
         /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public Interlocutor IDEmisorFactura { get; set; }
+        public string IDEmisorFactura { get; set; }
 
         /// <summary>
         /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
