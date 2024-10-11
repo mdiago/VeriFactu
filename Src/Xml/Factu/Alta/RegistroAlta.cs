@@ -102,17 +102,29 @@ namespace VeriFactu.Xml.Factu.Alta
         /// conservación / remisión de los registros de facturación.
         /// Este campo forma parte del detalle de las circunstancias
         /// de generación de los registros de facturación.</para>
-        /// <para>Alfanumérico(3)L15</para>
+        /// <para>Alfanumérico(3) L15:</para>
+        /// <para>1.0: Versión actual (1.0) del esquema utilizado </para>
         /// </summary>
         [XmlElement("IDVersion")]
         public string IDVersion { get; set; }
 
         /// <summary>
         /// Datos de identificación de factura expedida para
-        /// operaciones de baja y consulta.
+        /// operaciones de baja y consulta. Contiene del NIF del obligado
+        /// a expedir la factura, el número de factura y la fecha.
         /// </summary>
         [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
         public override IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// <para>Dato adicional de contenido libre con el objetivo de que se pueda
+        /// asociar opcionalmente información interna del sistema informático de facturación
+        /// al registro de facturación. Este dato puede ayudar a completar la identificación
+        /// o calificación de la factura y/o su registro de facturación.</para>
+        /// <para>Alfanumérico (60)</para>
+        /// </summary>
+        [XmlElement("RefExterna")]
+        public string RefExterna { get; set; }
 
         /// <summary>
         /// <para>Nombre-razón social del obligado a expedir la factura.</para>
@@ -129,7 +141,9 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Si no se informa este campo se entenderá que tiene valor "N" (Alta Normal-Inicial).
         /// Este campo forma parte del detalle de las circunstancias de generación de los
         /// registros de facturación.</para>
-        /// <para>Alfanumérico (1) L4</para>
+        /// <para>Alfanumérico (1) L4:</para>
+        /// <para>S: Sí</para>
+        /// <para>N: No</para>
         /// </summary>
         public string Subsanacion { get; set; }
 
@@ -146,7 +160,7 @@ namespace VeriFactu.Xml.Factu.Alta
         public RechazoPrevio RechazoPrevio { get; set; }
 
         /// <summary>
-        ///  Con true se serializa el dato, con false no.
+        /// Con true se serializa el dato, con false no.
         /// </summary>
         [XmlIgnore]
         public bool RechazoPrevioSpecified { get; set; }
@@ -214,22 +228,30 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// <para>Factura simplificada Articulo 7.2 Y 7.3 RD 1619/2012. 
         /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
-        /// <para>Alfunumérico (1) L4</para>
+        /// <para>Alfanumérico (1) L4:</para>
+        /// <para>S: Sí</para>
+        /// <para>N: No</para>
         /// </summary>
         public string FacturaSimplificadaArt7273 { get; set; }
 
         /// <summary>
         /// <para>Factura simplificada Articulo 7.2 Y 7.3 RD 1619/2012. 
         /// Si no se informa este campo se entenderá que tiene valor  “N".</para>
-        /// <para>Alfunumérico (1) L4</para>
+        /// <para>Alfanumérico (1) L5:</para>
+        /// <para>S: Sí</para>
+        /// <para>N: No</para>
         /// </summary>
         public string FacturaSinIdentifDestinatarioArt61d { get; set; }
 
         /// <summary>
-        /// <para>Identificador que especifica aquellas facturas con base o
-        /// importe de la factura superior al umbral especificado.
-        /// Si no se informa este campo se entenderá que tiene valor  “N”..</para>
-        /// <para>Alfanumérico(1).</para>
+        /// <para>Identificador que especifica aquellas facturas con base
+        /// o importe de la factura superior al umbral especificado.
+        /// Este campo es necesario porque contribuye a completar el
+        /// detalle de la tipología de la factura.
+        /// Si no se informa este campo se entenderá que tiene valor “N”.</para>
+        /// <para>Alfanumérico (1) L4:</para>
+        /// <para>S: Sí</para>
+        /// <para>N: No</para>
         /// </summary>
         [XmlElement("Macrodato", Namespace = Namespaces.NamespaceSFLR)]
         public string Macrodato { get; set; }
@@ -268,7 +290,9 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Este campo es necesario porque contribuye a completar el detalle
         /// de la tipología de la factura. Si no se informa este campo se
         /// entenderá que tiene valor  “N”.</para>
-        /// <para>Alfanumérico (1) L11</para>
+        /// <para>Alfanumérico (1) L4:</para>
+        /// <para>S: Sí</para>
+        /// <para>N: No</para>
         /// </summary>
         [XmlElement("Cupon", Namespace = Namespaces.NamespaceSFLR)]
         public string Cupon { get; set; }

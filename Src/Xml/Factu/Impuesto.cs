@@ -37,63 +37,41 @@
     address: info@irenesolutions.com
  */
 
+using System.Xml.Serialization;
+
 namespace VeriFactu.Xml.Factu
-{
+{   
 
     /// <summary>
-    /// Indentificadores fiscales de países distintos
-    /// a España-
+    /// Clave que identifica un impuesto. Alfanumérico(2) L1.
     /// </summary>
-    public class IDOtro
+    public enum Impuesto
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// Solo funciona en modo VERIFACTU.
+        /// </summary>
+        [XmlEnum("01")]
+        IVA,
 
         /// <summary>
-        /// <para>Código del país del tercero que expida la factura.</para>
-        /// <para>Alfanumérico(2) (ISO 3166-1 alpha-2 codes)</para>
+        /// Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).
         /// </summary>
-        public CodigoPais CodigoPais { get; set; }
+        [XmlEnum("02")]
+        IPSI,
 
         /// <summary>
-        /// <para>Clave para establecer el tipo de
-        /// identificación en el pais de residencia.</para>
-        /// <para>Alfanumérico(2). L7:</para>
-        /// <para>02: NIF-IVA</para>
-        /// <para>03: Pasaporte</para>
-        /// <para>04: Documento oficial de identificación expedido por el país o territorio de residencia</para>
-        /// <para>05: Certificado de residencia</para>
-        /// <para>06: Otro documento probatorio</para>
-        /// <para>07: No censado</para>
+        /// Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).
         /// </summary>
-        public IDType IDType { get; set; }
+        [XmlEnum("03")]
+        IGIC,
 
         /// <summary>
-        /// <para>Número de identificación en el país de residencia</para>
-        /// <para>Alfanumérico(20).</para>
+        /// Otros.
         /// </summary>
-        public string ID { get; set; }
+        [XmlEnum("05")]
+        OTROS      
 
-        /// <summary>
-        /// <para>NIF del representante del tercero que expida la factura.</para>
-        /// <para>FormatoNIF(9).</para>
-        /// </summary>
-        public string NIFRepresentante { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
-
-        /// <summary>
-        /// Representación textual de la instancia.
-        /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"[{CodigoPais}] {ID}";
-        }
-
-        #endregion
 
     }
 

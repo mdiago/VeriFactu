@@ -58,32 +58,32 @@ namespace VeriFactu.Xml.Factu
         /// <summary>
         /// PASAPORTE.
         /// </summary>
-        [XmlEnum("02")]
+        [XmlEnum("03")]
         PASAPORTE,
 
         /// <summary>
         /// DOCUMENTO OFICIAL DE IDENTIFICACIÓN
         /// EXPEDIDO POR EL PAÍS O TERRITORIO DE RESIDENCIA.
         /// </summary>
-        [XmlEnum("02")]
+        [XmlEnum("04")]
         DOCUMENTO_OFICIAL,
 
         /// <summary>
         /// CERTIFICADO DE RESIDENCIA.
         /// </summary>
-        [XmlEnum("02")]
+        [XmlEnum("05")]
         CERTIFICADO_RESIDENCIA,
 
         /// <summary>
         /// OTRO DOCUMENTO PROBATORIO.
         /// </summary>
-        [XmlEnum("02")]
+        [XmlEnum("06")]
         OTRO_DOC_PROBATORIO,
 
         /// <summary>
         /// NO CENSADO.
         /// </summary>
-        [XmlEnum("02")]
+        [XmlEnum("07")]
         NO_CENSADO
 
     }
