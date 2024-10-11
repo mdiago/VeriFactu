@@ -39,7 +39,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
 using VeriFactu.Qrcode;
