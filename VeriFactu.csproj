@@ -78,7 +78,7 @@
     <Compile Include="Src\Qrcode\QRCodeWriter.cs" />
     <Compile Include="Src\Qrcode\ReedSolomonEncoder.cs" />
     <Compile Include="Src\Qrcode\Version.cs" />
-    <Compile Include="Src\Settings.cs" />
+    <Compile Include="Src\Config\Settings.cs" />
     <Compile Include="Src\VeriFactuEndPointPrefixes.cs" />
     <Compile Include="Src\Xml\Factu\Alta\Cabecera.cs" />
     <Compile Include="Src\Xml\Factu\Alta\CalificacionOperacion.cs" />

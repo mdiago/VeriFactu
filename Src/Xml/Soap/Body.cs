@@ -69,8 +69,8 @@ namespace VeriFactu.Xml.Soap
         /// <summary>
         /// Registro.
         /// </summary>
-        [XmlElement("AltaFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSF)]
-        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSF)]
+        [XmlElement("RegFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
+        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
         public object Registro { get; set; }
 
         #endregion

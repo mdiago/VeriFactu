@@ -37,6 +37,8 @@
     address: info@irenesolutions.com
  */
 
+using System.Collections.Generic;
+
 namespace VeriFactu.Xml.Factu
 {
 
@@ -46,7 +48,7 @@ namespace VeriFactu.Xml.Factu
     public class Namespaces
     {
 
-        #region Variables Privadas de Instancia
+        #region Propiedades Públicas Estáticas
 
         /// <summary>
         /// Prefijo de espacios de nombres AEAT TIKE CONT.
@@ -63,8 +65,17 @@ namespace VeriFactu.Xml.Factu
         /// </summary>
         public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
 
+        /// <summary>
+        /// Diccionario de espacios de nombres.
+        /// </summary>
+        public static Dictionary<string, string> Items = new Dictionary<string, string>() 
+        {
+            { "sum",    NamespaceSFLR },
+            { "sum1",   NamespaceSF }
+        };
 
         #endregion
+       
 
     }
 

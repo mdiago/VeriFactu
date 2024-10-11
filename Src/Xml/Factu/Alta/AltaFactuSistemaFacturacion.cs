@@ -49,7 +49,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// Sistemas de facturacion alta.
     /// </summary>
     [Serializable]
-    [XmlRoot("AltaFactuSistemaFacturacion", Namespace = Namespaces.NamespaceSF)]
+    [XmlRoot("RegFactuSistemaFacturacion", Namespace = Namespaces.NamespaceSF)]
     public class AltaFactuSistemaFacturacion
     {
 
@@ -64,8 +64,8 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
-        [XmlArray("RegistroAltaFacturas", Namespace = Namespaces.NamespaceSF)]
-        [XmlArrayItem("RegistroFacturacion", Namespace = Namespaces.NamespaceSF)]
+        [XmlArray("RegistroFactura", Namespace = Namespaces.NamespaceSF)]
+        [XmlArrayItem("RegistroAlta", Namespace = Namespaces.NamespaceSF)]
         public List<RegistroAlta> RegistroAltaFacturas { get; set; }
 
         /// <summary>

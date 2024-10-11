@@ -41,6 +41,8 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Serialization;
+using VeriFactu.Config;
 using VeriFactu.Qrcode;
 using VeriFactu.Qrcode.Exceptions;
 using VeriFactu.Xml.Factu;
@@ -217,6 +219,7 @@ namespace VeriFactu.Xml
         /// Datos de identificación de factura expedida para
         /// operaciones de baja y consulta.
         /// </summary>
+        [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
         public virtual IDFactura IDFactura { get; set; }
 
         /// <summary>

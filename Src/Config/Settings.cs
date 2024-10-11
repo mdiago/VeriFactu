@@ -40,10 +40,11 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Xml.Serialization;
 using VeriFactu.Xml.Factu;
 
-namespace VeriFactu
+namespace VeriFactu.Config
 {
 
     /// <summary>
@@ -169,6 +170,18 @@ namespace VeriFactu
                 VeriFactuEndPointValidatePrefix = VeriFactuEndPointPrefixes.TestValidate,
                 VeriFactuHashAlgorithm = TipoHuella.Sha256,
                 VeriFactuHashInputEncoding = "UTF-8",
+                SistemaInformatico = new SistemaInformatico() 
+                { 
+                    NIF = "B12959755",
+                    NombreRazon = "IRENE SOLUTIONS SL",
+                    NombreSistemaInformatico = $"{Assembly.GetExecutingAssembly().GetName().Name}",
+                    IdSistemaInformatico = "1",
+                    Version = $"{Assembly.GetExecutingAssembly().GetName().Version}",
+                    NumeroInstalacion = "1",
+                    TipoUsoPosibleSoloVerifactu = "S",
+                    TipoUsoPosibleMultiOT = "S",
+                    IndicadorMultiplesOT = "S"
+                }
             };
 
         }
@@ -275,6 +288,12 @@ namespace VeriFactu
         /// </summary>
         [XmlElement("VeriFactuHashInputEncoding")]
         public string VeriFactuHashInputEncoding { get; set; }
+
+        /// <summary>
+        /// Datos del sistema informático.
+        /// </summary>
+        [XmlElement("SistemaInformatico")]
+        public SistemaInformatico SistemaInformatico { get; set; }
 
         #endregion
 

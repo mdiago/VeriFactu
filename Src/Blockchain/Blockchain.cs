@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 

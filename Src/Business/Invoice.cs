@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
@@ -50,7 +51,70 @@ namespace VeriFactu.Business
     /// Representa un factura en el sistema VeriFactu.
     /// </summary>
     public class Invoice
-    {  
+    {
+
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// Suma de las bases imponibles.
+        /// </summary>   
+        decimal _NetAmount;
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Calcula los totales de la factura.
+        /// </summary>
+        private void CalculateTotals() 
+        {
+
+            TotalAmount = TotalTaxOutput = _NetAmount = 0;
+
+            if (TaxItems == null || TaxItems.Count == 0)
+                return;
+
+            foreach (var taxitem in TaxItems) 
+            {
+
+                _NetAmount += taxitem.TaxBase;
+                TotalTaxOutput += taxitem.TaxAmount;
+
+            }
+
+            TotalAmount = _NetAmount + TotalTaxOutput - TotalTaxWithheld;
+
+        }
+
+        /// <summary>
+        /// Obtiene el desglose de la factura.
+        /// </summary>
+        /// <returns>Desglose de la factura.</returns>
+        private Desglose GetDesglose() 
+        {
+
+            var desglose = new Desglose() { DetalleDesglose = new List<DetalleDesglose>() };
+
+            foreach (var taxitem in TaxItems)
+            {
+
+                desglose.DetalleDesglose.Add(new DetalleDesglose() 
+                {
+                    ClaveRegimen = taxitem.TaxScheme,
+                    CalificacionOperacion = taxitem.TaxType,
+                    TipoImpositivo = XmlParser.GetXmlDecimal(taxitem.TaxRate),
+                    BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxitem.TaxBase),
+                    CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount)
+                });
+
+            }
+
+            return desglose;
+
+        }
+
+        #endregion
 
         #region Propiedades Públicas de Instancia
 
@@ -99,12 +163,12 @@ namespace VeriFactu.Business
         /// Importe total: Total neto + impuestos soportado
         /// - impuestos retenidos.
         /// </summary>        
-        public decimal TotalAmount { get; set; }
+        public decimal TotalAmount { get; private set; }
 
         /// <summary>
         /// Total impuestos soportados.
         /// </summary>        
-        public decimal TotalTaxOutput { get; set; }
+        public decimal TotalTaxOutput { get; private set; }
 
         /// <summary>
         /// Importe total impuestos retenidos.
@@ -132,17 +196,32 @@ namespace VeriFactu.Business
         public RegistroAlta GetRegistroAlta()
         {
 
+            CalculateTotals();            
+
             var registroAlta = new RegistroAlta()
             {
-                TipoFactura = InvoiceType,
+                IDVersion = Settings.Current.IDVersion,
                 IDFactura = new IDFactura()
                 {
                     IDEmisorFactura = SellerID,
-                    FechaExpedicionFactura = XmlParser.GetXmlDate(InvoiceDate),
-                    NumSerieFactura = InvoiceID
+                    NumSerieFactura = InvoiceID,
+                    FechaExpedicionFactura = XmlParser.GetXmlDate(InvoiceDate)                    
+                }, 
+                NombreRazonEmisor = SellerName,
+                TipoFactura = InvoiceType,
+                DescripcionOperacion = Text,
+                Destinatarios = new List<Interlocutor>() 
+                { 
+                    new Interlocutor
+                    { 
+                        NombreRazon = BuyerName,
+                        NIF = BuyerID
+                    }
                 },
+                Desglose = GetDesglose(),
                 CuotaTotal = XmlParser.GetXmlDecimal(TotalTaxOutput),
                 ImporteTotal = XmlParser.GetXmlDecimal(TotalAmount),
+                SistemaInformatico = Settings.Current.SistemaInformatico
             };
 
             return registroAlta;
