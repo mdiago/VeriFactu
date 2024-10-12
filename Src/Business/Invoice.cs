@@ -209,6 +209,7 @@ namespace VeriFactu.Business
                 }, 
                 NombreRazonEmisor = SellerName,
                 TipoFactura = InvoiceType,
+                TipoFacturaSpecified = true,
                 DescripcionOperacion = Text,
                 Destinatarios = new List<Interlocutor>() 
                 { 
@@ -221,7 +222,9 @@ namespace VeriFactu.Business
                 Desglose = GetDesglose(),
                 CuotaTotal = XmlParser.GetXmlDecimal(TotalTaxOutput),
                 ImporteTotal = XmlParser.GetXmlDecimal(TotalAmount),
-                SistemaInformatico = Settings.Current.SistemaInformatico
+                SistemaInformatico = Settings.Current.SistemaInformatico,
+                TipoHuella = TipoHuella.Sha256,
+                TipoHuellaSpecified = true
             };
 
             return registroAlta;

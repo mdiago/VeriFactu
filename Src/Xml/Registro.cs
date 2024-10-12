@@ -216,11 +216,32 @@ namespace VeriFactu.Xml
         #region Propiedades Públicas de Instancia
 
         /// <summary>
+        /// <para>Identificación de la versión actual del esquema o
+        /// estructura de información utilizada para la generación y
+        /// conservación / remisión de los registros de facturación.
+        /// Este campo forma parte del detalle de las circunstancias
+        /// de generación de los registros de facturación.</para>
+        /// <para>Alfanumérico(3) L15:</para>
+        /// <para>1.0: Versión actual (1.0) del esquema utilizado </para>
+        /// </summary>
+        [XmlElement("IDVersion", Namespace = Namespaces.NamespaceSF, Order = 1)]
+        public virtual string IDVersion { get; set; }
+
+        /// <summary>
         /// Datos de identificación de factura expedida para
         /// operaciones de baja y consulta.
         /// </summary>
-        [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSFLR)]
+        [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSF, Order = 2)]
         public virtual IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// <para>Fecha, hora y huso horario de generación del registro de facturación.
+        /// El huso horario es el que está usando el sistema informático de facturación
+        /// en el momento de generación del registro de facturación.</para>
+        /// <para>DateTime. Formato: YYYY-MM-DDThh:mm:ssTZD (ej: 2024-01-01T19:20:30+01:00) (ISO 8601)</para>
+        /// </summary>
+        [XmlIgnore]
+        public virtual string FechaHoraHusoGenRegistro { get; set; }
 
         /// <summary>
         /// <para>Primeros 64 caracteres de la huella o «hash» del registro
@@ -228,11 +249,13 @@ namespace VeriFactu.Xml
         /// en este sistema informático.</para>
         /// <para>Alfanumérico(64).</para>
         /// </summary>
+        [XmlIgnore]
         public virtual string Huella { get; set; }
 
         /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
+        [XmlIgnore]
         public virtual Encadenamiento Encadenamiento { get; set; }
 
         #endregion

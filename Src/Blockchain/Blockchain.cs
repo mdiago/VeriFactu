@@ -265,6 +265,9 @@ namespace VeriFactu.Blockchain
             CurrentID++;
             CurrentTimeStamp = DateTime.Now;
 
+            // Establezco el momento de generación.
+            registro.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(CurrentTimeStamp);
+
         }
 
         /// <summary>
@@ -296,7 +299,7 @@ namespace VeriFactu.Blockchain
         }
 
         /// <summary>
-        /// Añade los datos del último elmento al archivo de control
+        /// Añade los datos del último elemento al archivo de control
         /// de la cadena.
         /// </summary>
         private void WriteData()

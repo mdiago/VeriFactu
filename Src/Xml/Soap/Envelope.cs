@@ -49,7 +49,7 @@ namespace VeriFactu.Xml.Soap
     /// Sobre: el cual define qué hay en el mensaje y cómo procesarlo.
     /// </summary>
     [Serializable]
-    [XmlRoot("Envelope", Namespace = "http://schemas.xmlsoap.org/soap/envelope/")]
+    [XmlRoot("Envelope", Namespace = Namespaces.NamespaceSoap)]
     public class Envelope
     {
 

@@ -49,7 +49,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// Datos de contexto de un suministro.
     /// </summary>
     [Serializable]
-    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSFLR)]
+    [XmlRoot("Cabecera", Namespace = Namespaces.NamespaceSF)]
     public class Cabecera
     {
 
@@ -109,6 +109,12 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         [XmlElement("TipoRegistroAEAT")]
         public TipoRegistroAEAT TipoRegistroAEAT { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool TipoRegistroAEATSpecified { get; set; }
 
         /// <summary>
         /// <para>Última fecha en la que el sistema informático actuará 

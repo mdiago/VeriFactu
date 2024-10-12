@@ -39,7 +39,7 @@
 
 using System.Collections.Generic;
 
-namespace VeriFactu.Xml.Factu
+namespace VeriFactu.Xml
 {
 
     /// <summary>
@@ -66,16 +66,21 @@ namespace VeriFactu.Xml.Factu
         public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
 
         /// <summary>
+        /// Espacio de nombres soap
+        /// </summary>
+        public const string NamespaceSoap = "http://schemas.xmlsoap.org/soap/envelope/";
+
+        /// <summary>
         /// Diccionario de espacios de nombres.
         /// </summary>
         public static Dictionary<string, string> Items = new Dictionary<string, string>() 
         {
-            { "sum",    NamespaceSFLR },
-            { "sum1",   NamespaceSF }
+            { "soapenv",    NamespaceSoap},
+            { "sum",        NamespaceSFLR },
+            { "sum1",       NamespaceSF }
         };
 
-        #endregion
-       
+        #endregion       
 
     }
 

@@ -78,7 +78,7 @@ namespace VeriFactu.Net
         /// <param name="action">Acción a ejecutar.</param>
         /// <param name="xmlDocument">Documento soap xml.</param>
         /// <returns>Devuelve la respuesta.</returns>
-        protected static string Call(string url, string action, XmlDocument xmlDocument)
+        internal static string Call(string url, string action, XmlDocument xmlDocument)
         {
 
             HttpWebRequest webRequest = CreateWebRequest(url, action);

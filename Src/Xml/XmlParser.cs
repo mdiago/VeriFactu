@@ -128,12 +128,11 @@ namespace VeriFactu.Xml
         /// <param name="namespaces">Espacios de nombres.</param> 
         /// <param name="indent">Indica si se debe utilizar indentación.</param>
         /// <param name="omitXmlDeclaration">Indica si se se omite la delcaración xml.</param>
-        /// <param name="omitRootNamespace">Indica si se se omite la delcaración del espacio de nombres raiz.</param> 
         /// <returns>string con el archivo xml.</returns>
-        public string GetString(object instance, Dictionary<string, string> namespaces, bool indent = false, bool omitXmlDeclaration = true, bool omitRootNamespace = false)
+        public string GetString(object instance, Dictionary<string, string> namespaces, bool indent = false, bool omitXmlDeclaration = true)
         {
 
-            return Encoding.GetString(GetBytes(instance, namespaces, indent, omitXmlDeclaration, omitRootNamespace));
+            return Encoding.GetString(GetBytes(instance, namespaces, indent, omitXmlDeclaration));
 
         }
 
@@ -171,18 +170,14 @@ namespace VeriFactu.Xml
         /// <param name="namespaces">Espacios de nombres.</param> 
         /// <param name="indent">Indica si se debe utilizar indentación.</param>
         /// <param name="omitXmlDeclaration">Indica si se se omite la delcaración xml.</param>
-        /// <param name="omitRootNamespace">Indica si se se omite la delcaración del espacio de nombres raiz.</param> 
         /// <returns>string con el archivo xml.</returns>
         public byte[] GetBytes(object instance, Dictionary<string, string> namespaces,
-            bool indent = false, bool omitXmlDeclaration = true, bool omitRootNamespace = false)
+            bool indent = false, bool omitXmlDeclaration = true)
         {
 
             XmlSerializer serializer = new XmlSerializer(instance.GetType());
 
             var xmlSerializerNamespaces = new XmlSerializerNamespaces();
-
-            if (!omitRootNamespace)
-                xmlSerializerNamespaces.Add("sf", Namespaces.NamespaceSF);
 
             foreach (KeyValuePair<string, string> ns in namespaces)
                 xmlSerializerNamespaces.Add(ns.Key, ns.Value);

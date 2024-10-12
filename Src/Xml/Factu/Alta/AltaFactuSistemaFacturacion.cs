@@ -58,14 +58,14 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Datos de contexto de un suministro.
         /// </summary>
-        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceSFLR)]
+        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceSF)]
         public Cabecera Cabecera { get; set; }
 
         /// <summary>
         /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
-        [XmlArray("RegistroFactura", Namespace = Namespaces.NamespaceSF)]
-        [XmlArrayItem("RegistroAlta", Namespace = Namespaces.NamespaceSF)]
+        [XmlArray("RegistroFactura", Namespace = Namespaces.NamespaceSFLR)]
+        [XmlArrayItem("RegistroAlta", Namespace = Namespaces.NamespaceSFLR)]
         public List<RegistroAlta> RegistroAltaFacturas { get; set; }
 
         /// <summary>
