@@ -133,7 +133,7 @@ File.WriteAllBytes(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp", bmQr);
 ```
 El bitmap obtenido:
 
-![image](https://github.com/mdiago/VeriFactu/assets/22330809/d91e9202-78f0-4c33-9c1e-578a5c5dd3e1)
+![image](https://github.com/user-attachments/assets/24448239-3319-4272-8c97-069fae6fcd65)
 
 Url que consta en el QR:
 
