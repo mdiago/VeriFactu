@@ -12,6 +12,53 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
+Para emprezar, veamos un ejemplo sencillo registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
+
+```C#
+
+// Creamos una instacia de la clase factura
+var invoice = new Invoice()
+{
+    InvoiceType = TipoFactura.F1,
+    InvoiceID = "TEST007",
+    InvoiceDate = new DateTime(2024, 9, 13),
+    SellerID = "B12959755",
+    SellerName = "IRENE SOLUTIONS SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+    TaxItems = new List<TaxItem>() {
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 100,
+            TaxAmount = 21
+        }
+    }
+};
+
+// Creamos la entrada de la factura
+var invoiceEntry = new InvoiceEntry(invoice);
+
+// Guardamos la factura
+invoiceEntry.Save();
+
+// Consultamos el resultado devuelto por la AEAT
+Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}");
+
+
+```
+
 # Ejemplos
 
 ## 1. Generación de la huella o hash de un registro de alta de factura
