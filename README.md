@@ -109,7 +109,16 @@ var invoice = new Invoice()
     InvoiceID = "12345678&G33",
     InvoiceDate = new DateTime(2024, 1, 1),
     SellerID = "89890001K",
-    TotalAmount = 241.1m
+    TaxItems = new List<TaxItem>() {
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 199.25m,
+            TaxAmount = 41.85m
+        }
+    }
 };
 
 // Obtenemos una instancia de la clase RegistroAlta a partir de
