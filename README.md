@@ -158,18 +158,21 @@ var invoiceFirst = new Invoice()
     InvoiceID = "12345678/G33",
     InvoiceDate = new DateTime(2024, 1, 1),
     SellerID = "89890001K",
-    TotalTaxOutput = 12.35m,
-    TotalAmount = 123.45m
+    TaxItems = new List<TaxItem>() {
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 10,
+            TaxBase = 111.1m,
+            TaxAmount = 12.35m
+        }
+    }
 };
 
 // Obtenemos una instancia de la clase RegistroAlta a partir de
 // la instancia del objeto de negocio Invoice
 var registroFirst = invoiceFirst.GetRegistroAlta();
-
-// El registro no ha sido envíado, pero forzamos el valor de
-// FechaHoraHusoGenRegistro para que coincida con el ejemplo de la AEAT
-var fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 30); //2024-01-01T19:20:30+01:00 en España peninsula
-registroFirst.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
 
 // Ahora obtenemos el controlador de la cadena de bloques del vendedor
 var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID);
@@ -191,11 +194,6 @@ var invoiceSecond = new Invoice()
 // Obtenemos una instancia de la clase RegistroAlta a partir de
 // la instancia del objeto de negocio Invoice
 var registroSecond = invoiceSecond.GetRegistroAlta();
-
-// El registro no ha sido envíado, pero forzamos el valor de
-// FechaHoraHusoGenRegistro para que coincida con el ejemplo de la AEAT
-fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 35); //2024-01-01T19:20:35+01:00 en España peninsula
-registroSecond.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
 
 // Añadimos el registro de alta
 blockchain.Add(registroSecond);
