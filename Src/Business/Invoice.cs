@@ -91,15 +91,15 @@ namespace VeriFactu.Business
         /// Obtiene el desglose de la factura.
         /// </summary>
         /// <returns>Desglose de la factura.</returns>
-        private Desglose GetDesglose() 
+        private List<DetalleDesglose> GetDesglose() 
         {
 
-            var desglose = new Desglose() { DetalleDesglose = new List<DetalleDesglose>() };
+            var desglose = new List<DetalleDesglose>(); 
 
             foreach (var taxitem in TaxItems)
             {
 
-                desglose.DetalleDesglose.Add(new DetalleDesglose() 
+                desglose.Add(new DetalleDesglose() 
                 {
                     ClaveRegimen = taxitem.TaxScheme,
                     CalificacionOperacion = taxitem.TaxType,

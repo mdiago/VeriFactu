@@ -257,16 +257,16 @@ namespace VeriFactu.Blockchain
             // Actualizo los datos de encadenamiento con el registro anterior
             registro.Encadenamiento = GetEncadenamiento();
 
+            // Establezco el momento de generación.
+            CurrentTimeStamp = DateTime.Now;
+            registro.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(CurrentTimeStamp);            
+
             // Calculo la huella con los datos del encadenamiento ya actualizados
             registro.Huella = registro.GetHashOutput();
 
             // Establezco el elemento insertado como el último de la cadena
             Current = registro;
-            CurrentID++;
-            CurrentTimeStamp = DateTime.Now;
-
-            // Establezco el momento de generación.
-            registro.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(CurrentTimeStamp);
+            CurrentID++;           
 
         }
 

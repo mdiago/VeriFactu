@@ -321,10 +321,11 @@ namespace VeriFactu.Xml.Factu.Alta
         public string Cupon { get; set; }
 
         /// <summary>
-        /// Desglose de la factura.
+        /// Líneas de desglose de factura.
         /// </summary>
-        [XmlElement("Desglose", Namespace = Namespaces.NamespaceSF, Order = 21)]
-        public Desglose Desglose { get; set; }
+        [XmlArray("Desglose", Namespace = Namespaces.NamespaceSF, Order = 21)]
+        [XmlArrayItem("DetalleDesglose", Namespace = Namespaces.NamespaceSF)]
+        public List<DetalleDesglose> Desglose { get; set; }
 
         /// <summary>
         /// <para>Importe total de la cuota (sumatorio de la Cuota Repercutida
