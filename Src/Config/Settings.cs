@@ -158,7 +158,7 @@ namespace VeriFactu.Config
 
             return new Settings()
             {
-                IDVersion = "0.1",
+                IDVersion = "1.0",
                 InboxPath = $"{Path}Inbox{_PathSep}",
                 OutboxPath = $"{Path}Outbox{_PathSep}",
                 BlockchainPath = $"{Path}Blockchains{_PathSep}",
@@ -175,7 +175,7 @@ namespace VeriFactu.Config
                     NIF = "B12959755",
                     NombreRazon = "IRENE SOLUTIONS SL",
                     NombreSistemaInformatico = $"{Assembly.GetExecutingAssembly().GetName().Name}",
-                    IdSistemaInformatico = "1",
+                    IdSistemaInformatico = "01",
                     Version = $"{Assembly.GetExecutingAssembly().GetName().Version}",
                     NumeroInstalacion = "1",
                     TipoUsoPosibleSoloVerifactu = "S",
