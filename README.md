@@ -14,6 +14,8 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
+## Envío de facturas
+
 Para emprezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
 
 ```C#
@@ -60,6 +62,7 @@ Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}");
 
 
 ```
+## Anulación de facturas
 
 Seguimos con la anulación de una factura previamente remitida:
 
