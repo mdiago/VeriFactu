@@ -37,44 +37,52 @@
     address: info@irenesolutions.com
  */
 
-using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
-using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Anulacion;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
 
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.Xml.Factu.Respuesta
 {
+    
     /// <summary>
-    /// SOAP body.
+    /// Respuesta a una presentación.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
-    {      
-
-        #region Construtores de Instancia
-
-        /// <summary>
-        /// Body del envelope.
-        /// </summary>
-        public Body()
-        {
-        }
-
-        #endregion
+    [XmlRoot(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+    public class RespuestaRegFactuSistemaFacturacion
+    {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro.
+        /// Código seguro de verificación.
         /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        public object Registro { get; set; }
+        public string CSV { get; set; }
+
+        /// <summary>
+        /// Datos de la presentación a la que se 
+        /// refiere la respuesta.
+        /// </summary>
+        public DatosPresentacion DatosPresentacion { get; set; }
+
+        /// <summary>
+        /// Cabecera de la respuesta.
+        /// </summary>
+        public Cabecera Cabecera { get; set; }
+
+        /// <summary>
+        /// Tiempo espera envío.
+        /// </summary>
+        public byte TiempoEsperaEnvio { get; set; }
+
+        /// <summary>
+        /// Estado del envío.
+        /// </summary>
+        public string EstadoEnvio { get; set; }
+
+        /// <summary>
+        /// Líneas de respuestas.
+        /// </summary>
+        [XmlElement("RespuestaLinea")]
+        public List<RespuestaLinea> RespuestaLinea { get; set; }
 
         #endregion
 

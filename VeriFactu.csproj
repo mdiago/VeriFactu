@@ -87,8 +87,16 @@
     <Compile Include="Src\Xml\Factu\Alta\ClaveRegimen.cs" />
     <Compile Include="Src\Xml\Factu\Alta\RegistroAlta.cs" />
     <Compile Include="Src\Xml\Factu\Encadenamiento.cs" />
+    <Compile Include="Src\Xml\Factu\Fault\detail.cs" />
+    <Compile Include="Src\Xml\Factu\Fault\Fault.cs" />
     <Compile Include="Src\Xml\Factu\RechazoPrevio.cs" />
     <Compile Include="Src\Xml\Factu\RegistroAnterior.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\Cabecera.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\DatosPresentacion.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\IDFactura.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\ObligadoEmision.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\RespuestaLinea.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\RespuestaRegFactuSistemaFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\TipoHuella.cs" />
     <Compile Include="Src\Xml\Factu\Alta\TipoRegistroAEAT.cs" />
     <Compile Include="Src\Xml\Factu\CodigoPais.cs" />

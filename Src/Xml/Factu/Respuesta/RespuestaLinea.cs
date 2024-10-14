@@ -37,44 +37,41 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Xml.Serialization;
-using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Anulacion;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
 
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.Xml.Factu.Respuesta
 {
+
     /// <summary>
-    /// SOAP body.
+    /// Línea de respuesta de la presentación.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
-    {      
-
-        #region Construtores de Instancia
-
-        /// <summary>
-        /// Body del envelope.
-        /// </summary>
-        public Body()
-        {
-        }
-
-        #endregion
+    [XmlType(AnonymousType = true, Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+    public class RespuestaLinea
+    {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro.
+        /// Identificador de la factura.
         /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        public object Registro { get; set; }
+        [XmlElement(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+
+        public IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// Estado del registro presentado en el sistema de la AEAT.
+        /// </summary>
+        public string EstadoRegistro { get; set; }
+
+        /// <summary>
+        /// En su caso, código del error en la presentación.
+        /// </summary>
+        public string CodigoErrorRegistro { get; set; }
+
+        /// <summary>
+        /// En su caso, texto del error en la presentación.
+        /// </summary>
+        public string DescripcionErrorRegistro { get; set; }
 
         #endregion
 

@@ -37,44 +37,38 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Xml.Serialization;
-using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Anulacion;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
 
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.Xml.Factu.Fault
 {
+
     /// <summary>
-    /// SOAP body.
+    /// Error devuelto por el servidor no relacionado
+    /// con la lógica de Verifactu.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
-    {      
-
-        #region Construtores de Instancia
-
-        /// <summary>
-        /// Body del envelope.
-        /// </summary>
-        public Body()
-        {
-        }
-
-        #endregion
+    public class Fault
+    {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro.
+        /// Código de error.
         /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        public object Registro { get; set; }
+        [XmlElement(Namespace = "")]
+        public string faultcode { get; set; }
+
+        /// <summary>
+        /// Descripción error.
+        /// </summary>
+        [XmlElement(Namespace = "")]
+        public string faultstring { get; set; }
+
+        /// <summary>
+        /// Detalles del error.
+        /// </summary>
+
+        [XmlElement(Namespace = "")]
+        public detail detail { get; set; }
 
         #endregion
 

@@ -45,7 +45,7 @@ namespace VeriFactu.Xml.Factu
     /// <summary>
     /// Datos de identificación de factura expedida para operaciones de baja y consulta.
     /// </summary>
-    [XmlRoot("IDFactura", Namespace = Namespaces.NamespaceSF)]
+    [XmlRoot("IDFactura")]
     public class IDFactura
     {
 

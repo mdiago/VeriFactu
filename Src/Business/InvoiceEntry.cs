@@ -47,6 +47,8 @@ using VeriFactu.Net;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Factu.Fault;
+using VeriFactu.Xml.Factu.Respuesta;
 using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business
@@ -64,6 +66,48 @@ namespace VeriFactu.Business
         /// Acción para el webservice.
         /// </summary>
         internal virtual string Action => "?op=RegFactuSistemaFacturacion";
+
+        /// <summary>
+        /// Sobre SOAP de respuesta de la AEAT.
+        /// </summary>
+        private Envelope ResponseEnvelope{ get;set; }
+
+        /// <summary>
+        /// Error Fault.
+        /// </summary>
+        private Fault ErrorFault
+        {
+
+            get
+            {
+
+                if (ResponseEnvelope == null)
+                    return null;
+
+                return ResponseEnvelope.Body.Registro as Fault;             
+
+            }
+
+        }
+
+        /// <summary>
+        /// Respueta AEAT.
+        /// </summary>
+        private RespuestaRegFactuSistemaFacturacion RespuestaRegFactuSistemaFacturacion
+        {
+
+            get
+            {
+
+                if (ResponseEnvelope == null)
+                    return null;
+
+                return ResponseEnvelope.Body.Registro as RespuestaRegFactuSistemaFacturacion;
+
+            }
+
+        }
+
 
         #endregion
 
@@ -255,7 +299,7 @@ namespace VeriFactu.Business
                 {
                     Registro = new AltaFactuSistemaFacturacion()
                     {
-                        Cabecera = new Cabecera()
+                        Cabecera = new Xml.Factu.Alta.Cabecera()
                         {
                             ObligadoEmision = new Interlocutor()
                             {
@@ -382,6 +426,88 @@ namespace VeriFactu.Business
         /// </summary>
         public string Response { get; private set; }
 
+        /// <summary>
+        /// Código de error.
+        /// </summary>
+        public string ErrorCode 
+        { 
+
+            get 
+            {
+
+                if (ErrorFault != null)
+                    return ErrorFault.faultcode;
+
+                if (RespuestaRegFactuSistemaFacturacion.RespuestaLinea != null && 
+                    RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0 &&
+                    !string.IsNullOrEmpty(RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].CodigoErrorRegistro))
+                    return RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].CodigoErrorRegistro;
+
+                    return null;
+
+            } 
+
+        }
+
+        /// <summary>
+        /// Código de error.
+        /// </summary>
+        public string ErrorDesciption
+        {
+
+            get
+            {
+
+                if (ErrorFault != null)
+                    return ErrorFault.faultstring;
+
+                if (RespuestaRegFactuSistemaFacturacion.RespuestaLinea != null &&
+                    RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0 &&
+                    !string.IsNullOrEmpty(RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].DescripcionErrorRegistro))
+                    return RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].DescripcionErrorRegistro;
+
+                return null;
+
+            }
+
+        }
+
+        /// <summary>
+        /// Código de error.
+        /// </summary>
+        public string Status
+        {
+
+            get
+            {
+
+                if (RespuestaRegFactuSistemaFacturacion == null)
+                    return null;
+
+                return RespuestaRegFactuSistemaFacturacion.EstadoEnvio;
+
+            }
+
+        }
+
+        /// <summary>
+        /// Código de error.
+        /// </summary>
+        public string CSV
+        {
+
+            get
+            {
+
+                if (RespuestaRegFactuSistemaFacturacion == null)
+                    return null;
+
+                return RespuestaRegFactuSistemaFacturacion.CSV;
+
+            }
+
+        }
+
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -396,6 +522,8 @@ namespace VeriFactu.Business
             Response = Send();
 
             File.WriteAllText(ResponseFilePath, Response);
+
+            ResponseEnvelope = new Envelope(ResponseFilePath);
 
         }
 

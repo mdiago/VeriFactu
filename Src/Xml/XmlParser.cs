@@ -45,7 +45,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using VeriFactu.Config;
-using VeriFactu.Xml.Factu;
 
 namespace VeriFactu.Xml
 {

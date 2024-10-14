@@ -51,7 +51,7 @@ namespace VeriFactu.Xml
         #region Propiedades Públicas Estáticas
 
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.
+        /// Prefijo de espacios de nombres AEAT TIKE CONT.  
         /// </summary>
         public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
 

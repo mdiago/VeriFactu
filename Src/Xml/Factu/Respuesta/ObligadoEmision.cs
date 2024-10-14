@@ -37,44 +37,26 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Xml.Serialization;
-using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Anulacion;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
 
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.Xml.Factu.Respuesta
 {
+
     /// <summary>
-    /// SOAP body.
+    /// Datos del obligado de la presentación.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
-    {      
-
-        #region Construtores de Instancia
-
-        /// <summary>
-        /// Body del envelope.
-        /// </summary>
-        public Body()
-        {
-        }
-
-        #endregion
+    [XmlType(AnonymousType = true, Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd")]
+    [XmlRoot(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd", IsNullable = false)]
+    public class ObligadoEmision
+    {
 
         #region Propiedades Públicas de Instancia
 
-        /// <summary>
-        /// Registro.
-        /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(AltaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("BajaFactuSistemaFacturacion", typeof(BajaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        public object Registro { get; set; }
+        /// <remarks/>
+        public string NombreRazon { get; set; }
+
+        /// <remarks/>
+        public string NIF { get; set; }
 
         #endregion
 
