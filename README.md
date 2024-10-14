@@ -61,6 +61,33 @@ Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}");
 
 ```
 
+Seguimos con la anulación de una factura previamente remitida:
+
+```C#
+// Creamos una instacia de la clase factura con los datos del documento a anular
+var invoice = new Invoice()
+{
+    InvoiceType = TipoFactura.F1,
+    InvoiceID = "TEST003",
+    InvoiceDate = new DateTime(2024, 10, 14),
+    SellerID = "B72877814",
+    SellerName = "WEFINZ GANDIA SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+};
+
+// Creamos la cancelación de la factura
+var invoiceCancellation = new InvoiceCancellation(invoice);
+
+// Guardamos la cancelación factura
+invoiceCancellation.Save();
+
+// Consultamos el resultado devuelto por la AEAT
+Debug.Print($"Respuesta de la AEAT:\n{invoiceCancellation.Response}");
+
+```
+
 # Ejemplos
 
 ## 1. Generación de la huella o hash de un registro de alta de factura
