@@ -37,44 +37,45 @@
     address: info@irenesolutions.com
  */
 
-using System;
-
-namespace VeriFactu.Xml.Factu.Anulacion
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Registro de alta de facturas.
+    /// Tipo de registro (alta inicial, alta sustitutiva). 
+    /// Contiene la operación a realizar en el sistema de.
+    /// la AEAT, lo que forma parte del detalle de las 
+    /// circunstancias de generación del registro de facturación.
+    /// Alfanumérico (2)  L16.
     /// </summary>
-    [Serializable]
-    public class RegistroBajaFactura
+    public enum TipoRegistroAEAT
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// Alta inicial del registro de facturación en la AEAT.
+        /// </summary>
+        T0,
 
         /// <summary>
-        /// Registro facturación.
+        ///Alta inicial del registro de facturación en la AEAT.
         /// </summary>
-        public RegistroFacturacion RegistroFacturacion { get; set; }
+        T1,
 
         /// <summary>
-        /// Datos de control.
+        /// Anulación inicial del registro de facturación en la AEAT.
         /// </summary>
-        public DatosControl DatosControl { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        T2,
 
         /// <summary>
-        /// Representación textual de la instancia.
+        ///Anulación inicial del registro de facturación en la AEAT.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{RegistroFacturacion}-{DatosControl})";
-        }
+        T3,
 
-        #endregion
+        /// <summary>
+        /// Anulación inicial del registro de facturación cuando no existe
+        /// el registro de facturacion que se quiere anular en la AEAT.
+        /// </summary>
+        T4
+     
 
     }
 

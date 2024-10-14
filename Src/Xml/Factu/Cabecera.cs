@@ -40,7 +40,7 @@
 using System;
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>

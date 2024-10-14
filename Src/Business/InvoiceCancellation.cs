@@ -38,30 +38,75 @@
  */
 
 using System;
-using System.Xml.Serialization;
+using System.Collections.Generic;
+using System.Text;
 using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
+using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.Business
 {
+
     /// <summary>
-    /// SOAP body.
+    /// Representa una entrada de factura en el sistema.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
+    public class InvoiceCancellation : InvoiceEntry
     {      
 
         #region Construtores de Instancia
 
         /// <summary>
-        /// Body del envelope.
+        /// Constructor.
         /// </summary>
-        public Body()
+        /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
+        public InvoiceCancellation(Invoice invoice) : base(invoice)
         {
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia 
+
+        /// <summary>
+        /// Establece el registro relativo a la entrada
+        /// a contabilizar y enviar.
+        /// </summary>
+        internal override void SetRegistro()
+        {
+
+            Registro = Invoice.GetRegistroAnulacion();
+
+        }
+
+        /// <summary>
+        /// Genera el sobre SOAP.
+        /// </summary>
+        /// <returns>Sobre SOAP.</returns>
+        internal override Envelope GetEnvelope()
+        {
+
+            return new Envelope()
+            {
+                Body = new Body()
+                {
+                    Registro = new RegFactuSistemaFacturacion()
+                    {
+                        Cabecera = new Cabecera()
+                        {
+                            ObligadoEmision = new Interlocutor()
+                            {
+                                NombreRazon = Invoice.SellerName,
+                                NIF = Invoice.SellerID
+                            }
+                        },
+                        RegistroFactura = new List<object>()
+                        {
+                            Registro as RegistroAnulacion
+                        }
+                    }
+                }
+            };
+
         }
 
         #endregion
@@ -69,12 +114,21 @@ namespace VeriFactu.Xml.Soap
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro.
+        /// Identificador de la anulación de factura.
         /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(RegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        public object Registro { get; set; }
+        public override string InvoiceEntryID => BitConverter.ToString(Encoding.UTF8.GetBytes($"{Invoice.InvoiceID}.DEL")).Replace("-", "");
+
+        /// <summary>
+        /// Path del directorio de archivado de los datos de la
+        /// cadena.
+        /// </summary>
+        public override string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.DEL.xml";
+
+        /// <summary>
+        /// Path del directorio de archivado de los datos de la
+        /// cadena.
+        /// </summary>
+        public override string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.DEL.xml";   
 
         #endregion
 

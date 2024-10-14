@@ -54,20 +54,7 @@ namespace VeriFactu.Net
     /// Esta clase gestiona las oparaciones con los servicios web de la AEAT para el VeriFactu.
     /// </summary>
     public class Wsd
-    {
-
-        #region Variables Privadas Estáticas
-
-        /// <summary>
-        /// Operaciones disponibles en el webservice por tipo de registro.
-        /// </summary>
-        static Dictionary<Type, string> _Operations = new Dictionary<Type, string>()
-        {
-            { typeof(AltaFactuSistemaFacturacion),  "AltaFactuSistemaFacturacion"},
-            { typeof(BajaFactuSistemaFacturacion),  "BajaFactuSistemaFacturacion"}
-        };
-
-        #endregion
+    {       
 
         #region Métodos Privados Estáticos
 

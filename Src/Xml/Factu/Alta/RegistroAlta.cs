@@ -80,9 +80,11 @@ namespace VeriFactu.Xml.Factu.Alta
         internal protected override string GetHashTextInput()
         {
 
-            return $"IDEmisorFactura={IDFactura?.IDEmisorFactura}" +
-                $"&NumSerieFactura={IDFactura?.NumSerieFactura}" +
-                $"&FechaExpedicionFactura={IDFactura?.FechaExpedicionFactura}" +
+            IDFactura = IDFacturaAlta;
+
+            return $"IDEmisorFactura={IDFacturaAlta?.IDEmisorFactura}" +
+                $"&NumSerieFactura={IDFacturaAlta?.NumSerieFactura}" +
+                $"&FechaExpedicionFactura={IDFacturaAlta?.FechaExpedicionFactura}" +
                 $"&TipoFactura={TipoFactura}" +
                 $"&CuotaTotal={CuotaTotal}" +
                 $"&ImporteTotal={ImporteTotal}" +
@@ -102,9 +104,9 @@ namespace VeriFactu.Xml.Factu.Alta
         protected override string GetValidateUrlParams()
         {
 
-            var nif = HttpUtility.UrlEncode($"{IDFactura?.IDEmisorFactura}");
-            var numserie = HttpUtility.UrlEncode($"{IDFactura?.NumSerieFactura}");
-            var fecha = HttpUtility.UrlEncode($"{IDFactura?.FechaExpedicionFactura}");
+            var nif = HttpUtility.UrlEncode($"{IDFacturaAlta?.IDEmisorFactura}");
+            var numserie = HttpUtility.UrlEncode($"{IDFacturaAlta?.NumSerieFactura}");
+            var fecha = HttpUtility.UrlEncode($"{IDFacturaAlta?.FechaExpedicionFactura}");
             var importe = HttpUtility.UrlEncode($"{ImporteTotal}");
 
             return $"nif={nif}&numserie={numserie}&fecha={fecha}&importe={importe}";
@@ -133,7 +135,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// a expedir la factura, el número de factura y la fecha.
         /// </summary>
         [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSF, Order = 2)]
-        public override IDFactura IDFactura { get; set; }
+        public IDFactura IDFacturaAlta { get; set; }
 
         /// <summary>
         /// <para>Dato adicional de contenido libre con el objetivo de que se pueda
@@ -460,7 +462,6 @@ namespace VeriFactu.Xml.Factu.Alta
         [XmlElement("Huella", Namespace = Namespaces.NamespaceSF, Order = 30)]
         public string OrderedHuella { get; set; }
 
-
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -471,7 +472,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{TipoFactura}-{IDFactura}";
+            return $"{TipoFactura}-{IDFacturaAlta}";
         }
 
         #endregion

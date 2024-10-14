@@ -70,12 +70,12 @@ namespace VeriFactu.Business
         /// <summary>
         /// Sobre SOAP de respuesta de la AEAT.
         /// </summary>
-        private Envelope ResponseEnvelope{ get;set; }
+        internal Envelope ResponseEnvelope{ get;set; }
 
         /// <summary>
         /// Error Fault.
         /// </summary>
-        private Fault ErrorFault
+        internal Fault ErrorFault
         {
 
             get
@@ -93,7 +93,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Respueta AEAT.
         /// </summary>
-        private RespuestaRegFactuSistemaFacturacion RespuestaRegFactuSistemaFacturacion
+        internal RespuestaRegFactuSistemaFacturacion RespuestaRegFactuSistemaFacturacion
         {
 
             get
@@ -107,7 +107,6 @@ namespace VeriFactu.Business
             }
 
         }
-
 
         #endregion
 
@@ -152,7 +151,7 @@ namespace VeriFactu.Business
         /// </summary>
         /// <param name="invoice">Instancia de la clase Invlice a verificar.</param>
         /// <returns>Lista con los errores encontrados.</returns>
-        private List<string> GetArgErrors(Invoice invoice)
+        internal virtual List<string> GetArgErrors(Invoice invoice)
         {
 
             var errors = new List<string>();
@@ -178,7 +177,7 @@ namespace VeriFactu.Business
         /// factura por el incumplimiento de reglas de negocio.
         /// </summary>
         /// <returns>Lista con los errores encontrados.</returns>
-        private List<string> GetBusErrors()
+        internal List<string> GetBusErrors()
         {
 
             var errors = new List<string>();
@@ -200,7 +199,7 @@ namespace VeriFactu.Business
         /// envío de registro a gestionar.</param>
         /// <returns>Ruta de los registros contabilizados y
         /// envíados para un vendedor en concreto.</returns>
-        private string GetOutBoxPath(string sellerID)
+        internal string GetOutBoxPath(string sellerID)
         {
 
             var dir = $"{Settings.Current.OutboxPath}{sellerID}";
@@ -221,7 +220,7 @@ namespace VeriFactu.Business
         /// envío de registro a gestionar.</param>
         /// <returns>Ruta respuestas de los registros contabilizados y
         /// envíados para un vendedor en concreto.</returns>
-        private string GetInBoxPath(string sellerID)
+        internal string GetInBoxPath(string sellerID)
         {
 
             var dir = $"{Settings.Current.InboxPath}{sellerID}";
@@ -242,7 +241,7 @@ namespace VeriFactu.Business
         /// envío de registro a gestionar.</param>
         /// <returns>Ruta de los registros contabilizados y
         /// envíados para un vendedor en concreto.</returns>
-        private string GetInvoiceEntryPath(string year)
+        internal string GetInvoiceEntryPath(string year)
         {
 
             var dir = $"{OutboxPath}{year}";
@@ -263,7 +262,7 @@ namespace VeriFactu.Business
         /// envío de registro a gestionar.</param>
         /// <returns>Ruta respuestas de los registros contabilizados y
         /// envíados para un vendedor en concreto.</returns>
-        private string GetResponsesPath(string year)
+        internal string GetResponsesPath(string year)
         {
 
             var dir = $"{InboxPath}{year}";
@@ -297,9 +296,9 @@ namespace VeriFactu.Business
             {
                 Body = new Body()
                 {
-                    Registro = new AltaFactuSistemaFacturacion()
+                    Registro = new RegFactuSistemaFacturacion()
                     {
-                        Cabecera = new Xml.Factu.Alta.Cabecera()
+                        Cabecera = new Xml.Factu.Cabecera()
                         {
                             ObligadoEmision = new Interlocutor()
                             {
@@ -307,7 +306,7 @@ namespace VeriFactu.Business
                                 NIF = Invoice.SellerID
                             }
                         },
-                        RegistroAltaFacturas = new List<RegistroAlta>()
+                        RegistroFactura = new List<object>()
                         {
                             Registro as RegistroAlta
                         }
@@ -358,7 +357,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Identificador de la factura.
         /// </summary>
-        public string InvoiceEntryID => BitConverter.ToString(Encoding.UTF8.GetBytes(Invoice.InvoiceID)).Replace("-", "");
+        public virtual string InvoiceEntryID => BitConverter.ToString(Encoding.UTF8.GetBytes(Invoice.InvoiceID)).Replace("-", "");
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
@@ -388,13 +387,13 @@ namespace VeriFactu.Business
         /// Path del directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.xml";
+        public virtual string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.xml";
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.xml";
+        public virtual string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.xml";
 
         /// <summary>
         /// Objeto Invoice de la entrada.
@@ -404,7 +403,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Registro Verifactu.
         /// </summary>
-        public Registro Registro { get; private set; }
+        public Registro Registro { get; protected set; }
 
         /// <summary>
         /// Gestor de cadena de bloques para el registro.

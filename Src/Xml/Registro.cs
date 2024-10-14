@@ -231,7 +231,7 @@ namespace VeriFactu.Xml
         /// Datos de identificación de factura expedida para
         /// operaciones de baja y consulta.
         /// </summary>
-        [XmlElement("IDFactura", Namespace = Namespaces.NamespaceSF, Order = 2)]
+        [XmlIgnore()]
         public virtual IDFactura IDFactura { get; set; }
 
         /// <summary>

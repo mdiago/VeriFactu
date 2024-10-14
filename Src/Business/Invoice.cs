@@ -43,6 +43,7 @@ using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Factu.Anulacion;
 
 namespace VeriFactu.Business
 {
@@ -201,7 +202,7 @@ namespace VeriFactu.Business
             var registroAlta = new RegistroAlta()
             {
                 IDVersion = Settings.Current.IDVersion,
-                IDFactura = new IDFactura()
+                IDFacturaAlta = new IDFactura()
                 {
                     IDEmisorFactura = SellerID,
                     NumSerieFactura = InvoiceID,
@@ -228,6 +229,31 @@ namespace VeriFactu.Business
             };
 
             return registroAlta;
+
+        }
+
+        /// <summary>
+        /// Obtiene el registro de alta para verifactu.
+        /// </summary>
+        /// <returns>Registro de alta para verifactu</returns>
+        public RegistroAnulacion GetRegistroAnulacion()
+        {           
+
+            var registroAnulacion = new RegistroAnulacion()
+            {
+                IDVersion = Settings.Current.IDVersion,
+                IDFacturaAnulada = new IDFactura()
+                {
+                    IDEmisorFacturaAnulada = SellerID,
+                    NumSerieFacturaAnulada = InvoiceID,
+                    FechaExpedicionFacturaAnulada = XmlParser.GetXmlDate(InvoiceDate)
+                },
+                SistemaInformatico = Settings.Current.SistemaInformatico,
+                TipoHuella = TipoHuella.Sha256,
+                TipoHuellaSpecified = true
+            };
+
+            return registroAnulacion;
 
         }
 

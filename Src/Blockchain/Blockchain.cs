@@ -152,9 +152,9 @@ namespace VeriFactu.Blockchain
                         Huella = huella,
                         IDFactura = new IDFactura()
                         {
-                            FechaExpedicionFactura = fechaExpedicionFactura,
-                            IDEmisorFactura = idEmisorFactura,
-                            NumSerieFactura = numSerieFactura
+                            FechaExpedicion = fechaExpedicionFactura,
+                            IDEmisor = idEmisorFactura,
+                            NumSerie = numSerieFactura
                         }
                     };
 
@@ -239,9 +239,9 @@ namespace VeriFactu.Blockchain
                 RegistroAnterior = new RegistroAnterior()
                 {
                     Huella = Current.Huella,
-                    FechaExpedicionFactura = Current.IDFactura.FechaExpedicionFactura,
-                    IDEmisorFactura = Current.IDFactura.IDEmisorFactura,
-                    NumSerieFactura = Current.IDFactura.NumSerieFactura
+                    FechaExpedicionFactura = Current.IDFactura.FechaExpedicion,
+                    IDEmisorFactura = Current.IDFactura.IDEmisor,
+                    NumSerieFactura = Current.IDFactura.NumSerie
                 }
             };
 
@@ -292,9 +292,9 @@ namespace VeriFactu.Blockchain
             File.WriteAllText(BlockchainVarFileName, $"{CurrentID}{_CsvSeparator}" +    // 0
                 $"{CurrentTimeStamp}{_CsvSeparator}" +                                  // 1
                 $"{Current.Huella}{_CsvSeparator}" +                                    // 2
-                $"{Current.IDFactura.FechaExpedicionFactura}{_CsvSeparator}" +          // 3
-                $"{Current.IDFactura.IDEmisorFactura}{_CsvSeparator}" +                 // 4
-                $"{Current.IDFactura.NumSerieFactura}");                                // 5
+                $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +                 // 3
+                $"{Current.IDFactura.IDEmisor}{_CsvSeparator}" +                        // 4
+                $"{Current.IDFactura.NumSerie}");                                       // 5
 
         }
 
@@ -308,9 +308,9 @@ namespace VeriFactu.Blockchain
             string line = $"{CurrentID}{_CsvSeparator}" +
                 $"{CurrentTimeStamp}{_CsvSeparator}" +
                 $"{Current.Huella}{_CsvSeparator}" +
-                $"{Current.IDFactura.FechaExpedicionFactura}{_CsvSeparator}" +
-                $"{Current.IDFactura.IDEmisorFactura}{_CsvSeparator}" +
-                $"{Current.IDFactura.NumSerieFactura}{_CsvSeparator}" +
+                $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +
+                $"{Current.IDFactura.IDEmisor}{_CsvSeparator}" +
+                $"{Current.IDFactura.NumSerie}{_CsvSeparator}" +
                 $"[{Current.GetHashTextInput()}]";
 
             File.AppendAllText(BlockchainDataFileName, $"{line}\n");
@@ -408,8 +408,8 @@ namespace VeriFactu.Blockchain
         /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{SellerID} ({CurrentID}, {Current?.IDFactura?.NumSerieFactura}," +
-                $" {Current?.IDFactura?.FechaExpedicionFactura}, {Current?.Huella})";
+            return $"{SellerID} ({CurrentID}, {Current?.IDFactura?.NumSerie}," +
+                $" {Current?.IDFactura?.FechaExpedicion}, {Current?.Huella})";
         }
 
         #endregion
