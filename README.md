@@ -21,13 +21,10 @@ Para emprezar, veamos un ejemplo sencillo de registro de una factura; El registr
 ```C#
 
 // Creamos una instacia de la clase factura
-var invoice = new Invoice()
+var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
-    InvoiceID = "TEST007",
-    InvoiceDate = new DateTime(2024, 9, 13),
-    SellerID = "B12959755",
-    SellerName = "IRENE SOLUTIONS SL",
+    SellerName = "WEFINZ GANDIA SL",
     BuyerID = "B44531218",
     BuyerName = "WEFINZ SOLUTIONS SL",
     Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
@@ -68,16 +65,9 @@ Seguimos con la anulación de una factura previamente remitida:
 
 ```C#
 // Creamos una instacia de la clase factura con los datos del documento a anular
-var invoice = new Invoice()
+var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 {
-    InvoiceType = TipoFactura.F1,
-    InvoiceID = "TEST003",
-    InvoiceDate = new DateTime(2024, 10, 14),
-    SellerID = "B72877814",
     SellerName = "WEFINZ GANDIA SL",
-    BuyerID = "B44531218",
-    BuyerName = "WEFINZ SOLUTIONS SL",
-    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
 };
 
 // Creamos la cancelación de la factura
@@ -103,12 +93,9 @@ En este ejemplo calcularemos el hash de el registro de alta de verifactu que apa
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice() 
+var invoice = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K") 
 {
     InvoiceType = TipoFactura.F1,
-    InvoiceID = "12345678/G33",
-    InvoiceDate = new DateTime(2024, 1, 1),
-    SellerID = "89890001K",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -147,12 +134,9 @@ En este ejemplo obtendremos la url para el servicio de validación de una factur
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice()
+var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 {
     InvoiceType = TipoFactura.F1,
-    InvoiceID = "12345678&G33",
-    InvoiceDate = new DateTime(2024, 1, 1),
-    SellerID = "89890001K",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -182,12 +166,9 @@ En este ejemplo obtendremos la imágen del QR de la url para el servicio de vali
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice()
+var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 {
     InvoiceType = TipoFactura.F1,
-    InvoiceID = "12345678&G33",
-    InvoiceDate = new DateTime(2024, 1, 1),
-    SellerID = "89890001K",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -231,12 +212,9 @@ la cadena de bloques con el primer ejemplo y luego añadiremos a la cadena el se
 ```C#
           
 // Creamos una instacia de la clase factura (primera factura)
-var invoiceFirst = new Invoice()
+var invoiceFirst = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K")
 {
     InvoiceType = TipoFactura.F1,
-    InvoiceID = "12345678/G33",
-    InvoiceDate = new DateTime(2024, 1, 1),
-    SellerID = "89890001K",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -260,12 +238,9 @@ var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID);
 blockchain.Add(registroFirst);
 
 // Creamos una instacia de la clase factura (segunda factura)
-var invoiceSecond = new Invoice()
+var invoiceSecond = new Invoice("12345679/G34", new DateTime(2024, 1, 1), "89890001K")
 {
     InvoiceType = TipoFactura.F1,
-    InvoiceID = "12345679/G34",
-    InvoiceDate = new DateTime(2024, 1, 1),
-    SellerID = "89890001K",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
