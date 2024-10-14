@@ -63,6 +63,29 @@ namespace VeriFactu.Business
 
         #endregion
 
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="invoiceID">Identificador de la factura.</param>
+        /// <param name="invoiceDate">Fecha emisión de documento.</param>
+        /// <param name="sellerID">Identificador del vendedor.</param>        
+        /// <exception cref="ArgumentNullException">Los argumentos invoiceID y sellerID no pueden ser nulos</exception>
+        public Invoice(string invoiceID, DateTime invoiceDate, string sellerID) 
+        {
+
+            if (invoiceID == null || sellerID == null)
+                throw new ArgumentNullException($"Los argumentos invoiceID y sellerID no pueden ser nulos.");
+
+            InvoiceID = invoiceID;
+            InvoiceDate = invoiceDate;
+            SellerID = sellerID;
+
+        }
+
+        #endregion
+
         #region Métodos Privados de Instancia
 
         /// <summary>
@@ -127,12 +150,12 @@ namespace VeriFactu.Business
         /// <summary>
         /// Identificador de la factura.
         /// </summary>
-        public string InvoiceID { get; set; }
+        public string InvoiceID { get; private set; }
 
         /// <summary>
         /// Fecha emisión de documento.
         /// </summary>        
-        public DateTime InvoiceDate { get; set; }
+        public DateTime InvoiceDate { get; private set; }
 
         /// <summary>
         /// Identificador del vendedor.
@@ -140,7 +163,7 @@ namespace VeriFactu.Business
         /// En caso de no existir, se puede utilizar el número DUNS 
         /// o cualquier otro identificador acordado.
         /// </summary>        
-        public string SellerID { get; set; }
+        public string SellerID { get; private set; }
 
         /// <summary>
         /// Nombre del vendedor.

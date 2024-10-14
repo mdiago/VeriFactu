@@ -300,7 +300,17 @@ namespace VeriFactu.Xml
             var content = GetUrlValidate();
             return GetQr(content);
 
-        }  
+        }
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{IDFactura}";
+        }
+
 
         #endregion
 

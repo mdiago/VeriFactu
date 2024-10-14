@@ -44,7 +44,7 @@ namespace VeriFactu.Xml.Factu
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{Cabecera} ({RegistroFactura.Count})";
+            return $"Envío: {Cabecera} ({RegistroFactura.Count})";
         }
 
         #endregion

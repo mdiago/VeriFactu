@@ -186,6 +186,9 @@ namespace VeriFactu.Business
                 errors.Add($"Ya existe una entrada con SellerID: {Invoice.SellerID}" +
                     $" en el año {Invoice.InvoiceDate.Year} con el número {Invoice.InvoiceID}.");
 
+            if (string.IsNullOrEmpty(Invoice.SellerName))
+                errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
+
             return errors;
 
         }
@@ -437,8 +440,8 @@ namespace VeriFactu.Business
                 if (ErrorFault != null)
                     return ErrorFault.faultcode;
 
-                if (RespuestaRegFactuSistemaFacturacion.RespuestaLinea != null && 
-                    RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0 &&
+                if (RespuestaRegFactuSistemaFacturacion?.RespuestaLinea != null && 
+                    RespuestaRegFactuSistemaFacturacion?.RespuestaLinea.Count > 0 &&
                     !string.IsNullOrEmpty(RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].CodigoErrorRegistro))
                     return RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].CodigoErrorRegistro;
 
@@ -460,7 +463,7 @@ namespace VeriFactu.Business
                 if (ErrorFault != null)
                     return ErrorFault.faultstring;
 
-                if (RespuestaRegFactuSistemaFacturacion.RespuestaLinea != null &&
+                if (RespuestaRegFactuSistemaFacturacion?.RespuestaLinea != null &&
                     RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0 &&
                     !string.IsNullOrEmpty(RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].DescripcionErrorRegistro))
                     return RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].DescripcionErrorRegistro;
@@ -524,6 +527,15 @@ namespace VeriFactu.Business
 
             ResponseEnvelope = new Envelope(ResponseFilePath);
 
+        }
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Invoice.SellerID}-{Invoice.InvoiceID}-{Invoice.InvoiceDate:dd/MM/yyyy}";
         }
 
         #endregion
