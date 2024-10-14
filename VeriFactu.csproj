@@ -125,6 +125,8 @@
     <None Include="Doc\AnexoAlta_VERIFACTU.xlsx" />
     <None Include="Doc\AnexoAnulacion_VERIFACTU.xlsx" />
     <None Include="Doc\Help\VeriFactu.chm" />
+    <None Include="Doc\Legal\Declaracion Responsable v1.0.4-alpha.docx" />
+    <None Include="Doc\Legal\Declaracion Responsable v1.0.4-alpha.pdf" />
     <None Include="Doc\Seminario_EEDD_Novedades_SII_SIF_25_octubre_2022.pdf" />
     <None Include="Doc\VERIFACTU_ServicioWeb.pdf" />
   </ItemGroup>
