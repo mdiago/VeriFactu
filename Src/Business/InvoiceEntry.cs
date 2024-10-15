@@ -454,7 +454,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Código de error.
         /// </summary>
-        public string ErrorDesciption
+        public string ErrorDescription
         {
 
             get
