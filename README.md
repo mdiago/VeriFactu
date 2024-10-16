@@ -8,7 +8,7 @@ La finalidad de esta biblioteca es la generación, conservación y envío de reg
 
 La funcionalidad de Verifactu está disponible también en línea. Con ella disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales:
 
-[API REST](https://facturae.irenesolutions.com/verifactu/go)
+:globe_with_meridians: [Acceso al API REST](https://facturae.irenesolutions.com/verifactu/go)
 
 En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas...
 
