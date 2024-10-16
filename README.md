@@ -97,7 +97,6 @@ En este ejemplo calcularemos el hash de el registro de alta de verifactu que apa
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K") 
 {
-    InvoiceType = TipoFactura.F1,
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -138,7 +137,6 @@ En este ejemplo obtendremos la url para el servicio de validación de una factur
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 {
-    InvoiceType = TipoFactura.F1,
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -170,7 +168,6 @@ En este ejemplo obtendremos la imágen del QR de la url para el servicio de vali
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 {
-    InvoiceType = TipoFactura.F1,
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
