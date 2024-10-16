@@ -6,6 +6,10 @@ La finalidad de esta biblioteca es la generación, conservación y envío de reg
 
 [Declaración Responsable](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)
 
+La funcionalidad de la Verifactu está disponible también en API REST:
+
+[Singup](https://facturae.irenesolutions.com/verifactu/go)
+
 En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas...
 
 Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente cualquier tipo de colaboración o sugerencia. 
