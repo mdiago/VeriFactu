@@ -100,8 +100,6 @@ var invoice = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K")
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 10,
             TaxBase = 111.1m,
             TaxAmount = 12.35m
@@ -140,8 +138,6 @@ var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 199.25m,
             TaxAmount = 41.85m
@@ -171,8 +167,6 @@ var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 199.25m,
             TaxAmount = 41.85m
