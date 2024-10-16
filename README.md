@@ -2,9 +2,9 @@
 
 # Descripción
 
-La finalidad de esta biblioteca es la generación, conservación y envío de registros relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU.
+La finalidad de esta biblioteca es la generación, conservación y envío de registros relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ([Declaración Responsable](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)).
 
-[Declaración Responsable](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)
+
 
 [La funcionalidad de la Verifactu está disponible también en API REST](https://facturae.irenesolutions.com/verifactu/go)
 
