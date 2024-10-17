@@ -408,8 +408,10 @@ namespace VeriFactu.Blockchain
         /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
+
             return $"{SellerID} ({CurrentID}, {Current?.IDFactura?.NumSerie}," +
                 $" {Current?.IDFactura?.FechaExpedicion}, {Current?.Huella})";
+
         }
 
         #endregion

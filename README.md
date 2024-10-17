@@ -1,10 +1,16 @@
 ![image](https://github.com/mdiago/VeriFactu/assets/22330809/97e3b3d1-3e54-4834-bf71-911743cee8d7)
 
-# Descripción
+# VeriFactu - Facturación sistema VERI*FACTU de la AEAT
 
-La finalidad de esta biblioteca es la generación, conservación y envío de registros relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU.
+![workflow](https://github.com/mdiago/VeriFactu/actions/workflows/Verifactu.yml/badge.svg)
 
-[Declaración Responsable](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)
+:receipt: ¡Automatiza el envío de facturas con la AEAT de forma fácil y eficiente utilizando VeriFactu!
+
+La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)).
+
+La funcionalidad de Verifactu está disponible también en línea. Con ella disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales:
+
+:globe_with_meridians: [Acceso al API REST](https://facturae.irenesolutions.com/verifactu/go)
 
 En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas...
 
@@ -95,12 +101,9 @@ En este ejemplo calcularemos el hash de el registro de alta de verifactu que apa
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K") 
 {
-    InvoiceType = TipoFactura.F1,
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 10,
             TaxBase = 111.1m,
             TaxAmount = 12.35m
@@ -136,12 +139,9 @@ En este ejemplo obtendremos la url para el servicio de validación de una factur
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 {
-    InvoiceType = TipoFactura.F1,
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 199.25m,
             TaxAmount = 41.85m
@@ -168,12 +168,9 @@ En este ejemplo obtendremos la imágen del QR de la url para el servicio de vali
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 {
-    InvoiceType = TipoFactura.F1,
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 199.25m,
             TaxAmount = 41.85m
