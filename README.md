@@ -1,6 +1,8 @@
 ![image](https://github.com/mdiago/VeriFactu/assets/22330809/97e3b3d1-3e54-4834-bf71-911743cee8d7)
 
-# Descripción
+# VeriFactu - Facturación sistema VERI*FACTU de la AEAT
+
+:receipt: ¡Automatiza el envío de facturas con la AEAT de forma fácil y eficiente utilizando VeriFactu!
 
 La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)).
 
