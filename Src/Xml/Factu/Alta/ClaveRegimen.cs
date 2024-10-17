@@ -166,7 +166,7 @@ namespace VeriFactu.Xml.Factu.Alta
         RegimenEspecialAgriculturaArt25Ley19_1994,
 
         /// <summary>
-        /// Régimen simplificado sólo para IVA ('14').
+        /// Régimen simplificado sólo para IVA ('20').
         /// </summary>
         [XmlEnum("20")]
         RegimenSimplificado

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System;
 using System.Xml.Serialization;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;

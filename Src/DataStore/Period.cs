@@ -37,29 +37,32 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Xml.Serialization;
-using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
-
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.DataStore
 {
+
     /// <summary>
-    /// SOAP body.
+    /// Representa un periodo de facturación de un vendedor o emisor
+    /// de facturas.
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
-    {      
+    public class Period
+    {
 
         #region Construtores de Instancia
 
         /// <summary>
-        /// Body del envelope.
+        /// Constructor.
         /// </summary>
-        public Body()
+        /// <param name="seller">Vendedor o emisor de facturas al
+        /// que corresponde el periodo.</param>
+        /// <param name="periodID">Identificador del periodo.</param>
+        /// <param name="invoiceCount">Número de facturas del periodo.</param>
+        public Period(Seller seller, string periodID, int invoiceCount)
         {
+
+            Seller = seller;
+            PeriodID = periodID;
+            InvoiceCount = invoiceCount;
+
         }
 
         #endregion
@@ -67,25 +70,20 @@ namespace VeriFactu.Xml.Soap
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Registro.
+        /// Vendedor o emisor de facturas al que 
+        /// corresponde el periodo.
         /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(RegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        public object Registro { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        public Seller Seller { get; set; }
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Identificador del periodo.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{Registro}";
-        }
+        public string PeriodID { get; set; }
+
+        /// <summary>
+        /// Número de facturas del periodo.
+        /// </summary>
+        public int InvoiceCount { get; private set; }
 
         #endregion
 

@@ -327,10 +327,8 @@ namespace VeriFactu.Business
 
             // Añadimos el registro de alta
             BlockchainManager.Add(Registro);
-            // Creamos el xml de envío SOAP
-            Envelope = GetEnvelope();
             // Generamos el xml
-            Xml = new XmlParser().GetBytes(Envelope, Namespaces.Items);
+            Xml = GetXml();
             // Guardamos el archivo
             File.WriteAllBytes(InvoiceEntryFilePath, Xml);
 
@@ -526,6 +524,22 @@ namespace VeriFactu.Business
             File.WriteAllText(ResponseFilePath, Response);
 
             ResponseEnvelope = new Envelope(ResponseFilePath);
+
+        }
+
+        /// <summary>
+        /// Devuelve los bytes del XML serializado con los 
+        /// datos actuales.
+        /// </summary>
+        /// <returns>Bytes del XML serializado con los 
+        /// datos actuales.</returns>
+        public byte[] GetXml() 
+        {
+
+            // Creamos el xml de envío SOAP
+            Envelope = GetEnvelope();
+            // Generamos el xml
+            return new XmlParser().GetBytes(Envelope, Namespaces.Items);
 
         }
 

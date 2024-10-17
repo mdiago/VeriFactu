@@ -54,6 +54,8 @@
     <Compile Include="Src\Business\InvoiceCancellation.cs" />
     <Compile Include="Src\Business\InvoiceEntry.cs" />
     <Compile Include="Src\Business\TaxItem.cs" />
+    <Compile Include="Src\DataStore\Period.cs" />
+    <Compile Include="Src\DataStore\Seller.cs" />
     <Compile Include="Src\Net\Wsd.cs" />
     <Compile Include="Src\Qrcode\BitArray.cs" />
     <Compile Include="Src\Qrcode\BitMatrix.cs" />
