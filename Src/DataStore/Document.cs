@@ -38,22 +38,64 @@
  */
 
 using System.Collections.Generic;
-using System.IO;
-using VeriFactu.Config;
-using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Soap;
+using VeriFactu.Xml;
+using System;
 
 namespace VeriFactu.DataStore
 {
 
     /// <summary>
-    /// Representa un vendedor o emisor de facturas
-    /// en el sistema Verifactu.
+    /// Representa un documento de facturación.
     /// </summary>
-    public class Seller
+    public class Document
     {
 
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// Registros del documento (alta / anulación en su caso).
+        /// </summary>
+        List<Registro> _Records;
+
+        #endregion
+
+
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="period">Periodo al que pertenece el documento.</param>
+        /// <param name="record">Registro que pertenece el documento.</param>
+        public Document(Period period, Registro record = null)
+        {
+
+            _Records = new List<Registro>();
+
+            Period = period;
+            AddRecord(record);
+
+        }
+
+        #endregion
+
         #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Periodo al que pertenece el documento.
+        /// </summary>
+        public Period Period { get; private set; }
+
+        /// <summary>
+        /// Identificador del periodo.
+        /// </summary>        
+        public string PeriodID
+        {
+            get
+            {
+                return Period.PeriodID;
+            }
+        }
 
         /// <summary>
         /// Identificador del vendedor.
@@ -61,61 +103,23 @@ namespace VeriFactu.DataStore
         /// En caso de no existir, se puede utilizar el número DUNS 
         /// o cualquier otro identificador acordado.
         /// </summary>        
-        public string SellerID { get; private set; }
+        public string SellerID
+        {
+            get
+            {
+                return Period.SellerID;
+            }
+        }
 
         /// <summary>
         /// Nombre del vendedor.
         /// </summary>        
-        public string SellerName { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos Estáticos
-
-        /// <summary>
-        /// Recupera los vendedores en el sistema.
-        /// </summary>
-        /// <returns>Vendedores en el sistema.</returns>
-        public static Dictionary<string, List<Period>> GetSellers()
+        public string SellerName
         {
-
-            var sellersDic = new Dictionary<string, List<Period>>();
-
-            foreach (var sellerDir in Directory.GetDirectories(Settings.Current.OutboxPath))
+            get
             {
-
-                foreach (var periodDir in Directory.GetDirectories(sellerDir))
-                {
-                    var invoiceFiles = Directory.GetFiles(periodDir);
-
-                    if (invoiceFiles.Length > 0)
-                    {
-
-                        var periodID = Path.GetFileName(periodDir);
-                        var envelope = new Envelope(invoiceFiles[0]);
-                        var registro = (envelope.Body.Registro as RegFactuSistemaFacturacion);
-
-                        var seller = new Seller()
-                        {
-                            SellerID = $"{registro?.Cabecera?.ObligadoEmision?.IDOtro?.ID}{registro?.Cabecera?.ObligadoEmision?.NIF}",
-                            SellerName = $"{registro?.Cabecera?.ObligadoEmision?.NombreRazon}"
-                        };
-
-                        var period = new Period(seller, periodID, invoiceFiles.Length);
-
-                        if (sellersDic.ContainsKey(seller.SellerID))
-                            sellersDic[seller.SellerID].Add(period);
-                        else
-                            sellersDic.Add(seller.SellerID, new List<Period>() { period });
-
-                    }
-
-                }
-
+                return Period.SellerName;
             }
-
-            return sellersDic;
-
         }
 
         #endregion
@@ -123,16 +127,39 @@ namespace VeriFactu.DataStore
         #region Métodos Públicos de Instancia
 
         /// <summary>
+        /// Añade un nuevo registro aldocumento.
+        /// </summary>
+        /// <param name="record">Registro a añadir.</param>
+        public void AddRecord(Registro record) 
+        {
+
+            if(!record.IDFactura.FechaExpedicion.EndsWith(PeriodID))
+                throw new InvalidOperationException($"No se puede añadir un registro con año" +
+                    $" de emisión factura distinto de {PeriodID}.");
+
+            if (record.IDFactura.IDEmisor != SellerID)
+                throw new InvalidOperationException($"No se puede añadir un registro con emisor" +
+                    $" de factura distinto de {SellerID}.");
+
+            if(_Records.Count > 0)
+                if($"{_Records[0].IDFactura}" != $"{record.IDFactura}")
+                    throw new InvalidOperationException($"No se puede añadir un registro con IDFactura" +
+                        $" {record.IDFactura} ya que ya existe un documento con IDFactura {_Records[0].IDFactura}.");
+
+            _Records.Add(record);
+
+        }
+
+        /// <summary>
         /// Representación textual de la instancia.
         /// </summary>
         /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{SellerID} {SellerName}";
+            return $"({SellerID} {SellerName})";
         }
 
         #endregion
 
     }
-
 }

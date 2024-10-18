@@ -37,9 +37,14 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using VeriFactu.Config;
+using VeriFactu.Xml;
+using VeriFactu.Xml.Factu;
+using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Factu.Anulacion;
 using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.DataStore
@@ -67,6 +72,89 @@ namespace VeriFactu.DataStore
             Seller = seller;
             PeriodID = periodID;
             InvoiceCount = invoiceCount;
+
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Devuelve todos los envíos de un vendedor para un periodo
+        /// determinado.
+        /// </summary>
+        /// <returns>Lista de documentos envíados.</returns>
+        private List<Envelope> GetEnvelopes()
+        {
+
+            var envelopes = new List<Envelope>();
+            var envelopeDir = $"{Settings.Current.OutboxPath}{SellerID}{Path.DirectorySeparatorChar}{PeriodID}{Path.DirectorySeparatorChar}";
+            var envelopeFiles = Directory.GetFiles(envelopeDir);
+
+            foreach (var envelopeFile in envelopeFiles)
+                envelopes.Add(new Envelope(envelopeFile));
+
+            return envelopes;
+
+        }
+
+        /// <summary>
+        /// Diccionario de documentos.
+        /// </summary>
+        /// <param name="envelopes">Mensajes envíados al la AEAT.</param>
+        /// <returns>Diccionario de mensajes enviados a Verifactu de la AEAT de un
+        /// emisor y periodo determinados.</returns>
+        private Dictionary<string, Document> GetDocuments(List<Envelope> envelopes)
+        {
+
+            var documents = new Dictionary<string, Document>();
+
+            foreach (var envelope in envelopes)
+            {
+
+                var regFactuSistemaFacturacion = envelope.Body.Registro as RegFactuSistemaFacturacion;
+
+                if (regFactuSistemaFacturacion == null)
+                    throw new InvalidOperationException($"Error: Encontrado un envío de mensaje SOAP con propiedad Body desconocida {regFactuSistemaFacturacion}");
+
+                var registros = regFactuSistemaFacturacion?.RegistroFactura as IList<object>;
+
+                if (registros == null)
+                    throw new InvalidOperationException($"Error: Encontrado un RegFactuSistemaFacturacion que no es una lista {regFactuSistemaFacturacion}");
+
+                if (registros.Count == 0)
+                    throw new InvalidOperationException($"Error: Encontrado un RegFactuSistemaFacturacion sin elementos {registros}");
+
+                foreach (var registro in registros)
+                {
+
+                    var alta = registro as RegistroAlta;
+                    var baja = registro as RegistroAnulacion;
+
+                    var record = registro as Registro;
+
+                    if (record == null)
+                        throw new InvalidOperationException($"Error: Encontrado un envío de mensaje SOAP con propiedad Body desconocida {registro}");
+
+                    if (alta != null)
+                        record.IDFactura = alta.IDFacturaAlta;
+
+                    if (baja != null)
+                        record.IDFactura = baja.IDFacturaAnulada;
+
+                    var recordID = $"{record.IDFactura}";
+
+                    if (documents.ContainsKey(recordID))
+                        documents[recordID].AddRecord(record);
+                    else
+                        documents.Add(recordID, new Document(this, record));
+
+
+                }
+
+            }
+
+            return documents;
 
         }
 
@@ -120,21 +208,15 @@ namespace VeriFactu.DataStore
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Devuelve todos los envíos de un vendedor para un periodo
-        /// determinado.
+        /// Recupera un diccionario de documentos del periodo
+        /// cuya clave es el IDFactura.
         /// </summary>
-        /// <returns>Lista de documentos envíados.</returns>
-        public List<Envelope> Envelopes()
+        /// <returns>Diccionario de documentos del periodo.</returns>
+        public Dictionary<string, Document> GetDocuments()
         {
 
-            var envelopes = new List<Envelope>();
-            var envelopeDir = $"{Settings.Current.OutboxPath}{SellerID}{Path.DirectorySeparatorChar}{PeriodID}";
-            var envelopeFiles = Directory.GetFiles(envelopeDir);
-
-            foreach (var envelopeFile in envelopeFiles)
-                envelopes.Add(new Envelope(envelopeFile));
-
-            return envelopes;
+            var envelopes = GetEnvelopes();
+            return GetDocuments(envelopes);
 
         }
 
@@ -144,7 +226,9 @@ namespace VeriFactu.DataStore
         /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
+
             return $"{Seller} ({InvoiceCount:#,##0})";
+
         }
 
         #endregion

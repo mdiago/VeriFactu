@@ -215,6 +215,19 @@ namespace VeriFactu.Xml.Factu.Anulacion
 
         #endregion
 
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{IDFacturaAnulada}";
+        }
+
+        #endregion
+
     }
 
 }
