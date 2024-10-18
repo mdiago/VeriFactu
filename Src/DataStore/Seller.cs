@@ -120,6 +120,19 @@ namespace VeriFactu.DataStore
 
         #endregion
 
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns>Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{SellerID} {SellerName}";
+        }
+
+        #endregion
+
     }
 
 }

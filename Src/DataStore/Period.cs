@@ -37,6 +37,11 @@
     address: info@irenesolutions.com
  */
 
+using System.Collections.Generic;
+using System.IO;
+using VeriFactu.Config;
+using VeriFactu.Xml.Soap;
+
 namespace VeriFactu.DataStore
 {
 
@@ -73,17 +78,74 @@ namespace VeriFactu.DataStore
         /// Vendedor o emisor de facturas al que 
         /// corresponde el periodo.
         /// </summary>
-        public Seller Seller { get; set; }
+        public Seller Seller { get; private set; }
+
+        /// <summary>
+        /// Identificador del vendedor.
+        /// Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+        /// En caso de no existir, se puede utilizar el número DUNS 
+        /// o cualquier otro identificador acordado.
+        /// </summary>        
+        public string SellerID
+        {
+            get 
+            { 
+                return Seller.SellerID; 
+            }
+        }
+
+        /// <summary>
+        /// Nombre del vendedor.
+        /// </summary>        
+        public string SellerName
+        {
+            get
+            {
+                return Seller.SellerName;
+            }
+        }
 
         /// <summary>
         /// Identificador del periodo.
         /// </summary>
-        public string PeriodID { get; set; }
+        public string PeriodID { get; private set; }
 
         /// <summary>
         /// Número de facturas del periodo.
         /// </summary>
         public int InvoiceCount { get; private set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Devuelve todos los envíos de un vendedor para un periodo
+        /// determinado.
+        /// </summary>
+        /// <returns>Lista de documentos envíados.</returns>
+        public List<Envelope> Envelopes()
+        {
+
+            var envelopes = new List<Envelope>();
+            var envelopeDir = $"{Settings.Current.OutboxPath}{SellerID}{Path.DirectorySeparatorChar}{PeriodID}";
+            var envelopeFiles = Directory.GetFiles(envelopeDir);
+
+            foreach (var envelopeFile in envelopeFiles)
+                envelopes.Add(new Envelope(envelopeFile));
+
+            return envelopes;
+
+        }
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns>Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Seller} ({InvoiceCount:#,##0})";
+        }
 
         #endregion
 
