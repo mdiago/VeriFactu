@@ -101,7 +101,9 @@
     <Compile Include="Src\Xml\Factu\Respuesta\Cabecera.cs" />
     <Compile Include="Src\Xml\Factu\Respuesta\DatosPresentacion.cs" />
     <Compile Include="Src\Xml\Factu\Respuesta\IDFactura.cs" />
-    <Compile Include="Src\Xml\Factu\Respuesta\ObligadoEmision.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\Iterlocutor.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\Operacion.cs" />
+    <Compile Include="Src\Xml\Factu\Respuesta\RemisionVoluntaria.cs" />
     <Compile Include="Src\Xml\Factu\Respuesta\RespuestaLinea.cs" />
     <Compile Include="Src\Xml\Factu\Respuesta\RespuestaRegFactuSistemaFacturacion.cs" />
     <Compile Include="Src\Xml\Factu\TipoHuella.cs" />

@@ -46,7 +46,7 @@ namespace VeriFactu.Xml.Factu.Respuesta
     /// <summary>
     /// Respuesta a una presentación.
     /// </summary>
-    [XmlRoot(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+    [XmlRoot(Namespace = Namespaces.NamespaceTikR)]
     public class RespuestaRegFactuSistemaFacturacion
     {
 

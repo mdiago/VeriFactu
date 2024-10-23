@@ -45,7 +45,7 @@ namespace VeriFactu.Xml.Factu.Respuesta
     /// <summary>
     /// Cabecera de respuesta.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
     public partial class Cabecera
     {
 
@@ -54,8 +54,25 @@ namespace VeriFactu.Xml.Factu.Respuesta
         /// <summary>
         /// Obligado tributario emisión.
         /// </summary>
-        [XmlElement(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd")]
-        public ObligadoEmision ObligadoEmision { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public Iterlocutor ObligadoEmision { get; set; }
+
+        /// <summary>
+        /// Representante.
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public Iterlocutor Representante { get; set; }
+
+        /// <summary>
+        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
+        /// de los registros de facuración al sistema «VERI*FACTU».</para>
+        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
+        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
+        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
+        /// sistema informático de facturación…)</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public RemisionVoluntaria RemisionVoluntaria { get; set; }
 
         #endregion
 

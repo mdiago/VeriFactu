@@ -122,7 +122,7 @@ namespace VeriFactu.Qrcode
             try {
                 return GetVersionForNumber((dimension - 17) >> 2);
             }
-            catch (ArgumentException iae) {
+            catch (ArgumentException) {
                 throw;
             }
         }

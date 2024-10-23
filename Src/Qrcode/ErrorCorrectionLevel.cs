@@ -88,14 +88,26 @@ namespace VeriFactu.Qrcode
             return ordinal;
         }
 
+        /// <summary>
+        /// Returns bits.
+        /// </summary>
+        /// <returns>bits</returns>
         public int GetBits() {
             return bits;
         }
 
+        /// <summary>
+        /// Returns name.
+        /// </summary>
+        /// <returns>name</returns>
         public String GetName() {
             return name;
         }
 
+        /// <summary>
+        /// Textual representation of the instance. 
+        /// </summary>
+        /// <returns>Textual representation of the instance. </returns>
         public override String ToString() {
             return name;
         }

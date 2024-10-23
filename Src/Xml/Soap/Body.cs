@@ -70,7 +70,7 @@ namespace VeriFactu.Xml.Soap
         /// Registro.
         /// </summary>
         [XmlElement("RegFactuSistemaFacturacion", typeof(RegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceTikR)]
         [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
         public object Registro { get; set; }
 
