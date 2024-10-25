@@ -26,8 +26,9 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 > [!IMPORTANT]
 > Antes de comenzar a probar los envíos a la AEAT hay que configurar correctamente el certificado con el que vamos a trabajar.
+> Antes de realizar ningún envío a la AEAT necesitamos configurar el certificado con el que vamos a trabajar. Pordemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del > almacén de certificados de windows. La configuración del sistema esta accesible mediante la propiedad estática 'Current' del objeto `Settings'. En la siguiente tabla se describen los valores de configuración relacionados con el > > certificado a utilizar:
 
-Antes de realizar ningún envío a la AEAT necesitamos configurar el certificado con el que vamos a trabajar. Pordemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del almacén de certificados de windows. La configuración del sistema esta accesible mediante la propiedad estática 'Current' del objeto `Settings'. En la siguiente tabla se describen los valores de configuración relacionados con el certificado a utilizar:
+
 
 
 | Propiedade  | Descripción |
