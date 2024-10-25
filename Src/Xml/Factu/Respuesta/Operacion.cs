@@ -43,34 +43,18 @@ namespace VeriFactu.Xml.Factu.Respuesta
 {
 
     /// <summary>
-    /// Datos de identificación de factura expedida para operaciones de baja y consulta.
+    /// Contiene el tipo de operación y los parámetros opcionales asociados al mismo. 
     /// </summary>
-    [XmlRoot("IDFactura")]
-    public class IDFactura
+    public class Operacion
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// <para>Número de identificación fiscal (NIF) del obligado a expedir la factura.</para>
-        /// <para>FormatoNIF(9).</para>
+        /// Tipo operación Alta o Anulacion.
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public string IDEmisorFactura { get; set; }
-
-        /// <summary>
-        /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
-        /// <para>Alfanumérico(60).</para>
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public string NumSerieFactura { get; set; }
-
-        /// <summary>
-        /// <para>Fecha de expedición de la factura.</para>
-        /// <para>Fecha(dd-mm-yyyy).</para>
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public string FechaExpedicionFactura { get; set; }
+        public string TipoOperacion { get; set; }
 
         #endregion
 
@@ -79,10 +63,10 @@ namespace VeriFactu.Xml.Factu.Respuesta
         /// <summary>
         /// Representación textual de la instancia.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
+        /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{IDEmisorFactura}: {NumSerieFactura} ({FechaExpedicionFactura})";
+            return $"{TipoOperacion}";
         }
 
         #endregion

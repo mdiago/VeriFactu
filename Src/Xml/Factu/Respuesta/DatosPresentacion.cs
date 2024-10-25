@@ -46,7 +46,7 @@ namespace VeriFactu.Xml.Factu.Respuesta
     /// Datos relativos a la presentación a la que
     /// se refiere la respuesta.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
     public class DatosPresentacion
     {
 
@@ -55,13 +55,13 @@ namespace VeriFactu.Xml.Factu.Respuesta
         /// <summary>
         /// NIF del presentador.
         /// </summary>
-        [XmlElement(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd")]
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
         public string NIFPresentador { get; set; }
 
         /// <summary>
         /// Marca de tiempo de la preséntación.
         /// </summary>
-        [XmlElement(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd")]
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
         public string TimestampPresentacion { get; set; }
 
         #endregion

@@ -37,55 +37,41 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
-
 namespace VeriFactu.Xml.Factu.Respuesta
 {
 
     /// <summary>
-    /// Datos de identificación de factura expedida para operaciones de baja y consulta.
+    /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
+    /// de los registros de facuración al sistema «VERI*FACTU».</para>
+    /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
+    /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
+    /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
+    /// sistema informático de facturación…)</para>
     /// </summary>
-    [XmlRoot("IDFactura")]
-    public class IDFactura
+    public class RemisionVoluntaria
     {
 
-        #region Propiedades Públicas de Instancia
-
         /// <summary>
-        /// <para>Número de identificación fiscal (NIF) del obligado a expedir la factura.</para>
-        /// <para>FormatoNIF(9).</para>
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public string IDEmisorFactura { get; set; }
-
-        /// <summary>
-        /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
-        /// <para>Alfanumérico(60).</para>
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public string NumSerieFactura { get; set; }
-
-        /// <summary>
-        /// <para>Fecha de expedición de la factura.</para>
+        /// <para>Última fecha en la que el sistema informático actuará como «VERI*FACTU».
+        /// Después de la misma, el sistema dejará de funcionar como «VERI*FACTU».
+        /// Este campo forma parte del detalle de las circunstancias de generación de los
+        /// registros de facturación actuales y futuros. A rellenar sólo en los casos de
+        /// remisión voluntaria «VERI*FACTU» ante una futura renuncia a continuar con las
+        /// remisiones voluntarias «VERI*FACTU».</para>
         /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public string FechaExpedicionFactura { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        public string FechaFinVeriFactu { get; set; }
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Indicador que especifica si la remisión voluntaria de los registros de facturación
+        /// se ha visto afectada por algún tipo de incidencia técnica (por ej. ausencia de corriente
+        /// eléctrica, problemas de conexión a Internet, fallo del sistema informático de facturación…).
+        /// Si no se informa este campo se entenderá que tiene valor “N”. Este campo forma parte del
+        /// detalle de las circunstancias de generación de los registros de facturación. A rellenar
+        /// sólo en los casos de remisión voluntaria «VERI*FACTU» cuando haya ocurrido alguna
+        /// situación de este tipo.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{IDEmisorFactura}: {NumSerieFactura} ({FechaExpedicionFactura})";
-        }
-
-        #endregion
+        public string Incidencia { get; set; }
 
     }
 

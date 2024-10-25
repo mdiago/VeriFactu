@@ -43,19 +43,25 @@ namespace VeriFactu.Xml.Factu.Respuesta
 {
 
     /// <summary>
-    /// Datos del obligado de la presentación.
+    /// Datos interlocutor.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd")]
-    [XmlRoot(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd", IsNullable = false)]
-    public class ObligadoEmision
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceSF)]
+    [XmlRoot(Namespace = Namespaces.NamespaceSF, IsNullable = false)]
+    public class Iterlocutor
     {
 
         #region Propiedades Públicas de Instancia
 
-        /// <remarks/>
+        /// <summary>
+        /// Nombre-razón social del interlocutor.
+        /// <para> Alfanumérico(120).</para>
+        /// </summary>
         public string NombreRazon { get; set; }
 
-        /// <remarks/>
+        /// <summary>
+        /// NIF del interlocutor.
+        /// <para> FormatoNIF(9).</para>
+        /// </summary>
         public string NIF { get; set; }
 
         #endregion

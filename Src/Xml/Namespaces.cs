@@ -66,6 +66,11 @@ namespace VeriFactu.Xml
         public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
 
         /// <summary>
+        /// Espacio de nombres RespuestaSuministro
+        /// </summary>
+        public const string NamespaceTikR = NamespacePrefix + "RespuestaSuministro.xsd";
+
+        /// <summary>
         /// Espacio de nombres soap
         /// </summary>
         public const string NamespaceSoap = "http://schemas.xmlsoap.org/soap/envelope/";

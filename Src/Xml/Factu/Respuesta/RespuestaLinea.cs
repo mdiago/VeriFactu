@@ -45,7 +45,7 @@ namespace VeriFactu.Xml.Factu.Respuesta
     /// <summary>
     /// Línea de respuesta de la presentación.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
     public class RespuestaLinea
     {
 
@@ -54,9 +54,14 @@ namespace VeriFactu.Xml.Factu.Respuesta
         /// <summary>
         /// Identificador de la factura.
         /// </summary>
-        [XmlElement(Namespace = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/RespuestaSuministro.xsd")]
+        [XmlElement(Namespace = Namespaces.NamespaceTikR)]
 
         public IDFactura IDFactura { get; set; }
+
+        /// <summary>
+        /// Contiene el tipo de operación y los parámetros opcionales asociados al mismo. 
+        /// </summary>
+        public Operacion Operacion { get; set; }
 
         /// <summary>
         /// Estado del registro presentado en el sistema de la AEAT.
