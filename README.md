@@ -22,7 +22,7 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
-> [!IMPORTANTE]
+> [!IMPORTANT]
 > Antes de comenzar a probar los envíos a la AEAT hay que configurar correctamente el certificado con el que vamos a trabajar.
 
 ## Establecer en la configuración los valores para el uso del certificado
