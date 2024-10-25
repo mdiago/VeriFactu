@@ -31,7 +31,8 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 
 
-| Propiedade  | Descripción |
+
+| Propiedad  | Descripción |
 | ------------- | ------------- |
 | CertificatePath  | Ruta al archivo del certificado a utilizar.   |
 | CertificatePassword  | Password del certificado. Este valor sólo es necesario si tenemos establecido el valor para 'CertificatePath' y el certificado tiene clave de acceso. Sólo se utiliza en los certificados cargados desde el sistema de archivos.  |
