@@ -22,12 +22,37 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
+## Establecer en la configuración los valores para el uso del certificado
+
 > [!IMPORTANT]
 > Antes de comenzar a probar los envíos a la AEAT hay que configurar correctamente el certificado con el que vamos a trabajar.
 
-## Establecer en la configuración los valores para el uso del certificado
+Antes de realizar ningún envío a la AEAT necesitamos configurar el certificado con el que vamos a trabajar. Pordemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del almacén de certificados de windows. La configuración del sistema esta accesible mediante la propiedad estática 'Current' del objeto `Settings'. En la siguiente tabla se describen los valores de configuración relacionados con el certificado a utilizar:
 
-Antes de realizar ningún envío a la AEAT necesitamos configurar el certificado con el que vamos a trabajar. Pordemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del almacén de certificados de windows.
+| Propiedade  | Descripción |
+| ------------- | ------------- |
+| CertificatePath  | Ruta al archivo del certificado a utilizar.   |
+| CertificatePassword  | Password del certificado. Este valor sólo es necesario si tenemos establecido el valor para 'CertificatePath' y el certificado tiene clave de acceso. Sólo se utiliza en los certificados cargados desde el sistema de archivos.  |
+| CertificateSerial  | Número de serie del certificado a utilizar. Mediante este número de serie se selecciona del almacén de certificados de windows el certificado con el que realizar las comunicaciones.  |
+| CertificateThumbprint  | Hash o Huella digital del certificado a utilizar. Mediante esta huella digital se selecciona del almacén de certificados de windows el certificado con el que realizar las comunicaciones.    |
+
+En el siguiente ejemplo estableceremos la configuración de nuestro certificado para cargarlo desde el sitema de archivos:
+
+```C#
+
+// Valores actuales de configuración de certificado
+Debug.Print($"{Settings.Current.CertificatePath}");
+Debug.Print($"{Settings.Current.CertificatePassword}");
+
+// Establezco nuevos valores
+Settings.Current.CertificatePath = @"C:\CERTIFICADO.pfx";
+Settings.Current.CertificatePassword = "pass certificado";
+
+// Guardo los cambios
+Settings.Save();
+
+```
+
 
 ## Envío de facturas
 
