@@ -22,6 +22,10 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
+## Establecer en la configuración los valores para el uso del certificado
+
+Antes de realizar ningún envío a la AEAT necesitamos configurar el certificado con el que vamos a trabajar. Pordemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del almacén de certificados de windows.
+
 ## Envío de facturas
 
 Para emprezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
