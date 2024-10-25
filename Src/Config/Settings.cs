@@ -248,7 +248,9 @@ namespace VeriFactu.Config
         public string CertificateSerial { get; set; }
 
         /// <summary>
-        /// Hash o Huella digital del certificado a utilizar.
+        /// Hash o Huella digital del certificado a utilizar. Mediante esta
+        /// huella digital se selecciona del almacén de certificados de
+        /// windows el certificado con el que realizar las comunicaciones.
         /// </summary>
         [XmlElement("CertificateThumbprint")]
         public string CertificateThumbprint { get; set; }
@@ -260,7 +262,10 @@ namespace VeriFactu.Config
         public string CertificatePath { get; set; }
 
         /// <summary>
-        /// Password del certificado.
+        /// Password del certificado. Este valor sólo es necesario si
+        /// tenemos establecido el valor para 'CertificatePath' y el certificado
+        /// tiene clave de acceso. Sólo se utiliza en los certificados
+        /// cargados desde el sistema de archivos.
         /// </summary>
         [XmlElement("CertificatePassword")]
         public string CertificatePassword { get; set; }

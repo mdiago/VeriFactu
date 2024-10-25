@@ -53,6 +53,13 @@
     <Compile Include="Src\Business\Invoice.cs" />
     <Compile Include="Src\Business\InvoiceCancellation.cs" />
     <Compile Include="Src\Business\InvoiceEntry.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEs.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEsDCDniNie.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEsDCNif.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEsError.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEsException.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEsPersonTypeCode.cs" />
+    <Compile Include="Src\Business\TaxId\TaxIdEsTypes.cs" />
     <Compile Include="Src\Business\TaxItem.cs" />
     <Compile Include="Src\DataStore\Document.cs" />
     <Compile Include="Src\DataStore\Period.cs" />

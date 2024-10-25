@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using VeriFactu.Business.TaxId;
 using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
@@ -138,6 +139,69 @@ namespace VeriFactu.Business
 
         }
 
+        /// <summary>
+        /// Obtiene la lista de destinatarios.
+        /// </summary>
+        /// <returns>Lista de destinatarios.</returns>
+        private List<Interlocutor> GetDestinatarios() 
+        {
+
+            TaxIdEs taxId = null;
+            var isTaxIdEs = false;
+
+            try 
+            {
+
+                taxId = new TaxIdEs(BuyerID);
+                isTaxIdEs = taxId.IsDCOK;
+
+            } 
+            catch (TaxIdEsException) // Id. fiscal no español
+            {
+
+                isTaxIdEs = false;
+
+            } 
+            catch (Exception ex) 
+            {
+
+                throw (ex);
+
+            }
+
+            if (isTaxIdEs && (BuyerCountryID == "ES" || string.IsNullOrEmpty(BuyerCountryID)))
+                return new List<Interlocutor>()
+                {
+                    new Interlocutor
+                    {
+                        NombreRazon = BuyerName,
+                        NIF = BuyerID
+                    }
+                };
+
+
+            if(string.IsNullOrEmpty(BuyerCountryID))
+                throw new Exception("Si BuyerID no es un identificador español válido" +
+                    " (NIF, DNI, NIE...) es obligatorio que BuyerCountryID tenga un valor.");
+
+            if (!Enum.TryParse<CodigoPais>(BuyerCountryID, out CodigoPais buyerCountryId))
+                throw new Exception($"El código de pais consignado en BuyerCountryID='{BuyerCountryID}' no es válido.");
+
+            return new List<Interlocutor>()
+                {
+                    new Interlocutor
+                    {
+                       IDOtro = new IDOtro()
+                       { 
+                            CodigoPais = buyerCountryId,
+                            ID = BuyerID,
+                            IDType = BuyerIDType
+                       }
+                    }
+                };
+
+        }
+
         #endregion
 
         #region Propiedades Públicas de Instancia
@@ -182,6 +246,19 @@ namespace VeriFactu.Business
         /// Nombre del comprador.
         /// </summary>        
         public string BuyerName { get; set; }
+
+        /// <summary>
+        /// Código del país del destinatario (a veces también denominado contraparte,
+        /// es decir, el cliente) de la operación de la factura expedida.
+        /// <para>Alfanumérico (2) (ISO 3166-1 alpha-2 codes) </para>
+        /// </summary>        
+        public string BuyerCountryID { get; set; }
+
+        /// <summary>
+        /// Clave para establecer el tipo de identificación
+        /// en el pais de residencia. L7.
+        /// </summary>        
+        public IDType BuyerIDType { get; set; }
 
         /// <summary>
         /// Importe total: Total neto + impuestos soportado
@@ -235,14 +312,7 @@ namespace VeriFactu.Business
                 TipoFactura = InvoiceType,
                 TipoFacturaSpecified = true,
                 DescripcionOperacion = Text,
-                Destinatarios = new List<Interlocutor>() 
-                { 
-                    new Interlocutor
-                    { 
-                        NombreRazon = BuyerName,
-                        NIF = BuyerID
-                    }
-                },
+                Destinatarios = GetDestinatarios(),
                 Desglose = GetDesglose(),
                 CuotaTotal = XmlParser.GetXmlDecimal(TotalTaxOutput),
                 ImporteTotal = XmlParser.GetXmlDecimal(TotalAmount),
