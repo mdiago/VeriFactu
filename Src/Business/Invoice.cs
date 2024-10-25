@@ -191,12 +191,13 @@ namespace VeriFactu.Business
                 {
                     new Interlocutor
                     {
-                       IDOtro = new IDOtro()
-                       { 
+                        NombreRazon = BuyerName,
+                        IDOtro = new IDOtro()
+                        { 
                             CodigoPais = buyerCountryId,
                             ID = BuyerID,
                             IDType = BuyerIDType
-                       }
+                        }
                     }
                 };
 
