@@ -124,7 +124,7 @@ namespace VeriFactu.Xml
         internal protected virtual string GetHashTextInput()
         {
 
-            throw new NotImplementedException("La clase base record no implmenta el método GetHashInput.\n" +
+            throw new NotImplementedException("La clase base record no implementa el método GetHashInput.\n" +
                 "Este método debe implementarse en las clases derivadas.");
 
         }
@@ -140,7 +140,7 @@ namespace VeriFactu.Xml
         protected virtual string GetValidateUrlParams()
         {
 
-            throw new NotImplementedException("La clase base record no implmenta el método GetValidateUrlParams.\n" +
+            throw new NotImplementedException("La clase base record no implementa el método GetValidateUrlParams.\n" +
                 "Este método debe implementarse en las clases derivadas.");
 
         }

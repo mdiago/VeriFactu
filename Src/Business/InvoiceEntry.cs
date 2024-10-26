@@ -60,6 +60,15 @@ namespace VeriFactu.Business
     public class InvoiceEntry
     {
 
+        #region Variables Privadas Estáticas
+
+        /// <summary>
+        /// Bloqueo para thread safe.
+        /// </summary>
+        private static readonly object _Locker = new object();
+
+        #endregion
+
         #region Propiedades Privadas de Instacia
 
         /// <summary>
@@ -107,6 +116,11 @@ namespace VeriFactu.Business
             }
 
         }
+
+        /// <summary>
+        /// Indica si la entrada ya ha sido guardada.
+        /// </summary>
+        internal bool IsSaved { get; set; }
 
         #endregion
 
@@ -328,9 +342,33 @@ namespace VeriFactu.Business
             // Añadimos el registro de alta
             BlockchainManager.Add(Registro);
             // Generamos el xml
-            Xml = GetXml();
-            // Guardamos el archivo
-            File.WriteAllBytes(InvoiceEntryFilePath, Xml);
+            Xml = GetXml();            
+
+        }
+
+        /// <summary>
+        /// Devuelve el nombre completo de un archivo xml de respuesta
+        /// de la AEAT cuyo envío ha resultado erróneo.
+        /// </summary>
+        /// <returns>Nombre completo de un archivo xml de respuesta
+        /// de la AEAT que ha resultado erróneo.</returns>
+        private string GetErrorResponseFilePath()
+        {
+
+            return $"{ResponsesPath}{InvoiceEntryID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
+        
+        }
+
+        /// <summary>
+        /// Path de la factura en el directorio de archivado de los datos de la
+        /// cadena si el documento a resultado erróneo.
+        /// </summary>
+        /// <returns>Path de la factura en el directorio de archivado de los datos de la
+        /// cadena si el documento a resultado erróneo.</returns>
+        private string GeErrorInvoiceEntryFilePath() 
+        {
+
+            return $"{InvoiceEntryPath}{InvoiceEntryID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
 
         }
 
@@ -342,12 +380,35 @@ namespace VeriFactu.Business
         {
 
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(InvoiceEntryFilePath);
+
+            using (var msXml = new MemoryStream(Xml)) 
+                xmlDocument.Load(msXml);
 
             var url = Settings.Current.VeriFactuEndPointPrefix;
             var action = $"{url}{Action}";
 
             return Wsd.Call(url, action, xmlDocument);
+
+        }
+
+        /// <summary>
+        /// Deshace cambios de guardado de documente eliminando
+        /// el elemento de la cadena de bloques y marcando los
+        /// archivos relacionados como erróneos.
+        /// </summary>
+        private void Undo() 
+        {
+
+            //Reevierto cambios
+            BlockchainManager.Delete(Registro);
+
+            if (File.Exists(InvoiceEntryFilePath)) 
+            {
+
+                File.Copy(InvoiceEntryFilePath, GeErrorInvoiceEntryFilePath());
+                File.Delete(InvoiceEntryFilePath);
+
+            }
 
         }
 
@@ -385,7 +446,7 @@ namespace VeriFactu.Business
         public string ResponsesPath { get; private set; }
 
         /// <summary>
-        /// Path del directorio de archivado de los datos de la
+        /// Path de la factura en el directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
         public virtual string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.xml";
@@ -518,12 +579,100 @@ namespace VeriFactu.Business
         public void Save()
         {
 
-            Post();
-            Response = Send();
+            if (IsSaved)
+                throw new InvalidOperationException("El objeto InvoiceEntry sólo" +
+                    " puede llamar al método Save() una vez.");
 
-            File.WriteAllText(ResponseFilePath, Response);
+            IsSaved = true;
+            Exception postException = null;
+            Exception sendException = null;
+            Exception responseException = null;
+            Exception undoException = null;
 
-            ResponseEnvelope = new Envelope(ResponseFilePath);
+            lock (_Locker)
+            {
+
+                try
+                {
+
+                    Post();
+
+                }
+                catch (Exception ex)
+                {
+
+                    postException = ex;
+
+                }                
+
+                try
+                {
+                    if(postException == null)
+                        Response = Send();
+
+                }
+                catch (Exception ex)
+                {
+
+                    sendException = ex;
+
+                }
+
+                if (postException == null && sendException == null)
+                {
+
+                    try 
+                    {
+
+                        ResponseEnvelope = Envelope.FromXml(Response);
+
+                        var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GeErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
+                        var responseFilePath = string.IsNullOrEmpty(CSV) ? GetErrorResponseFilePath() : ResponseFilePath;
+
+                        // Almaceno xml envíado
+                        File.WriteAllBytes(invoiceEntryFilePath, Xml);
+                        // Almaceno xml de respuesta correcta
+                        File.WriteAllText(responseFilePath, Response);
+
+                    }
+                    catch (Exception ex) 
+                    {
+
+                        responseException = ex;
+
+                    }
+
+
+                }
+
+                try 
+                {
+
+                    if (string.IsNullOrEmpty(CSV) || sendException != null)
+                        Undo();
+
+                }
+                catch (Exception ex) 
+                {
+
+                    undoException = ex;
+
+                }
+
+            }
+
+            if (postException != null)
+                throw new Exception($"Se ha producido un error al intentar contabilizar" +
+                    $" el envío en la cadena de bloques.", postException);
+
+            if (sendException != null)
+                throw new Exception($"Se ha producido un error al intentar realizar el envío.", sendException);
+
+            if (responseException != null)
+                throw new Exception($"Se ha producido un error al intentar procesar la respuesta el envío.", responseException);
+
+            if (undoException != null)
+                throw new Exception($"Se ha producido un error al deshacer los cambios en la cadena de bloques.", undoException);
 
         }
 
