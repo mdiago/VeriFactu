@@ -56,12 +56,12 @@ namespace VeriFactu.Xml
         public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// Espacio de nombres SF (sum1)
         /// </summary>
         public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
 
         /// <summary>
-        /// Espacio de nombres SF
+        /// Espacio de nombres SF (sum)
         /// </summary>
         public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
 

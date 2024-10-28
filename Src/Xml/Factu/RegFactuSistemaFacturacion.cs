@@ -17,7 +17,7 @@ namespace VeriFactu.Xml.Factu
         /// <summary>
         /// Datos de contexto de un suministro.
         /// </summary>
-        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceSF)]
+        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceSFLR)]
         public Cabecera Cabecera { get; set; }
 
         /// <summary>

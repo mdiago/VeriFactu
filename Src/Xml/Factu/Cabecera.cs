@@ -98,6 +98,7 @@ namespace VeriFactu.Xml.Factu
         /// <summary>
         /// Obligado que suministra la información.
         /// </summary>
+        [XmlElement("ObligadoEmision", Namespace = Namespaces.NamespaceSF)]
         public Interlocutor ObligadoEmision { get; set; }
 
         /// <summary>
