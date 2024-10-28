@@ -24,8 +24,8 @@ namespace VeriFactu.Xml.Factu
         /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
         [XmlArray("RegistroFactura", Namespace = Namespaces.NamespaceSFLR)]
-        [XmlArrayItem("RegistroAlta", typeof(RegistroAlta), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlArrayItem("RegistroAnulacion", typeof(RegistroAnulacion), Namespace = Namespaces.NamespaceSFLR)]
+        [XmlArrayItem("RegistroAlta", typeof(RegistroAlta), Namespace = Namespaces.NamespaceSF)]
+        [XmlArrayItem("RegistroAnulacion", typeof(RegistroAnulacion), Namespace = Namespaces.NamespaceSF)]
         public List<object> RegistroFactura { get; set; }
 
         /// <summary>
