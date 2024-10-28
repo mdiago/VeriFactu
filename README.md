@@ -6,7 +6,7 @@
 
 :receipt: ¡Automatiza el envío de facturas con la AEAT de forma fácil y eficiente utilizando VeriFactu!
 
-La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.5-alpha.pdf)).
+La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/Doc/Legal/Declaracion%20Responsable%20v1.0.6-beta.pdf)).
 
 La funcionalidad de Verifactu está disponible también en línea:
 
