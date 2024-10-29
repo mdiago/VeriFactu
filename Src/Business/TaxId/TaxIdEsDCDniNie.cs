@@ -39,6 +39,7 @@
 
 namespace VeriFactu.Business.TaxId
 {
+
     /// <summary>
     /// Equivalencias de letras con números para el cálculo del número de control en el NIE.
     /// </summary>
@@ -137,4 +138,5 @@ namespace VeriFactu.Business.TaxId
         /// </summary>
         E = 22
     }
+
 }

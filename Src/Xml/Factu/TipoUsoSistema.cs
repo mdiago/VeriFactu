@@ -71,8 +71,7 @@ namespace VeriFactu.Xml.Factu
         /// Otros.
         /// </summary>
         [XmlEnum("04")]
-        Otros      
-
+        Otros  
 
     }
 

@@ -195,7 +195,6 @@ namespace VeriFactu.Xml
             return $"{IDEmisor}-{NumSerie}-{FechaExpedicion}";
         }
 
-
         #endregion
 
     }

@@ -82,4 +82,5 @@ namespace VeriFactu.Xml.Factu.Alta
         #endregion
 
     }
+
 }

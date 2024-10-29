@@ -75,7 +75,6 @@ namespace VeriFactu.Xml.Factu
         /// el registro de facturacion que se quiere anular en la AEAT.
         /// </summary>
         T4
-     
 
     }
 

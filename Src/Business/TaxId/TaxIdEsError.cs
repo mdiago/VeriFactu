@@ -39,6 +39,7 @@
 
 namespace VeriFactu.Business.TaxId
 {
+
     /// <summary>
     /// Definición de errores en número fiscal.
     /// </summary>
@@ -65,4 +66,5 @@ namespace VeriFactu.Business.TaxId
         /// </summary>
         InvalidControlNumber
     }
+
 }

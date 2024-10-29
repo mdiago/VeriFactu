@@ -70,8 +70,7 @@ namespace VeriFactu.Xml.Factu
         /// Otros.
         /// </summary>
         [XmlEnum("05")]
-        OTROS      
-
+        OTROS
 
     }
 

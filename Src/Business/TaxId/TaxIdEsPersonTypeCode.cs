@@ -39,6 +39,7 @@
 
 namespace VeriFactu.Business.TaxId
 {
+
     /// <summary>
     /// Código de tipo de persona.
     /// </summary>
@@ -53,4 +54,5 @@ namespace VeriFactu.Business.TaxId
         /// </summary>
         Individual
     }
+
 }

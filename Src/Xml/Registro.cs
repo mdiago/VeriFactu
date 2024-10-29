@@ -311,7 +311,6 @@ namespace VeriFactu.Xml
             return $"{IDFactura}";
         }
 
-
         #endregion
 
     }

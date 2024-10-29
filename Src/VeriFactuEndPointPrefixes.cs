@@ -47,6 +47,8 @@ namespace VeriFactu
     public class VeriFactuEndPointPrefixes
     {
 
+        #region Constantes
+
         /// <summary>
         /// Prefijo del endpoint de pruebas.
         /// </summary>
@@ -66,6 +68,8 @@ namespace VeriFactu
         /// Prefijo del endpoint de producción de validación.
         /// </summary>
         public const string ProdValidate = "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR";
+
+        #endregion
 
     }
 

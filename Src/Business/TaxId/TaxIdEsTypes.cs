@@ -39,6 +39,7 @@
 
 namespace VeriFactu.Business.TaxId
 {
+
     /// <summary>
     /// Tipo de número de identificación fiscal según RD 1065/2007, de 27 de julio.
     /// </summary>
@@ -57,4 +58,5 @@ namespace VeriFactu.Business.TaxId
         /// </summary>
         NIE
     }
+
 }

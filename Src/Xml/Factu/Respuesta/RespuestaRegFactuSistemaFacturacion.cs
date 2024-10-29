@@ -97,7 +97,6 @@ namespace VeriFactu.Xml.Factu.Respuesta
             return $"{EstadoEnvio}-{CSV}";
         }
 
-
         #endregion
 
     }

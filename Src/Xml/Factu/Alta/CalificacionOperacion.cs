@@ -68,4 +68,5 @@ namespace VeriFactu.Xml.Factu.Alta
         N2
 
     }
+
 }

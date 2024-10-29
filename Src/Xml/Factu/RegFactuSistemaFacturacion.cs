@@ -48,6 +48,6 @@ namespace VeriFactu.Xml.Factu
 
         #endregion
 
-
     }
+
 }

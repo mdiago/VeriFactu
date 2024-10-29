@@ -54,6 +54,31 @@ namespace VeriFactu.Xml
     public class XmlParser
     {
 
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public XmlParser()
+        {
+
+            Encoding = Encoding.GetEncoding("UTF-8");
+
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Codificación de texto a utilizar. UTF8 por defecto.
+        /// </summary>
+        public Encoding Encoding { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
+
         /// <summary>
         /// Devuelve una fecha formateada para un campo FechaHoraHuso
         /// de la especificación de VeriFactu.
@@ -92,28 +117,6 @@ namespace VeriFactu.Xml
         {
             return amount.ToString(Settings.DefaultNumberFormatInfo);
         }
-
-
-        #region Construtores de Instancia
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public XmlParser()
-        {
-
-            Encoding = Encoding.GetEncoding("UTF-8");
-
-        }
-
-        #endregion
-
-        #region Métodos Privados de Instancia
-
-        /// <summary>
-        /// Codificación de texto a utilizar. UTF8 por defecto.
-        /// </summary>
-        public Encoding Encoding { get; set; }
 
         #endregion
 

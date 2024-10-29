@@ -51,6 +51,8 @@ namespace VeriFactu.Xml.Factu.Respuesta
     public class RemisionVoluntaria
     {
 
+        #region Propiedades Públicas de Instancia
+
         /// <summary>
         /// <para>Última fecha en la que el sistema informático actuará como «VERI*FACTU».
         /// Después de la misma, el sistema dejará de funcionar como «VERI*FACTU».
@@ -72,6 +74,21 @@ namespace VeriFactu.Xml.Factu.Respuesta
         /// situación de este tipo.
         /// </summary>
         public string Incidencia { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{FechaFinVeriFactu}-{Incidencia}";
+        }
+
+        #endregion
 
     }
 

@@ -39,6 +39,7 @@
 
 namespace VeriFactu.Business.TaxId
 {
+
     /// <summary>
     /// Equivalencias de letras con números para el calculo del número de control en el NIF.
     /// </summary>
@@ -85,4 +86,5 @@ namespace VeriFactu.Business.TaxId
         /// </summary>
         I = 9
     }
+
 }

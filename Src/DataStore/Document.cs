@@ -59,7 +59,6 @@ namespace VeriFactu.DataStore
 
         #endregion
 
-
         #region Construtores de Instancia
 
         /// <summary>
@@ -162,4 +161,5 @@ namespace VeriFactu.DataStore
         #endregion
 
     }
+
 }
