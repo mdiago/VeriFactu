@@ -157,6 +157,12 @@ namespace VeriFactu.Business
 
         #endregion
 
+        #region Métodos Privados Estáticos
+
+
+
+        #endregion
+
         #region Métodos Privados de Instancia
 
         /// <summary>
@@ -208,6 +214,23 @@ namespace VeriFactu.Business
         }
 
         /// <summary>
+        /// Devuelve el path de un directorio.
+        /// Si no existe lo crea.
+        /// </summary>
+        /// <param name="dir">Ruta al directorio.</param>
+        /// <returns>Ruta al directorio con el separador
+        /// de directorio de sistema añadido al final.</returns>
+        internal string GetDirPath(string dir) 
+        {
+
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+
+            return $"{dir}{Path.DirectorySeparatorChar}";
+
+        }
+
+        /// <summary>
         /// Devuelve la ruta de almacenamiento de los
         /// registros contabilizados y envíados para un
         /// vendedor en concreto.
@@ -219,12 +242,7 @@ namespace VeriFactu.Business
         internal string GetOutBoxPath(string sellerID)
         {
 
-            var dir = $"{Settings.Current.OutboxPath}{sellerID}";
-
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
-            return $"{dir}{Path.DirectorySeparatorChar}";
+            return GetDirPath($"{Settings.Current.OutboxPath}{sellerID}");
 
         }
 
@@ -240,12 +258,7 @@ namespace VeriFactu.Business
         internal string GetInBoxPath(string sellerID)
         {
 
-            var dir = $"{Settings.Current.InboxPath}{sellerID}";
-
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
-            return $"{dir}{Path.DirectorySeparatorChar}";
+            return GetDirPath($"{Settings.Current.InboxPath}{sellerID}");
 
         }
 
@@ -261,12 +274,7 @@ namespace VeriFactu.Business
         internal string GetInvoiceEntryPath(string year)
         {
 
-            var dir = $"{OutboxPath}{year}";
-
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
-            return $"{dir}{Path.DirectorySeparatorChar}";
+            return GetDirPath($"{OutboxPath}{year}");
 
         }
 
@@ -282,12 +290,7 @@ namespace VeriFactu.Business
         internal string GetResponsesPath(string year)
         {
 
-            var dir = $"{InboxPath}{year}";
-
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
-            return $"{dir}{Path.DirectorySeparatorChar}";
+            return GetDirPath( $"{InboxPath}{year}");
 
         }
 
@@ -373,21 +376,33 @@ namespace VeriFactu.Business
         }
 
         /// <summary>
-        /// Envía el registro a la AEAT.
+        /// Envía un xml en formato binario a la AEAT.
         /// </summary>
+        /// <param name="xml">Archivo xml en formato binario a la AEAT.</param>
         /// <returns>Devuelve las respuesta de la AEAT.</returns>
-        private string Send()
+        internal string Send(byte[] xml) 
         {
 
             XmlDocument xmlDocument = new XmlDocument();
 
-            using (var msXml = new MemoryStream(Xml))
+            using (var msXml = new MemoryStream(xml))
                 xmlDocument.Load(msXml);
 
             var url = Settings.Current.VeriFactuEndPointPrefix;
             var action = $"{url}{Action}";
 
             return Wsd.Call(url, action, xmlDocument);
+
+        }
+
+        /// <summary>
+        /// Envía el registro a la AEAT.
+        /// </summary>
+        /// <returns>Devuelve las respuesta de la AEAT.</returns>
+        private string Send()
+        {
+
+            return Send(Xml);
 
         }
 
@@ -479,10 +494,48 @@ namespace VeriFactu.Business
         internal void ExecuteSend()
         {
 
-            if (Posted)
-                Response = Send();
-            else
+            if (!Posted)
                 throw new InvalidOperationException("No se puede enviar un registro no contabilizado (Posted = false).");
+
+            Response = Send();
+            IsSent = true;
+
+        }
+
+        /// <summary>
+        /// Serializa como sobre soap un string de respuesta
+        /// de la AEAT.
+        /// </summary>
+        /// <param name="response">Texto con la respuesta xml de la AEAT.</param>
+        /// <returns>Objeto Envelope con la respuesta.</returns>
+        internal Envelope GetResponseEnvelope(string response) 
+        {
+
+            if (string.IsNullOrEmpty(response))
+                throw new InvalidOperationException("No existe ninguna respuesta que guardar.");
+
+            return Envelope.FromXml(response);
+
+        }
+
+        /// <summary>
+        /// Procesa y guarda respuesta de la AEAT al envío.
+        /// </summary>
+        /// <param name="response"></param>
+        internal void ProcessResponse(string response)
+        {
+
+            ResponseEnvelope = GetResponseEnvelope(response);
+
+            var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GeErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
+            var responseFilePath = string.IsNullOrEmpty(CSV) ? GetErrorResponseFilePath() : ResponseFilePath;
+
+            // Almaceno xml envíado
+            File.WriteAllBytes(invoiceEntryFilePath, Xml);
+            // Almaceno xml de respuesta correcta
+            File.WriteAllText(responseFilePath, response);
+
+            ResponseProcessed = true;
 
         }
 
@@ -492,20 +545,7 @@ namespace VeriFactu.Business
         internal void ProcessResponse()
         {
 
-            if (string.IsNullOrEmpty(Response))
-                throw new InvalidOperationException("No existe ninguna respuesta que guardar.");
-
-            ResponseEnvelope = Envelope.FromXml(Response);
-
-            var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GeErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
-            var responseFilePath = string.IsNullOrEmpty(CSV) ? GetErrorResponseFilePath() : ResponseFilePath;
-
-            // Almaceno xml envíado
-            File.WriteAllBytes(invoiceEntryFilePath, Xml);
-            // Almaceno xml de respuesta correcta
-            File.WriteAllText(responseFilePath, Response);
-
-            ResponseProcessed = true;
+            ProcessResponse(Response);
 
         }
 
@@ -682,6 +722,11 @@ namespace VeriFactu.Business
         /// sido procesada de la AEAT.
         /// </summary>
         public bool ResponseProcessed { get; private set; }
+
+        /// <summary>
+        /// Identificador del vendedro.
+        /// </summary>
+        public string SellerID => Invoice.SellerID;
 
         #endregion
 

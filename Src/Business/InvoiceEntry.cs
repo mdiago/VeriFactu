@@ -37,20 +37,6 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Xml;
-using VeriFactu.Config;
-using VeriFactu.Net;
-using VeriFactu.Xml;
-using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
-using VeriFactu.Xml.Soap;
-
 namespace VeriFactu.Business
 {
 

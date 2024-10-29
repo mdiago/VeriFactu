@@ -38,16 +38,13 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace VeriFactu.Business.FlowControl
 {
 
+    /// <summary>
     /// Clase para ejecutar en un hilo de fondo
     /// una tarea de manera periodica.
     /// </summary>

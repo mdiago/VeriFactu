@@ -40,9 +40,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VeriFactu.Xml;
+using VeriFactu.Xml.Factu;
+using VeriFactu.Xml.Factu.Respuesta;
+using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business.FlowControl
 {
@@ -56,9 +61,18 @@ namespace VeriFactu.Business.FlowControl
     public class InvoiceQueue : IntervalWorker
     {
 
-        DateTime _LastProcessMoment;
 
-        int _CurrentWaitSecods;
+        #region Variables Privadas Estáticas
+
+        /// <summary>
+        /// Almacena el gestor de cola actualmente activo en
+        /// el sitema.
+        /// </summary>
+        static InvoiceQueue ActiveInvoiceQueue;
+
+        #endregion
+
+        #region Variables Privadas de Instancia
 
         /// <summary>
         /// Almacena los registro pendientes de envío.
@@ -71,15 +85,232 @@ namespace VeriFactu.Business.FlowControl
         Dictionary<string, List<InvoiceAction>> _SellerErrorQueue;
 
         /// <summary>
+        /// Almacena el momento de finalización del último
+        /// envío.
+        /// </summary>
+        DateTime _LastProcessMoment;
+
+        /// <summary>
+        /// Almacena tiempo de espera comunicado por la AEAT
+        /// en el últinmo envío.
+        /// </summary>
+        int _CurrentWaitSecods;
+
+        #endregion
+
+        #region Propiedades Privadas Estáticas
+        #endregion
+
+        #region Propiedades Privadas de Instacia
+        #endregion
+
+        #region Construtores Estáticos
+        #endregion
+
+        #region Construtores de Instancia
+
+        /// <summary>
         /// Constructor.
         /// </summary>
-
-        InvoiceQueue() 
+        InvoiceQueue()
         {
+
+            if (ActiveInvoiceQueue != null)
+                throw new InvalidOperationException("Ya existe una instancia de gestor de cola actualmente en el sistema." +
+                    " Únicamente puede existir una instancia creada de esta clase.");
 
             _LastProcessMoment = new DateTime(1, 1, 1);
             _SellerPendingQueue = new Dictionary<string, List<InvoiceAction>>();
-            _SellerErrorQueue = new Dictionary<string, List<InvoiceAction>>();            
+            _SellerErrorQueue = new Dictionary<string, List<InvoiceAction>>();
+
+            ActiveInvoiceQueue = this;
+
+        }
+
+        #endregion
+
+        #region Indexadores
+        #endregion
+
+        #region Métodos Privados Estáticos
+
+        /// <summary>
+        /// Recupera la instancia que se encarga de gestionar
+        /// la cola de facturas pendientes de envío.
+        /// </summary>
+        /// <returns> Instancia que se encarga de gestionar
+        /// la cola de facturas pendientes de envío.</returns>
+        public static InvoiceQueue GetInstance() 
+        {
+
+            if (ActiveInvoiceQueue == null)
+                ActiveInvoiceQueue = new InvoiceQueue();
+
+            return ActiveInvoiceQueue;
+
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Procesa la cola de facturas pendientes de un emisor.
+        /// </summary>
+        /// <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+        private bool Process(List<InvoiceAction> invoiceActions) 
+        {
+
+            // 1. Contabilizo todos los registros incluyendolos
+            // en la cadena de bloques correspondiente.
+            var allPosted = Post(invoiceActions);
+
+            if (!allPosted)
+                return false;
+
+            var allSent = Send(invoiceActions);
+
+            return true;
+
+        }
+
+        /// <summary>
+        /// Contabilizo todos los registros incluyendolos
+        /// en la cadena de bloques correspondiente.
+        /// </summary>
+        /// <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+        /// <returns>Devuelve true si todos los registros se han contabilizado
+        /// sin problemas.</returns>
+        private bool Post(List<InvoiceAction> invoiceActions)
+        {
+
+            string sellerID = null;
+
+            for (int i = 0; i < invoiceActions.Count; i++) 
+            {
+
+                if (i > 0 && sellerID != invoiceActions[i].SellerID)
+                    throw new InvalidOperationException($"Distintos vendedores encontrados en una misma" +
+                        $" cola de envíos pendientes.\n - {invoiceActions[i-1]}.\n - {invoiceActions[i]}");
+
+                if(!invoiceActions[i].Posted)
+                    invoiceActions[i].ExecutePost();
+
+                sellerID = invoiceActions[i].SellerID;
+
+            }
+
+            return true;
+
+        }
+
+        /// <summary>
+        /// Envío el lote de facturas a la AEAT.
+        /// </summary>
+        /// <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+        /// <returns>Devuelve true si todos los registros se han envíado
+        /// sin problemas.</returns>
+        private bool Send(List<InvoiceAction> invoiceActions)
+        {
+
+            string sellerID = null;
+
+            // Comprobaciones
+            for (int i = 0; i < invoiceActions.Count; i++)
+            {
+
+                if (!invoiceActions[i].Posted)
+                    throw new InvalidOperationException("Se han encontrado en la cola facturas" +
+                        " sin contabilizar, por lo que no se puede realizar el envío.");
+
+                if (i > 0 && sellerID != invoiceActions[i].SellerID)
+                    throw new InvalidOperationException($"Distintos vendedores encontrados en una misma" +
+                        $" cola de envíos pendientes.\n - {invoiceActions[i - 1]}.\n - {invoiceActions[i]}");
+
+                sellerID = invoiceActions[i].SellerID;
+
+            }
+
+            Envelope envelope = null;
+            InvoiceAction last = null;
+
+            for (int i = 0; i < invoiceActions.Count; i++) 
+            {
+
+                if (i == 0)
+                    envelope = invoiceActions[0].GetEnvelope();
+                else
+                    ((envelope.Body.Registro as RegFactuSistemaFacturacion).RegistroFactura as List<object>).Add(invoiceActions[0].Registro);
+
+                last = invoiceActions[i];
+
+            }
+
+            var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
+
+            File.WriteAllBytes(@"C:\Users\manuel\Downloads\z\z.xml", xml);
+
+            var response = last.Send(xml);
+
+            File.WriteAllText(@"C:\Users\manuel\Downloads\z\zz.xml", response);
+
+            var envelopeRespuesta = last.GetResponseEnvelope(response);
+
+            _LastProcessMoment = DateTime.Now;
+            _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
+
+            return true;
+
+        }
+
+        /// <summary>
+        /// Procesa errores.
+        /// </summary>
+        /// <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+        private void ProcessErrors(List<InvoiceAction> invoiceActions) 
+        {
+
+            throw new NotImplementedException("ProcessErrors pendiente de implementar");
+        
+        }
+
+        #endregion
+
+        #region Propiedades Públicas Estáticas
+        #endregion
+
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Momento a partir del cual ya se pueden realizar envíos.
+        /// </summary>
+        public DateTime AllowedFrom => _LastProcessMoment.AddSeconds(_CurrentWaitSecods);
+
+        /// <summary>
+        /// Si es true indica que el envío ya está permitido.
+        /// </summary>
+        public bool Allowed => AllowedFrom < DateTime.Now;
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Añade un elemento a la cola de registros
+        /// pendientes de envío.
+        /// </summary>
+        /// <param name="invoiceAction">Acción de registro a añadir.</param>
+        public void Add(InvoiceAction invoiceAction) 
+        {
+
+            if (_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
+                _SellerPendingQueue[invoiceAction.SellerID].Add(invoiceAction);
+            else
+                _SellerPendingQueue.Add(invoiceAction.SellerID, new List<InvoiceAction>() { invoiceAction });
+
 
         }
 
@@ -93,7 +324,7 @@ namespace VeriFactu.Business.FlowControl
             try
             {
 
-                if (_LastProcessMoment.AddSeconds(_CurrentWaitSecods) < DateTime.Now)
+                if (Allowed)
                     Process();
 
             }
@@ -107,12 +338,29 @@ namespace VeriFactu.Business.FlowControl
         }
 
         /// <summary>
-        /// Procesa toda la cola.
+        /// Procesa toda la cola emisor a emisor.
         /// </summary>
-        public void Process() 
-        { 
-        
+        public void Process()
+        {
+
+            foreach (KeyValuePair<string, List<InvoiceAction>> kvpInvoiceAction in _SellerPendingQueue)
+            {
+
+                var processed = Process(kvpInvoiceAction.Value);
+
+                if (processed)
+                    _SellerPendingQueue.Remove(kvpInvoiceAction.Key);
+                else
+                    ProcessErrors(kvpInvoiceAction.Value);
+
+                if (!Allowed)
+                    break;
+
+            }
+
         }
+
+        #endregion
 
 
     }
