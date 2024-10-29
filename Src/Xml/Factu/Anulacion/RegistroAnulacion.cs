@@ -72,6 +72,13 @@ namespace VeriFactu.Xml.Factu.Anulacion
         /// <summary>
         /// Devuelve la cadena de entrada para el cálculo
         /// del hash previa conversión mediante UTF-8.
+        /// <para> El Artículo 137 de la Orden HAC/1177/2024 de 17 de octubre establece el contenido:</para>
+        /// <para> b) Para el registro de facturación de anulación:</para>
+        /// <para> 1.º NIF del emisor.</para>
+        /// <para> 2.º Numero de factura y serie.</para>
+        /// <para> 3.º Fecha de expedición de la factura.</para>
+        /// <para> 4.º Huella del registro de facturación anterior.</para>
+        /// <para> 5.º Fecha, hora y huso horario de generación del registro.</para>
         /// </summary>
         /// <returns>Cadena de entrada para el cálculo
         /// del hash</returns>
@@ -79,12 +86,12 @@ namespace VeriFactu.Xml.Factu.Anulacion
         {
 
             IDFactura = IDFacturaAnulada;
-
-            return $"IDEmisorFacturaAnulada={IDFacturaAnulada?.IDEmisorFacturaAnulada}" +
-                $"&NumSerieFacturaAnulada={IDFacturaAnulada?.NumSerieFacturaAnulada}" +
-                $"&FechaExpedicionFacturaAnulada={IDFacturaAnulada?.FechaExpedicionFacturaAnulada}" +
-                $"&Huella={Encadenamiento?.RegistroAnterior?.Huella}" +
-                $"&FechaHoraHusoGenRegistro={FechaHoraHusoGenRegistro}";
+                                                                                                            // l Artículo 137.b de la Orden HAC/1177/2024 de 17 de octubre:
+            return $"IDEmisorFacturaAnulada={IDFacturaAnulada?.IDEmisorFacturaAnulada}" +                   // 1.º NIF del emisor.
+                $"&NumSerieFacturaAnulada={IDFacturaAnulada?.NumSerieFacturaAnulada}" +                     // 2.º Numero de factura y serie.
+                $"&FechaExpedicionFacturaAnulada={IDFacturaAnulada?.FechaExpedicionFacturaAnulada}" +       // 3.º Fecha de expedición de la factura.
+                $"&Huella={Encadenamiento?.RegistroAnterior?.Huella}" +                                     // 4.º Huella del registro de facturación anterior.
+                $"&FechaHoraHusoGenRegistro={FechaHoraHusoGenRegistro}";                                    // 5.º Fecha, hora y huso horario de generación del registro.
 
         }
 
@@ -188,6 +195,13 @@ namespace VeriFactu.Xml.Factu.Anulacion
         /// <para>Huella o «hash» de cierto contenido de este registro
         /// de facturación. Dicho contenido se detallará en la documentación
         /// correspondiente en la sede electrónica de la AEAT (documento de huella...).</para>
+        /// <para> El Artículo 137 de la Orden HAC/1177/2024 de 17 de octubre establece el contenido:</para>
+        /// <para> b) Para el registro de facturación de anulación:</para>
+        /// <para> 1.º NIF del emisor.</para>
+        /// <para> 2.º Numero de factura y serie.</para>
+        /// <para> 3.º Fecha de expedición de la factura.</para>
+        /// <para> 4.º Huella del registro de facturación anterior.</para>
+        /// <para> 5.º Fecha, hora y huso horario de generación del registro.</para>
         /// <para>Alfanumérico (64)</para>
         /// </summary>
         [XmlIgnore]

@@ -41,7 +41,9 @@ namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Datos registro anterior.
+    /// Datos registro anterior. Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
+    /// <para>Datos del registro anterior: </para>
+    /// NIF + NumSerieFactura + FechaExpedicionFactura + HuellaAnterior.Substring(0, 64)
     /// </summary>
     public class RegistroAnterior
     {

@@ -37,45 +37,104 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace VeriFactu.Business.FlowControl
 {
 
-    /// <summary>
-    /// Encadenamiento con la factura anterior. 
-    /// Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
+    /// Clase para ejecutar en un hilo de fondo
+    /// una tarea de manera periodica.
     /// </summary>
-    public class Encadenamiento
+    public class IntervalWorker
     {
 
-        #region Propiedades Públicas de Instancia
+        #region Private Members Variables
 
         /// <summary>
-        /// <para>Indicador que especifica que no existe registro de facturación anterior
-        /// en este sistema informático por tratarse del primer registro de facturación
-        /// generado en él. En este caso, se informará con el valor "S".
-        /// Si no se informa este campo se entenderá que no es el primer registro de
-        /// facturación, en cuyo caso es obligatorio informar los campos de que consta
-        /// «RegistroAnterior».</para>
-        /// <para>Alfanumérico (1).</para>
+        /// Utilizado para esperar el intervalo determinado,
+        /// y para finalizar definitivamente el hilo de trabajo.
         /// </summary>
-        public string PrimerRegistro { get; set; }
-
-        /// <summary>
-        /// Datos registro anterior.
-        /// </summary>
-        public RegistroAnterior RegistroAnterior { get; set; }      
+        ManualResetEvent _End;
 
         #endregion
 
-        #region Métodos Públicos de Instancia
+        #region Private Methods
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Procedimiento en bucle en el que ejecuta periódicamente
+        /// el método Execute.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
+        private void Process()
         {
-            return $"{RegistroAnterior}";
+            while (true)
+            {
+                if (_End.WaitOne(Interval))
+                    break;
+
+                Execute();
+            }
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Intervalo en milegundos entre cada ejecución. Por defecto
+        /// 30 segundos.
+        /// </summary>
+        public int Interval = 30000;
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Proceso a ejecutar periódicamente entre
+        /// intervalos.
+        /// </summary>
+        public virtual void Execute()
+        {
+        }
+
+        /// <summary>
+        /// Comienza a ejecutar el proceso de manera
+        /// continua y periodica hasta que se finaliza
+        /// el trabajo con End.
+        /// </summary>
+        public void Start()
+        {
+            try
+            {
+                _End = new ManualResetEvent(false);
+                new Thread(Process).Start();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"Error IntervalWorker.Start:\n{ex.Message}");
+            }
+        }
+
+
+        /// <summary>
+        /// Finaliza el trabajo.
+        /// </summary>
+        public void End()
+        {
+            try
+            {
+                _End.Set();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print($"Error IntervalWorker.End:\n{ex.Message}");
+            }
         }
 
         #endregion

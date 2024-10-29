@@ -37,49 +37,83 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Xml.Factu
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace VeriFactu.Business.FlowControl
 {
 
     /// <summary>
-    /// Encadenamiento con la factura anterior. 
-    /// Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
+    /// Gestiona el envío de registros a la AEAT con los intervalos de
+    /// espera establecidos entre envíos.
+    /// <para> Según lo establecido en la Orden HAC/1177/2024, de 17 de octubre
+    ///  en su Artículo 16.</para>
     /// </summary>
-    public class Encadenamiento
+    public class InvoiceQueue : IntervalWorker
     {
 
-        #region Propiedades Públicas de Instancia
+        DateTime _LastProcessMoment;
+
+        int _CurrentWaitSecods;
 
         /// <summary>
-        /// <para>Indicador que especifica que no existe registro de facturación anterior
-        /// en este sistema informático por tratarse del primer registro de facturación
-        /// generado en él. En este caso, se informará con el valor "S".
-        /// Si no se informa este campo se entenderá que no es el primer registro de
-        /// facturación, en cuyo caso es obligatorio informar los campos de que consta
-        /// «RegistroAnterior».</para>
-        /// <para>Alfanumérico (1).</para>
+        /// Almacena los registro pendientes de envío.
         /// </summary>
-        public string PrimerRegistro { get; set; }
+        Dictionary<string, List<InvoiceAction>> _SellerPendingQueue;
 
         /// <summary>
-        /// Datos registro anterior.
+        /// Almacena los registros envíados y que han resultado erróneos.
         /// </summary>
-        public RegistroAnterior RegistroAnterior { get; set; }      
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
+        Dictionary<string, List<InvoiceAction>> _SellerErrorQueue;
 
         /// <summary>
-        /// Representación textual de la instancia.
+        /// Constructor.
         /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
+
+        InvoiceQueue() 
         {
-            return $"{RegistroAnterior}";
+
+            _LastProcessMoment = new DateTime(1, 1, 1);
+            _SellerPendingQueue = new Dictionary<string, List<InvoiceAction>>();
+            _SellerErrorQueue = new Dictionary<string, List<InvoiceAction>>();            
+
         }
 
-        #endregion
+        /// <summary>
+        /// Proceso a ejecutar periódicamente entre
+        /// intervalos.
+        /// </summary>
+        public override void Execute()
+        {
+
+            try
+            {
+
+                if (_LastProcessMoment.AddSeconds(_CurrentWaitSecods) < DateTime.Now)
+                    Process();
+
+            }
+            catch (Exception ex)
+            {
+
+                Debug.Print($"InvoiceQueue error {ex}.");
+
+            }
+
+        }
+
+        /// <summary>
+        /// Procesa toda la cola.
+        /// </summary>
+        public void Process() 
+        { 
+        
+        }
+
 
     }
-
 }

@@ -118,6 +118,9 @@ namespace VeriFactu.Xml
         /// <summary>
         /// Devuelve la cadena de entrada para el cálculo
         /// del hash previa conversión mediante UTF-8.
+        /// <para> El Artículo 137 de la Orden HAC/1177/2024 de 17 de octubre establece el contenido:</para>
+        /// <para> a) Para el registro de facturación de alta.</para>
+        /// <para> b) Para el registro de facturación de anulación.</para>
         /// </summary>
         /// <returns>La cadena de entrada para el cálculo
         /// del hash previa conversión mediante UTF-8.</returns>

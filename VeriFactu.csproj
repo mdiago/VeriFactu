@@ -50,7 +50,10 @@
     <Compile Include="Doc\NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Blockchain\Blockchain.cs" />
+    <Compile Include="Src\Business\FlowControl\IntervalWorker.cs" />
+    <Compile Include="Src\Business\FlowControl\InvoiceQueue.cs" />
     <Compile Include="Src\Business\Invoice.cs" />
+    <Compile Include="Src\Business\InvoiceAction.cs" />
     <Compile Include="Src\Business\InvoiceCancellation.cs" />
     <Compile Include="Src\Business\InvoiceEntry.cs" />
     <Compile Include="Src\Business\TaxId\TaxIdEs.cs" />
