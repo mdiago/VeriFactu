@@ -146,6 +146,10 @@ namespace VeriFactu.Business
         private List<Interlocutor> GetDestinatarios() 
         {
 
+            // Factura simplificada sin contraparte
+            if (string.IsNullOrEmpty(BuyerID) && (InvoiceType == TipoFactura.F2 || InvoiceType == TipoFactura.R5))
+                return null;
+
             TaxIdEs taxId = null;
             var isTaxIdEs = false;
 
