@@ -41,7 +41,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using VeriFactu.Config;
-using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;

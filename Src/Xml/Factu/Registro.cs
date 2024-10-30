@@ -45,9 +45,8 @@ using System.Xml.Serialization;
 using VeriFactu.Config;
 using VeriFactu.Qrcode;
 using VeriFactu.Qrcode.Exceptions;
-using VeriFactu.Xml.Factu;
 
-namespace VeriFactu.Xml
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
@@ -261,9 +260,34 @@ namespace VeriFactu.Xml
         [XmlIgnore]
         public virtual Encadenamiento Encadenamiento { get; set; }
 
+        /// <summary>
+        /// Encadenamiento con la factura anterior.
+        /// </summary>
+        [XmlIgnore]
+        public virtual ulong BlockchainLinkID { get; set; }
+
+        /// <summary>
+        /// Referencia externa.
+        /// </summary>
+        [XmlIgnore]
+        public string ExternKey => BlockchainLinkID == null ?
+            null : $"{BlockchainLinkID}".PadLeft(20, '0');
+
+
         #endregion
 
         #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Asigna la clave externa que vincula la factura con
+        /// la cadena de bloques.
+        /// </summary>
+        public virtual void SetExternKey() 
+        {
+
+            throw new NotImplementedException("SetExternKey no implementado para la clase base Registro.");
+
+        }
 
         /// <summary>
         /// Devuelve la representación del hash en formato hexadecimal.

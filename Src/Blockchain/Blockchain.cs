@@ -271,7 +271,11 @@ namespace VeriFactu.Blockchain
 
             // Establezco el elemento insertado como el último de la cadena
             Current = registro;
-            CurrentID++;           
+            CurrentID++;
+
+            // Asigno el identificador del eslabón
+            registro.BlockchainLinkID = CurrentID;
+            registro.SetExternKey();
 
         }
 

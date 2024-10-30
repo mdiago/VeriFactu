@@ -487,6 +487,17 @@ namespace VeriFactu.Xml.Factu.Alta
         #region Métodos Públicos de Instancia
 
         /// <summary>
+        /// Asigna la clave externa que vincula la factura con
+        /// la cadena de bloques.
+        /// </summary>
+        public override void SetExternKey()
+        {
+
+            RefExterna = ExternKey;
+
+        }
+
+        /// <summary>
         /// Representación textual de la instancia.
         /// </summary>
         /// <returns> Representación textual de la instancia.</returns>

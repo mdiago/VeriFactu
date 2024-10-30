@@ -120,6 +120,66 @@ namespace VeriFactu.Xml.Factu.Anulacion
         public IDFactura IDFacturaAnulada { get; set; }
 
         /// <summary>
+        /// <para>Dato adicional de contenido libre con el objetivo de que se pueda
+        /// asociar opcionalmente información interna del sistema informático de facturación
+        /// al registro de facturación. Este dato puede ayudar a completar la identificación
+        /// o calificación de la factura y/o su registro de facturación.</para>
+        /// <para>Alfanumérico (60)</para>
+        /// </summary>
+        [XmlElement("RefExterna", Namespace = Namespaces.NamespaceSF, Order = 3)]
+        public string RefExterna { get; set; }
+
+        /// <summary>
+        /// <para>Indicador que especifica que se trata de la anulación de un registro
+        /// de facturación de alta (o subsanación de un registro de facturación de anulación
+        /// previo) cuando este no existe en la AEAT (o en el propio sistema informático,
+        /// si así procede indicar). Si no se informa este campo se entenderá que tiene
+        /// valor "N". Este campo forma parte del detalle de las circunstancias de generación de los registros de facturación.</para>
+        /// <para>L4: S / N</para>
+        /// <para>Alfanumérico (1)</para>
+        /// </summary>
+        [XmlElement("SinRegistroPrevio", Namespace = Namespaces.NamespaceSF, Order = 4)]
+        public string SinRegistroPrevio { get; set; }
+
+        /// <summary>
+        /// <para>Indicador que especifica que se está generando -para volverlo a remitir- un
+        /// nuevo registro de facturación de anulación subsanado tras haber sido rechazado en
+        /// su remisión inmediatamente anterior, es decir, en el último envío que contenía ese
+        /// registro de facturación de anulación rechazado. Si no se informa este campo se
+        /// entenderá que tiene valor "N". Solo es necesario informarlo en caso de remisión
+        /// voluntaria «VERI*FACTU». 
+        /// Este campo forma parte del detalle de las circunstancias de generación de los registros
+        /// de facturación.</para>
+        /// <para>L4: S / N</para>
+        /// <para>Alfanumérico (1)</para>
+        /// </summary>
+        [XmlElement("RechazoPrevio", Namespace = Namespaces.NamespaceSF, Order = 5)]
+        public string RechazoPrevio { get; set; }
+
+        /// <summary>
+        /// <para>Indicador que especifica quién se ha encargado de generar materialmente el
+        /// registro de facturación de anulación, cuyos datos identificativos deberán hacerse 
+        /// constar dentro del grupo de campos "Generador", en su correspondiente sitio en
+        /// función de si dispone de NIF o no. Si no se informa este campo, tampoco se deberá
+        /// informar "Generador", considerándose que es el mismo que el emisor material de la
+        /// factura que se anula. Por otro lado, se entiende que el obligado a generar el
+        /// registro de facturación de anulación siempre es el mismo que el obligado a expedir
+        /// la factura que en él se anula (incluyendo los casos de sucesión).</para>
+        /// <para>Alfanumérico (1) L16:</para>
+        /// <para> E: Expedidor (obligado a Expedir la factura anulada).</para>
+        /// <para> D: Destinatario.</para>
+        /// <para> T: Tercero</para>
+        /// </summary>
+        [XmlElement("GeneradoPor", Namespace = Namespaces.NamespaceSF, Order = 6)]
+        public string GeneradoPor { get; set; }
+
+        /// <summary>
+        /// Obligado que suministra la información.
+        /// </summary>
+        [XmlElement("Generador", Namespace = Namespaces.NamespaceSF, Order = 7)]
+        public Interlocutor Generador { get; set; }
+
+        /// <summary>
         /// Encadenamiento con la factura anterior..
         /// </summary>
         [XmlIgnore]
@@ -230,6 +290,17 @@ namespace VeriFactu.Xml.Factu.Anulacion
         #endregion
 
         #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Asigna la clave externa que vincula la factura con
+        /// la cadena de bloques.
+        /// </summary>
+        public override void SetExternKey()
+        {
+
+            RefExterna = ExternKey;
+
+        }
 
         /// <summary>
         /// Representación textual de la instancia.

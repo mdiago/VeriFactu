@@ -51,9 +51,42 @@ namespace VeriFactu.Net
     /// Esta clase gestiona las oparaciones con los servicios web de la AEAT para el VeriFactu.
     /// </summary>
     public class Wsd
-    {       
+    {
 
         #region Métodos Privados Estáticos
+
+        /// <summary>
+        /// Obtiene el certificado configurado y verifica la validez.
+        /// </summary>
+        /// <returns>Certificado validado.</returns>
+        internal static X509Certificate2 GetCheckedCertificate()
+        {
+
+            X509Certificate2 certificate = GetCertificate();
+
+            if (certificate == null)
+                throw new ArgumentNullException(
+                    "Certificate is null. Maybe serial number in configuration was wrong.");
+
+            CheckCertificate(certificate);
+
+            return certificate;
+          
+
+        }
+
+        /// <summary>
+        /// Verifica la validez del certificado.
+        /// </summary>
+        /// <param name="certificate">Verifica la validez del certificado.</param>
+        internal static void CheckCertificate(X509Certificate2 certificate) 
+        {
+
+            if (certificate.NotAfter < DateTime.Now)
+                throw new ArgumentNullException(
+                  $"Certificate is out of date. NotAfter: {certificate.NotAfter}.");
+
+        }
 
         /// <summary>
         /// Llama a al web service de la AEAT para el VeriFactu seleccionado.
@@ -67,15 +100,7 @@ namespace VeriFactu.Net
 
             HttpWebRequest webRequest = CreateWebRequest(url, action);
 
-            X509Certificate2 certificate = GetCertificate();
-
-            if (certificate == null)
-                throw new ArgumentNullException(
-                    "Certificate is null. Maybe serial number in configuration was wrong.");
-
-            if (certificate.NotAfter < DateTime.Now)
-                throw new ArgumentNullException(
-                  $"Certificate is out of date. NotAfter: {certificate.NotAfter}.");
+            X509Certificate2 certificate = GetCheckedCertificate();
 
             webRequest.ClientCertificates.Add(certificate);
 

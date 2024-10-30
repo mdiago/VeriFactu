@@ -38,11 +38,7 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Text;
-using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Anulacion;
-using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business
 {
@@ -78,37 +74,6 @@ namespace VeriFactu.Business
 
         }
 
-        /// <summary>
-        /// Genera el sobre SOAP.
-        /// </summary>
-        /// <returns>Sobre SOAP.</returns>
-        internal override Envelope GetEnvelope()
-        {
-
-            return new Envelope()
-            {
-                Body = new Body()
-                {
-                    Registro = new RegFactuSistemaFacturacion()
-                    {
-                        Cabecera = new Cabecera()
-                        {
-                            ObligadoEmision = new Interlocutor()
-                            {
-                                NombreRazon = Invoice.SellerName,
-                                NIF = Invoice.SellerID
-                            }
-                        },
-                        RegistroFactura = new List<object>()
-                        {
-                            Registro as RegistroAnulacion
-                        }
-                    }
-                }
-            };
-
-        }      
-
         #endregion
 
         #region Propiedades Públicas de Instancia
@@ -116,7 +81,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Identificador de la anulación de factura.
         /// </summary>
-        public override string InvoiceEntryID => BitConverter.ToString(Encoding.UTF8.GetBytes($"{Invoice.InvoiceID}.DEL")).Replace("-", "");
+        public override string InvoiceEntryID => $"{base.InvoiceEntryID}.DEL";
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la

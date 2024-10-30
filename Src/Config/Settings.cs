@@ -162,6 +162,7 @@ namespace VeriFactu.Config
                 InboxPath = $"{Path}Inbox{_PathSep}",
                 OutboxPath = $"{Path}Outbox{_PathSep}",
                 BlockchainPath = $"{Path}Blockchains{_PathSep}",
+                InvoicePath = $"{Path}Invoices{_PathSep}",
                 CertificateSerial = "",
                 CertificateThumbprint = "",
                 CertificatePath = "",
@@ -238,6 +239,13 @@ namespace VeriFactu.Config
         /// </summary>
         [XmlElement("BlockchainPath")]
         public string BlockchainPath { get; set; }
+
+        /// <summary>
+        /// Ruta al directorio que actuará almacenamiento
+        /// de las facturas emitidas por emisor.
+        /// </summary>
+        [XmlElement("InvoicePath")]
+        public string InvoicePath { get; set; }
 
         /// <summary>
         /// Número de serie del certificado a utilizar. Mediante este número
@@ -339,6 +347,9 @@ namespace VeriFactu.Config
 
             if (!Directory.Exists(_Current.BlockchainPath))
                 Directory.CreateDirectory(_Current.BlockchainPath);
+
+            if (!Directory.Exists(_Current.InvoicePath))
+                Directory.CreateDirectory(_Current.InvoicePath);
 
         }
 

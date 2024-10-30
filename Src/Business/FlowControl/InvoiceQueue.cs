@@ -41,9 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VeriFactu.Net;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Respuesta;
@@ -61,7 +59,6 @@ namespace VeriFactu.Business.FlowControl
     public class InvoiceQueue : IntervalWorker
     {
 
-
         #region Variables Privadas Estáticas
 
         /// <summary>
@@ -69,6 +66,11 @@ namespace VeriFactu.Business.FlowControl
         /// el sitema.
         /// </summary>
         static InvoiceQueue ActiveInvoiceQueue;
+
+        /// <summary>
+        /// Máximo número de registros a incluir en un envío.
+        /// </summary>
+        static int MaxRecordNumber = 1000;
 
         #endregion
 
@@ -213,6 +215,9 @@ namespace VeriFactu.Business.FlowControl
         private bool Send(List<InvoiceAction> invoiceActions)
         {
 
+            if (invoiceActions == null || invoiceActions.Count == 0)
+                throw new ArgumentException("El argumento invoiceActions debe contener elementos.");
+
             string sellerID = null;
 
             // Comprobaciones
@@ -232,6 +237,7 @@ namespace VeriFactu.Business.FlowControl
             }
 
             Envelope envelope = null;
+            InvoiceAction first = invoiceActions[0];
             InvoiceAction last = null;
 
             for (int i = 0; i < invoiceActions.Count; i++) 
@@ -240,21 +246,20 @@ namespace VeriFactu.Business.FlowControl
                 if (i == 0)
                     envelope = invoiceActions[0].GetEnvelope();
                 else
-                    ((envelope.Body.Registro as RegFactuSistemaFacturacion).RegistroFactura as List<object>).Add(invoiceActions[0].Registro);
+                    ((envelope.Body.Registro as RegFactuSistemaFacturacion).RegistroFactura as List<RegistroFactura>).Add(new RegistroFactura() { Registro = invoiceActions[0].Registro });
 
                 last = invoiceActions[i];
 
             }
 
-            var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
-
-            File.WriteAllBytes(@"C:\Users\manuel\Downloads\z\z.xml", xml);
+            var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);            
 
             var response = last.Send(xml);
 
-            File.WriteAllText(@"C:\Users\manuel\Downloads\z\zz.xml", response);
-
             var envelopeRespuesta = last.GetResponseEnvelope(response);
+
+            File.WriteAllBytes($"{first.InvoiceEntryPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", xml);
+            File.WriteAllText($"{first.ResponsesPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", response);
 
             _LastProcessMoment = DateTime.Now;
             _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
@@ -306,11 +311,25 @@ namespace VeriFactu.Business.FlowControl
         public void Add(InvoiceAction invoiceAction) 
         {
 
-            if (_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
-                _SellerPendingQueue[invoiceAction.SellerID].Add(invoiceAction);
-            else
-                _SellerPendingQueue.Add(invoiceAction.SellerID, new List<InvoiceAction>() { invoiceAction });
+            List<InvoiceAction> sellerPendingQueue = _SellerPendingQueue.ContainsKey(invoiceAction.SellerID) ? 
+                _SellerPendingQueue[invoiceAction.SellerID] : new List<InvoiceAction>() { invoiceAction };       
 
+            if (!_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
+                _SellerPendingQueue.Add(invoiceAction.SellerID, sellerPendingQueue);
+
+
+            if (_SellerPendingQueue.Count >= MaxRecordNumber)
+            {
+                var processed = Process(sellerPendingQueue);
+
+                if (!processed)
+                    throw new Exception("Error al vaciar la cola de documentos pendientes de envío. " +
+                        $"El elemento no se puede agregar ya que la cola está llena con {_SellerPendingQueue.Count}" +
+                        $" registros que es igual o mayor que el máximo {MaxRecordNumber}");
+
+            }
+
+            _SellerPendingQueue[invoiceAction.SellerID].Add(invoiceAction);
 
         }
 
@@ -343,6 +362,12 @@ namespace VeriFactu.Business.FlowControl
         public void Process()
         {
 
+            // Compruebo el certificado
+            var cert = Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
+
             foreach (KeyValuePair<string, List<InvoiceAction>> kvpInvoiceAction in _SellerPendingQueue)
             {
 
@@ -361,7 +386,6 @@ namespace VeriFactu.Business.FlowControl
         }
 
         #endregion
-
 
     }
 }

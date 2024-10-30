@@ -133,7 +133,8 @@
     <Compile Include="Src\Xml\Factu\Impuesto.cs" />
     <Compile Include="Src\Xml\Factu\TipoUsoSistema.cs" />
     <Compile Include="Src\Xml\Namespaces.cs" />
-    <Compile Include="Src\Xml\Registro.cs" />
+    <Compile Include="Src\Xml\Factu\Registro.cs" />
+    <Compile Include="Src\Xml\Factu\RegistroFactura.cs" />
     <Compile Include="Src\Xml\Soap\Body.cs" />
     <Compile Include="Src\Xml\Soap\Envelope.cs" />
     <Compile Include="Src\Xml\Soap\Header.cs" />

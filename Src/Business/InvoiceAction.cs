@@ -46,7 +46,6 @@ using VeriFactu.Config;
 using VeriFactu.Net;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Fault;
 using VeriFactu.Xml.Factu.Respuesta;
 using VeriFactu.Xml.Soap;
@@ -141,8 +140,7 @@ namespace VeriFactu.Business
             Invoice = invoice;
             OutboxPath = GetOutBoxPath(Invoice.SellerID);
             InboxPath = GetInBoxPath(Invoice.SellerID);
-            InvoiceEntryPath = GetInvoiceEntryPath($"{Invoice.InvoiceDate.Year}");
-            ResponsesPath = GetResponsesPath($"{Invoice.InvoiceDate.Year}");
+            InvoicePath = GetInvoicePath(Invoice.SellerID);
 
             errors = GetBusErrors();
 
@@ -263,6 +261,38 @@ namespace VeriFactu.Business
         }
 
         /// <summary>
+        /// Devuelve la ruta de almacenamiento de facturas
+        /// emitidas y contabilizadas para un
+        /// vendedor en concreto.
+        /// </summary>
+        /// <param name="sellerID">Emisor al que pertenece el
+        /// envío de registro a gestionar.</param>
+        /// <returns>Ruta facturas de los registros contabilizados
+        /// para un vendedor en concreto.</returns>
+        internal string GetInvoicePath(string sellerID)
+        {
+
+            return GetDirPath($"{Settings.Current.InvoicePath}{sellerID}");
+
+        }
+
+        /// <summary>
+        /// Devuelve la ruta de almacenamiento de los
+        /// registros contabilizados y envíados para un
+        /// año en concreto.
+        /// </summary>
+        /// <param name="year">Año al que pertenece el
+        /// envío de registro a gestionar.</param>
+        /// <returns>Ruta de los registros contabilizados y
+        /// envíados para un vendedor en concreto.</returns>
+        internal string GetInvoicePostedPath(string year)
+        {
+
+            return GetDirPath($"{InvoicePath}{year}");
+
+        }
+
+        /// <summary>
         /// Devuelve la ruta de almacenamiento de los
         /// registros contabilizados y envíados para un
         /// año en concreto.
@@ -326,9 +356,12 @@ namespace VeriFactu.Business
                                 NIF = Invoice.SellerID
                             }
                         },
-                        RegistroFactura = new List<object>()
+                        RegistroFactura = new List<RegistroFactura>()
                         {
-                            Registro as RegistroAlta
+                            new RegistroFactura()
+                            {
+                                Registro = Registro 
+                            }
                         }
                     }
                 }
@@ -342,10 +375,18 @@ namespace VeriFactu.Business
         private void Post()
         {
 
+            // Compruebo el certificado
+            var cert = Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
+
             // Añadimos el registro de alta
             BlockchainManager.Add(Registro);
             // Generamos el xml
             Xml = GetXml();
+            // Guardamos el xml
+            File.WriteAllBytes($"{InvoicePostedPath}{EncodedInvoiceID}.xml", Xml);
 
         }
 
@@ -554,9 +595,17 @@ namespace VeriFactu.Business
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Identificador de la factura.
+        /// Identificador de la factura en formato
+        /// hexadecimal.
         /// </summary>
-        public virtual string InvoiceEntryID => BitConverter.ToString(Encoding.UTF8.GetBytes(Invoice.InvoiceID)).Replace("-", "");
+        public virtual string EncodedInvoiceID => BitConverter.ToString(Encoding.UTF8.GetBytes(Invoice.InvoiceID)).Replace("-", "");
+
+        /// <summary>
+        /// Identificador del eslabón de la cadena asociado
+        /// a la factura.
+        /// </summary>
+        public virtual string InvoiceEntryID => Registro?.BlockchainLinkID == null ? 
+            null : $"{Registro.BlockchainLinkID}".PadLeft(20, '0');
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
@@ -571,16 +620,28 @@ namespace VeriFactu.Business
         public string InboxPath { get; private set; }
 
         /// <summary>
-        /// Path del directorio de archivado de los datos de la
-        /// cadena.
+        /// Path del directorio de archivado de los datos de las
+        /// facturas emitidas.
         /// </summary>
-        public string InvoiceEntryPath { get; private set; }
+        public string InvoicePath { get; private set; }
+
+        /// <summary>
+        /// Path del directorio de archivado de los datos de la
+        /// factura.
+        /// </summary>
+        public string InvoicePostedPath => Registro?.FechaHoraHusoGenRegistro == null ? null : GetInvoicePostedPath($"{Invoice.InvoiceDate.Year}");
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public string ResponsesPath { get; private set; }
+        public string InvoiceEntryPath => Registro?.FechaHoraHusoGenRegistro == null ? null : GetInvoiceEntryPath($"{Registro.FechaHoraHusoGenRegistro.Substring(0, 4)}"); 
+
+        /// <summary>
+        /// Path del directorio de archivado de los datos de la
+        /// cadena.
+        /// </summary>
+        public string ResponsesPath => Registro?.FechaHoraHusoGenRegistro == null ? null : GetResponsesPath($"{Registro.FechaHoraHusoGenRegistro.Substring(0, 4)}");
 
         /// <summary>
         /// Path de la factura en el directorio de archivado de los datos de la
@@ -760,7 +821,8 @@ namespace VeriFactu.Business
             }
 
             if (string.IsNullOrEmpty(CSV) || sentException != null)
-                ClearPost();
+                if(sentException == null)
+                    ClearPost();
 
             if (sentException != null)
                 throw new Exception($"Se ha producido un error al intentar realizar el envío" +

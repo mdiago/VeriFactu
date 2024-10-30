@@ -38,8 +38,8 @@
  */
 
 using System.Collections.Generic;
-using VeriFactu.Xml;
 using System;
+using VeriFactu.Xml.Factu;
 
 namespace VeriFactu.DataStore
 {

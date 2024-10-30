@@ -38,70 +38,25 @@
  */
 
 using System.Xml.Serialization;
+using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Factu.Anulacion;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Línea de respuesta de la presentación.
+    /// Representa un registro de alta o de anulación.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public class RespuestaLinea
+    public class RegistroFactura
     {
 
-        #region Propiedades Públicas de Instancia
-
         /// <summary>
-        /// Identificador de la factura.
+        /// Representa un registro de alta o anulación.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceTikR)]
+        [XmlElement("RegistroAlta", typeof(RegistroAlta), Namespace = Namespaces.NamespaceSF)]
+        [XmlElement("RegistroAnulacion", typeof(RegistroAnulacion), Namespace = Namespaces.NamespaceSF)]
+        public object Registro { get; set; }
 
-        public IDFactura IDFactura { get; set; }
-
-        /// <summary>
-        /// Contiene el tipo de operación y los parámetros opcionales asociados al mismo. 
-        /// </summary>
-        public Operacion Operacion { get; set; }
-
-        /// <summary>
-        /// <para>Dato adicional de contenido libre con el objetivo de que se pueda
-        /// asociar opcionalmente información interna del sistema informático de facturación
-        /// al registro de facturación. Este dato puede ayudar a completar la identificación
-        /// o calificación de la factura y/o su registro de facturación.</para>
-        /// <para>Alfanumérico (60)</para>
-        /// </summary>
-        public string RefExterna { get; set; }
-
-        /// <summary>
-        /// Estado del registro presentado en el sistema de la AEAT.
-        /// </summary>
-        public string EstadoRegistro { get; set; }
-
-        /// <summary>
-        /// En su caso, código del error en la presentación.
-        /// </summary>
-        public string CodigoErrorRegistro { get; set; }
-
-        /// <summary>
-        /// En su caso, texto del error en la presentación.
-        /// </summary>
-        public string DescripcionErrorRegistro { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
-
-        /// <summary>
-        /// Representación textual de la instancia.
-        /// </summary>
-        /// <returns> Representación textual de la instancia.</returns>
-        public override string ToString()
-        {
-            return $"{IDFactura}-{EstadoRegistro}";
-        }
-
-        #endregion
 
     }
-
 }

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Anulacion;
 
 namespace VeriFactu.Xml.Factu
 {
@@ -23,10 +21,9 @@ namespace VeriFactu.Xml.Factu
         /// <summary>
         /// Datos correspondientes a los registro de facturacion de alta.
         /// </summary>
-        [XmlArray("RegistroFactura", Namespace = Namespaces.NamespaceSFLR)]
-        [XmlArrayItem("RegistroAlta", typeof(RegistroAlta), Namespace = Namespaces.NamespaceSF)]
-        [XmlArrayItem("RegistroAnulacion", typeof(RegistroAnulacion), Namespace = Namespaces.NamespaceSF)]
-        public List<object> RegistroFactura { get; set; }
+        [XmlElement("RegistroFactura", Namespace = Namespaces.NamespaceSFLR)]
+        public List<RegistroFactura> RegistroFactura { get; set; }
+
 
         /// <summary>
         /// Datos de control.
