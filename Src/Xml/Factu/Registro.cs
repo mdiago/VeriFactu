@@ -270,7 +270,7 @@ namespace VeriFactu.Xml.Factu
         /// Referencia externa.
         /// </summary>
         [XmlIgnore]
-        public string ExternKey => BlockchainLinkID == null ?
+        public string ExternKey => BlockchainLinkID == 0 ?
             null : $"{BlockchainLinkID}".PadLeft(20, '0');
 
 

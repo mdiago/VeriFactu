@@ -102,6 +102,15 @@ namespace VeriFactu.Xml.Factu
         public Interlocutor ObligadoEmision { get; set; }
 
         /// <summary>
+        /// Representante del obligado tributario. A rellenar solo en caso de que los registros
+        /// de facturación remitidos hayan sido generados por un representante/asesor del obligado
+        /// tributario. Este campo forma parte del detalle de las circunstancias de generación
+        /// de los registros de facturación.
+        /// </summary>
+        [XmlElement("Representante", Namespace = Namespaces.NamespaceSF)]
+        public Interlocutor Representante { get; set; }
+
+        /// <summary>
         /// <para>Tipo de registro (alta inicial, alta sustitutiva). 
         /// Contiene la operación a realizar en el sistema de la AEAT, 
         /// lo que forma parte del detalle de las circunstancias de 

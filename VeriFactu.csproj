@@ -64,6 +64,10 @@
     <Compile Include="Src\Business\TaxId\TaxIdEsPersonTypeCode.cs" />
     <Compile Include="Src\Business\TaxId\TaxIdEsTypes.cs" />
     <Compile Include="Src\Business\TaxItem.cs" />
+    <Compile Include="Src\Business\Validation\InvoiceValiation.cs" />
+    <Compile Include="Src\Business\Validation\InvoiceValiationBusiness.cs" />
+    <Compile Include="Src\Business\Validation\InvoiceValiationSintax.cs" />
+    <Compile Include="Src\Business\Validation\NIF\NifValidation.cs" />
     <Compile Include="Src\DataStore\Document.cs" />
     <Compile Include="Src\DataStore\Period.cs" />
     <Compile Include="Src\DataStore\Seller.cs" />
