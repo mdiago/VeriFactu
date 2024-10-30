@@ -329,6 +329,31 @@ namespace VeriFactu.Business.Validation
                     $" Solo podrá incluirse el campo RechazoPrevio con valor “X” si se" +
                     $" ha informado el campo Subsanacion y tiene el valor “S”.");
 
+            // No podrá informarse el campo RechazoPrevio con valor “S” si no se
+            // informa el campo Subsanación o éste tiene el valor “N”
+            if (registroAlta.RechazoPrevio == RechazoPrevio.S && 
+                (string.IsNullOrEmpty(registroAlta.Subsanacion) || registroAlta.Subsanacion == "N"))
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                    $" No podrá informarse el campo RechazoPrevio con valor “S” si no se" +
+                    $" informa el campo Subsanación o éste tiene el valor “N”.");
+
+            // 3. TipoRectificativa
+
+            // Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”,
+            // “R4” o “R5”
+            
+            var isRectificativa = Array.IndexOf(new TipoFactura[]{ TipoFactura.R1, TipoFactura.R2, 
+                TipoFactura.R3, TipoFactura.R4, TipoFactura.R5 }, registroAlta.TipoFactura) != -1;
+
+            if(!isRectificativa && registroAlta.TipoRectificativaSpecified)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                   $" Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
+                   $" “R4” o “R5”.");
+
+            // Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
+            if (isRectificativa && !registroAlta.TipoRectificativaSpecified)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                   $" Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
 
 
             return result;
