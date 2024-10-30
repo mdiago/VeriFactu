@@ -311,6 +311,11 @@ namespace VeriFactu.Business.FlowControl
         public void Add(InvoiceAction invoiceAction) 
         {
 
+            var busErrors = invoiceAction.GetBusErrors();
+
+            if (busErrors.Count > 0)
+                throw new Exception($"No se puede añadir un elemento con errores en validación: {string.Join("\n", busErrors)}");
+
             List<InvoiceAction> sellerPendingQueue = _SellerPendingQueue.ContainsKey(invoiceAction.SellerID) ? 
                 _SellerPendingQueue[invoiceAction.SellerID] : new List<InvoiceAction>() { invoiceAction };       
 

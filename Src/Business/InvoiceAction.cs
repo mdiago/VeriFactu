@@ -200,7 +200,7 @@ namespace VeriFactu.Business
 
             var errors = new List<string>();
 
-            if (File.Exists(InvoiceEntryFilePath))
+            if (File.Exists(InvoiceFilePath))
                 errors.Add($"Ya existe una entrada con SellerID: {Invoice.SellerID}" +
                     $" en el año {Invoice.InvoiceDate.Year} con el número {Invoice.InvoiceID}.");
 
@@ -386,7 +386,10 @@ namespace VeriFactu.Business
             // Generamos el xml
             Xml = GetXml();
             // Guardamos el xml
-            File.WriteAllBytes($"{InvoicePostedPath}{EncodedInvoiceID}.xml", Xml);
+
+            var test = InvoiceFilePath;
+
+            File.WriteAllBytes(InvoiceFilePath, Xml);
 
         }
 
@@ -629,7 +632,7 @@ namespace VeriFactu.Business
         /// Path del directorio de archivado de los datos de la
         /// factura.
         /// </summary>
-        public string InvoicePostedPath => Registro?.FechaHoraHusoGenRegistro == null ? null : GetInvoicePostedPath($"{Invoice.InvoiceDate.Year}");
+        public string InvoicePostedPath => GetInvoicePostedPath($"{Invoice.InvoiceDate.Year}");
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
@@ -644,10 +647,15 @@ namespace VeriFactu.Business
         public string ResponsesPath => Registro?.FechaHoraHusoGenRegistro == null ? null : GetResponsesPath($"{Registro.FechaHoraHusoGenRegistro.Substring(0, 4)}");
 
         /// <summary>
+        /// Path de la factura en el directorio de facturas.
+        /// </summary>
+        public virtual string InvoiceFilePath => $"{InvoicePostedPath}{EncodedInvoiceID}.xml";
+
+        /// <summary>
         /// Path de la factura en el directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public virtual string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.xml";
+        public virtual string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.xml"; 
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
