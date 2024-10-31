@@ -39,11 +39,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using VeriFactu.Business.Validation.NIF;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -56,6 +52,8 @@ namespace VeriFactu.Business.Validation.Validators
     /// </summary>
     public class ValidatorRegistroAlta : InvoiceValiation
     {
+
+        #region Variables Privadas de Instancia
 
         /// <summary>
         /// Registro de alta a validar.
@@ -77,10 +75,14 @@ namespace VeriFactu.Business.Validation.Validators
         /// </summary>
         protected DateTime _FechaExpedicion;
 
+        #endregion
+
+        #region Construtores de Instancia
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorRegistroAlta(Envelope envelope, RegistroAlta registroAlta) : base(envelope) 
+        public ValidatorRegistroAlta(Envelope envelope, RegistroAlta registroAlta) : base(envelope)
         {
 
             _RegistroAlta = registroAlta;
@@ -101,6 +103,52 @@ namespace VeriFactu.Business.Validation.Validators
 
         }
 
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Obtiene los errores de un bloque en concreto.
+        /// </summary>
+        /// <returns>Lista con los errores de un bloque en concreto.</returns>
+        protected virtual List<string> GetBlockErrors()
+        {
+
+            var result = new List<string>();
+
+            // 1. Agrupación IDFactura
+            result.AddRange(new ValidatorRegistroAltaIDFactura(_Envelope, _RegistroAlta).GetErrors());
+            // 2. RechazoPrevio
+            result.AddRange(new ValidatorRegistroAltaRechazoPrevio(_Envelope, _RegistroAlta).GetErrors());
+            // 3. TipoRectificativa
+            result.AddRange(new ValidatorRegistroAltaTipoRectificativa(_Envelope, _RegistroAlta).GetErrors());
+
+            return result;
+
+        }
+
+        /// <summary>
+        /// Obtiene un DateTime de la cadena de representación
+        /// de una fecha en un archivo xml.
+        /// </summary>
+        /// <param name="xmlDate">Cadena de fecha xml.</param>
+        /// <returns>DateTime de la cadena de representación
+        /// de una fecha en un archivo xml.</returns>
+        protected DateTime FromXmlDate(string xmlDate)
+        {
+
+            var year = Convert.ToInt32(xmlDate.Substring(6, 4));
+            var month = Convert.ToInt32(xmlDate.Substring(3, 2));
+            var day = Convert.ToInt32(xmlDate.Substring(0, 2));
+
+            return new DateTime(year, month, day);
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Ejecuta las validaciones y devuelve una lista
         /// con los errores encontrados.
@@ -114,38 +162,7 @@ namespace VeriFactu.Business.Validation.Validators
 
         }
 
-        /// <summary>
-        /// Obtiene los errores de un bloque en concreto.
-        /// </summary>
-        /// <returns>Lista con los errores de un bloque en concreto.</returns>
-        protected virtual List<string> GetBlockErrors() 
-        {
-
-            var result = new List<string>();
-
-            result.AddRange(new ValidatorRegistroAltaIDFactura(_Envelope, _RegistroAlta).GetErrors());
-
-            return result;
-
-        }
-
-        /// <summary>
-        /// Obtiene un DateTime de la cadena de representación
-        /// de una fecha en un archivo xml.
-        /// </summary>
-        /// <param name="xmlDate">Cadena de fecha xml.</param>
-        /// <returns>DateTime de la cadena de representación
-        /// de una fecha en un archivo xml.</returns>
-        protected DateTime FromXmlDate(string xmlDate) 
-        {
-
-            var year = Convert.ToInt32(xmlDate.Substring(6, 4));
-            var month = Convert.ToInt32(xmlDate.Substring(3, 2));
-            var day = Convert.ToInt32(xmlDate.Substring(0, 2));
-
-            return new DateTime(year, month, day);
-
-        }
+        #endregion
 
     }
 

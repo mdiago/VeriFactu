@@ -67,6 +67,8 @@
     <Compile Include="Src\Business\Validation\InvoiceValiation.cs" />
     <Compile Include="Src\Business\Validation\IValidator.cs" />
     <Compile Include="Src\Business\Validation\NIF\NifValidation.cs" />
+    <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroAltaTipoRectificativa.cs" />
+    <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroAltaRechazoPrevio.cs" />
     <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroAltaIDFactura.cs" />
     <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroAlta.cs" />
     <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroFactura.cs" />

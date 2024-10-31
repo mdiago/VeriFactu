@@ -37,13 +37,7 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using VeriFactu.Business.Validation.NIF;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
@@ -58,47 +52,24 @@ namespace VeriFactu.Business.Validation.Validators
     public class ValidatorRegistroFactura : InvoiceValiation
     {
 
+        #region Construtores de Instancia
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorRegistroFactura(Envelope envelope) : base(envelope) 
+        public ValidatorRegistroFactura(Envelope envelope) : base(envelope)
         {
         }
 
-        /// <summary>
-        /// Ejecuta las validaciones y devuelve una lista
-        /// con los errores encontrados.
-        /// </summary>
-        /// <returns>Lista con las descripciones de los 
-        /// errores encontrado.</returns>
-        public override List<string> GetErrors()
-        {
+        #endregion
 
-            var result = new List<string>();
-
-            if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 10000)
-                result.Add($"La colección RegFactuSistemaFacturacion.RegistroFactura" +
-                    $" contiene {_RegFactuSistemaFacturacion.RegistroFactura.Count}" +
-                    $" elementos cuando sólo está permitido un máximo de 1000.");
-
-            //1. Agrupaciones RegistroAlta y RegistroAnulacion: Dentro de cada una de las posibles repeticiones
-            //u “ocurrencias” de RegistroFactura (de 1 a 1000) se pueden incluir registros de facturación de alta
-            //(agrupación RegistroAlta) y de anulación(agrupación RegistroAnulacion) en un mismo mensaje remitido,
-            //pero siempre que vayan en distintas ocurrencias de RegistroFactura(no pueden ir ambas agrupaciones a
-            //la vez dentro de la misma ocurrencia). ?????????????????????
-
-            foreach (var registroFactura in _RegFactuSistemaFacturacion.RegistroFactura)
-                result.AddRange(GetErrorsRegistroFactura(registroFactura));
-
-            return result;
-
-        }
+        #region Métodos Privados de Instancia
 
         /// <summary>
         /// Validaciones del bloque de todos los items de RegistroFactura.
         /// </summary>
         /// <returns>Lista con los errores encontrados.</returns>
-        public List<string> GetErrorsRegistroFactura(object registro)
+        private List<string> GetErrorsRegistroFactura(object registro)
         {
 
             var result = new List<string>();
@@ -131,6 +102,42 @@ namespace VeriFactu.Business.Validation.Validators
             return result;
 
         }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Ejecuta las validaciones y devuelve una lista
+        /// con los errores encontrados.
+        /// </summary>
+        /// <returns>Lista con las descripciones de los 
+        /// errores encontrado.</returns>
+        public override List<string> GetErrors()
+        {
+
+            var result = new List<string>();
+
+            if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 10000)
+                result.Add($"La colección RegFactuSistemaFacturacion.RegistroFactura" +
+                    $" contiene {_RegFactuSistemaFacturacion.RegistroFactura.Count}" +
+                    $" elementos cuando sólo está permitido un máximo de 1000.");
+
+            //1. Agrupaciones RegistroAlta y RegistroAnulacion: Dentro de cada una de las posibles repeticiones
+            //u “ocurrencias” de RegistroFactura (de 1 a 1000) se pueden incluir registros de facturación de alta
+            //(agrupación RegistroAlta) y de anulación(agrupación RegistroAnulacion) en un mismo mensaje remitido,
+            //pero siempre que vayan en distintas ocurrencias de RegistroFactura(no pueden ir ambas agrupaciones a
+            //la vez dentro de la misma ocurrencia). ?????????????????????
+
+            foreach (var registroFactura in _RegFactuSistemaFacturacion.RegistroFactura)
+                result.AddRange(GetErrorsRegistroFactura(registroFactura));
+
+            return result;
+
+        }
+
+        #endregion
+
 
     }
 

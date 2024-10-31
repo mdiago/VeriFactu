@@ -40,7 +40,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using VeriFactu.Business.Validation.NIF;
 using VeriFactu.Business.Validation.Validators;
 using VeriFactu.Business.Validation.VIES;
 using VeriFactu.Xml;

@@ -39,10 +39,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using VeriFactu.Business.Validation.NIF;
 using VeriFactu.Xml.Soap;
 
@@ -55,12 +52,18 @@ namespace VeriFactu.Business.Validation.Validators
     public class ValidatorCabecera : InvoiceValiation
     {
 
+        #region Construtores de Instancia
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorCabecera(Envelope envelope) : base(envelope) 
-        { 
+        public ValidatorCabecera(Envelope envelope) : base(envelope)
+        {
         }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
         /// Ejecuta las validaciones y devuelve una lista
@@ -123,6 +126,8 @@ namespace VeriFactu.Business.Validation.Validators
             return result;
 
         }
+
+        #endregion
 
     }
 

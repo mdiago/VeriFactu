@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-/*
+﻿/*
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -38,23 +37,66 @@
     address: info@irenesolutions.com
  */
 
+using System;
+using System.Collections.Generic;
+using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation
+namespace VeriFactu.Business.Validation.Validators
 {
 
     /// <summary>
-    /// Representa un validador.
+    /// Valida los datos de RegistroAlta TipoRectificativa.
     /// </summary>
-    public interface IValidator
+    public class ValidatorRegistroAltaTipoRectificativa : ValidatorRegistroAlta
     {
 
+        #region Construtores de Instancia
+
         /// <summary>
-        /// Ejecuta las validaciones y devuelve una lista
-        /// con los errores encontrados.
+        /// Constructor.
         /// </summary>
-        /// <returns>Lista con las descripciones de los 
-        /// errores encontrado.</returns>
-        List<string> GetErrors();
+        public ValidatorRegistroAltaTipoRectificativa(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        {
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Obtiene los errores de un bloque en concreto.
+        /// </summary>
+        /// <returns>Lista con los errores de un bloque en concreto.</returns>
+        protected override List<string> GetBlockErrors()
+        {
+
+            var result = new List<string>();
+
+            // 3. TipoRectificativa
+
+            // Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”,
+            // “R4” o “R5”
+
+            var isRectificativa = Array.IndexOf(new TipoFactura[]{ TipoFactura.R1, TipoFactura.R2,
+                TipoFactura.R3, TipoFactura.R4, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1;
+
+            if (!isRectificativa && _RegistroAlta.TipoRectificativaSpecified)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                   $" Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
+                   $" “R4” o “R5”.");
+
+            // Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
+            if (isRectificativa && !_RegistroAlta.TipoRectificativaSpecified)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                   $" Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
+
+            return result;
+
+        }
+
+        #endregion
 
     }
+
 }

@@ -39,11 +39,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using VeriFactu.Business.Validation.NIF;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -57,19 +53,24 @@ namespace VeriFactu.Business.Validation.Validators
     public class ValidatorRegistroAltaIDFactura : ValidatorRegistroAlta
     {
 
-      
+        #region Construtores de Instancia
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorRegistroAltaIDFactura(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta) 
+        public ValidatorRegistroAltaIDFactura(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
-        }    
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
 
         /// <summary>
         /// Obtiene los errores de un bloque en concreto.
         /// </summary>
         /// <returns>Lista con los errores de un bloque en concreto.</returns>
-        protected override List<string> GetBlockErrors() 
+        protected override List<string> GetBlockErrors()
         {
 
             var result = new List<string>();
@@ -159,6 +160,8 @@ namespace VeriFactu.Business.Validation.Validators
             return result;
 
         }
+
+        #endregion
 
     }
 
