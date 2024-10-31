@@ -37,18 +37,17 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators
+namespace VeriFactu.Business.Validation.Validators.Alta
 {
 
     /// <summary>
-    /// Valida los datos de RegistroAlta TipoRectificativa.
+    /// Valida los datos de RegistroAlta Tercero.
     /// </summary>
-    public class ValidatorRegistroAltaTipoRectificativa : ValidatorRegistroAlta
+    public class ValidatorRegistroAltaDestinatarios : ValidatorRegistroAlta
     {
 
         #region Construtores de Instancia
@@ -56,7 +55,7 @@ namespace VeriFactu.Business.Validation.Validators
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorRegistroAltaTipoRectificativa(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        public ValidatorRegistroAltaDestinatarios(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }
 
@@ -73,23 +72,27 @@ namespace VeriFactu.Business.Validation.Validators
 
             var result = new List<string>();
 
-            // 3. TipoRectificativa
+            // 13. Agrupación Destinatarios
 
-            // Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”,
-            // “R4” o “R5”
+            // Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación Destinatarios tiene que estar cumplimentada, con al menos un destinatario.
 
-            var isRectificativa = Array.IndexOf(new TipoFactura[]{ TipoFactura.R1, TipoFactura.R2,
-                TipoFactura.R3, TipoFactura.R4, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1;
+            // Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.
 
-            if (!isRectificativa && _RegistroAlta.TipoRectificativaSpecified)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                   $" Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
-                   $" “R4” o “R5”.");
+            // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
 
-            // Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
-            if (isRectificativa && !_RegistroAlta.TipoRectificativaSpecified)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                   $" Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
+            // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
+
+            // Cuando uno o varios destinatarios se identifiquen a través del NIF, los NIF deben estar identificados y ser distintos del NIF del campo IDEmisorFactura de la agrupación IDFactura.
+
+            // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
+
+            // Si el campo IDType = “07” (No censado), el campo CodigoPais debe ser “ES”.
+
+            // Cuando uno o varios destinatarios se identifiquen a través de la agrupación IDOtro e IDType sea “02”, se validará que el campo identificador se ajuste a la estructura de NIF-IVA de alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
+
+            // Cuando uno o varios destinatarios se identifiquen a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03” o “07”.
+
+            // Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”, se validará que TipoFactura sea “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.
 
             return result;
 

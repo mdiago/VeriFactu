@@ -41,13 +41,13 @@ using System.Collections.Generic;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators
+namespace VeriFactu.Business.Validation.Validators.Alta
 {
 
     /// <summary>
-    /// Valida los datos de RegistroAlta RechazoPrevio.
+    /// Valida los datos de RegistroAlta TipoRectificativa.
     /// </summary>
-    public class ValidatorRegistroAltaRechazoPrevio : ValidatorRegistroAlta
+    public class ValidatorRegistroAltaTipoRectificativa : ValidatorRegistroAlta
     {
 
         #region Construtores de Instancia
@@ -55,7 +55,7 @@ namespace VeriFactu.Business.Validation.Validators
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorRegistroAltaRechazoPrevio(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        public ValidatorRegistroAltaTipoRectificativa(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }
 
@@ -72,22 +72,20 @@ namespace VeriFactu.Business.Validation.Validators
 
             var result = new List<string>();
 
-            // 2. RechazoPrevio
+            // 3. TipoRectificativa
 
-            // Solo podrá incluirse el campo RechazoPrevio con valor “X” si se ha
-            // informado el campo Subsanacion y tiene el valor “S”.
-            if (_RegistroAlta.RechazoPrevio == RechazoPrevio.X && _RegistroAlta.Subsanacion != "S")
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" Solo podrá incluirse el campo RechazoPrevio con valor “X” si se" +
-                    $" ha informado el campo Subsanacion y tiene el valor “S”.");
+            // Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”,
+            // “R4” o “R5”
 
-            // No podrá informarse el campo RechazoPrevio con valor “S” si no se
-            // informa el campo Subsanación o éste tiene el valor “N”
-            if (_RegistroAlta.RechazoPrevio == RechazoPrevio.S &&
-                (string.IsNullOrEmpty(_RegistroAlta.Subsanacion) || _RegistroAlta.Subsanacion == "N"))
+            if (!_IsRectificativa && _RegistroAlta.TipoRectificativaSpecified)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" No podrá informarse el campo RechazoPrevio con valor “S” si no se" +
-                    $" informa el campo Subsanación o éste tiene el valor “N”.");
+                   $" Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
+                   $" “R4” o “R5”.");
+
+            // Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
+            if (_IsRectificativa && !_RegistroAlta.TipoRectificativaSpecified)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                   $" Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
 
             return result;
 

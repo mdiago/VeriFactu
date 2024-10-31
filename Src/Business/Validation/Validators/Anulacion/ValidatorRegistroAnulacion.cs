@@ -37,30 +37,70 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
-using VeriFactu.Business.Validation.Validators.Alta;
-using VeriFactu.Business.Validation.Validators.Anulacion;
+using System.Text.RegularExpressions;
 using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators
+namespace VeriFactu.Business.Validation.Validators.Anulacion
 {
 
     /// <summary>
-    /// Valida los datos de RegistroFactura.
+    /// Valida los datos de RegistroAnulacion.
     /// </summary>
-    public class ValidatorRegistroFactura : InvoiceValiation
+    public class ValidatorRegistroAnulacion : InvoiceValiation
     {
+
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// Registro de alta a validar.
+        /// </summary>
+        protected RegistroAnulacion _RegistroAnulacion;
+
+        /// <summary>
+        /// Cabecera 
+        /// </summary>
+        protected Cabecera _Cabecera;
+
+        /// <summary>
+        /// Fecha operación.
+        /// </summary>
+        protected DateTime? _FechaOperacion = null;
+
+        /// <summary>
+        /// Fecha operación.
+        /// </summary>
+        protected DateTime _FechaExpedicion;
+
+        /// <summary>
+        /// Indicador de si la factura es rectificativa.
+        /// </summary>
+        protected bool _IsRectificativa = false;
+
+        #endregion
 
         #region Construtores de Instancia
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ValidatorRegistroFactura(Envelope envelope) : base(envelope)
+        public ValidatorRegistroAnulacion(Envelope envelope, RegistroAnulacion registroAnulacion) : base(envelope)
         {
+
+            _RegistroAnulacion = registroAnulacion;
+            _Cabecera = _RegFactuSistemaFacturacion?.Cabecera;
+
+            var fechaExpedicion = _RegistroAnulacion?.IDFacturaAnulada?.FechaExpedicion;
+
+            if (string.IsNullOrEmpty(fechaExpedicion) && !Regex.IsMatch(fechaExpedicion, @"\d{2}-\d{2}-\d{4}"))
+                throw new ArgumentException($"Error en el bloque RegistroAlta ({_RegistroAnulacion}):" +
+                $" La propiedad IDFactura.FechaExpedicion tiene que tener un valor con formato dd-mm-yyyy.");
+
+            _FechaExpedicion = FromXmlDate(fechaExpedicion);
+
         }
 
         #endregion
@@ -68,37 +108,36 @@ namespace VeriFactu.Business.Validation.Validators
         #region Métodos Privados de Instancia
 
         /// <summary>
-        /// Validaciones del bloque de todos los items de RegistroFactura.
+        /// Obtiene los errores de un bloque en concreto.
         /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        private List<string> GetErrorsRegistroFactura(object registro)
+        /// <returns>Lista con los errores de un bloque en concreto.</returns>
+        protected virtual List<string> GetBlockErrors()
         {
 
             var result = new List<string>();
 
-            var registroFactura = registro as RegistroFactura;
-
-            if (registroFactura == null)
-                result.Add($"Error en el bloque RegistroFactura: Se ha encontrado un" +
-                    $" elemento de la clase {registro.GetType()} en la colección RegistroFactura" +
-                    $". Esta colección sólo admite elementos del tipo RegistroFactura.");
-
-            var registroAlta = registroFactura.Registro as RegistroAlta;
-            var registroAnulacion = registroFactura.Registro as RegistroAnulacion;
-
-            if (registroAlta == null && registroAnulacion == null)
-                result.Add($"Error en el bloque RegistroFactura.Registro: Se ha encontrado un" +
-                    $" elmento de la clase {registro.GetType()} en la colección RegistroFactura" +
-                    $". Esta colección sólo admite elementos del tipo RegistroAlta o RegistroAnulacion.");
-
-            if (registroAlta != null)
-                result.AddRange(new ValidatorRegistroAlta(_Envelope, registroAlta).GetErrors());
-
-
-            if (registroAnulacion != null)
-                result.AddRange(new ValidatorRegistroAnulacion(_Envelope, registroAnulacion).GetErrors());
+            // 1. Agrupación IDFactura
+            //result.AddRange(new ValidatorRegistroAltaIDFactura(_Envelope, _RegistroAlta).GetErrors());
 
             return result;
+
+        }
+
+        /// <summary>
+        /// Obtiene un DateTime de la cadena de representación
+        /// de una fecha en un archivo xml.
+        /// </summary>
+        /// <param name="xmlDate">Cadena de fecha xml.</param>
+        /// <returns>DateTime de la cadena de representación
+        /// de una fecha en un archivo xml.</returns>
+        protected DateTime FromXmlDate(string xmlDate)
+        {
+
+            var year = Convert.ToInt32(xmlDate.Substring(6, 4));
+            var month = Convert.ToInt32(xmlDate.Substring(3, 2));
+            var day = Convert.ToInt32(xmlDate.Substring(0, 2));
+
+            return new DateTime(year, month, day);
 
         }
 
@@ -115,28 +154,11 @@ namespace VeriFactu.Business.Validation.Validators
         public override List<string> GetErrors()
         {
 
-            var result = new List<string>();
-
-            if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 10000)
-                result.Add($"La colección RegFactuSistemaFacturacion.RegistroFactura" +
-                    $" contiene {_RegFactuSistemaFacturacion.RegistroFactura.Count}" +
-                    $" elementos cuando sólo está permitido un máximo de 1000.");
-
-            //1. Agrupaciones RegistroAlta y RegistroAnulacion: Dentro de cada una de las posibles repeticiones
-            //u “ocurrencias” de RegistroFactura (de 1 a 1000) se pueden incluir registros de facturación de alta
-            //(agrupación RegistroAlta) y de anulación(agrupación RegistroAnulacion) en un mismo mensaje remitido,
-            //pero siempre que vayan en distintas ocurrencias de RegistroFactura(no pueden ir ambas agrupaciones a
-            //la vez dentro de la misma ocurrencia). ?????????????????????
-
-            foreach (var registroFactura in _RegFactuSistemaFacturacion.RegistroFactura)
-                result.AddRange(GetErrorsRegistroFactura(registroFactura));
-
-            return result;
+            return GetBlockErrors();
 
         }
 
         #endregion
-
 
     }
 

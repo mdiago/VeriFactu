@@ -44,7 +44,7 @@ using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators
+namespace VeriFactu.Business.Validation.Validators.Alta
 {
 
     /// <summary>

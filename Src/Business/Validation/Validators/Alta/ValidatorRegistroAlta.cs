@@ -44,7 +44,7 @@ using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators
+namespace VeriFactu.Business.Validation.Validators.Alta
 {
 
     /// <summary>
@@ -75,6 +75,11 @@ namespace VeriFactu.Business.Validation.Validators
         /// </summary>
         protected DateTime _FechaExpedicion;
 
+        /// <summary>
+        /// Indicador de si la factura es rectificativa.
+        /// </summary>
+        protected bool _IsRectificativa = false;
+
         #endregion
 
         #region Construtores de Instancia
@@ -101,6 +106,9 @@ namespace VeriFactu.Business.Validation.Validators
 
             _FechaExpedicion = FromXmlDate(fechaExpedicion);
 
+            _IsRectificativa = Array.IndexOf(new TipoFactura[]{ TipoFactura.R1, TipoFactura.R2,
+                TipoFactura.R3, TipoFactura.R4, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1;
+
         }
 
         #endregion
@@ -122,6 +130,26 @@ namespace VeriFactu.Business.Validation.Validators
             result.AddRange(new ValidatorRegistroAltaRechazoPrevio(_Envelope, _RegistroAlta).GetErrors());
             // 3. TipoRectificativa
             result.AddRange(new ValidatorRegistroAltaTipoRectificativa(_Envelope, _RegistroAlta).GetErrors());
+            // 4. Agrupación FacturasRectificadas
+            result.AddRange(new ValidatorRegistroAltaFacturasRectificadas(_Envelope, _RegistroAlta).GetErrors());
+            // 5. Agrupación FacturasSustituidas
+            result.AddRange(new ValidatorRegistroAltaFacturasSustituidas(_Envelope, _RegistroAlta).GetErrors());
+            // 6. Agrupación ImporteRectificacion
+            result.AddRange(new ValidatorRegistroAltaImporteRectificacion(_Envelope, _RegistroAlta).GetErrors());
+            // 7. FechaOperacion
+            result.AddRange(new ValidatorRegistroAltaFechaOperacion(_Envelope, _RegistroAlta).GetErrors());
+            // 8. FacturaSimplificadaArt7273
+            result.AddRange(new ValidatorRegistroAltaFacturaSimplificadaArt7273(_Envelope, _RegistroAlta).GetErrors());
+            // 9. FacturaSinIdentifDestinatarioArt61d
+            result.AddRange(new ValidatorRegistroAltaFacturaSinIdentifDestinatarioArt61d(_Envelope, _RegistroAlta).GetErrors());
+            // 10. Macrodato
+            result.AddRange(new ValidatorRegistroAltaMacrodato(_Envelope, _RegistroAlta).GetErrors());
+            // 11. EmitidaPorTerceroODestinatario
+            result.AddRange(new ValidatorRegistroAltaEmitidaPorTerceroODestinatario(_Envelope, _RegistroAlta).GetErrors());
+            // 12. Agrupación Tercero
+            result.AddRange(new ValidatorRegistroAltaTercero(_Envelope, _RegistroAlta).GetErrors());
+            // 13. Agrupación Destinatarios
+            result.AddRange(new ValidatorRegistroAltaDestinatarios(_Envelope, _RegistroAlta).GetErrors());
 
             return result;
 
