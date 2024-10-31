@@ -1,10 +1,47 @@
-﻿using System;
+﻿/*
+    This file is part of the VeriFactu (R) project.
+    Copyright (c) 2023-2024 Irene Solutions SL
+    Authors: Irene Solutions SL.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License version 3
+    as published by the Free Software Foundation with the addition of the
+    following permission added to Section 15 as permitted in Section 7(a):
+    FOR ANY PART OF THE COVERED WORK IN WHICH THE COPYRIGHT IS OWNED BY
+    IRENE SOLUTIONS SL. IRENE SOLUTIONS SL DISCLAIMS THE WARRANTY OF NON INFRINGEMENT
+    OF THIRD PARTY RIGHTS
+    
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+    or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU Affero General Public License for more details.
+    You should have received a copy of the GNU Affero General Public License
+    along with this program; if not, see http://www.gnu.org/licenses or write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    Boston, MA, 02110-1301 USA, or download the license from the following URL:
+        http://www.irenesolutions.com/terms-of-use.pdf
+    
+    The interactive user interfaces in modified source and object code versions
+    of this program must display Appropriate Legal Notices, as required under
+    Section 5 of the GNU Affero General Public License.
+    
+    You can be released from the requirements of the license by purchasing
+    a commercial license. Buying such a license is mandatory as soon as you
+    develop commercial activities involving the VeriFactu software without
+    disclosing the source code of your own applications.
+    These activities include: offering paid services to customers as an ASP,
+    serving sii XML data on the fly in a web application, shipping VeriFactu
+    with a closed source product.
+    
+    For more information, please contact Irene Solutions SL. at this
+    address: info@irenesolutions.com
+ */
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using VeriFactu.Business.Validation.NIF;
+using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
@@ -193,6 +230,8 @@ namespace VeriFactu.Business.Validation
 
             var cabecera = _RegFactuSistemaFacturacion?.Cabecera;
 
+            DateTime? operacion = null;
+
             var result = new List<string>();
 
             // 1. Agrupación IDFactura
@@ -265,7 +304,7 @@ namespace VeriFactu.Business.Validation
                             month = Convert.ToInt32(fechaOperacion.Substring(3, 2));
                             day = Convert.ToInt32(fechaOperacion.Substring(0, 2));
 
-                            var operacion = new DateTime(year, month, day);
+                            operacion = new DateTime(year, month, day);
 
                             foreach (var desglose in registroAlta.Desglose)
                             {
@@ -355,6 +394,189 @@ namespace VeriFactu.Business.Validation
                 result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
                    $" Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
 
+            // 4. Agrupación FacturasRectificadas
+            
+            var facturasRecticadas = registroAlta?.FacturasRectificadas;
+
+            if (facturasRecticadas != null) 
+            {
+
+                if(facturasRecticadas.Count > 1000)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                       $" La colección FacturasRectificadas no puede" +
+                       $" contener más de 1000 elementos y contiene {facturasRecticadas.Count}”.");
+
+
+                if (!isRectificativa)
+                {
+                    // Sólo podrá incluirse esta agrupación (no es obligatoria) si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" La colección FacturasRectificadas sólo puede existir" +
+                        $" si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
+
+                } 
+                else 
+                {
+
+                    // El NIF del campo IDEmisorFactura debe estar identificado.
+                    foreach (var facturaRectificada in facturasRecticadas) 
+                    { 
+                    
+                        if(facturaRectificada?.IDEmisorFactura != registroAlta?.IDFactura?.IDEmisorFactura)
+                            result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                               $" El NIF del campo IDEmisorFactura de FacturasRectificada ({facturaRectificada?.IDEmisorFactura}) debe estar" +
+                               $" identificado y debe se el mismo que IDEmisorFactura ({registroAlta?.IDFactura?.IDEmisorFactura}).");
+
+                    }
+
+                }
+
+
+            }
+
+            // 5. Agrupación FacturasSustituidas
+
+            var facturasSustituidas = registroAlta?.FacturasSustituidas;
+
+            if (facturasSustituidas != null)
+            {
+
+                if (facturasSustituidas.Count > 1000)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                       $" La colección FacturasSustituidas no puede" +
+                       $" contener más de 1000 elementos y contiene {facturasSustituidas.Count}”.");
+
+
+                if (registroAlta.TipoFacturaSpecified && registroAlta.TipoFactura == TipoFactura.F3)
+                {
+
+                    // El NIF del campo IDEmisorFactura debe estar identificado.
+                    foreach (var facturasSustituida in facturasSustituidas)
+                    {
+
+                        if (facturasSustituida?.IDEmisorFactura != registroAlta?.IDFactura?.IDEmisorFactura)
+                            result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                               $" El NIF del campo IDEmisorFactura de FacturasSustituida ({facturasSustituida?.IDEmisorFactura}) debe estar" +
+                               $" identificado y debe se el mismo que IDEmisorFactura ({registroAlta?.IDFactura?.IDEmisorFactura}).");
+
+                    }
+
+                }
+                else
+                {
+
+                    // Sólo podrá incluirse esta agrupación (no es obligatoria) cuando el campo TipoFactura="F3"
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" La colección FacturasSustituidas sólo puede existir" +
+                        $" si TipoFactura es igual a “F3”.");
+
+                }
+
+            }
+
+            // 6. Agrupación ImporteRectificacion
+
+            var importeRectificacion = registroAlta?.ImporteRectificacion;
+
+            if (registroAlta.TipoRectificativaSpecified && registroAlta.TipoRectificativa == TipoRectificativa.S)
+            {
+
+                // Obligatorio si TipoRectificativa = “S”
+
+                if (importeRectificacion == null)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" Obligatorio informar el bloque ImporteRectificacion si TipoRectificativa = 'S'.");
+
+            }
+            else 
+            {
+
+                // Sólo deberá incluirse esta agrupación si el campo TipoRectificativa = "S".
+
+                if (importeRectificacion != null)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" Sólo deberá incluirse el bloque ImporteRectificacion si el campo TipoRectificativa = 'S'.");
+
+            }
+
+            // 7. FechaOperacion
+
+            if (operacion != null) 
+            {
+
+                // La FechaOperacion no debe ser inferior a la fecha actual menos veinte años y no debe ser superior al año siguiente de la fecha actual.
+                if (DateTime.Now.AddYears(-20).CompareTo(operacion) > 0)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" La FechaOperacion ({operacion:yyyy-MM-dd}) no debe ser inferior a la fecha actual menos veinte años.");
+
+                if((operacion??DateTime.Now).Year > DateTime.Now.Year)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" La FechaOperacion ({operacion:yyyy-MM-dd}) no debe ser superior al año siguiente de la fecha actual.");
+
+            }
+
+            // 8.FacturaSimplificadaArt7273
+
+            // Sólo se podrá rellenar con “S” si TipoFactura=“F1” o “F3” o “R1” o “R2” o “R3” o “R4”.
+            var allowedFacturaSimplificadaArt7273 = Array.IndexOf(new TipoFactura[]{ TipoFactura.F1, TipoFactura.F3,
+                TipoFactura.R1, TipoFactura.R2, TipoFactura.R3, TipoFactura.R4 }, registroAlta.TipoFactura) != -1;
+
+            if(registroAlta.FacturaSimplificadaArt7273 == "S" && !allowedFacturaSimplificadaArt7273)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" La propiedad FacturaSimplificadaArt7273 sólo se puede rellenar" +
+                        $" con “S” si TipoFactura=“F1” o “F3” o “R1” o “R2” o “R3” o “R4”.");
+
+            // 9.FacturaSinIdentifDestinatarioArt61d
+
+            // Sólo se podrá rellenar con “S” si TipoFactura=”F2” o “R5”.
+
+            var allowedFacturaSinIdentifDestinatarioArt61d = Array.IndexOf(
+                new TipoFactura[]{ TipoFactura.F2, TipoFactura.R5}, registroAlta.TipoFactura) != -1;
+
+            if (registroAlta.FacturaSinIdentifDestinatarioArt61d == "S" && !allowedFacturaSinIdentifDestinatarioArt61d)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" La propiedad FacturaSinIdentifDestinatarioArt61d sólo se puede rellenar" +
+                        $" con “S” si TipoFactura=”F2” o “R5”.");
+
+            // 10. Macrodato
+
+            // Campo obligatorio si ImporteTotal >= |100.000.000,00| (valor absoluto).
+
+            if(XmlParser.ToDecimal(registroAlta.ImporteTotal) >100000000m && (registroAlta.Macrodato == null || registroAlta.Macrodato == "N"))
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" El campo Macrodato debe contener el valor 'S' obligatoriamente" +
+                        $" si ImporteTotal >= |100.000.000,00| (valor absoluto).");
+
+            // 11. EmitidaPorTerceroODestinatario
+
+            // Si es igual a “T”, el bloque Tercero será de cumplimentación obligatoria.
+
+            if(registroAlta.Tercero == null && registroAlta.EmitidaPorTercerosODestinatarioSpecified && 
+                registroAlta.EmitidaPorTercerosODestinatario == EmitidaPorTercerosODestinatario.T)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                    $" Si EmitidaPorTerceroODestinatario es igual a “T”," +
+                    $" el bloque Tercero será de cumplimentación obligatoria.");
+
+            // Si es igual a “D”, el bloque Destinatarios será de cumplimentación obligatoria.
+
+            if ((registroAlta.Destinatarios == null || registroAlta.Destinatarios.Count == 0) && 
+                registroAlta.EmitidaPorTercerosODestinatarioSpecified && 
+                registroAlta.EmitidaPorTercerosODestinatario == EmitidaPorTercerosODestinatario.D)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                    $" Si EmitidaPorTerceroODestinatario es igual a “D”, el bloque" +
+                    $" Destinatarios será de cumplimentación obligatoria,");
+
+            // 12. Agrupación Tercero
+
+            // Solo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.
+
+            // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
+
+            // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
+
+            // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
+
+            // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”, se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
 
             return result;
 

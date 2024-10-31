@@ -118,6 +118,17 @@ namespace VeriFactu.Xml
             return amount.ToString(Settings.DefaultNumberFormatInfo);
         }
 
+        /// <summary>
+        /// Devuelve un decimal a partir de un string
+        /// de un campo de xml que representa un valor decimal.
+        /// </summary>
+        /// <param name="amount">Impote a convertir</param>
+        /// <returns>Importe convertido.</returns>
+        public static decimal ToDecimal(string amount)
+        {
+            return Convert.ToDecimal(amount, Settings.DefaultNumberFormatInfo);
+        }
+
         #endregion
 
         #region Métodos Públicos de Instancia

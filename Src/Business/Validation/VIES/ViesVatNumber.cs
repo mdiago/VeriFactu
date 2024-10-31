@@ -37,63 +37,50 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Business
+using System.Net;
+using System.Text.RegularExpressions;
+
+namespace VeriFactu.Business.Validation.VIES
 {
 
     /// <summary>
-    /// Representa una entrada de factura en el sistema.
+    /// Validador de NIF comunitarios mediante API REST.
+    /// https://ec.europa.eu/taxation_customs/vies/#/technical-information
     /// </summary>
-    public class InvoiceCancellation : InvoiceEntry
-    {      
-
-        #region Construtores de Instancia
+    public class ViesVatNumber
+    {
 
         /// <summary>
-        /// Constructor.
+        /// Url del endpoint de validación.
         /// </summary>
-        /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
-        public InvoiceCancellation(Invoice invoice) : base(invoice)
-        {
-        }
-
-        #endregion
-
-        #region Métodos Privados de Instancia 
+        static string UrlValidate = "https://ec.europa.eu/taxation_customs/vies/rest-api//check-vat-number";
 
         /// <summary>
-        /// Establece el registro relativo a la entrada
-        /// a contabilizar y enviar.
+        /// Valida un número de IVA intracomunitario.
         /// </summary>
-        internal override void SetRegistro()
+        /// <param name="vatNumber">Número de IVA intracomunitario
+        /// incluyendo el código de país.</param>
+        /// <returns>True si es válido y false en caso contario.</returns>
+        public static bool Validate(string vatNumber) 
         {
 
-            Registro = Invoice.GetRegistroAnulacion();
+            var country = vatNumber.Substring(0, 2);
+            var number = vatNumber.Substring(2, vatNumber.Length - 2);
+
+            var json = "{\"countryCode\": \""+ country + "\",\"vatNumber\": \""+ number + "\"}";
+            string valid = null;
+
+            using (WebClient webClient = new WebClient()) 
+            {
+
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                string response = webClient.UploadString(UrlValidate, json);
+                valid = Regex.Match(response, @"(?<=\Wvalid\W\s*:\s*)\w+").Value;
+
+            }
+
+            return (valid == "true");
 
         }
-
-        #endregion
-
-        #region Propiedades Públicas de Instancia
-
-        /// <summary>
-        /// Identificador de la anulación de factura.
-        /// </summary>
-        public override string InvoiceEntryID => $"{base.InvoiceEntryID}.DEL";
-
-        /// <summary>
-        /// Path del directorio de archivado de los datos de la
-        /// cadena.
-        /// </summary>
-        public override string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.DEL.xml";
-
-        /// <summary>
-        /// Path del directorio de archivado de los datos de la
-        /// cadena.
-        /// </summary>
-        public override string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.DEL.xml";   
-
-        #endregion
-
     }
-
 }
