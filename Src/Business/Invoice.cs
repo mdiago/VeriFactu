@@ -39,7 +39,7 @@
 
 using System;
 using System.Collections.Generic;
-using VeriFactu.Business.TaxId;
+using VeriFactu.Business.Validation.NIF.TaxId;
 using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;

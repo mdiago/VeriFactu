@@ -41,7 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace VeriFactu.Business.TaxId
+namespace VeriFactu.Business.Validation.NIF.TaxId
 {
     /// <summary>
     /// Clase para almacenar, verificar y obtener información de números de identificación fiscal españoles

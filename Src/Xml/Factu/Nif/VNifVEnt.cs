@@ -37,26 +37,38 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Business.TaxId
-{
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using VeriFactu.Xml;
 
-    /// <summary>
-    /// Tipo de número de identificación fiscal según RD 1065/2007, de 27 de julio.
-    /// </summary>
-    public enum TaxIdEsTypes
-    {
-        /// <summary>
-        /// Documento nacional de indentidad.
-        /// </summary>
-        DNI,
-        /// <summary>
-        /// Número de identificación fiscal para personas físicas y jurídicas.
-        /// </summary>
-        NIF,
-        /// <summary>
-        /// Número de identificación de extranjeros.
-        /// </summary>
-        NIE
-    }
+namespace VeriFactu.Xml.Factu.Nif
+{
+	/// <summary>
+	/// Datos de contribuyentes de entrada al web service
+	/// de validación de NIF de la AEAT.
+	/// </summary>
+	[Serializable]
+	[XmlRoot("VNifV2Ent", Namespace = Namespaces.NamespaceVNifV2Ent)]
+	public class VNifVEnt
+	{
+		/// <summary>
+		/// NIF del contribuyente.
+		/// Numérico(4).
+		/// </summary>
+		public List<Contribuyente> Contribuyente { get; set; }
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public VNifVEnt()
+		{
+			Contribuyente = new List<Contribuyente>();
+		}
+
+	}
 
 }

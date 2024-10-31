@@ -37,24 +37,38 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace VeriFactu.Business.Validation
+namespace VeriFactu.Xml.Factu.Nif
 {
+	/// <summary>
+	/// Perido impositivo
+	/// </summary>
+	[Serializable]
+	[XmlRoot("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Ent)]
+	public class Contribuyente
+	{
+		/// <summary>
+		/// NIF del contribuyente.
+		/// Numérico(4).
+		/// </summary>
+		public string Nif { get; set; }
 
-    /// <summary>
-    /// Representa un validador.
-    /// </summary>
-    public interface IValidator
-    {
+		/// <summary>
+		/// Nombre del contribuyente.	
+		/// </summary>
+		public string Nombre { get; set; }
 
-        /// <summary>
-        /// Ejecuta las validaciones y devuelve una lista
-        /// con los errores encontrados.
-        /// </summary>
-        /// <returns>Lista con las descripciones de los 
-        /// errores encontrado.</returns>
-        List<string> GetErrors();
+		/// <summary>
+		/// Nombre del contribuyente.	
+		/// </summary>
+		public string Resultado { get; set; }
 
-    }
+	}
+
 }

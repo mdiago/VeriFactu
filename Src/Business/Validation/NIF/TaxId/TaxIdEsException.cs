@@ -37,22 +37,31 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Business.TaxId
+using System;
+
+namespace VeriFactu.Business.Validation.NIF.TaxId
 {
 
     /// <summary>
-    /// Código de tipo de persona.
+    /// Initializes a new instance of the System.Exception class with a specified error
+    /// español.
     /// </summary>
-    public enum TaxIdEsPersonTypeCode
+    public class TaxIdEsException : Exception
     {
+
+        #region Construtores de Instancia
+
         /// <summary>
-        /// Persona jurídica
+        /// Initializes a new instance of the System.Exception class with a specified error
+        /// message.
         /// </summary>
-        LegalEntity,
-        /// <summary>
-        /// Persona física
-        /// </summary>
-        Individual
+        /// <param name="message">The message that describes the error.</param>
+        public TaxIdEsException(string message) : base(message)
+        {
+        }
+
+        #endregion
+
     }
 
 }

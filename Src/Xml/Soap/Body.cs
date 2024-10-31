@@ -38,9 +38,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
+using VeriFactu.Src.Xml.Factu.Nif;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Fault;
+using VeriFactu.Xml.Factu.Nif;
 using VeriFactu.Xml.Factu.Respuesta;
 
 namespace VeriFactu.Xml.Soap
@@ -72,7 +75,16 @@ namespace VeriFactu.Xml.Soap
         [XmlElement("RegFactuSistemaFacturacion", typeof(RegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
         [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceTikR)]
         [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
+        [XmlElement("VNifV2Ent", typeof(VNifVEnt), Namespace = Namespaces.NamespaceVNifV2Ent)]
         public object Registro { get; set; }
+
+        /// <summary>
+        /// Lista de contribuyentes en respuesta web service
+        /// de validación de NIF.
+        /// </summary>
+        [XmlArray("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
+        [XmlArrayItem("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
+        public List<ContribuyenteSal> Contribuyentes { get; set; }
 
         #endregion
 

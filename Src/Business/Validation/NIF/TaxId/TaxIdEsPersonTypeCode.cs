@@ -37,24 +37,22 @@
     address: info@irenesolutions.com
  */
 
-using System.Collections.Generic;
-
-namespace VeriFactu.Business.Validation
+namespace VeriFactu.Business.Validation.NIF.TaxId
 {
 
     /// <summary>
-    /// Representa un validador.
+    /// Código de tipo de persona.
     /// </summary>
-    public interface IValidator
+    public enum TaxIdEsPersonTypeCode
     {
-
         /// <summary>
-        /// Ejecuta las validaciones y devuelve una lista
-        /// con los errores encontrados.
+        /// Persona jurídica
         /// </summary>
-        /// <returns>Lista con las descripciones de los 
-        /// errores encontrado.</returns>
-        List<string> GetErrors();
-
+        LegalEntity,
+        /// <summary>
+        /// Persona física
+        /// </summary>
+        Individual
     }
+
 }

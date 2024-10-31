@@ -37,78 +37,106 @@
     address: info@irenesolutions.com
  */
 
-using System.Collections.Generic;
-
-namespace VeriFactu.Xml
+namespace VeriFactu.Business.Validation.NIF.TaxId
 {
 
     /// <summary>
-    /// Espacios de nombre de VERI*FACTU.
+    /// Equivalencias de letras con números para el cálculo del número de control en el NIE.
     /// </summary>
-    public class Namespaces
+    public enum TaxIdEsDCDniNie
     {
-
-        #region Propiedades Públicas Estáticas
-
         /// <summary>
-        /// Prefijo de espacios de nombres AEAT TIKE CONT.  
+        /// La letra T equivale a 0.
         /// </summary>
-        public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
-
+        T = 0,
         /// <summary>
-        /// Espacio de nombres SF (sum1)
+        /// La letra R equivale a 1.
         /// </summary>
-        public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
-
+        R = 1,
         /// <summary>
-        /// Espacio de nombres SF (sum)
+        /// La letra W equivale a 2.
         /// </summary>
-        public const string NamespaceSFLR = NamespacePrefix + "SuministroLR.xsd";
-
+        W = 2,
         /// <summary>
-        /// Espacio de nombres RespuestaSuministro
+        /// La letra A equivale a 3.
         /// </summary>
-        public const string NamespaceTikR = NamespacePrefix + "RespuestaSuministro.xsd";
-
+        A = 3,
         /// <summary>
-        /// Espacio de nombres web service validación NIF.
+        /// La letra G equivale a 4.
         /// </summary>
-        public const string NamespaceVNifV2Ent = "http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd";
-
+        G = 4,
         /// <summary>
-        /// Espacio de nombres web service validación NIF.
+        /// La letra M equivale a 5.
         /// </summary>
-        public const string NamespaceVNifV2Sal = "http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Sal.xsd";
-
+        M = 5,
         /// <summary>
-        /// Espacio de nombres soap
+        /// La letra Y equivale a 6.
         /// </summary>
-        public const string NamespaceSoap = "http://schemas.xmlsoap.org/soap/envelope/";
-
+        Y = 6,
         /// <summary>
-        /// Diccionario de espacios de nombres.
+        /// La letra F equivale a 7.
         /// </summary>
-        public static Dictionary<string, string> Items = new Dictionary<string, string>() 
-        {
-            { "soapenv",    NamespaceSoap},
-            { "sum",        NamespaceSFLR },
-            { "sum1",       NamespaceSF }
-        };
-
+        F = 7,
         /// <summary>
-        /// Diccionario de espacios de nombres para el servicio
-        /// de validación de NIF de la AEAT.
+        /// La letra P equivale a 8.
         /// </summary>
-        public static Dictionary<string, string> NifItems = new Dictionary<string, string>()
-        {
-            { "soapenv",    NamespaceSoap},
-            { "VNifV2Ent",  NamespaceVNifV2Ent },
-            { "VNifV2Sal",  NamespaceVNifV2Sal }
-        };
-
-
-        #endregion       
-
+        P = 8,
+        /// <summary>
+        /// La letra D equivale a 9.
+        /// </summary>
+        D = 9,
+        /// <summary>
+        /// La letra X equivale a 10.
+        /// </summary>
+        X = 10,
+        /// <summary>
+        /// La letra B equivale a 11.
+        /// </summary>
+        B = 11,
+        /// <summary>
+        /// La letra N equivale a 12.
+        /// </summary>
+        N = 12,
+        /// <summary>
+        /// La letra J equivale a 13.
+        /// </summary>
+        J = 13,
+        /// <summary>
+        /// La letra T equivale a 14.
+        /// </summary>
+        Z = 14,
+        /// <summary>
+        /// La letra Z equivale a 15.
+        /// </summary>
+        S = 15,
+        /// <summary>
+        /// La letra S equivale a 16.
+        /// </summary>
+        Q = 16,
+        /// <summary>
+        /// La letra Q equivale a 17.
+        /// </summary>
+        V = 17,
+        /// <summary>
+        /// La letra V equivale a 18.
+        /// </summary>
+        H = 18,
+        /// <summary>
+        /// La letra H equivale a 19.
+        /// </summary>
+        L = 19,
+        /// <summary>
+        /// La letra L equivale a 20.
+        /// </summary>
+        C = 20,
+        /// <summary>
+        /// La letra C equivale a 21.
+        /// </summary>
+        K = 21,
+        /// <summary>
+        /// La letra K equivale a 22.
+        /// </summary>
+        E = 22
     }
 
 }

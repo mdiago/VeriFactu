@@ -37,24 +37,40 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using VeriFactu.Xml;
 
-namespace VeriFactu.Business.Validation
+namespace VeriFactu.Src.Xml.Factu.Nif
 {
+	/// <summary>
+	/// Representa un resultado de llamada al web service de
+	/// validación de NIF de la AEAT.
+	/// </summary>
+	[Serializable]
+	[XmlRoot("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
+	public class ContribuyenteSal
+	{
+		/// <summary>
+		/// NIF del contribuyente.
+		/// Numérico(4).
+		/// </summary>
+		public string Nif { get; set; }
 
-    /// <summary>
-    /// Representa un validador.
-    /// </summary>
-    public interface IValidator
-    {
+		/// <summary>
+		/// Nombre del contribuyente.	
+		/// </summary>
+		public string Nombre { get; set; }
 
-        /// <summary>
-        /// Ejecuta las validaciones y devuelve una lista
-        /// con los errores encontrados.
-        /// </summary>
-        /// <returns>Lista con las descripciones de los 
-        /// errores encontrado.</returns>
-        List<string> GetErrors();
+		/// <summary>
+		/// Nombre del contribuyente.	
+		/// </summary>
+		public string Resultado { get; set; }
 
-    }
+	}
+
 }

@@ -37,7 +37,7 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Business.TaxId
+namespace VeriFactu.Business.Validation.NIF.TaxId
 {
 
     /// <summary>

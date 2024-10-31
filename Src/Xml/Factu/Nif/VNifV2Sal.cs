@@ -37,34 +37,39 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Business.TaxId
-{
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using VeriFactu.Xml;
 
-    /// <summary>
-    /// Definición de errores en número fiscal.
-    /// </summary>
-    public enum TaxIdEsError
+namespace VeriFactu.Xml.Factu.Nif
+{
+	/// <summary>
+	/// Datos de contribuyentes de entrada al web service
+	/// de validación de NIF de la AEAT.
+	/// </summary>
+	[Serializable]
+	[XmlRoot("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
+	public class VNifV2Sal
     {
         /// <summary>
-        /// Ningún error.
+        /// NIF del contribuyente.
         /// </summary>
-        NoError,
-        /// <summary>
-        /// Longitud de la cadena errónea, o carácteres no permitidos.
-        /// </summary>
-        InvalidString,
-        /// <summary>
-        /// Carácter no permitido en la primera posición.
-        /// </summary>
-        InvalidFirstChar,
-        /// <summary>
-        /// Longitud no permitida.
-        /// </summary>
-        InvalidLength,
-        /// <summary>
-        /// El dígito de control no es válido.
-        /// </summary>
-        InvalidControlNumber
-    }
+        [XmlArray("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
+        [XmlArrayItem("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
+        public List<Contribuyente> Contribuyente { get; set; }
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public VNifV2Sal()
+		{
+			Contribuyente = new List<Contribuyente>();
+		}
+
+	}
 
 }

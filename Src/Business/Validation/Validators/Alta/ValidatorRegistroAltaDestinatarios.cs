@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -74,9 +75,26 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // 13. Agrupación Destinatarios
 
+            var destinatarios = _RegistroAlta.Destinatarios;
+
             // Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación Destinatarios tiene que estar cumplimentada, con al menos un destinatario.
 
+            var isRequired  = Array.IndexOf(new TipoFactura[]{ TipoFactura.F1, TipoFactura.F3,
+                TipoFactura.R1, TipoFactura.R2, TipoFactura.R3, TipoFactura.R4 }, _RegistroAlta.TipoFactura) != -1;
+
+            if ((destinatarios == null || destinatarios.Count == 0) && isRequired)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    $" Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación" +
+                    $" Destinatarios tiene que estar cumplimentada, con al menos un destinatario.");
+
             // Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.
+
+            var isForbidden = Array.IndexOf(new TipoFactura[]{ TipoFactura.F1, TipoFactura.F3,
+                TipoFactura.R1, TipoFactura.R2, TipoFactura.R3, TipoFactura.R4 }, _RegistroAlta.TipoFactura) != -1;
+
+            if ((destinatarios != null && destinatarios.Count > 0) && isForbidden)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    $" SSi TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.");
 
             // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
 
