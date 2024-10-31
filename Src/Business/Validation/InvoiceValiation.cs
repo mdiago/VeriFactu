@@ -41,6 +41,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using VeriFactu.Business.Validation.NIF;
+using VeriFactu.Business.Validation.Validators;
+using VeriFactu.Business.Validation.VIES;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
@@ -57,41 +59,55 @@ namespace VeriFactu.Business.Validation
     /// <para>Fecha: 2024-10-15</para>
     /// <para>Versión: 0.9.1</para>
     /// </summary>
-    public class InvoiceValiation
+    public class InvoiceValiation : IValidator
     {
 
 
-        Envelope _Envelope;
-
+        /// <summary>
+        /// Objeto InvoiceAction en el caso de que la validación se
+        /// haya asignado al mismo.
+        /// </summary>
         InvoiceAction _InvoiceAction;
 
+        /// <summary>
+        /// Objeto Envelope a validar.
+        /// </summary>
+        internal Envelope _Envelope;
 
-        Registro _Registro => _InvoiceAction?.Registro;
+        /// <summary>
+        /// Objeto RegFactuSistemaFacturacion contenido en el bloque
+        /// Body del objeto Envelope a validar.
+        /// </summary>
+        protected RegFactuSistemaFacturacion _RegFactuSistemaFacturacion;
 
-        RegFactuSistemaFacturacion _RegFactuSistemaFacturacion;
 
-
-        InvoiceValiationSintax _InvoiceValiationSintax;
-
-
-        InvoiceValiationBusiness _InvoiceValiationBusiness;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="invoiceAction">Objeto InvoiceAction a validar.</param>
-        public InvoiceValiation(InvoiceAction invoiceAction) 
+        public InvoiceValiation(InvoiceAction invoiceAction) : this(invoiceAction.Envelope)
         {
 
             _InvoiceAction = invoiceAction;
-            _Envelope = _InvoiceAction.GetEnvelope();
-            _InvoiceValiationSintax = new InvoiceValiationSintax(invoiceAction);
-            _InvoiceValiationBusiness = new InvoiceValiationBusiness(invoiceAction);
-
             _RegFactuSistemaFacturacion = _Envelope.Body.Registro as RegFactuSistemaFacturacion;
 
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="envelope">Objeto Envelope a validar.</param>
+        public InvoiceValiation(Envelope envelope)
+        {
+
+            _Envelope = envelope;
+
+            _RegFactuSistemaFacturacion = envelope.Body.Registro as RegFactuSistemaFacturacion;
+
             if (_RegFactuSistemaFacturacion == null)
-                throw new Exception($"El registro asociado al InvoiceAction ({_InvoiceAction}) no contiene un valor del tipo 'RegFactuSistemaFacturacion'.");
+                throw new Exception($"El registro Envelope ({_Envelope})" +
+                    $" no contiene un valor del tipo 'RegFactuSistemaFacturacion'.");
 
         }
 
@@ -101,125 +117,18 @@ namespace VeriFactu.Business.Validation
         public virtual List<string> GetErrors() 
         {
 
-            var errorsCabecera = GetErrorsCabecera();
-
-
-
-
-            new NotImplementedException("Execute no implementado en la clase InvoiceValiation.");
-            return null;
-
-        }
-
-        /// <summary>
-        /// Validaciones del bloque Cabecera.
-        /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        public List<string> GetErrorsCabecera()
-        {
-
             var result = new List<string>();
 
-            var cabecera = _RegFactuSistemaFacturacion?.Cabecera;
+            var errorsCabecera = new ValidatorCabecera(_Envelope).GetErrors();
+            var errorsRegistrosFactura = new ValidatorRegistroFactura(_Envelope).GetErrors();
+            
 
-            // 1. ObligadoEmision: El NIF del obligado a expedir (emitir) facturas asociado a la remisión debe estar identificado en la AEAT.
-
-            if (cabecera?.ObligadoEmision?.NIF == null)
-                result.Add("Error en el bloque Cabecera: El NIF del bloque ObligadoEmision debe contener un valor");
-
-            var nifError = new NifValidation(cabecera.ObligadoEmision.NIF, cabecera.ObligadoEmision.NombreRazon).GetErrors();
-
-            if (nifError.Count > 0)
-                result.Add($"Error en el bloque Cabecera: El NIF del ObligadoEmision {cabecera.ObligadoEmision.NIF}" +
-                    $" con el nombre {cabecera.ObligadoEmision.NombreRazon} no es válido para la AEAT.");
-
-            // 2. Representante: El NIF del representante/asesor del obligado a expedir (emitir) facturas asociado a la remisión debe estar identificado en la AEAT.
-            if (cabecera.Representante != null)
-            {
-
-                nifError = new NifValidation(cabecera.Representante.NIF, cabecera.Representante.NombreRazon).GetErrors();
-
-                if (nifError.Count > 0)
-                    result.Add($"Error en el bloque Cabecera: El NIF del Representante {cabecera.Representante.NIF}" +
-                        $" con el nombre {cabecera.Representante.NombreRazon} no es válido para la AEAT.");
-            }
-
-            // 3. FechaFinVeriFactu
-            if (cabecera.FechaFinVeriFactu != null)
-            {
-
-                // Sólo se permite contenido en sistemas que emite facturas verificables (Es el caso siempre)
-                // La fecha debe tener el formato 31-12-20XX.
-                if (!Regex.IsMatch(cabecera.FechaFinVeriFactu, @"31-12-20\d{2}"))
-                    result.Add("Error en el bloque Cabecera: La fecha FechaFinVeriFactu debe tener el formato 31-12-20XX.");
-
-                // El año de la fecha deberá ser igual al año de la fecha del sistema de la AEAT, o al año anterior(para admitir
-                // casos excepcionales y puntuales que pudieran darse a finales de año y comienzo del siguiente).
-                var fechaFinVeriFactuYear = Convert.ToInt32(cabecera.FechaFinVeriFactu.Substring(6, 4));
-
-                if (fechaFinVeriFactuYear > DateTime.Now.Year && fechaFinVeriFactuYear < DateTime.Now.Year - 1)
-                    result.Add("Error en el bloque Cabecera: El año de la fecha FechaFinVeriFactu deberá ser igual" +
-                        " al año de la fecha del sistema de la AEAT, o al año anterior.");
-
-            }
-
-            // 4. Incidencia: Sólo se permite contenido en sistemas que emite facturas verificables. (Es el caso siempre)
-
-            // 5. RefRequerimiento: Sólo se permite contenido en sistemas que emiten facturas no verificables. (En nuestro caso no existe el bloque)
+            result.AddRange(errorsCabecera);
+            result.AddRange(errorsRegistrosFactura);
 
             return result;
 
-        }
-
-        /// <summary>
-        /// Validaciones del bloque de todos los items de RegistroFactura.
-        /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        public List<string> GetErrorsRegistrosFactura() 
-        {
-
-            var result = new List<string>();
-
-            //1. Agrupaciones RegistroAlta y RegistroAnulacion: Dentro de cada una de las posibles repeticiones
-            //u “ocurrencias” de RegistroFactura (de 1 a 1000) se pueden incluir registros de facturación de alta
-            //(agrupación RegistroAlta) y de anulación(agrupación RegistroAnulacion) en un mismo mensaje remitido,
-            //pero siempre que vayan en distintas ocurrencias de RegistroFactura(no pueden ir ambas agrupaciones a
-            //la vez dentro de la misma ocurrencia). ?????????????????????
-
-            foreach (var registroFactura in _RegFactuSistemaFacturacion.RegistroFactura)
-                result.AddRange(GetErrorsRegistroFactura(registroFactura));
-
-            return result;
-
-
-        }
-
-        /// <summary>
-        /// Validaciones del bloque de todos los items de RegistroFactura.
-        /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        public List<string> GetErrorsRegistroFactura(object registro)
-        {
-
-            var result = new List<string>();
-
-            var registroAlta = registro as RegistroAlta;
-            var registroAnulacion = registro as RegistroAnulacion;
-
-            if (registroAlta != null)
-                result.AddRange(GetErrorsRegistroAlta(registroAlta));
-
-            if (registroAnulacion != null)
-                result.AddRange(GetErrorsRegistroAnulacion(registroAnulacion));
-
-            if (registroAnulacion == null && registroAnulacion == null)
-                result.Add($"Error en el bloque RegistroFactura: Se ha encontrado un" +
-                    $" elmento de la clase {registro.GetType()} en la colección RegistroFactura" +
-                    $". Esta colección sólo admite elementos del tipo RegistroAlta o RegistroAnulacion.");
-
-            return result;
-
-        }
+        } 
 
         /// <summary>
         /// Validaciones del bloque de todos los items de RegistroAlta.
@@ -236,7 +145,7 @@ namespace VeriFactu.Business.Validation
 
             // 1. Agrupación IDFactura
 
-            var nifEmisorFactura = $"{registroAlta?.IDFactura?.IDEmisorFactura}";
+            var nifEmisorFactura = $"{registroAlta?.IDFacturaAlta?.IDEmisorFactura}";
 
             if (string.IsNullOrEmpty(nifEmisorFactura))
             {
@@ -251,12 +160,12 @@ namespace VeriFactu.Business.Validation
                 // El NIF del campo IDEmisorFactura debe ser el mismo que el del campo NIF
                 // de la agrupación ObligadoEmision del bloque Cabecera.
 
-                if (cabecera?.ObligadoEmision?.NIF != registroAlta?.IDFactura?.IDEmisorFactura)
+                if (cabecera?.ObligadoEmision?.NIF != registroAlta?.IDFacturaAlta?.IDEmisorFactura)
                     result.Add($"Error en el bloque RegistroAlta ({registroAlta}): El NIF del campo IDEmisorFactura debe ser el mismo que el del campo NIF de la agrupación ObligadoEmision del bloque Cabecera.");
 
                 // La FechaExpedicionFactura no podrá ser superior a la fecha actual.
 
-                var fechaExpedicion = registroAlta?.IDFactura?.FechaExpedicion;
+                var fechaExpedicion = registroAlta?.IDFacturaAlta?.FechaExpedicion;
 
                 if (string.IsNullOrEmpty(fechaExpedicion))
                 {
@@ -337,7 +246,7 @@ namespace VeriFactu.Business.Validation
                 }
 
                 // NumSerieFactura solo puede contener caracteres ASCII del 32 a 126 (caracteres imprimibles)
-                var numSerie = registroAlta?.IDFactura?.NumSerie;
+                var numSerie = registroAlta?.IDFacturaAlta?.NumSerie;
 
                 if (string.IsNullOrEmpty(numSerie)) 
                 {
@@ -422,10 +331,10 @@ namespace VeriFactu.Business.Validation
                     foreach (var facturaRectificada in facturasRecticadas) 
                     { 
                     
-                        if(facturaRectificada?.IDEmisorFactura != registroAlta?.IDFactura?.IDEmisorFactura)
+                        if(facturaRectificada?.IDEmisorFactura != registroAlta?.IDFacturaAlta?.IDEmisorFactura)
                             result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
                                $" El NIF del campo IDEmisorFactura de FacturasRectificada ({facturaRectificada?.IDEmisorFactura}) debe estar" +
-                               $" identificado y debe se el mismo que IDEmisorFactura ({registroAlta?.IDFactura?.IDEmisorFactura}).");
+                               $" identificado y debe se el mismo que IDEmisorFactura ({registroAlta?.IDFacturaAlta?.IDEmisorFactura}).");
 
                     }
 
@@ -454,10 +363,10 @@ namespace VeriFactu.Business.Validation
                     foreach (var facturasSustituida in facturasSustituidas)
                     {
 
-                        if (facturasSustituida?.IDEmisorFactura != registroAlta?.IDFactura?.IDEmisorFactura)
+                        if (facturasSustituida?.IDEmisorFactura != registroAlta?.IDFacturaAlta?.IDEmisorFactura)
                             result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
                                $" El NIF del campo IDEmisorFactura de FacturasSustituida ({facturasSustituida?.IDEmisorFactura}) debe estar" +
-                               $" identificado y debe se el mismo que IDEmisorFactura ({registroAlta?.IDFactura?.IDEmisorFactura}).");
+                               $" identificado y debe se el mismo que IDEmisorFactura ({registroAlta?.IDFacturaAlta?.IDEmisorFactura}).");
 
                     }
 
@@ -570,13 +479,72 @@ namespace VeriFactu.Business.Validation
 
             // Solo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.
 
+            if (registroAlta.Tercero != null && registroAlta.EmitidaPorTercerosODestinatarioSpecified &&
+                registroAlta.EmitidaPorTercerosODestinatario != EmitidaPorTercerosODestinatario.T)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                    $" Tercero sólo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.");
+
+            // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
+            var tercero = registroAlta.Tercero;
+
+            // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
+            if(tercero != null && !string.IsNullOrEmpty(tercero.NIF) && tercero.IDOtro != null)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                    $" Tercero si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa");
+
+            if (tercero != null && string.IsNullOrEmpty(tercero.NIF) && tercero.IDOtro == null)
+                result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                    $" Tercero es obligatorio que se cumplimente NIF o IDOtro.");
+
+            if (tercero != null && tercero.IDOtro != null) 
+            {
+
+                // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
+                if(tercero.IDOtro.IDType != IDType.NIF_IVA)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" Tercero es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
+
+                // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
+                // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
+                // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
+                if (tercero.IDOtro.IDType == IDType.NIF_IVA && !ViesVatNumber.Validate(tercero.IDOtro.ID))
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" Tercero es obligatorio que IDOtro.ID = “{tercero.IDOtro.ID}” esté identificado.");
+
+                // Si se identifica a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03”.
+                if(tercero.IDOtro.CodigoPais == CodigoPais.ES && tercero.IDOtro.IDType == IDType.PASAPORTE)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" Tercero es obligatorio que para IDOtro.CodigoPais = “{tercero.IDOtro.CodigoPais}” IDOtro.IDType = “03” (PASAPORTE).");
+
+                if(tercero.IDOtro.IDType == IDType.NO_CENSADO)
+                    result.Add($"Error en el bloque RegistroAlta ({registroAlta}):" +
+                        $" Tercero no se admite IDOtro.IDType = “07” (NO CENSADO).");
+
+
+            }
+
+
+            // 13. Agrupación Destinatarios
+
+            // Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación Destinatarios tiene que estar cumplimentada, con al menos un destinatario.
+
+            // Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.
+
             // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
 
             // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
 
+            // Cuando uno o varios destinatarios se identifiquen a través del NIF, los NIF deben estar identificados y ser distintos del NIF del campo IDEmisorFactura de la agrupación IDFactura.
+
             // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
 
-            // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”, se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
+            // Si el campo IDType = “07” (No censado), el campo CodigoPais debe ser “ES”.
+
+            // Cuando uno o varios destinatarios se identifiquen a través de la agrupación IDOtro e IDType sea “02”, se validará que el campo identificador se ajuste a la estructura de NIF-IVA de alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
+
+            // Cuando uno o varios destinatarios se identifiquen a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03” o “07”.
+
+            // Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”, se validará que TipoFactura sea “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.
 
             return result;
 

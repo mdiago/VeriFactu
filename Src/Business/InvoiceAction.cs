@@ -42,6 +42,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using VeriFactu.Business.Validation;
 using VeriFactu.Config;
 using VeriFactu.Net;
 using VeriFactu.Xml;
@@ -142,12 +143,17 @@ namespace VeriFactu.Business
             InboxPath = GetInBoxPath(Invoice.SellerID);
             InvoicePath = GetInvoicePath(Invoice.SellerID);
 
+            // Establecemos el registro alta/anulación
+            SetRegistro();
+
+            // Generamos el xml
+            Xml = GetXml();
+
+            // Validamos
             errors = GetBusErrors();
 
             if (errors.Count > 0)
-                throw new InvalidOperationException(string.Join("\n", errors));
-
-            SetRegistro();
+                throw new InvalidOperationException(string.Join("\n", errors));            
 
             BlockchainManager = Blockchain.Blockchain.GetInstance(Invoice.SellerID);
 
@@ -206,6 +212,10 @@ namespace VeriFactu.Business
 
             if (string.IsNullOrEmpty(Invoice.SellerName))
                 errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
+
+            var validation = new InvoiceValiation(this);
+
+            var err = validation.GetErrors();
 
             return errors;
 
@@ -383,12 +393,8 @@ namespace VeriFactu.Business
 
             // Añadimos el registro de alta
             BlockchainManager.Add(Registro);
-            // Generamos el xml
-            Xml = GetXml();
+
             // Guardamos el xml
-
-            var test = InvoiceFilePath;
-
             File.WriteAllBytes(InvoiceFilePath, Xml);
 
         }

@@ -65,9 +65,12 @@
     <Compile Include="Src\Business\TaxId\TaxIdEsTypes.cs" />
     <Compile Include="Src\Business\TaxItem.cs" />
     <Compile Include="Src\Business\Validation\InvoiceValiation.cs" />
-    <Compile Include="Src\Business\Validation\InvoiceValiationBusiness.cs" />
-    <Compile Include="Src\Business\Validation\InvoiceValiationSintax.cs" />
+    <Compile Include="Src\Business\Validation\IValidator.cs" />
     <Compile Include="Src\Business\Validation\NIF\NifValidation.cs" />
+    <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroAltaIDFactura.cs" />
+    <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroAlta.cs" />
+    <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroFactura.cs" />
+    <Compile Include="Src\Business\Validation\Validators\ValidatorCabecera.cs" />
     <Compile Include="Src\Business\Validation\VIES\ViesVatNumber.cs" />
     <Compile Include="Src\DataStore\Document.cs" />
     <Compile Include="Src\DataStore\Period.cs" />

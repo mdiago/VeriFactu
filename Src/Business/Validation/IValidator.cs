@@ -1,4 +1,7 @@
-﻿/*
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+/*
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,42 +40,25 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace VeriFactu.Business.Validation
 {
 
     /// <summary>
-    /// en ellas se valida el formato, longitud, obligatoriedad del contenido
-    /// y si el valor debe coincidir con una serie de valores preestablecidos,
-    /// en los casos que aplique. Cuando estos errores se hayan producido en
-    /// el bloque Cabecera, darán lugar al rechazo completo del mensaje de
-    /// remisión. Cuando estos errores se hayan producido a nivel de registro
-    /// (agrupaciones RegistroAlta o RegistroAnulacion dentro del bloque
-    /// RegistroFactura), provocarán el rechazo del registro, pero se seguirán
-    /// procesando el resto de registros incluidos en el mensaje de remisión.
+    /// Representa un validador.
     /// </summary>
-    public class InvoiceValiationSintax : InvoiceValiation
+    public interface IValidator
     {
 
-
-        public InvoiceValiationSintax(InvoiceAction invoiceAction) : base(invoiceAction)
-        { 
-        
-        }
-
-
         /// <summary>
-        /// Ejecuta las validaciones del obejeto de negocio.
+        /// Ejecuta las validaciones y devuelve una lista
+        /// con los errores encontrados.
         /// </summary>
-        public override List<string> GetErrors()
-        {
-
-            new NotImplementedException("Execute no implementado en la clase InvoiceValiation.");
-            return null;
-        }
-
+        /// <returns>Lista con las descripciones de los 
+        /// errores encontrado.</returns>
+        List<string> GetErrors();
 
     }
 }
