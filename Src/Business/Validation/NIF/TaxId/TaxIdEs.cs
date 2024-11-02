@@ -54,17 +54,17 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
 
         #region Regular expresions related to TaxIdentificationNumber...
 
-        private Regex rgxTaxIdentification = new Regex(PatternTaxIdentification);
-        private Regex rgxTaxIdNieIndividual = new Regex(PatternTaxIdNieIndividual);
-        private Regex rgxTaxIdDniIndividual = new Regex(PatternTaxIdDniIndividual);
-        private Regex rgxTaxIdNifIndividual = new Regex(PatternTaxIdNifIndividual);
-        private Regex rgxTaxIdNifLegalEntity = new Regex(PatternTaxIdNifLegalEntity);
+        private readonly Regex rgxTaxIdentification = new Regex(PatternTaxIdentification);
+        private readonly Regex rgxTaxIdNieIndividual = new Regex(PatternTaxIdNieIndividual);
+        private readonly Regex rgxTaxIdDniIndividual = new Regex(PatternTaxIdDniIndividual);
+        private readonly Regex rgxTaxIdNifIndividual = new Regex(PatternTaxIdNifIndividual);
+        private readonly Regex rgxTaxIdNifLegalEntity = new Regex(PatternTaxIdNifLegalEntity);
         // No residentes y corporaciones locales
 
         // Digito de control será una LETRA si la clave de entidad es P, Q, S o W. 
         // O también si los dos dígitos iniciales indican "No Residente"
 
-        private Regex rgxTaxIdNifLegalEntityNRyCL = new Regex(PatternTaxIdNifLegalEntityNRyCL);
+        private readonly Regex rgxTaxIdNifLegalEntityNRyCL = new Regex(PatternTaxIdNifLegalEntityNRyCL);
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
         /// Diccionario de códigos de provincia definidos para el NIF de personas jurídicas.
         /// No significativo ya.
         /// </summary>
-        static Dictionary<string, string> TaxCCAA = new Dictionary<string, string>()
+        static readonly Dictionary<string, string> TaxCCAA = new Dictionary<string, string>()
         {
              {"01","Álava"},
              {"02","Albacete"},
@@ -177,7 +177,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
         /// <summary>
         /// Tipos de organizaciones asociados a la primera letra del NIF de persona jurídica.
         /// </summary>
-        static Dictionary<string, string> LegalEntities = new Dictionary<string, string>()
+        static readonly Dictionary<string, string> LegalEntities = new Dictionary<string, string>()
         {
             {"A", "Sociedades anónimas"},
             {"B", "Sociedades de responsabilidad limitada"},
@@ -201,7 +201,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
         /// <summary>
         /// Tipos de personas físicas definidos por la letra del NIF o NIE.
         /// </summary>
-        static Dictionary<string, string> Individuals = new Dictionary<string, string>()
+        static readonly Dictionary<string, string> Individuals = new Dictionary<string, string>()
         {
             {"K", "Españoles menores de 14 años que carezcan de DNI. Anterior a la entrada en vigor de la Orden EHA/451/2008 el 1 de julio de 2008 también se incluían los extranjeros menores de 18 años que carecían de NIE (para los menores de la edad indicada no es obligatorio que tengan documentación de identidad, pero pueden solicitar un NIF si lo necesitan), esta Orden separa las claves de españoles y extranjeros, de forma que los extranjeros sin NIE transitoria o definitivamente pueden solicitar un NIF M."},
             {"L", "Españoles mayores de 14 años residentes en el extranjero y que no tengan DNI que se trasladan a España por un tiempo inferior a seis meses."},

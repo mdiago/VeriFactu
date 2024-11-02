@@ -37,7 +37,6 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -56,6 +55,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
         public ValidatorRegistroAltaFacturaSimplificadaArt7273(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }
@@ -76,10 +78,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // 8.FacturaSimplificadaArt7273
 
             // Sólo se podrá rellenar con “S” si TipoFactura=“F1” o “F3” o “R1” o “R2” o “R3” o “R4”.
-            var allowedFacturaSimplificadaArt7273 = Array.IndexOf(new TipoFactura[]{ TipoFactura.F1, TipoFactura.F3,
-                TipoFactura.R1, TipoFactura.R2, TipoFactura.R3, TipoFactura.R4 }, _RegistroAlta.TipoFactura) != -1;
 
-            if (_RegistroAlta.FacturaSimplificadaArt7273 == "S" && !allowedFacturaSimplificadaArt7273)
+            if (_RegistroAlta.FacturaSimplificadaArt7273 == "S" && !_IsSimplificada)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad FacturaSimplificadaArt7273 sólo se puede rellenar" +
                         $" con “S” si TipoFactura=“F1” o “F3” o “R1” o “R2” o “R3” o “R4”.");

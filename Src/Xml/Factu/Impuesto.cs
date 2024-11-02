@@ -49,25 +49,25 @@ namespace VeriFactu.Xml.Factu
     {
 
         /// <summary>
-        /// Solo funciona en modo VERIFACTU.
+        /// IVA (01).
         /// </summary>
         [XmlEnum("01")]
         IVA,
 
         /// <summary>
-        /// Solo funciona en modo no-VERIFACTU (cumpliendo Reglamento).
+        /// IPSI (02).
         /// </summary>
         [XmlEnum("02")]
         IPSI,
 
         /// <summary>
-        /// Funciona tanto en modo VERIFACTU como no-VERIFACTU (cumpliendo Reglamento).
+        /// IGIC (03).
         /// </summary>
         [XmlEnum("03")]
         IGIC,
 
         /// <summary>
-        /// Otros.
+        /// Otros (05).
         /// </summary>
         [XmlEnum("05")]
         OTROS

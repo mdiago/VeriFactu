@@ -110,14 +110,14 @@ namespace VeriFactu.Qrcode
         /// <returns>Textual representation of the instance. </returns>
         public override String ToString() {
             return name;
-        }
+        }  
 
+        /// <summary>
+        ///  error correction level
+        /// </summary>
         /// <param name="bits">int containing the two bits encoding a QR Code's error correction level</param>
-        /// <returns>
-        /// 
         /// <see cref="ErrorCorrectionLevel"/>
-        /// representing the encoded error correction level
-        /// </returns>
+        /// <returns> error correction level</returns>
         public static ErrorCorrectionLevel ForBits(int bits) {
             if (bits < 0 || bits >= FOR_BITS.Length) {
                 throw new ArgumentException();

@@ -98,7 +98,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Representación textual de la instancia.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
             return $"{TaxBase}, {TaxRate}, {TaxAmount}";

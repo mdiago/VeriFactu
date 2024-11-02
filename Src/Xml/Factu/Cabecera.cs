@@ -58,7 +58,7 @@ namespace VeriFactu.Xml.Factu
         /// <summary>
         /// Versiones VeriFactu.
         /// </summary>
-        string[] _IDVersions = new string[1]
+        readonly string[] _IDVersions = new string[1]
         {
             // Versión 2024.01
             "1.0"

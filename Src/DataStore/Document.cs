@@ -55,7 +55,7 @@ namespace VeriFactu.DataStore
         /// <summary>
         /// Registros del documento (alta / anulación en su caso).
         /// </summary>
-        List<Registro> _Records;
+        readonly List<Registro> _Records;
 
         #endregion
 

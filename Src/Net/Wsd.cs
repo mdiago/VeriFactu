@@ -50,7 +50,7 @@ namespace VeriFactu.Net
     /// <summary>
     /// Esta clase gestiona las oparaciones con los servicios web de la AEAT para el VeriFactu.
     /// </summary>
-    public class Wsd
+    public static class Wsd
     {
 
         #region Métodos Privados Estáticos
@@ -110,8 +110,6 @@ namespace VeriFactu.Net
             }
 
             HttpWebResponse response = (HttpWebResponse)webRequest.GetResponse();
-
-            string statusDescription = response.StatusDescription;
 
             Stream dataStream = response.GetResponseStream();
 

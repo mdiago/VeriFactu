@@ -38,8 +38,6 @@
  */
 
 using System.Collections.Generic;
-using VeriFactu.Business.Validation.VIES;
-using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
@@ -57,6 +55,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
         public ValidatorRegistroAltaTercero(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }
@@ -83,44 +84,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Tercero sólo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.");
 
-            // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
-            var tercero = _RegistroAlta.Tercero;
-
-            // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
-            if (tercero != null && !string.IsNullOrEmpty(tercero.NIF) && tercero.IDOtro != null)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" Tercero si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa");
-
-            if (tercero != null && string.IsNullOrEmpty(tercero.NIF) && tercero.IDOtro == null)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" Tercero es obligatorio que se cumplimente NIF o IDOtro.");
-
-            if (tercero != null && tercero.IDOtro != null)
-            {
-
-                // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
-                if (tercero.IDOtro.IDType != IDType.NIF_IVA)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" Tercero es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
-
-                // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
-                // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
-                // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
-                if (tercero.IDOtro.IDType == IDType.NIF_IVA && !ViesVatNumber.Validate(tercero.IDOtro.ID))
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" Tercero es obligatorio que IDOtro.ID = “{tercero.IDOtro.ID}” esté identificado.");
-
-                // Si se identifica a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03”.
-                if (tercero.IDOtro.CodigoPais == CodigoPais.ES && tercero.IDOtro.IDType == IDType.PASAPORTE)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" Tercero es obligatorio que para IDOtro.CodigoPais = “{tercero.IDOtro.CodigoPais}” IDOtro.IDType = “03” (PASAPORTE).");
-
-                if (tercero.IDOtro.IDType == IDType.NO_CENSADO)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" Tercero no se admite IDOtro.IDType = “07” (NO CENSADO).");
-
-
-            }
+            // Validaciones de ID
+            if(_RegistroAlta.Tercero != null)
+                result.AddRange(new ValidatorRegistroAltaInterlocutor(_Envelope, _RegistroAlta, _RegistroAlta.Tercero, "Tercero").GetErrors());
 
             return result;
 

@@ -51,7 +51,7 @@ namespace VeriFactu.Business.Validation.Validators
     /// <summary>
     /// Valida los datos de RegistroFactura.
     /// </summary>
-    public class ValidatorRegistroFactura : InvoiceValiation
+    public class ValidatorRegistroFactura : InvoiceValidation
     {
 
         #region Construtores de Instancia
@@ -59,6 +59,8 @@ namespace VeriFactu.Business.Validation.Validators
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope">Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
         public ValidatorRegistroFactura(Envelope envelope) : base(envelope)
         {
         }
@@ -88,7 +90,7 @@ namespace VeriFactu.Business.Validation.Validators
 
             if (registroAlta == null && registroAnulacion == null)
                 result.Add($"Error en el bloque RegistroFactura.Registro: Se ha encontrado un" +
-                    $" elmento de la clase {registro.GetType()} en la colección RegistroFactura" +
+                    $" elemento de la clase {registro.GetType()} en la colección RegistroFactura" +
                     $". Esta colección sólo admite elementos del tipo RegistroAlta o RegistroAnulacion.");
 
             if (registroAlta != null)

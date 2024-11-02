@@ -53,7 +53,7 @@ namespace VeriFactu.Business.Validation.VIES
         /// <summary>
         /// Url del endpoint de validación.
         /// </summary>
-        static string UrlValidate = "https://ec.europa.eu/taxation_customs/vies/rest-api//check-vat-number";
+        static readonly string UrlValidate = "https://ec.europa.eu/taxation_customs/vies/rest-api//check-vat-number";
 
         /// <summary>
         /// Valida un número de IVA intracomunitario.

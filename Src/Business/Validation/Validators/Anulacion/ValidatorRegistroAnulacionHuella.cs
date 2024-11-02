@@ -37,38 +37,59 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using VeriFactu.Xml;
+using System.Text.RegularExpressions;
+using VeriFactu.Xml.Factu.Anulacion;
+using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Xml.Factu.Nif
+namespace VeriFactu.Business.Validation.Validators.Anulacion
 {
-	/// <summary>
-	/// Datos de contribuyentes de entrada al web service
-	/// de validación de NIF de la AEAT.
-	/// </summary>
-	[Serializable]
-	[XmlRoot("VNifV2Ent", Namespace = Namespaces.NamespaceVNifV2Ent)]
-	public class VNifVEnt
-	{
-		/// <summary>
-		/// NIF del contribuyente.
-		/// Numérico(4).
-		/// </summary>
-		public List<Contribuyente> Contribuyente { get; set; }
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public VNifVEnt()
-		{
-			Contribuyente = new List<Contribuyente>();
-		}
+    /// <summary>
+    /// Valida los datos de RegistroAlta Huella.
+    /// </summary>
+    public class ValidatorRegistroAnulacionHuella : ValidatorRegistroAnulacion
+    {
 
-	}
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAnulacion"> Registro de anulación del bloque Body.</param>
+        public ValidatorRegistroAnulacionHuella(Envelope envelope, RegistroAnulacion registroAnulacion) : base(envelope, registroAnulacion)
+        {
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Obtiene los errores de un bloque en concreto.
+        /// </summary>
+        /// <returns>Lista con los errores de un bloque en concreto.</returns>
+        protected override List<string> GetBlockErrors()
+        {
+
+            var result = new List<string>();
+
+            if (_RegistroAnulacion.Encadenamiento == null ||_RegistroAnulacion.Encadenamiento.PrimerRegistro == "S")
+                return result;
+
+            if (Regex.IsMatch(_RegistroAnulacion.Encadenamiento.RegistroAnterior.Huella, @"[0-9ABCDEF]{64}"))
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAnulacion}):" +
+                    $" La huella del encadenamiento del registro anterior debe cumplir el formato de salida" +
+                    $" del algoritmo SHA-256, siendo de 64 caracteres en hexadecimal y en mayúsculas");
+
+            return result;
+
+        }
+
+        #endregion
+
+    }
 
 }

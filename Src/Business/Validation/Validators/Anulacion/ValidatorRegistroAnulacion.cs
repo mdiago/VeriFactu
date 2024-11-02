@@ -50,7 +50,7 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
     /// <summary>
     /// Valida los datos de RegistroAnulacion.
     /// </summary>
-    public class ValidatorRegistroAnulacion : InvoiceValiation
+    public class ValidatorRegistroAnulacion : InvoiceValidation
     {
 
         #region Variables Privadas de Instancia
@@ -68,17 +68,7 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
         /// <summary>
         /// Fecha operación.
         /// </summary>
-        protected DateTime? _FechaOperacion = null;
-
-        /// <summary>
-        /// Fecha operación.
-        /// </summary>
         protected DateTime _FechaExpedicion;
-
-        /// <summary>
-        /// Indicador de si la factura es rectificativa.
-        /// </summary>
-        protected bool _IsRectificativa = false;
 
         #endregion
 
@@ -87,6 +77,9 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAnulacion"> Registro de anulación del bloque Body.</param>
         public ValidatorRegistroAnulacion(Envelope envelope, RegistroAnulacion registroAnulacion) : base(envelope)
         {
 
@@ -116,28 +109,16 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
 
             var result = new List<string>();
 
-            // 1. Agrupación IDFactura
-            //result.AddRange(new ValidatorRegistroAltaIDFactura(_Envelope, _RegistroAlta).GetErrors());
+            // 1. GeneradoPor
+            result.AddRange(new ValidatorRegistroAnulacionGeneradoPor(_Envelope, _RegistroAnulacion).GetErrors());
+            // 2. Agrupación Generador
+            result.AddRange(new ValidatorRegistroAnulacionGenerador(_Envelope, _RegistroAnulacion).GetErrors());
+            // 3. Huella (del registro anterior)
+            result.AddRange(new ValidatorRegistroAnulacionHuella(_Envelope, _RegistroAnulacion).GetErrors());
+
+
 
             return result;
-
-        }
-
-        /// <summary>
-        /// Obtiene un DateTime de la cadena de representación
-        /// de una fecha en un archivo xml.
-        /// </summary>
-        /// <param name="xmlDate">Cadena de fecha xml.</param>
-        /// <returns>DateTime de la cadena de representación
-        /// de una fecha en un archivo xml.</returns>
-        protected DateTime FromXmlDate(string xmlDate)
-        {
-
-            var year = Convert.ToInt32(xmlDate.Substring(6, 4));
-            var month = Convert.ToInt32(xmlDate.Substring(3, 2));
-            var day = Convert.ToInt32(xmlDate.Substring(0, 2));
-
-            return new DateTime(year, month, day);
 
         }
 

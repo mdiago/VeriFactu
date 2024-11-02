@@ -37,6 +37,8 @@
     address: info@irenesolutions.com
  */
 
+using System;
+
 namespace VeriFactu.Xml.Factu
 {
 
@@ -44,6 +46,7 @@ namespace VeriFactu.Xml.Factu
     /// Indentificadores fiscales de países distintos
     /// a España-
     /// </summary>
+    [Serializable]
     public class IDOtro
     {
 

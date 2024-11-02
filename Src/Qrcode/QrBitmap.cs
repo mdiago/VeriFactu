@@ -49,21 +49,21 @@ namespace VeriFactu.Qrcode
 
         #region Variables Privadas de Instancia
 
-        ByteMatrix _ByteMatrix;
-        QrRawBm _Bitmap;
+        readonly ByteMatrix _ByteMatrix;
+        readonly QrRawBm _Bitmap;
 
         #endregion
 
         #region Propiedades Privadas Estáticas
 
-        private static byte[] BLACK = new byte[] { 0, 0, 0 };
-        private static byte[] WHITE = new byte[] { 255, 255, 255 };
+        private static readonly byte[] BLACK = new byte[] { 0, 0, 0 };
+        private static readonly byte[] WHITE = new byte[] { 255, 255, 255 };
 
         #endregion
 
         #region Propiedades Privadas de Instacia
 
-        private int SquareSideLenth = 4;
+        private readonly int SquareSideLenth = 4;
 
         #endregion
 

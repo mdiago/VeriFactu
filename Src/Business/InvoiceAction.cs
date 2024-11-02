@@ -39,8 +39,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using VeriFactu.Business.Validation;
 using VeriFactu.Config;
@@ -213,9 +215,9 @@ namespace VeriFactu.Business
             if (string.IsNullOrEmpty(Invoice.SellerName))
                 errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
 
-            var validation = new InvoiceValiation(this);
+            var validation = new InvoiceValidation(this);
 
-            var err = validation.GetErrors();
+            errors.AddRange(validation.GetErrors());
 
             return errors;
 
@@ -393,6 +395,9 @@ namespace VeriFactu.Business
 
             // Añadimos el registro de alta
             BlockchainManager.Add(Registro);
+
+            // Regeneramos el Xml
+            Xml = GetXml();
 
             // Guardamos el xml
             File.WriteAllBytes(InvoiceFilePath, Xml);
@@ -689,10 +694,14 @@ namespace VeriFactu.Business
         /// </summary>
         public Envelope Envelope { get; private set; }
 
+        #pragma warning disable CA1819
+
         /// <summary>
         /// Datos binarios del archivo xml de envío.
         /// </summary>
         public byte[] Xml { get; private set; }
+
+        #pragma warning restore CA1819
 
         /// <summary>
         /// Respuesta del envío a la AEAT.

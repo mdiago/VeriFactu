@@ -50,38 +50,38 @@ namespace VeriFactu.Xml.Factu
     {
 
         /// <summary>
-        /// NIF-IVA.
+        /// NIF-IVA (02).
         /// </summary>
         [XmlEnum("02")]
         NIF_IVA,
 
         /// <summary>
-        /// PASAPORTE.
+        /// PASAPORTE (03).
         /// </summary>
         [XmlEnum("03")]
         PASAPORTE,
 
         /// <summary>
         /// DOCUMENTO OFICIAL DE IDENTIFICACIÓN
-        /// EXPEDIDO POR EL PAÍS O TERRITORIO DE RESIDENCIA.
+        /// EXPEDIDO POR EL PAÍS O TERRITORIO DE RESIDENCIA (04).
         /// </summary>
         [XmlEnum("04")]
         DOCUMENTO_OFICIAL,
 
         /// <summary>
-        /// CERTIFICADO DE RESIDENCIA.
+        /// CERTIFICADO DE RESIDENCIA (05).
         /// </summary>
         [XmlEnum("05")]
         CERTIFICADO_RESIDENCIA,
 
         /// <summary>
-        /// OTRO DOCUMENTO PROBATORIO.
+        /// OTRO DOCUMENTO PROBATORIO (06).
         /// </summary>
         [XmlEnum("06")]
         OTRO_DOC_PROBATORIO,
 
         /// <summary>
-        /// NO CENSADO.
+        /// NO CENSADO (07).
         /// </summary>
         [XmlEnum("07")]
         NO_CENSADO

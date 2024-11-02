@@ -41,6 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using VeriFactu.Net;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
@@ -62,15 +63,9 @@ namespace VeriFactu.Business.FlowControl
         #region Variables Privadas Estáticas
 
         /// <summary>
-        /// Almacena el gestor de cola actualmente activo en
-        /// el sitema.
-        /// </summary>
-        static InvoiceQueue ActiveInvoiceQueue;
-
-        /// <summary>
         /// Máximo número de registros a incluir en un envío.
         /// </summary>
-        static int MaxRecordNumber = 1000;
+        static readonly int MaxRecordNumber = 1000;
 
         #endregion
 
@@ -79,12 +74,24 @@ namespace VeriFactu.Business.FlowControl
         /// <summary>
         /// Almacena los registro pendientes de envío.
         /// </summary>
-        Dictionary<string, List<InvoiceAction>> _SellerPendingQueue;
+        readonly Dictionary<string, List<InvoiceAction>> _SellerPendingQueue;
 
         /// <summary>
         /// Almacena los registros envíados y que han resultado erróneos.
         /// </summary>
-        Dictionary<string, List<InvoiceAction>> _SellerErrorQueue;
+        readonly Dictionary<string, List<InvoiceAction>> _SellerErrorQueue;
+
+        /// <summary>
+        /// Lista de procesamiento. En esta lista
+        /// se incluyen todos los elmentos a procesar
+        /// una vez se desencadena el proceso de ejecución.
+        /// </summary>
+        List<InvoiceAction> _Processing;
+
+        /// <summary>
+        /// Bloqueo para thread safe.
+        /// </summary>
+        private readonly object _Locker = new object();
 
         /// <summary>
         /// Almacena el momento de finalización del último
@@ -96,17 +103,28 @@ namespace VeriFactu.Business.FlowControl
         /// Almacena tiempo de espera comunicado por la AEAT
         /// en el últinmo envío.
         /// </summary>
-        int _CurrentWaitSecods;
+        int _CurrentWaitSecods = 60;
 
-        #endregion
+        /// <summary>
+        /// Indica si la cola se está procesando.
+        /// </summary>
+        bool _IsWorking;
 
-        #region Propiedades Privadas Estáticas
-        #endregion
-
-        #region Propiedades Privadas de Instacia
         #endregion
 
         #region Construtores Estáticos
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        static InvoiceQueue() 
+        {
+
+            ActiveInvoiceQueue = GetInstance();
+            ActiveInvoiceQueue.Start();
+
+        }
+
         #endregion
 
         #region Construtores de Instancia
@@ -131,9 +149,6 @@ namespace VeriFactu.Business.FlowControl
 
         #endregion
 
-        #region Indexadores
-        #endregion
-
         #region Métodos Privados Estáticos
 
         /// <summary>
@@ -142,7 +157,7 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         /// <returns> Instancia que se encarga de gestionar
         /// la cola de facturas pendientes de envío.</returns>
-        public static InvoiceQueue GetInstance() 
+        private static InvoiceQueue GetInstance() 
         {
 
             if (ActiveInvoiceQueue == null)
@@ -244,9 +259,9 @@ namespace VeriFactu.Business.FlowControl
             {
 
                 if (i == 0)
-                    envelope = invoiceActions[0].GetEnvelope();
+                    envelope = invoiceActions[i].GetEnvelope();
                 else
-                    ((envelope.Body.Registro as RegFactuSistemaFacturacion).RegistroFactura as List<RegistroFactura>).Add(new RegistroFactura() { Registro = invoiceActions[0].Registro });
+                    ((envelope.Body.Registro as RegFactuSistemaFacturacion).RegistroFactura as List<RegistroFactura>).Add(new RegistroFactura() { Registro = invoiceActions[i].Registro });
 
                 last = invoiceActions[i];
 
@@ -262,7 +277,14 @@ namespace VeriFactu.Business.FlowControl
             File.WriteAllText($"{first.ResponsesPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", response);
 
             _LastProcessMoment = DateTime.Now;
-            _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
+
+            var respuesta = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion);
+
+            if(respuesta != null)
+                _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
+
+            Debug.Print($"Establecido momento próxima ejecución (LastProcessMoment: {_LastProcessMoment} + " +
+                $"CurrentWaitSecods: {_CurrentWaitSecods}) = {_LastProcessMoment.AddSeconds(_CurrentWaitSecods)}");
 
             return true;
 
@@ -282,6 +304,13 @@ namespace VeriFactu.Business.FlowControl
         #endregion
 
         #region Propiedades Públicas Estáticas
+
+        /// <summary>
+        /// Almacena el gestor de cola actualmente activo en
+        /// el sitema.
+        /// </summary>
+        public static InvoiceQueue ActiveInvoiceQueue { get; private set; }
+
         #endregion
 
         #region Propiedades Públicas de Instancia
@@ -296,9 +325,6 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         public bool Allowed => AllowedFrom < DateTime.Now;
 
-        #endregion
-
-        #region Métodos Públicos Estáticos
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -316,16 +342,56 @@ namespace VeriFactu.Business.FlowControl
             if (busErrors.Count > 0)
                 throw new Exception($"No se puede añadir un elemento con errores en validación: {string.Join("\n", busErrors)}");
 
-            List<InvoiceAction> sellerPendingQueue = _SellerPendingQueue.ContainsKey(invoiceAction.SellerID) ? 
-                _SellerPendingQueue[invoiceAction.SellerID] : new List<InvoiceAction>() { invoiceAction };       
+            List<InvoiceAction> sellerPendingQueue = null;
 
-            if (!_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
-                _SellerPendingQueue.Add(invoiceAction.SellerID, sellerPendingQueue);
+            if (_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
+                sellerPendingQueue = _SellerPendingQueue[invoiceAction.SellerID];
+            else 
+                _SellerPendingQueue[invoiceAction.SellerID] = new List<InvoiceAction>();
 
+            // Añado a la cola del emisor
+            _SellerPendingQueue[invoiceAction.SellerID].Add(invoiceAction);
 
-            if (_SellerPendingQueue.Count >= MaxRecordNumber)
+            if (_SellerPendingQueue[invoiceAction.SellerID].Count >= MaxRecordNumber)
             {
-                var processed = Process(sellerPendingQueue);
+
+                lock (_Locker)
+                    _IsWorking = true;
+
+                Exception processException = null;
+
+                // Compruebo el certificado
+                var cert = Wsd.GetCheckedCertificate();
+
+                if (cert == null)
+                    throw new Exception("Existe algún problema con el certificado.");
+
+                lock (_Locker)
+                {
+
+                    try
+                    {
+                        Debug.Print($"Ejecutando por cola con 1.000 elementos: {sellerPendingQueue.Count}");
+                        _Processing = sellerPendingQueue;
+                        _SellerPendingQueue.Remove(invoiceAction.SellerID);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        processException = ex;
+
+                    }
+
+                }
+
+                if (processException != null)
+                    throw new Exception($"Error proceando cola.", processException);
+
+                var processed = Process(_Processing);
+
+                lock (_Locker)
+                    _IsWorking = false;
 
                 if (!processed)
                     throw new Exception("Error al vaciar la cola de documentos pendientes de envío. " +
@@ -333,8 +399,6 @@ namespace VeriFactu.Business.FlowControl
                         $" registros que es igual o mayor que el máximo {MaxRecordNumber}");
 
             }
-
-            _SellerPendingQueue[invoiceAction.SellerID].Add(invoiceAction);
 
         }
 
@@ -348,7 +412,7 @@ namespace VeriFactu.Business.FlowControl
             try
             {
 
-                if (Allowed)
+                if (Allowed && !_IsWorking)
                     Process();
 
             }
@@ -367,26 +431,53 @@ namespace VeriFactu.Business.FlowControl
         public void Process()
         {
 
+            lock (_Locker)
+                _IsWorking = true;
+
+            Exception processException = null;
+
             // Compruebo el certificado
             var cert = Wsd.GetCheckedCertificate();
 
             if (cert == null)
-                throw new Exception("Existe algún problema con el certificado.");
+                throw new Exception("Existe algún problema con el certificado.");           
 
             foreach (KeyValuePair<string, List<InvoiceAction>> kvpInvoiceAction in _SellerPendingQueue)
-            {
+            {                
 
-                var processed = Process(kvpInvoiceAction.Value);
+                lock (_Locker)
+                {
 
-                if (processed)
-                    _SellerPendingQueue.Remove(kvpInvoiceAction.Key);
-                else
-                    ProcessErrors(kvpInvoiceAction.Value);
+                    try
+                    {
+                        _Processing = kvpInvoiceAction.Value;
+                        _SellerPendingQueue.Remove(kvpInvoiceAction.Key);
 
-                if (!Allowed)
-                    break;
+                    }
+                    catch (Exception ex)
+                    {
+
+                        processException = ex;
+
+                    }
+
+                }
+
+                if (processException != null)
+                    throw new Exception($"Error proceando cola.", processException);
+
+                
+                break;
 
             }
+
+            var processed = Process(_Processing);
+
+            if(!processed)
+                ProcessErrors(_Processing);
+
+            lock (_Locker)
+                _IsWorking = false;
 
         }
 

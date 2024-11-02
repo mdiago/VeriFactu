@@ -55,6 +55,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
         public ValidatorRegistroAltaImporteRectificacion(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }

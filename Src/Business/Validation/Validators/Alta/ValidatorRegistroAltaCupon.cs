@@ -39,38 +39,59 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using VeriFactu.Xml;
+using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Src.Xml.Factu.Nif
+namespace VeriFactu.Business.Validation.Validators.Alta
 {
-	/// <summary>
-	/// Representa un resultado de llamada al web service de
-	/// validación de NIF de la AEAT.
-	/// </summary>
-	[Serializable]
-	[XmlRoot("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
-	public class ContribuyenteSal
-	{
-		/// <summary>
-		/// NIF del contribuyente.
-		/// Numérico(4).
-		/// </summary>
-		public string Nif { get; set; }
 
-		/// <summary>
-		/// Nombre del contribuyente.	
-		/// </summary>
-		public string Nombre { get; set; }
+    /// <summary>
+    /// Valida los datos de RegistroAlta Cupon.
+    /// </summary>
+    public class ValidatorRegistroAltaCupon : ValidatorRegistroAlta
+    {
 
-		/// <summary>
-		/// Nombre del contribuyente.	
-		/// </summary>
-		public string Resultado { get; set; }
+        #region Construtores de Instancia
 
-	}
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
+        public ValidatorRegistroAltaCupon(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        {
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Obtiene los errores de un bloque en concreto.
+        /// </summary>
+        /// <returns>Lista con los errores de un bloque en concreto.</returns>
+        protected override List<string> GetBlockErrors()
+        {
+
+            var result = new List<string>();
+
+            // 14. Cupon
+
+            var tiposFacturaCupon = new TipoFactura[] { TipoFactura.R5, TipoFactura.R1 };
+            var isFacturaCupon = Array.IndexOf(tiposFacturaCupon, _RegistroAlta.TipoFactura) != -1;
+
+            // Sólo se podrá rellenar con “S” (no es obligatorio) si TipoFactura = ”R5” o “R1”
+            if(_RegistroAlta.Cupon == "S" && !isFacturaCupon)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    $" Cupon sólo se podrá rellenar con “S” (no es obligatorio) si TipoFactura = ”R5” o “R1”.");
+
+            return result;
+
+        }
+
+        #endregion
+
+    }
 
 }

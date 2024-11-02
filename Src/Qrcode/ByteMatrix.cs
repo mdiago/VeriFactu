@@ -72,11 +72,17 @@ namespace VeriFactu.Qrcode
             this.height = height;
         }
 
+        /// <summary>
+        /// height of the matrix
+        /// </summary>
         /// <returns>height of the matrix</returns>
         public int GetHeight() {
             return height;
         }
 
+        /// <summary>
+        /// width of the matrix
+        /// </summary>
         /// <returns>width of the matrix</returns>
         public int GetWidth() {
             return width;
@@ -90,7 +96,10 @@ namespace VeriFactu.Qrcode
             return bytes[y][x];
         }
 
-        /// <returns>matrix as byte[][]</returns>
+        /// <summary>
+        /// Returns matrix as byte[][]
+        /// </summary>
+        /// <returns> Matrix as byte[][]</returns>
         public byte[][] GetArray() {
             return bytes;
         }
@@ -121,6 +130,9 @@ namespace VeriFactu.Qrcode
             }
         }
 
+        /// <summary>
+        /// String representation
+        /// </summary>
         /// <returns>String representation</returns>
         public override String ToString() {
             StringBuilder result = new StringBuilder(2 * width * height + 2);

@@ -37,12 +37,15 @@
     address: info@irenesolutions.com
  */
 
+using System;
+
 namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
     ///  Datos parte interviniente en algún modo en la facturación.
     /// </summary>
+    [Serializable]
     public class Interlocutor
     {     
 

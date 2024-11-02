@@ -40,11 +40,10 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using VeriFactu.Src.Xml.Factu.Nif;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Nif;
 using VeriFactu.Xml.Factu.Respuesta;
+using VeriFactu.Xml.Nif;
 
 namespace VeriFactu.Xml.Soap
 {

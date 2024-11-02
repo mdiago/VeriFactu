@@ -48,6 +48,20 @@ namespace VeriFactu.Xml.Factu.Alta
     public class DetalleDesglose
     {
 
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public DetalleDesglose()
+        {
+
+            ClaveRegimenSpecified = true;
+
+        }
+
+        #endregion
+
         #region Propiedades Públicas de Instancia
 
         /// <summary>
@@ -94,10 +108,16 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para>18: L8B: Régimen especial del pequeño empresario o profesional.</para>
         /// <para>19: L8A: Operaciones de actividades incluidas en el Régimen Especial de Agricultura, Ganadería y Pesca (REAGYP).</para>
         /// <para>19: L8B: Operaciones interiores exentas por aplicación artículo 25 Ley 19/1994.</para>
-        /// <para>20: Régimen simplificado IVA.</para>
-        /// <para>L8B DESCRIPCIÓN DE LA CLAVE DE RÉGIMEN PARA DESGLOSES DONDE EL IMPUESTO DE APLICACIÓN ES EL IGIC</para>
+        /// <para>20: Régimen simplificado IVA. Régimen simplificado sólo para IVA.</para>
         /// </summary>
         public ClaveRegimen ClaveRegimen { get; set; }
+
+        /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool ClaveRegimenSpecified { get; set; }
+
 
         /// <summary>
         /// <para>Clave de la operación sujeta y

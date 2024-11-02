@@ -39,35 +39,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Nif
+namespace VeriFactu.Xml.Nif
 {
-	/// <summary>
-	/// Perido impositivo
-	/// </summary>
-	[Serializable]
-	[XmlRoot("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Ent)]
-	public class Contribuyente
-	{
-		/// <summary>
-		/// NIF del contribuyente.
-		/// Numérico(4).
-		/// </summary>
-		public string Nif { get; set; }
+    /// <summary>
+    /// Datos de contribuyentes de entrada al web service
+    /// de validación de NIF de la AEAT.
+    /// </summary>
+    [Serializable]
+	[XmlRoot("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
+	public class VNifV2Sal
+    {
+        /// <summary>
+        /// NIF del contribuyente.
+        /// </summary>
+        [XmlArray("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
+        [XmlArrayItem("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
+        public List<Contribuyente> Contribuyente { get; set; }
 
 		/// <summary>
-		/// Nombre del contribuyente.	
+		/// Constructor
 		/// </summary>
-		public string Nombre { get; set; }
-
-		/// <summary>
-		/// Nombre del contribuyente.	
-		/// </summary>
-		public string Resultado { get; set; }
+		public VNifV2Sal()
+		{
+			Contribuyente = new List<Contribuyente>();
+		}
 
 	}
 

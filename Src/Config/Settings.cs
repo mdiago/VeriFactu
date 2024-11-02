@@ -60,7 +60,7 @@ namespace VeriFactu.Config
         /// <summary>
         /// Path separator win="\" and linux ="/".
         /// </summary>
-        static char _PathSep = System.IO.Path.DirectorySeparatorChar;
+        static readonly char _PathSep = System.IO.Path.DirectorySeparatorChar;
 
         /// <summary>
         /// Configuración actual.
@@ -307,6 +307,13 @@ namespace VeriFactu.Config
         /// </summary>
         [XmlElement("SistemaInformatico")]
         public SistemaInformatico SistemaInformatico { get; set; }
+
+        /// <summary>
+        /// Salta la validación en línea de NIF con
+        /// la AEAT.
+        /// </summary>
+        [XmlElement("SkipNifAeatValidation")]
+        public bool SkipNifAeatValidation { get; set; }
 
         #endregion
 

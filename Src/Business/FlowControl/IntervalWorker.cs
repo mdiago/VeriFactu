@@ -86,7 +86,7 @@ namespace VeriFactu.Business.FlowControl
         /// Intervalo en milegundos entre cada ejecución. Por defecto
         /// 30 segundos.
         /// </summary>
-        public int Interval = 30000;
+        public int Interval = 5000;
 
         #endregion
 

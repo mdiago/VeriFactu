@@ -61,12 +61,12 @@ namespace VeriFactu.Blockchain
         /// Se registran todas en este diccionario estático para únicamente permitir
         /// la creación de una clase por vendedor.
         /// </summary>
-        static Dictionary<string, Blockchain> _BlockchainsLoaded;
+        static readonly Dictionary<string, Blockchain> _BlockchainsLoaded = new Dictionary<string, Blockchain>();
 
         /// <summary>
         /// Separador para los archivos csv.
         /// </summary>
-        static char _CsvSeparator = ';';
+        const char _CsvSeparator = ';';
 
         #endregion
 
@@ -87,7 +87,6 @@ namespace VeriFactu.Blockchain
         static Blockchain()
         {
 
-            _BlockchainsLoaded = new Dictionary<string, Blockchain>();
             LoadBlockchainsFromDisk();
 
         }

@@ -50,6 +50,8 @@ namespace VeriFactu.Xml.Factu
     public class RegistroFactura
     {
 
+        #region Propiedades Públicas de Instancia
+
         /// <summary>
         /// Representa un registro de alta o anulación.
         /// </summary>
@@ -57,6 +59,21 @@ namespace VeriFactu.Xml.Factu
         [XmlElement("RegistroAnulacion", typeof(RegistroAnulacion), Namespace = Namespaces.NamespaceSF)]
         public object Registro { get; set; }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Registro}";
+        }
+
+        #endregion
 
     }
+
 }

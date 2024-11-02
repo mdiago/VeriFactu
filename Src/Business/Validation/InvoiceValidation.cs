@@ -41,7 +41,6 @@ using System;
 using System.Collections.Generic;
 using VeriFactu.Business.Validation.Validators;
 using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Anulacion;
 using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business.Validation
@@ -54,15 +53,10 @@ namespace VeriFactu.Business.Validation
     /// <para>Fecha: 2024-10-15</para>
     /// <para>Versión: 0.9.1</para>
     /// </summary>
-    public class InvoiceValiation : IValidator
+    public class InvoiceValidation : IValidator
     {
 
-
-        /// <summary>
-        /// Objeto InvoiceAction en el caso de que la validación se
-        /// haya asignado al mismo.
-        /// </summary>
-        InvoiceAction _InvoiceAction;
+        #region Variables Privadas de Instancia
 
         /// <summary>
         /// Objeto Envelope a validar.
@@ -75,16 +69,17 @@ namespace VeriFactu.Business.Validation
         /// </summary>
         protected RegFactuSistemaFacturacion _RegFactuSistemaFacturacion;
 
+        #endregion
 
+        #region Construtores de Instancia
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="invoiceAction">Objeto InvoiceAction a validar.</param>
-        public InvoiceValiation(InvoiceAction invoiceAction) : this(invoiceAction.Envelope)
+        public InvoiceValidation(InvoiceAction invoiceAction) : this(invoiceAction.Envelope)
         {
 
-            _InvoiceAction = invoiceAction;
             _RegFactuSistemaFacturacion = _Envelope.Body.Registro as RegFactuSistemaFacturacion;
 
         }
@@ -93,7 +88,7 @@ namespace VeriFactu.Business.Validation
         /// Constructor.
         /// </summary>
         /// <param name="envelope">Objeto Envelope a validar.</param>
-        public InvoiceValiation(Envelope envelope)
+        public InvoiceValidation(Envelope envelope)
         {
 
             _Envelope = envelope;
@@ -106,41 +101,56 @@ namespace VeriFactu.Business.Validation
 
         }
 
+        #endregion
+
+        #region Métodos Privados Estáticos
+
+        /// <summary>
+        /// Obtiene un DateTime de la cadena de representación
+        /// de una fecha en un archivo xml.
+        /// </summary>
+        /// <param name="xmlDate">Cadena de fecha xml.</param>
+        /// <returns>DateTime de la cadena de representación
+        /// de una fecha en un archivo xml.</returns>
+        protected static DateTime FromXmlDate(string xmlDate)
+        {
+
+            var year = Convert.ToInt32(xmlDate.Substring(6, 4));
+            var month = Convert.ToInt32(xmlDate.Substring(3, 2));
+            var day = Convert.ToInt32(xmlDate.Substring(0, 2));
+
+            return new DateTime(year, month, day);
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Ejecuta las validaciones del obejeto de negocio.
         /// </summary>
-        public virtual List<string> GetErrors() 
+        /// <returns>Lista con las descripciones de los errores
+        /// encontrados.</returns>
+        public virtual List<string> GetErrors()
         {
 
             var result = new List<string>();
 
             var errorsCabecera = new ValidatorCabecera(_Envelope).GetErrors();
             var errorsRegistrosFactura = new ValidatorRegistroFactura(_Envelope).GetErrors();
-            
+            var errorsSistemaInrformatico = new ValidatorSistemaInformatico(_Envelope).GetErrors();
 
             result.AddRange(errorsCabecera);
             result.AddRange(errorsRegistrosFactura);
+            result.AddRange(errorsSistemaInrformatico);
 
             return result;
-
-        } 
-
-
-        /// <summary>
-        /// Validaciones del bloque de todos los items de RegistroFactura.
-        /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        public List<string> GetErrorsRegistroAnulacion(RegistroAnulacion registroAnulacion)
-        {
-
-            var result = new List<string>();
-
-
-            return result;
-
 
         }
 
+        #endregion
 
     }
+
 }

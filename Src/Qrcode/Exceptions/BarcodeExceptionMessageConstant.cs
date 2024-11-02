@@ -97,7 +97,7 @@ namespace VeriFactu.Qrcode.Exceptions
         public const String TEXT_CANNOT_BE_NULL = "Text cannot be null.";
 
         /// <summary>
-        /// 
+        /// Text is too big.
         /// </summary>
         public const String TEXT_IS_TOO_BIG = "Text is too big.";
 
@@ -112,7 +112,7 @@ namespace VeriFactu.Qrcode.Exceptions
         public const String TWO_BARCODE_MUST_BE_EXTERNALLY = "The two barcodes must be composed externally.";
 
         /// <summary>
-        /// 
+        /// There are illegal characters for " + "barcode 128.
         /// </summary>
         public const String THERE_ARE_ILLEGAL_CHARACTERS_FOR_BARCODE_128 = "There are illegal characters for " + "barcode 128 in {0}.";
 

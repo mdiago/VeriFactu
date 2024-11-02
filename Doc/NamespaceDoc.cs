@@ -80,6 +80,184 @@ namespace VeriFactu.Business
 
 }
 
+namespace VeriFactu.Business.FlowControl
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente al control de flujo
+    /// incluido en las especificaciones. Se encarga
+    /// de realizar los envíos según los tiempos
+    /// de espera comunicados por la AEAT entre ellos
+    /// y teniendo en cuenta el máximo número
+    /// de documentos a acumular en la cola de
+    /// envío.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente a la validación de datos.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.NIF
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente a la validación de datos
+    /// de NIF y su identificación en la AEAT.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.NIF.TaxId
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente a la validación de datos
+    /// de NIF. Contiene la lógica establecida en
+    /// la normativa española para números de
+    /// identificación fiscal.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+
+namespace VeriFactu.Business.Validation.Validators
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente los validadores que implmentan
+    /// las distintas validaciones.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.Validators.Alta
+{
+
+    /// <summary>
+    /// <para>Validadores de mensaje de alta.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
+{
+
+    /// <summary>
+    /// <para>Validadores del desglose de mensaje de alta.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
+{
+
+    /// <summary>
+    /// <para>Validadores del desglose de mensaje de alta
+    /// según el valor de ClaveRegimen.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.Validators.Anulacion
+{
+
+    /// <summary>
+    /// <para>Validadores de mensaje de anulación.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Business.Validation.VIES
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente la identificación
+    /// de número de IVA intracomunitarios.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Config
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para los parámetros de configuración.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.DataStore
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la consulta de datos.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
 namespace VeriFactu.Net
 {
 
@@ -143,8 +321,83 @@ namespace VeriFactu.Xml.Factu
 
     /// <summary>
     /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml de Verifactu.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml.Factu.Alta
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
     /// empleados para la serialización xml del documentos de
     /// alta de factura.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml.Factu.Anulacion
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml del documentos de
+    /// anulación de factura.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml.Factu.Fault
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml del mensajes de
+    /// respuesta de la AEAT por error de envío.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Xml.Factu.Respuesta
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml del mensajes de
+    /// respuesta de la AEAT por envío.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+
+namespace VeriFactu.Xml.Nif
+{
+
+    /// <summary>
+    /// <para>Espacio de nombres para los tipos
+    /// relacionados con el web service de validación
+    /// de NIF de la AEAT.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
     class NamespaceDoc

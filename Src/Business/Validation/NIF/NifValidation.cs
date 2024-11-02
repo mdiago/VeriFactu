@@ -42,7 +42,7 @@ using System.IO;
 using System.Xml;
 using VeriFactu.Net;
 using VeriFactu.Xml;
-using VeriFactu.Xml.Factu.Nif;
+using VeriFactu.Xml.Nif;
 using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business.Validation.NIF
@@ -59,32 +59,32 @@ namespace VeriFactu.Business.Validation.NIF
         /// <summary>
         /// Url del web service de validación de NIF de la AEAT.
         /// </summary>
-        static string Url = "https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP";
+        const string Url = "https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP";
 
         /// <summary>
         /// Action del web service de validación de NIF de la AEAT.
         /// </summary>
-        static string Action = "https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP?op=VNifV2";
+        const string Action = "https://www1.agenciatributaria.gob.es/wlpl/BURT-JDIT/ws/VNifV2SOAP?op=VNifV2";
 
         /// <summary>
         /// Nombre.
         /// </summary>
-        string _Name;
+        readonly string _Name;
 
         /// <summary>
         /// NIF
         /// </summary>
-        string _Nif;
+        readonly string _Nif;
 
         /// <summary>
         /// Sobre SOAP con la petición
         /// </summary>
-        Envelope _Envelope;
+        readonly Envelope _Envelope;
 
         /// <summary>
         /// Binario del xml de la petición.
         /// </summary>
-        byte[] _Xml;
+        readonly byte[] _Xml;
 
         #endregion
 
@@ -160,6 +160,8 @@ namespace VeriFactu.Business.Validation.NIF
         /// <summary>
         /// Ejecuta las validaciones del obejeto de negocio.
         /// </summary>
+        /// <returns>Lista con las descripciones de los errores
+        /// encontrados.</returns>
         public virtual List<string> GetErrors()
         {
 

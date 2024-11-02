@@ -37,7 +37,6 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -56,6 +55,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
         public ValidatorRegistroAltaFacturaSinIdentifDestinatarioArt61d(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }
@@ -77,10 +79,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Sólo se podrá rellenar con “S” si TipoFactura=”F2” o “R5”.
 
-            var allowedFacturaSinIdentifDestinatarioArt61d = Array.IndexOf(
-                new TipoFactura[] { TipoFactura.F2, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1;
-
-            if (_RegistroAlta.FacturaSinIdentifDestinatarioArt61d == "S" && !allowedFacturaSinIdentifDestinatarioArt61d)
+            if (_RegistroAlta.FacturaSinIdentifDestinatarioArt61d == "S" && !_IsSimplificada)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad FacturaSinIdentifDestinatarioArt61d sólo se puede rellenar" +
                         $" con “S” si TipoFactura=”F2” o “R5”.");

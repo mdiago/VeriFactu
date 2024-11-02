@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using VeriFactu.Business.Validation.Validators.Alta.Detalle;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -50,7 +51,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
     /// <summary>
     /// Valida los datos de RegistroAlta.
     /// </summary>
-    public class ValidatorRegistroAlta : InvoiceValiation
+    public class ValidatorRegistroAlta : InvoiceValidation
     {
 
         #region Variables Privadas de Instancia
@@ -80,6 +81,11 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// </summary>
         protected bool _IsRectificativa = false;
 
+        /// <summary>
+        /// Indicador de si la factura es simplificada F2 o R5.
+        /// </summary>
+        protected bool _IsSimplificada = false;
+
         #endregion
 
         #region Construtores de Instancia
@@ -87,6 +93,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope"> Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
+        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
         public ValidatorRegistroAlta(Envelope envelope, RegistroAlta registroAlta) : base(envelope)
         {
 
@@ -108,6 +117,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             _IsRectificativa = Array.IndexOf(new TipoFactura[]{ TipoFactura.R1, TipoFactura.R2,
                 TipoFactura.R3, TipoFactura.R4, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1;
+
+            _IsSimplificada = (_RegistroAlta.TipoFactura == TipoFactura.F2 || _RegistroAlta.TipoFactura == TipoFactura.R5);
 
         }
 
@@ -150,26 +161,41 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             result.AddRange(new ValidatorRegistroAltaTercero(_Envelope, _RegistroAlta).GetErrors());
             // 13. Agrupación Destinatarios
             result.AddRange(new ValidatorRegistroAltaDestinatarios(_Envelope, _RegistroAlta).GetErrors());
+            // 14. Cupon
+            result.AddRange(new ValidatorRegistroAltaCupon(_Envelope, _RegistroAlta).GetErrors());
+            // 15. Agruapacion Desglos
+            result.AddRange(new ValidatorRegistroAltaDetalleDesglose(_Envelope, _RegistroAlta).GetErrors());
+            // 15.8 Validaciones adicionales en el caso de facturas simplificadas.
+            result.AddRange(new ValidatorRegistroAltaDetalleDesgloseFacturaSimplificada(_Envelope, _RegistroAlta).GetErrors());
+            // 16. CuotaTotal
+            result.AddRange(new ValidatorRegistroAltaCuotaTotal(_Envelope, _RegistroAlta).GetErrors());
+            // 17. ImporteTotal
+            result.AddRange(new ValidatorRegistroAltaImporteTotal(_Envelope, _RegistroAlta).GetErrors());
+            // 18. Huella (del registro anterior)
+            result.AddRange(new ValidatorRegistroAltaHuella(_Envelope, _RegistroAlta).GetErrors());
+
+            // 19. Agrupación SistemaInformatico
+            // Ver las validaciones que le aplican en su apartado correspondiente.
+
+
+            // 20. FechaHoraHusoGenRegistro
+            // Se validará que la FechaHoraHusoGenRegistro sea menor o igual que la fecha del
+            // sistema de la AEAT, admitiéndose un margen de error.En caso de superar el umbral,
+            // se devolverá unaviso de error(no generará rechazo).
+
+            // 21. NumRegistroAcuerdoFacturacion
+            // Si se informa, debe existir el NumRegistroAcuerdoFacturacion en la AEAT.
+
+            // 22. IdAcuerdoSistemaInformatico
+            // Si se informa, debe existir el IdAcuerdoSistemaInformatico en la AEAT.
+
+            // 23. Huella
+            // Se validará que la huella o «hash» generado sea acorde a las especificaciones y formato
+            // detallados en el documento “Especificaciones técnicas para generación de la huella o «hash»
+            // de los registros de facturación” publicado en Sede Electrónica de la AEAT. En caso contrario,
+            // se devolverá un aviso de error (no generará rechazo).
 
             return result;
-
-        }
-
-        /// <summary>
-        /// Obtiene un DateTime de la cadena de representación
-        /// de una fecha en un archivo xml.
-        /// </summary>
-        /// <param name="xmlDate">Cadena de fecha xml.</param>
-        /// <returns>DateTime de la cadena de representación
-        /// de una fecha en un archivo xml.</returns>
-        protected DateTime FromXmlDate(string xmlDate)
-        {
-
-            var year = Convert.ToInt32(xmlDate.Substring(6, 4));
-            var month = Convert.ToInt32(xmlDate.Substring(3, 2));
-            var day = Convert.ToInt32(xmlDate.Substring(0, 2));
-
-            return new DateTime(year, month, day);
 
         }
 

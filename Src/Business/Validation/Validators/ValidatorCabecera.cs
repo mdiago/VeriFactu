@@ -41,6 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using VeriFactu.Business.Validation.NIF;
+using VeriFactu.Config;
 using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business.Validation.Validators
@@ -49,7 +50,7 @@ namespace VeriFactu.Business.Validation.Validators
     /// <summary>
     /// Valida los datos de Cabecera.
     /// </summary>
-    public class ValidatorCabecera : InvoiceValiation
+    public class ValidatorCabecera : InvoiceValidation
     {
 
         #region Construtores de Instancia
@@ -57,6 +58,8 @@ namespace VeriFactu.Business.Validation.Validators
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="envelope">Envelope de envío al
+        /// servicio Verifactu de la AEAT.</param>
         public ValidatorCabecera(Envelope envelope) : base(envelope)
         {
         }
@@ -83,21 +86,17 @@ namespace VeriFactu.Business.Validation.Validators
             if (cabecera?.ObligadoEmision?.NIF == null)
                 result.Add("Error en el bloque Cabecera: El NIF del bloque ObligadoEmision debe contener un valor");
 
-            var nifError = new NifValidation(cabecera.ObligadoEmision.NIF, cabecera.ObligadoEmision.NombreRazon).GetErrors();
+            if(!Settings.Current.SkipNifAeatValidation)
+                result.AddRange(new NifValidation(cabecera.ObligadoEmision.NIF, cabecera.ObligadoEmision.NombreRazon).GetErrors());
 
-            if (nifError.Count > 0)
-                result.Add($"Error en el bloque Cabecera: El NIF del ObligadoEmision {cabecera.ObligadoEmision.NIF}" +
-                    $" con el nombre {cabecera.ObligadoEmision.NombreRazon} no es válido para la AEAT.");
-
-            // 2. Representante: El NIF del representante/asesor del obligado a expedir (emitir) facturas asociado a la remisión debe estar identificado en la AEAT.
+            // 2. Representante: El NIF del representante/asesor del obligado a expedir (emitir) facturas asociado
+            // a la remisión debe estar identificado en la AEAT.
             if (cabecera.Representante != null)
             {
 
-                nifError = new NifValidation(cabecera.Representante.NIF, cabecera.Representante.NombreRazon).GetErrors();
+                if (!Settings.Current.SkipNifAeatValidation)
+                    result.AddRange(new NifValidation(cabecera.Representante.NIF, cabecera.Representante.NombreRazon).GetErrors());
 
-                if (nifError.Count > 0)
-                    result.Add($"Error en el bloque Cabecera: El NIF del Representante {cabecera.Representante.NIF}" +
-                        $" con el nombre {cabecera.Representante.NombreRazon} no es válido para la AEAT.");
             }
 
             // 3. FechaFinVeriFactu
