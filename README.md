@@ -300,7 +300,59 @@ Debug.Print($"La huella de la segunda factura es: {registroSecond.GetHashOutput(
 
 ```
 
+## 5. Control de flujo
 
+La AEAT establece en sus especificaciones que la aplicación debe disponer de un control de flujo que respete los tiempos de espera entre envíos que vienen en las respuestas que remite. El sistema informático debe esperar antes de realizar otro envío a que transcurra este tiempo o se alcancen los 1.000 registros pendientes de envío. En el siguiente ejemplo veremos como podemos gestionar este flujo con Verifactu:
+
+```C#
+          
+// Deshabilito la validación de NIF en linea con la AEAT
+Settings.Current.SkipNifAeatValidation = true;
+
+for (int i = 1; i < 1006; i++) 
+{
+
+    // Creamos una instacia de la clase factura
+    var invoice = new Invoice("" + $"{i}".PadLeft(5, '0'), new DateTime(2024, 10, 29), "B12959755")
+    {
+        InvoiceType = TipoFactura.F1,
+        SellerName = "IRENE SOLUTIONS SL",
+        BuyerID = "B44531218",
+        BuyerName = "WEFINZ SOLUTIONS SL",
+        Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+        TaxItems = new List<TaxItem>() {
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 100,
+            TaxAmount = 21
+        }
+    }
+    };
+
+    // Creamos el documento de alta
+    Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
+    var invoiceEntry = new InvoiceEntry(invoice);
+
+    // Añadimos el documentos a la cola de procesamiento:
+    // En la cola se irán realizando los envíos cuando
+    // los documentos en espera sean 1.000 o cuando el
+    // tiempo de espera haya finalizado
+    InvoiceQueue.ActiveInvoiceQueue.Add(invoiceEntry);
+
+}
+
+```
 
 
 
