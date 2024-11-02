@@ -136,14 +136,29 @@ En este ejemplo calcularemos el hash de el registro de alta de verifactu que apa
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K") 
+var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 {
+    InvoiceType = TipoFactura.F1,
+    SellerName = "WEFINZ GANDIA SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxRate = 10,
-            TaxBase = 111.1m,
-            TaxAmount = 12.35m
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 100,
+            TaxAmount = 21
         }
     }
 };
@@ -153,12 +168,12 @@ var invoice = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K")
 var registro = invoice.GetRegistroAlta();
 
 // El registro no ha sido envíado, pero forzamos el valor de
-// FechaHoraHusoGenRegistro para que coincida con el ejemplo de la AEAT
-var fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 30); //2024-01-01T19:20:30+01:00 en España peninsula
+// FechaHoraHusoGenRegistro
+var fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 30); 
 registro.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
 
 // Obtenemos el valor de la huella
-var hash = registro.GetHashOutput(); // 3C464DAF61ACB827C65FDA19F352A4E3BDC2C640E9E9FC4CC058073F38F12F60
+var hash = registro.GetHashOutput(); 
 
 ```
 
@@ -166,22 +181,32 @@ var hash = registro.GetHashOutput(); // 3C464DAF61ACB827C65FDA19F352A4E3BDC2C640
 
 En este ejemplo obtendremos la url para el servicio de validación de una factura de las especificaciones técnicas de la AEAT.
 
-![image](https://github.com/mdiago/VeriFactu/assets/22330809/2f11a627-b446-46a2-a36c-8e77127eb839)
-
-> [!NOTE]  
-> En la documentación técnica de la AEAT el último carácter debería se '1' pero por error consta '4'.
-
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
+var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 {
+    InvoiceType = TipoFactura.F1,
+    SellerName = "WEFINZ GANDIA SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
-            TaxBase = 199.25m,
-            TaxAmount = 41.85m
+            TaxBase = 100,
+            TaxAmount = 21
         }
     }
 };
@@ -191,8 +216,7 @@ var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
 var registro = invoice.GetRegistroAlta();
 
 // Obtenemos la url de validación
-var urlValidacion = registro.GetUrlValidate(); // https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=89890001K&numserie=12345678%26G33&fecha=01-01-2024&importe=241.10
-
+var urlValidacion = registro.GetUrlValidate(); 
 
 ```
 
@@ -203,14 +227,29 @@ En este ejemplo obtendremos la imágen del QR de la url para el servicio de vali
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("12345678&G33", new DateTime(2024, 1, 1), "89890001K")
+var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 {
+    InvoiceType = TipoFactura.F1,
+    SellerName = "WEFINZ GANDIA SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
-            TaxBase = 199.25m,
-            TaxAmount = 41.85m
+            TaxBase = 100,
+            TaxAmount = 21
         }
     }
 };
@@ -225,14 +264,6 @@ var bmQr = registro.GetValidateQr();
 File.WriteAllBytes(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp", bmQr);
 
 ```
-El bitmap obtenido:
-
-![image](https://github.com/user-attachments/assets/24448239-3319-4272-8c97-069fae6fcd65)
-
-Url que consta en el QR:
-
-https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=89890001K&numserie=12345678%26G33&fecha=01-01-2024&importe=241.10
-
 
 ## 4. Inicialización de la cadena de bloques para un vendedor
 
@@ -246,17 +277,29 @@ la cadena de bloques con el primer ejemplo y luego añadiremos a la cadena el se
 ```C#
           
 // Creamos una instacia de la clase factura (primera factura)
-var invoiceFirst = new Invoice("12345678/G33", new DateTime(2024, 1, 1), "89890001K")
+var invoiceFirst = new Invoice("TEST001", new DateTime(2024, 10, 14), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
+    SellerName = "WEFINZ GANDIA SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
             TaxScheme = ClaveRegimen.RegimenGeneral,
             TaxType = CalificacionOperacion.S1,
-            TaxRate = 10,
-            TaxBase = 111.1m,
-            TaxAmount = 12.35m
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 100,
+            TaxAmount = 21
         }
     }
 };
@@ -272,17 +315,29 @@ var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID);
 blockchain.Add(registroFirst);
 
 // Creamos una instacia de la clase factura (segunda factura)
-var invoiceSecond = new Invoice("12345679/G34", new DateTime(2024, 1, 1), "89890001K")
+var invoiceSecond = new Invoice("TEST002", new DateTime(2024, 10, 14), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
+    SellerName = "WEFINZ GANDIA SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
             TaxScheme = ClaveRegimen.RegimenGeneral,
             TaxType = CalificacionOperacion.S1,
-            TaxRate = 10,
-            TaxBase = 111.1m,
-            TaxAmount = 12.35m
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 100,
+            TaxAmount = 21
         }
     }
 };
@@ -296,7 +351,6 @@ blockchain.Add(registroSecond);
 
 Debug.Print($"La huella de la primera factura es: {registroFirst.GetHashOutput()}");
 Debug.Print($"La huella de la segunda factura es: {registroSecond.GetHashOutput()}");
-
 
 ```
 
