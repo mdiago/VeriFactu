@@ -262,12 +262,7 @@ File.WriteAllBytes(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp", bmQr);
 
 ## 4. Inicialización de la cadena de bloques para un vendedor
 
-Es este ejemplo iniciaremos la cadena de bloques del vendedor que figura en los ejemplos de la AEAT con NIF '89890001K'. Iniciaremos
-la cadena de bloques con el primer ejemplo y luego añadiremos a la cadena el segundo ejemplo:
-
-![image](https://github.com/mdiago/VeriFactu/assets/22330809/3ac3e2dc-5279-4702-9bda-ac028d167689)
-
-![image](https://github.com/mdiago/VeriFactu/assets/22330809/0ef57803-edba-4705-adcb-0c79e6275453)
+Es este ejemplo iniciaremos la cadena de bloques de un vendedor:
 
 ```C#
           
