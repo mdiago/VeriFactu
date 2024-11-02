@@ -302,7 +302,8 @@ Debug.Print($"La huella de la segunda factura es: {registroSecond.GetHashOutput(
 
 ## 5. Control de flujo
 
-La AEAT establece en sus especificaciones que la aplicación debe disponer de un control de flujo que respete los tiempos de espera entre envíos que vienen en las respuestas que remite. El sistema informático debe esperar antes de realizar otro envío a que transcurra este tiempo o se alcancen los 1.000 registros pendientes de envío. En el siguiente ejemplo veremos como podemos gestionar este flujo con Verifactu:
+La AEAT establece en sus especificaciones, que la aplicación debe disponer de un control de flujo que respete los tiempos de espera entre envíos. Estos tiempos vienen en las respuestas que remite. 
+El sistema informático debe esperar antes de realizar otro envío a que transcurra este tiempo o se alcancen los 1.000 registros pendientes de envío. En el siguiente ejemplo veremos como podemos gestionar este flujo con Verifactu:
 
 ```C#
           
