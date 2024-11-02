@@ -128,11 +128,6 @@ Debug.Print($"Respuesta de la AEAT:\n{invoiceCancellation.Response}");
 
 ## 1. Generación de la huella o hash de un registro de alta de factura
 
-En este ejemplo calcularemos el hash de el registro de alta de verifactu que aparece en la documentación técnica.
-
-![image](https://github.com/mdiago/VeriFactu/assets/22330809/cbe2b8c5-4536-49ec-89b5-cd10110fe2d6)
-
-
 ```C#
           
 // Creamos una instacia de la clase factura
