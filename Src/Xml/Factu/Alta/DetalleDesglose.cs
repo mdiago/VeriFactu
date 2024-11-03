@@ -118,7 +118,6 @@ namespace VeriFactu.Xml.Factu.Alta
         [XmlIgnore]
         public bool ClaveRegimenSpecified { get; set; }
 
-
         /// <summary>
         /// <para>Clave de la operación sujeta y
         /// no exenta o de la operación no sujeta.</para>

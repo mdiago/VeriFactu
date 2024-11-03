@@ -41,23 +41,23 @@ namespace VeriFactu.Business
 {
 
     /// <summary>
-    /// Representa una entrada de factura en el sistema.
+    /// Indicador que determina si la línea de impuestos
+    /// contiene información de impuestos repecutidos 
+    /// (IVA, IGIC, IPSI...) o de retenciones.
     /// </summary>
-    public class InvoiceEntry : InvoiceAction
+    public enum TaxClass
     {
 
-        #region Construtores de Instancia
+        /// <summary>
+        /// Impuestos repecutidos
+        /// (IVA, IGIC, IPSI...)
+        /// </summary>
+        TaxOutput,
 
         /// <summary>
-        /// Constructor.
+        /// Retenciones.
         /// </summary>
-        /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
-        public InvoiceEntry(Invoice invoice) : base(invoice)
-        {
-        }
-
-        #endregion
+        TaxWithheld
 
     }
-
 }

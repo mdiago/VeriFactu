@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 
 namespace VeriFactu.Business
@@ -46,9 +47,29 @@ namespace VeriFactu.Business
     /// Representa una línea de impuesto.
     /// </summary>
     public class TaxItem
-    { 
+    {
 
         #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Indicador que determina si la línea de impuestos
+        /// contiene información de impuestos repecutidos 
+        /// (IVA, IGIC, IPSI...) o de retenciones.
+        /// </summary>
+        public TaxClass TaxClass { get; set; }
+
+        /// <summary>
+        /// <para>Impuesto de aplicación. Si no se informa este campo
+        /// se entenderá que el impuesto de aplicación es el IVA.
+        /// Este campo es necesario porque contribuye a completar el
+        /// detalle de la tipología de la factura.</para>
+        /// <para>Alfanumérico (1) L1:</para>
+        /// <para>01: Impuesto sobre el Valor Añadido (IVA)</para>
+        /// <para>02: Impuesto sobre la Producción, los Servicios y la Importación (IPSI) de Ceuta y Melilla</para>
+        /// <para>03: Impuesto General Indirecto Canario (IGIC)</para>
+        /// <para>05: Otros</para>
+        /// </summary>
+        public Impuesto Tax { get; set; }
 
         /// <summary>
         /// Esquema impositivo.

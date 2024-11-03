@@ -41,7 +41,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using VeriFactu.Net;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;

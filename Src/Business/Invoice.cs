@@ -95,7 +95,7 @@ namespace VeriFactu.Business
         private void CalculateTotals() 
         {
 
-            TotalAmount = TotalTaxOutput = _NetAmount = 0;
+            TotalAmount = TotalTaxOutput = TotalTaxWithheld = TotalTaxOutputSurcharge = _NetAmount = 0;
 
             if (TaxItems == null || TaxItems.Count == 0)
                 return;
@@ -103,12 +103,20 @@ namespace VeriFactu.Business
             foreach (var taxitem in TaxItems) 
             {
 
-                _NetAmount += taxitem.TaxBase;
-                TotalTaxOutput += taxitem.TaxAmount;
+                if (taxitem.TaxClass == TaxClass.TaxOutput)
+                {
+                    _NetAmount += taxitem.TaxBase;
+                    TotalTaxOutput += taxitem.TaxAmount;
+                    TotalTaxOutputSurcharge += taxitem.TaxAmountSurcharge;
+                }
+                else 
+                {
+                    TotalTaxWithheld += taxitem.TaxAmount;
+                }
 
             }
 
-            TotalAmount = _NetAmount + TotalTaxOutput - TotalTaxWithheld;
+            TotalAmount = _NetAmount + TotalTaxOutput + TotalTaxOutputSurcharge - TotalTaxWithheld;
 
         }
 
@@ -124,14 +132,22 @@ namespace VeriFactu.Business
             foreach (var taxitem in TaxItems)
             {
 
-                desglose.Add(new DetalleDesglose() 
+                var detalleDesglose = new DetalleDesglose()
                 {
+                    Impuesto = taxitem.Tax,
                     ClaveRegimen = taxitem.TaxScheme,
                     CalificacionOperacion = taxitem.TaxType,
                     TipoImpositivo = XmlParser.GetXmlDecimal(taxitem.TaxRate),
                     BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxitem.TaxBase),
-                    CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount)
-                });
+                    CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount),
+                    TipoRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxRateSurcharge),
+                    CuotaRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxAmountSurcharge)
+                };
+
+                detalleDesglose.ImpuestoSpecified = (detalleDesglose.Impuesto != Impuesto.IVA);
+                detalleDesglose.ClaveRegimenSpecified = (detalleDesglose.Impuesto == Impuesto.IVA || detalleDesglose.Impuesto == Impuesto.IGIC);
+
+                desglose.Add(detalleDesglose);
 
             }
 
@@ -277,6 +293,11 @@ namespace VeriFactu.Business
         public decimal TotalTaxOutput { get; private set; }
 
         /// <summary>
+        /// Total impuestos soportados.
+        /// </summary>        
+        public decimal TotalTaxOutputSurcharge { get; private set; }
+
+        /// <summary>
         /// Importe total impuestos retenidos.
         /// </summary>        
         public decimal TotalTaxWithheld { get; set; }
@@ -319,7 +340,7 @@ namespace VeriFactu.Business
                 DescripcionOperacion = Text,
                 Destinatarios = GetDestinatarios(),
                 Desglose = GetDesglose(),
-                CuotaTotal = XmlParser.GetXmlDecimal(TotalTaxOutput),
+                CuotaTotal = XmlParser.GetXmlDecimal(TotalTaxOutput + TotalTaxOutputSurcharge),
                 ImporteTotal = XmlParser.GetXmlDecimal(TotalAmount),
                 SistemaInformatico = Settings.Current.SistemaInformatico,
                 TipoHuella = TipoHuella.Sha256,

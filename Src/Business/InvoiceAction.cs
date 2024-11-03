@@ -39,10 +39,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Xml;
 using VeriFactu.Business.Validation;
 using VeriFactu.Config;
@@ -879,7 +877,7 @@ namespace VeriFactu.Business
 
             if (sentException != null)
                 throw new Exception($"Se ha producido un error al intentar realizar el envío" +
-                    $" oprocesar la respuesta.", sentException);
+                    $" o procesar la respuesta.", sentException);
 
             IsSaved = true;
 
