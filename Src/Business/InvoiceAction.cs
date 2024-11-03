@@ -383,24 +383,49 @@ namespace VeriFactu.Business
 
         /// <summary>
         /// Contabiliza una entrada.
+        /// <para> 1. Incluye el registro en la cadena de bloques.</para>
+        /// <para> 2. Recalcula Xml con la info Blockchain actualizada.</para>
+        /// <para> 3. Guarda el registro en disco en el el directorio de registros emitidos.</para>
+        /// <para> 4. Establece Posted = true.</para>
         /// </summary>
         private void Post()
         {
 
-            // Compruebo el certificado
-            var cert = Wsd.GetCheckedCertificate();
-
-            if (cert == null)
-                throw new Exception("Existe algún problema con el certificado.");
-
-            // Añadimos el registro de alta
+            // Añadimos el registro de alta (1)
             BlockchainManager.Add(Registro);
+
+            // Actualizamos datos (2,3,4)
+            SaveBlockchainChanges();
+
+        }
+
+        /// <summary>
+        /// Actualiza los datos tras la incorporación del registro
+        /// a la cadena de bloques.
+        /// <para> 1. Recalcula Xml con la info Blockchain actualizada.</para>
+        /// <para> 2. Guarda el registro en disco en el el directorio de registros emitidos.</para>
+        /// <para> 3. Establece Posted = true.</para>
+        /// </summary>
+        internal void SaveBlockchainChanges() 
+        {
+
+            if (Registro.BlockchainLinkID == 0)
+                throw new InvalidOperationException($"El registro {Registro}" +
+                    $" no está incluido en la cadena de bloques.");
+
+            if (Posted)
+                throw new InvalidOperationException($"La operación {this}" +
+                    $" ya está contabilizada.");
+
 
             // Regeneramos el Xml
             Xml = GetXml();
 
             // Guardamos el xml
             File.WriteAllBytes(InvoiceFilePath, Xml);
+
+            // Marcamos como contabilizado
+            Posted = true;
 
         }
 
@@ -514,6 +539,12 @@ namespace VeriFactu.Business
         internal void ExecutePost()
         {
 
+            // Compruebo el certificado
+            var cert = Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
+
             Exception postException = null;
 
             lock (_Locker)
@@ -522,8 +553,7 @@ namespace VeriFactu.Business
                 try
                 {
 
-                    Post();
-                    Posted = true;
+                    Post();                   
 
                 }
                 catch (Exception ex)

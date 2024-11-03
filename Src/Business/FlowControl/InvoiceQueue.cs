@@ -201,8 +201,14 @@ namespace VeriFactu.Business.FlowControl
         private bool Post(List<InvoiceAction> invoiceActions)
         {
 
-            string sellerID = null;
+            if (invoiceActions == null || invoiceActions.Count == 0)
+                throw new ArgumentException("El parámetro invoiceActions debe" +
+                    " ser una lista de instancias de InvoiceAction con elementos.");
 
+            string sellerID = invoiceActions[0].SellerID;
+            var blockchainManager = invoiceActions[0].BlockchainManager;
+            var registros = new List<Registro>();
+            Debug.Print($"Añadiendo registros {invoiceActions.Count} a la cadena de bloques {DateTime.Now}");
             for (int i = 0; i < invoiceActions.Count; i++) 
             {
 
@@ -211,12 +217,19 @@ namespace VeriFactu.Business.FlowControl
                         $" cola de envíos pendientes.\n - {invoiceActions[i-1]}.\n - {invoiceActions[i]}");
 
                 if(!invoiceActions[i].Posted)
-                    invoiceActions[i].ExecutePost();
+                    registros.Add(invoiceActions[i].Registro);
 
                 sellerID = invoiceActions[i].SellerID;
 
             }
 
+            // Añado los registros a la cadena de bloques
+            blockchainManager.Add(registros);
+            Debug.Print($"Actualizando datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
+            // Actualizo los cambios
+            for (int i = 0; i < invoiceActions.Count; i++)
+                invoiceActions[i].SaveBlockchainChanges();
+            Debug.Print($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
             return true;
 
         }
@@ -229,7 +242,7 @@ namespace VeriFactu.Business.FlowControl
         /// sin problemas.</returns>
         private bool Send(List<InvoiceAction> invoiceActions)
         {
-
+            Debug.Print($"Enviando datos a la AEAT de {invoiceActions.Count} elementos {DateTime.Now}");
             if (invoiceActions == null || invoiceActions.Count == 0)
                 throw new ArgumentException("El argumento invoiceActions debe contener elementos.");
 
@@ -282,7 +295,7 @@ namespace VeriFactu.Business.FlowControl
 
             if(respuesta != null)
                 _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
-
+            Debug.Print($"Finalizado envío de datos a la AEAT de {invoiceActions.Count} elementos (quedan {_SellerPendingQueue.Count} colas) {DateTime.Now}");
             Debug.Print($"Establecido momento próxima ejecución (LastProcessMoment: {_LastProcessMoment} + " +
                 $"CurrentWaitSecods: {_CurrentWaitSecods}) = {_LastProcessMoment.AddSeconds(_CurrentWaitSecods)}");
 
@@ -336,6 +349,10 @@ namespace VeriFactu.Business.FlowControl
         /// <param name="invoiceAction">Acción de registro a añadir.</param>
         public void Add(InvoiceAction invoiceAction) 
         {
+
+            if (invoiceAction.Posted)
+                throw new InvalidOperationException($"La operación {invoiceAction}" +
+                    $" ya está contabilizada y por lo tanto no se puede agregar a la cola.");
 
             var busErrors = invoiceAction.GetBusErrors();
 
@@ -397,6 +414,8 @@ namespace VeriFactu.Business.FlowControl
                     throw new Exception("Error al vaciar la cola de documentos pendientes de envío. " +
                         $"El elemento no se puede agregar ya que la cola está llena con {_SellerPendingQueue.Count}" +
                         $" registros que es igual o mayor que el máximo {MaxRecordNumber}");
+                else
+                    _Processing = null;
 
             }
 
@@ -430,7 +449,7 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         public void Process()
         {
-
+            Debug.Print($"Ejecutando por cola tras tiempo espera en segundos: {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
             lock (_Locker)
                 _IsWorking = true;
 
@@ -471,10 +490,17 @@ namespace VeriFactu.Business.FlowControl
 
             }
 
-            var processed = Process(_Processing);
+            if (_Processing != null) 
+            {
 
-            if(!processed)
-                ProcessErrors(_Processing);
+                var processed = Process(_Processing);
+
+                if (!processed)
+                    ProcessErrors(_Processing);
+                else
+                    _Processing = null;
+
+            }           
 
             lock (_Locker)
                 _IsWorking = false;

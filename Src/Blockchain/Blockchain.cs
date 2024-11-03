@@ -519,6 +519,42 @@ namespace VeriFactu.Blockchain
         }
 
         /// <summary>
+        /// Añade una lista de elementos a la cadena de bloques.
+        /// </summary>
+        /// <param name="registros">Registros a añadir.</param>
+        public void Add(List<Registro> registros)
+        {
+
+            Exception addException = null;
+
+            lock (_Locker)
+            {
+
+                try
+                {
+
+                    for(int r = 0; r < registros.Count; r++)
+                        Insert(registros[r]);
+
+                    Write();
+
+                }
+                catch (Exception ex)
+                {
+
+                    addException = ex;
+
+                }
+
+            }
+
+            if (addException != null)
+                throw new Exception($"Error añadiendo eslabón de la cadena.", addException);
+
+        }
+
+
+        /// <summary>
         /// Elimina el último elememto añadido a la cadena.
         /// </summary>
         /// <param name="registro">Registro a eliminar.
