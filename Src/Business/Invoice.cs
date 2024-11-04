@@ -140,9 +140,15 @@ namespace VeriFactu.Business
                     TipoImpositivo = XmlParser.GetXmlDecimal(taxitem.TaxRate),
                     BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxitem.TaxBase),
                     CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount),
-                    TipoRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxRateSurcharge),
-                    CuotaRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxAmountSurcharge)
                 };
+
+                if (taxitem.TaxAmountSurcharge != 0) 
+                {
+
+                    detalleDesglose.TipoRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxRateSurcharge);
+                    detalleDesglose.CuotaRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxAmountSurcharge);
+
+                }
 
                 detalleDesglose.ImpuestoSpecified = (detalleDesglose.Impuesto != Impuesto.IVA);
                 detalleDesglose.ClaveRegimenSpecified = (detalleDesglose.Impuesto == Impuesto.IVA || detalleDesglose.Impuesto == Impuesto.IGIC);
