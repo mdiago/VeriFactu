@@ -64,7 +64,7 @@ Para empezar, veamos un ejemplo sencillo de registro de una factura; El registro
 ```C#
 
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
+var invoice = new Invoice("GITHUB-EJ-002", new DateTime(2024, 11, 4), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
@@ -74,16 +74,12 @@ var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 4,
             TaxBase = 10,
             TaxAmount = 0.4m
         },
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 100,
             TaxAmount = 21
@@ -97,9 +93,26 @@ var invoiceEntry = new InvoiceEntry(invoice);
 // Guardamos la factura
 invoiceEntry.Save();
 
+// Consultamos el estado
+Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Status}");
+
+if (invoiceEntry.Status == "Correcto")
+{
+
+    // Consultamos el CSV
+    Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.CSV}");
+
+}
+else 
+{
+
+    // Consultamos el error
+    Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.ErrorCode}: {invoiceEntry.ErrorDescription}");
+
+}
+
 // Consultamos el resultado devuelto por la AEAT
 Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}");
-
 
 ```
 ## Anulación de facturas
