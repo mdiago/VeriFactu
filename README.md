@@ -232,12 +232,12 @@ var urlValidacion = registro.GetUrlValidate(); //https://prewww2.aeat.es/wlpl/TI
 
 ## 3. Obtención de Bitmap con el QR con la URL de cotejo o remisión de información de la factura
 
-En este ejemplo obtendremos la imágen del QR de la url para el servicio de validación de una factura de las especificaciones técnicas de la AEAT, que hemos visto en el ejemplo anterior.
+En este ejemplo obtendremos la imágen del QR de la url para el servicio de validación de una factura envíada previamente al entorno de pruebas de la AEAT.
 
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
+var invoice = new Invoice("GITHUB-EJ-004", new DateTime(2024, 11, 4), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
@@ -247,16 +247,12 @@ var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 4,
             TaxBase = 10,
             TaxAmount = 0.4m
         },
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 100,
             TaxAmount = 21
@@ -271,7 +267,7 @@ var registro = invoice.GetRegistroAlta();
 // Obtenemos la imágen del QR
 var bmQr = registro.GetValidateQr();
 
-File.WriteAllBytes(@"C:\Users\usuario\Downloads\zz\ValidateQrSampe.bmp", bmQr);
+File.WriteAllBytes(@"C:\Users\usuario\Downloads\Verifactu\ValidateQrSampe.bmp", bmQr);
 
 ```
 
