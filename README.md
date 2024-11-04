@@ -59,7 +59,7 @@ Settings.Save();
 
 ## Envío de facturas
 
-Para emprezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
+Para empezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
 
 ```C#
 
