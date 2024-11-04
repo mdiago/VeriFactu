@@ -232,7 +232,10 @@ var urlValidacion = registro.GetUrlValidate(); //https://prewww2.aeat.es/wlpl/TI
 
 ## 3. Obtención de Bitmap con el QR con la URL de cotejo o remisión de información de la factura
 
-En este ejemplo obtendremos la imágen del QR de la url para el servicio de validación de una factura envíada previamente al entorno de pruebas de la AEAT.
+En este ejemplo obtendremos la imágen del QR de la url para el servicio de validación de una factura envíada previamente al entorno de pruebas de la AEAT:
+
+![image](https://github.com/user-attachments/assets/bc0e7562-4f20-4acc-a17d-95434f7e8ab1)
+
 
 ```C#
           
