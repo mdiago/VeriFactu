@@ -23,9 +23,7 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 [Irene Solutions](http://www.irenesolutions.com)
 
 ## Establecer en la configuración los valores para el uso del certificado
-
-
-
+<br/>
 > [!IMPORTANT]
 > Antes de comenzar a probar los envíos a la AEAT hay que configurar correctamente el certificado con el que vamos a trabajar.
 > Podemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del  almacén de certificados de windows. La configuración del sistema esta accesible mediante la propiedad estática 'Current' del objeto `Settings'. En la siguiente tabla se describen los valores de configuración relacionados con el   certificado a utilizar:
