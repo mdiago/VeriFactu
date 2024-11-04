@@ -193,12 +193,12 @@ var hash = registro.GetHashOutput(); // 4EECCE4DD48C0539665385D61D451BA921B7160C
 
 ## 2. Obtención de la «URL» de cotejo o remisión de información de la factura contenida en el código «QR»
 
-En este ejemplo obtendremos la url para el servicio de validación de una factura de las especificaciones técnicas de la AEAT.
+En este ejemplo obtendremos la url para el servicio de validación de una factura envíada al entorno de pruebas de la AEAT.
 
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
+var invoice = new Invoice("GITHUB-EJ-004", new DateTime(2024, 11, 4), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
@@ -208,16 +208,12 @@ var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 4,
             TaxBase = 10,
             TaxAmount = 0.4m
         },
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 100,
             TaxAmount = 21
@@ -229,8 +225,8 @@ var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 // la instancia del objeto de negocio Invoice
 var registro = invoice.GetRegistroAlta();
 
-// Obtenemos la url de validación
-var urlValidacion = registro.GetUrlValidate(); 
+// Obtenemos la url
+var urlValidacion = registro.GetUrlValidate(); //https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR?nif=B72877814&numserie=GITHUB-EJ-004&fecha=04-11-2024&importe=131.4
 
 ```
 
