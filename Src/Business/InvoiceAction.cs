@@ -213,11 +213,22 @@ namespace VeriFactu.Business
             if (string.IsNullOrEmpty(Invoice.SellerName))
                 errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
 
-            var validation = new InvoiceValidation(this);
-
-            errors.AddRange(validation.GetErrors());
+            errors.AddRange(GetInvoiceValidationErrors());
 
             return errors;
+
+        }
+
+        /// <summary>
+        /// Devuelve errores de las validaciones de negocio según las
+        /// especificaciones.
+        /// </summary>
+        /// <returns>Lista de errores de validación según las especificaciones.</returns>
+        internal virtual List<string> GetInvoiceValidationErrors() 
+        {
+
+            var validation = new InvoiceValidation(this);
+            return validation.GetErrors();
 
         }
 

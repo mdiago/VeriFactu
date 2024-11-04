@@ -37,6 +37,9 @@
     address: info@irenesolutions.com
  */
 
+using System;
+using System.Text;
+
 namespace VeriFactu.Business
 {
 
@@ -74,6 +77,13 @@ namespace VeriFactu.Business
         #endregion
 
         #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Identificador de la factura en formato
+        /// hexadecimal.
+        /// </summary>
+        public override string EncodedInvoiceID => BitConverter.ToString(Encoding.UTF8.GetBytes($"{Invoice.InvoiceID}.DEL")).Replace("-", "");
+
 
         /// <summary>
         /// Identificador de la anulación de factura.
