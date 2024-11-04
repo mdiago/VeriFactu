@@ -120,8 +120,9 @@ Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}");
 Seguimos con la anulación de una factura previamente remitida:
 
 ```C#
+
 // Creamos una instacia de la clase factura con los datos del documento a anular
-var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
+var invoice = new Invoice("GITHUB-EJ-002", new DateTime(2024, 11, 4), "B72877814")
 {
     SellerName = "WEFINZ GANDIA SL",
 };
