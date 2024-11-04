@@ -145,26 +145,22 @@ Debug.Print($"Respuesta de la AEAT:\n{invoiceCancellation.Response}");
 ```C#
           
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
+var invoice = new Invoice("GITHUB-EJ-003", new DateTime(2024, 11, 4), "B72877814")
 {
-    InvoiceType = TipoFactura.F1,
-    SellerName = "WEFINZ GANDIA SL",
+    //InvoiceType = TipoFactura.F1,
+    //SellerName = "WEFINZ GANDIA SL",
     BuyerID = "B44531218",
     BuyerName = "WEFINZ SOLUTIONS SL",
-    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+    //Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 4,
             TaxBase = 10,
             TaxAmount = 0.4m
         },
         new TaxItem()
         {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
             TaxRate = 21,
             TaxBase = 100,
             TaxAmount = 21
@@ -177,12 +173,21 @@ var invoice = new Invoice("TEST009", new DateTime(2024, 10, 14), "B72877814")
 var registro = invoice.GetRegistroAlta();
 
 // El registro no ha sido envíado, pero forzamos el valor de
-// FechaHoraHusoGenRegistro
-var fechaHoraHusoGenRegistro = new DateTime(2024, 1, 1, 19, 20, 30); 
+// FechaHoraHusoGenRegistro para que coincida con el último envío a la AEAT
+var fechaHoraHusoGenRegistro = new DateTime(2024, 11, 4, 12, 36, 39); //2024-01-01T19:20:30+01:00 en España peninsula
 registro.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
 
+// Establecemos el valor del encadenamiento anterior
+registro.Encadenamiento = new Encadenamiento() 
+{ 
+    RegistroAnterior = new RegistroAnterior() 
+    { 
+        Huella = "8C8DCEFB120522E0C71BC19902F44D5334FF6C98E74F0E3AC1D1E5A30C2EA836" 
+    } 
+};
+
 // Obtenemos el valor de la huella
-var hash = registro.GetHashOutput(); 
+var hash = registro.GetHashOutput(); // 4EECCE4DD48C0539665385D61D451BA921B7160CA6FEF46CD3C2E2BC5C778E14
 
 ```
 
