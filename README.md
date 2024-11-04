@@ -102,14 +102,12 @@ if (invoiceEntry.Status == "Correcto")
     // Consultamos el CSV
     Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.CSV}");
 
-
 }
 else 
 {
 
     // Consultamos el error
     Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.ErrorCode}: {invoiceEntry.ErrorDescription}");
-
 
 }
 
