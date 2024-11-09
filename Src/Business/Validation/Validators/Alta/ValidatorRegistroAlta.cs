@@ -163,7 +163,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             result.AddRange(new ValidatorRegistroAltaDestinatarios(_Envelope, _RegistroAlta).GetErrors());
             // 14. Cupon
             result.AddRange(new ValidatorRegistroAltaCupon(_Envelope, _RegistroAlta).GetErrors());
-            // 15. Agruapacion Desglos
+            // 15. Agruapacion Desglose
             result.AddRange(new ValidatorRegistroAltaDetalleDesglose(_Envelope, _RegistroAlta).GetErrors());
             // 15.8 Validaciones adicionales en el caso de facturas simplificadas.
             result.AddRange(new ValidatorRegistroAltaDetalleDesgloseFacturaSimplificada(_Envelope, _RegistroAlta).GetErrors());

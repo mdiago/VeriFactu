@@ -452,7 +452,7 @@ namespace VeriFactu.Business
         }
 
         /// <summary>
-        /// Path de la factura en el directorio de archivado de los datos de la
+        /// Path de la entrada factura en el directorio de archivado de los datos de la
         /// cadena si el documento a resultado erróneo.
         /// </summary>
         /// <returns>Path de la factura en el directorio de archivado de los datos de la
@@ -461,6 +461,19 @@ namespace VeriFactu.Business
         {
 
             return $"{InvoiceEntryPath}{InvoiceEntryID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
+
+        }
+
+        /// <summary>
+        /// Path de la factura en el directorio de archivado de facturas
+        /// si el documento a resultado erróneo.
+        /// </summary>
+        /// <returns>Path de la factura en el directorio de archivado de los datos de la
+        /// cadena si el documento a resultado erróneo.</returns>
+        private string GeErrorInvoiceFilePath()
+        {
+
+            return $"{InvoicePostedPath}{EncodedInvoiceID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
 
         }
 
@@ -626,8 +639,12 @@ namespace VeriFactu.Business
 
             // Almaceno xml envíado
             File.WriteAllBytes(invoiceEntryFilePath, Xml);
-            // Almaceno xml de respuesta correcta
+            // Almaceno xml de respuesta
             File.WriteAllText(responseFilePath, response);
+
+            // Si la respuesta no ha sido correcta renombro archivo de factura
+            if (Status != "Correcto" && File.Exists(InvoiceFilePath)) 
+                File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());                
 
             ResponseProcessed = true;
 

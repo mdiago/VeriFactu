@@ -102,8 +102,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                     // 15.7 CuotaRepercutida.
                     result.AddRange(new ValidatorRegistroAltaDetalleDesgloseCuotaRepercutida(_Envelope, _RegistroAlta, detalle).GetErrors());
 
-
-
                 }
 
             }

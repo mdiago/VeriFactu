@@ -77,9 +77,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var result = new List<string>();
 
-            if (_RegistroAlta.TipoFactura != TipoFactura.F2)
-                return result;
-
             // Se validará que sea igual a Ʃ (CuotaRepercutida + CuotaRecargoEquivalencia) de todas
             // las líneas de detalle de desglose.En caso contrario se devolverá un aviso de error
             // (no generará rechazo), admitiéndose un margen de error de +/ -10,00 euros.
