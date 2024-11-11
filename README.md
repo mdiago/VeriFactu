@@ -10,9 +10,9 @@ La finalidad de esta biblioteca es la generación, conservación y envío de reg
 
 > La funcionalidad de Verifactu está disponible gratis también en línea:
 
-:globe_with_meridians: [Acceso al API REST](https://facturae.irenesolutions.com/verifactu/go)
+> :globe_with_meridians: [Acceso al API REST](https://facturae.irenesolutions.com/verifactu/go)
 
-Con el API REST disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales.
+> Con el API REST disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales.
 
 Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente cualquier tipo de colaboración o sugerencia. 
 
