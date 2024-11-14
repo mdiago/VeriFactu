@@ -19,8 +19,9 @@
     <Language>es-ES</Language>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\bin\Debug\VeriFactu.dll" />
-<DocumentationSource sourceFile="..\bin\Debug\VeriFactu.xml" /></DocumentationSources>
-    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+      <DocumentationSource sourceFile="..\bin\Debug\VeriFactu.xml" />
+    </DocumentationSources>
+    <HelpFileVersion>1.0.0.9</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>Standard</SyntaxFilters>
