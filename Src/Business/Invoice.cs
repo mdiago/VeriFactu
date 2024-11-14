@@ -39,7 +39,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using VeriFactu.Business.Validation.NIF.TaxId;
 using VeriFactu.Config;
 using VeriFactu.Xml;
@@ -83,24 +82,6 @@ namespace VeriFactu.Business
             InvoiceID = invoiceID;
             InvoiceDate = invoiceDate;
             SellerID = sellerID;
-
-        }
-
-        #endregion
-
-        #region Métodos Privados Estáticos
-
-        /// <summary>
-        /// Codifica un texto de entrada en una cadena de bytes
-        /// utilizando UTF8, y luego devuelve la cadena de bytes
-        /// en hexadecimal.
-        /// </summary>
-        /// <param name="text">Texto a codificar.</param>
-        /// <returns>Texto que contiene la codificación hexadecimal.</returns>
-        internal string GetEncodedToHex(string text) 
-        {
-
-            return BitConverter.ToString(Encoding.UTF8.GetBytes(text)).Replace("-", "");
 
         }
 

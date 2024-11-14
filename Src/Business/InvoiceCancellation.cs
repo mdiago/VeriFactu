@@ -37,8 +37,7 @@
     address: info@irenesolutions.com
  */
 
-using System;
-using System.Text;
+using VeriFactu.Common;
 
 namespace VeriFactu.Business
 {
@@ -82,7 +81,7 @@ namespace VeriFactu.Business
         /// Identificador de la factura en formato
         /// hexadecimal.
         /// </summary>
-        public override string EncodedInvoiceID => Invoice.GetEncodedToHex($"{Invoice.InvoiceID}.DEL");
+        public override string EncodedInvoiceID => Utils.GetEncodedToHex($"{Invoice.InvoiceID}.DEL");
 
 
         /// <summary>

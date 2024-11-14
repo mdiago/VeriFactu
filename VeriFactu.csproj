@@ -115,6 +115,7 @@
     <Compile Include="Src\Business\Validation\Validators\ValidatorCabecera.cs" />
     <Compile Include="Src\Business\Validation\VIES\ViesVatNumber.cs" />
     <Compile Include="Src\Common\SingletonByKey.cs" />
+    <Compile Include="Src\Common\Utils.cs" />
     <Compile Include="Src\DataStore\Document.cs" />
     <Compile Include="Src\DataStore\Period.cs" />
     <Compile Include="Src\DataStore\Seller.cs" />

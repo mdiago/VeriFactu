@@ -39,9 +39,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using System.Xml.Serialization;
+using VeriFactu.Common;
 using VeriFactu.Config;
 using VeriFactu.Qrcode;
 using VeriFactu.Qrcode.Exceptions;
@@ -54,63 +53,6 @@ namespace VeriFactu.Xml.Factu
     /// </summary>
     public class Registro
     {
-
-        #region Variables Privadas Estáticas
-
-        /// <summary>
-        /// Algoritmos de dgiest disponibles.
-        /// </summary>
-        static readonly Dictionary<TipoHuella, HashAlgorithm> _HashAlgorithms = new Dictionary<TipoHuella, HashAlgorithm>()
-        {
-
-            {TipoHuella.Sha256, new SHA256Managed() }
-
-        };
-
-        /// <summary>
-        /// Algoritmos de digest disponibles.
-        /// </summary>
-        static readonly Dictionary<string, Encoding> _Encodings = new Dictionary<string, Encoding>()
-        {
-
-            {"UTF-8", Encoding.UTF8 }
-
-        };
-
-        /// <summary>
-        /// Algoritmo de hash.
-        /// </summary>
-        protected static HashAlgorithm HashAlgorithm { get; private set; }
-
-        /// <summary>
-        /// Encoding del texto de entrada para el hash de hash.
-        /// </summary>
-        protected static Encoding Encoding { get; private set; }
-
-        #endregion
-
-        #region Construtores Estáticos
-
-        /// <summary>
-        /// Constructor estático clase.
-        /// </summary>
-        static Registro()
-        {
-
-            if (!_HashAlgorithms.ContainsKey(Settings.Current.VeriFactuHashAlgorithm))
-                throw new ArgumentException($"El valor de la variable de configuración 'VeriFactuHashAlgorithm'" +
-                    $" no puede ser '{Settings.Current.VeriFactuHashAlgorithm}'.");
-
-            if (!_Encodings.ContainsKey(Settings.Current.VeriFactuHashInputEncoding))
-                throw new ArgumentException($"El valor de la variable de configuración 'VeriFactuHashInputEncoding'" +
-                    $" no puede ser '{Settings.Current.VeriFactuHashInputEncoding}'.");
-
-            HashAlgorithm = _HashAlgorithms[Settings.Current.VeriFactuHashAlgorithm];
-            Encoding = _Encodings[Settings.Current.VeriFactuHashInputEncoding];
-
-        }
-
-        #endregion
 
         #region Métodos Privados de Instancia
 
@@ -155,7 +97,7 @@ namespace VeriFactu.Xml.Factu
         {
 
             var textInput = GetHashTextInput();
-            var binInput = Encoding.GetBytes(textInput);
+            var binInput = Utils.Encoding.GetBytes(textInput);
 
             return binInput;
 
@@ -169,7 +111,7 @@ namespace VeriFactu.Xml.Factu
         {
 
             var binInput = GetHashInput();
-            var hash = HashAlgorithm.ComputeHash(binInput);
+            var hash = Utils.HashAlgorithm.ComputeHash(binInput);
 
             return hash;
 

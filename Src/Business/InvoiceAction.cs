@@ -40,9 +40,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 using VeriFactu.Business.Validation;
+using VeriFactu.Common;
 using VeriFactu.Config;
 using VeriFactu.Net;
 using VeriFactu.Xml;
@@ -679,7 +679,7 @@ namespace VeriFactu.Business
         /// Identificador de la factura en formato
         /// hexadecimal.
         /// </summary>
-        public virtual string EncodedInvoiceID => Invoice.GetEncodedToHex(Invoice.InvoiceID);
+        public virtual string EncodedInvoiceID => Utils.GetEncodedToHex(Invoice.InvoiceID);
 
         /// <summary>
         /// Identificador del eslabón de la cadena asociado
