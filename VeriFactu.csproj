@@ -54,7 +54,10 @@
     <Compile Include="Src\Business\FlowControl\InvoiceQueue.cs" />
     <Compile Include="Src\Business\FlowControl\SellerQueue.cs" />
     <Compile Include="Src\Business\Invoice.cs" />
-    <Compile Include="Src\Business\InvoiceAction.cs" />
+    <Compile Include="Src\Business\Operations\InvoiceActionMessage.cs" />
+    <Compile Include="Src\Business\Operations\InvoiceAction.cs" />
+    <Compile Include="Src\Business\Operations\InvoiceActionPost.cs" />
+    <Compile Include="Src\Business\Operations\InvoiceActionData.cs" />
     <Compile Include="Src\Business\InvoiceCancellation.cs" />
     <Compile Include="Src\Business\InvoiceEntry.cs" />
     <Compile Include="Src\Business\TaxClass.cs" />

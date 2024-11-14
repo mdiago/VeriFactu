@@ -37,6 +37,8 @@
     address: info@irenesolutions.com
  */
 
+using VeriFactu.Business.Operations;
+
 namespace VeriFactu.Business
 {
 

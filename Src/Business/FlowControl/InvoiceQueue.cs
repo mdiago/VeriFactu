@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Net;
 

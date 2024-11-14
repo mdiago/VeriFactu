@@ -114,6 +114,24 @@ namespace VeriFactu.Business.FlowControl
 
 }
 
+namespace VeriFactu.Business.Operations
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de negocio referente a las operaciones a 
+    /// realizar en los registros de alta y anulacion.
+    /// Transformación de la factura, contabilización
+    /// en la cadena de bloques, envío a la AEAT y
+    /// posterior tratamiento de los errores.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
 namespace VeriFactu.Business.Validation
 {
 

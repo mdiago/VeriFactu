@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;

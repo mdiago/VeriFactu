@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using VeriFactu.Business.Operations;
 using VeriFactu.Business.Validation.Validators;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Soap;

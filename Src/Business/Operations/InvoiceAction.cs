@@ -37,16 +37,22 @@
     address: info@irenesolutions.com
  */
 
-using VeriFactu.Common;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using VeriFactu.Business.Validation;
 
-namespace VeriFactu.Business
+namespace VeriFactu.Business.Operations
 {
 
     /// <summary>
-    /// Representa una entrada de factura en el sistema.
+    /// Representa una acción de alta o anulación de registro
+    /// en todo lo referente a la factura, su envío a la AEAT
+    /// y su gestión contable en la 
+    /// cadena de bloques.
     /// </summary>
-    public class InvoiceCancellation : InvoiceEntry
-    {      
+    public class InvoiceAction : InvoiceActionPost
+    {    
 
         #region Construtores de Instancia
 
@@ -54,51 +60,56 @@ namespace VeriFactu.Business
         /// Constructor.
         /// </summary>
         /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
-        public InvoiceCancellation(Invoice invoice) : base(invoice)
-        {
-        }
-
-        #endregion
-
-        #region Métodos Privados de Instancia 
-
-        /// <summary>
-        /// Establece el registro relativo a la entrada
-        /// a contabilizar y enviar.
-        /// </summary>
-        internal override void SetRegistro()
+        public InvoiceAction(Invoice invoice) : base(invoice)
         {
 
-            Registro = Invoice.GetRegistroAnulacion();
+            // Validamos
+            var errors = GetBusErrors();
+
+            if (errors.Count > 0)
+                throw new InvalidOperationException(string.Join("\n", errors));  
 
         }
 
         #endregion
 
-        #region Propiedades Públicas de Instancia
+        #region Métodos Privados de Instancia
 
         /// <summary>
-        /// Identificador de la factura en formato
-        /// hexadecimal.
+        /// Devuelve una lista con los errores de la
+        /// factura por el incumplimiento de reglas de negocio.
         /// </summary>
-        public override string EncodedInvoiceID => Utils.GetEncodedToHex($"{Invoice.InvoiceID}.DEL");
+        /// <returns>Lista con los errores encontrados.</returns>
+        internal List<string> GetBusErrors()
+        {
+
+            var errors = new List<string>();
+
+            if (File.Exists(InvoiceFilePath))
+                errors.Add($"Ya existe una entrada con SellerID: {Invoice.SellerID}" +
+                    $" en el año {Invoice.InvoiceDate.Year} con el número {Invoice.InvoiceID}.");
+
+            if (string.IsNullOrEmpty(Invoice.SellerName))
+                errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
+
+            errors.AddRange(GetInvoiceValidationErrors());
+
+            return errors;
+
+        }
 
         /// <summary>
-        /// Identificador de la anulación de factura.
+        /// Devuelve errores de las validaciones de negocio según las
+        /// especificaciones.
         /// </summary>
-        public override string InvoiceEntryID => $"{base.InvoiceEntryID}.DEL";
+        /// <returns>Lista de errores de validación según las especificaciones.</returns>
+        internal virtual List<string> GetInvoiceValidationErrors() 
+        {
 
-        /// <summary>
-        /// Path del directorio de archivado de los datos de la
-        /// cadena.
-        /// </summary>
-        public override string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.DEL.xml";
+            var validation = new InvoiceValidation(this);
+            return validation.GetErrors();
 
-        /// <summary>
-        /// Path del directorio de archivado de los datos de la
-        /// cadena.
-        /// </summary>
-        public override string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.DEL.xml";   
+        }
 
         #endregion
 
