@@ -39,6 +39,7 @@
 
 using System.Collections.Generic;
 using VeriFactu.Business.Validation.VIES;
+using VeriFactu.Config;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
@@ -132,10 +133,12 @@ namespace VeriFactu.Business.Validation.Validators
                     result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                         $"Es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
 
+                var isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(sistemaInformatico.IDOtro.ID);
+
                 // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
                 // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
                 // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
-                if (sistemaInformatico.IDOtro.IDType == IDType.NIF_IVA && !ViesVatNumber.Validate(sistemaInformatico.IDOtro.ID))
+                if (sistemaInformatico.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
                     result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                         $" Es obligatorio que IDOtro.ID = “{sistemaInformatico.IDOtro.ID}” esté identificado.");
              

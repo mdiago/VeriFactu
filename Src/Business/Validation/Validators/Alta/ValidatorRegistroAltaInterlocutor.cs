@@ -139,13 +139,14 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
 
+                var isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(_Interlocutor.IDOtro.ID);
+
                 // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
                 // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
                 // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
-                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && !ViesVatNumber.Validate(_Interlocutor.IDOtro.ID))
+                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} es obligatorio que IDOtro.ID = “{_Interlocutor.IDOtro.ID}” esté identificado.");
-
 
                 if (_AllowNoCensado) 
                 {

@@ -315,6 +315,13 @@ namespace VeriFactu.Config
         [XmlElement("SkipNifAeatValidation")]
         public bool SkipNifAeatValidation { get; set; }
 
+        /// <summary>
+        /// Salta la validación en línea de en el censo VIES
+        /// de los VAT numbers intracomunitarios.
+        /// </summary>
+        [XmlElement("SkipViesVatNumberValidation")]
+        public bool SkipViesVatNumberValidation { get; set; }
+
         #endregion
 
         #region Métodos Públicos Estáticos
