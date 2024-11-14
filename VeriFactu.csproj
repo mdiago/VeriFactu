@@ -52,6 +52,7 @@
     <Compile Include="Src\Blockchain\Blockchain.cs" />
     <Compile Include="Src\Business\FlowControl\IntervalWorker.cs" />
     <Compile Include="Src\Business\FlowControl\InvoiceQueue.cs" />
+    <Compile Include="Src\Business\FlowControl\SellerQueue.cs" />
     <Compile Include="Src\Business\Invoice.cs" />
     <Compile Include="Src\Business\InvoiceAction.cs" />
     <Compile Include="Src\Business\InvoiceCancellation.cs" />

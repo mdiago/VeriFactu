@@ -82,7 +82,7 @@ namespace VeriFactu.Business
         /// Identificador de la factura en formato
         /// hexadecimal.
         /// </summary>
-        public override string EncodedInvoiceID => BitConverter.ToString(Encoding.UTF8.GetBytes($"{Invoice.InvoiceID}.DEL")).Replace("-", "");
+        public override string EncodedInvoiceID => Invoice.GetEncodedToHex($"{Invoice.InvoiceID}.DEL");
 
 
         /// <summary>

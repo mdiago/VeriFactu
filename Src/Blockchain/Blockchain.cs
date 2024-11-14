@@ -250,7 +250,7 @@ namespace VeriFactu.Blockchain
         /// Inserta un eslabón en la cadena.
         /// </summary>
         /// <param name="registro">Registro a encadenar.</param>
-        private void Insert(Registro registro)
+        private string Insert(Registro registro)
         {
 
             // Guardo previo
@@ -275,6 +275,8 @@ namespace VeriFactu.Blockchain
             // Asigno el identificador del eslabón
             registro.BlockchainLinkID = CurrentID;
             registro.SetExternKey();
+
+            return GetControFilelLine();
 
         }
 
@@ -301,11 +303,12 @@ namespace VeriFactu.Blockchain
         /// <summary>
         /// Escribe los datos de la cadena en disco.
         /// </summary>
-        private void Write()
+        /// <param name="csvLines">Líneas a escribir en el csv de control.</param>
+        private void Write(List<string> csvLines = null)
         {
 
             WriteVar();
-            WriteData();
+            WriteData(csvLines);
 
         }
 
@@ -340,19 +343,35 @@ namespace VeriFactu.Blockchain
         }
 
         /// <summary>
+        /// Devuelve un texto para el archivo csv de control
+        /// representando la inserción en la cadena de bloques
+        /// con los datos necesarios.
+        /// </summary>
+        /// <returns>Linea de archivo csv</returns>
+        private string GetControFilelLine() 
+        {
+
+            return $"{CurrentID}{_CsvSeparator}" +                              // 0 Id de entrada en la cadena de bloques
+                    $"{CurrentTimeStamp}{_CsvSeparator}" +                      // 1 Marca de tiempo
+                    $"{Current.Huella}{_CsvSeparator}" +                        // 2 Huella
+                    $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +     // 3 Fecha expedición factura
+                    $"{Current.IDFactura.IDEmisor}{_CsvSeparator}" +            // 4 Id emisor
+                    $"{Current.IDFactura.NumSerie}{_CsvSeparator}" +            // 5 Número factura
+                    $"[{Current.GetHashTextInput()}]";                          // 6 Cadena de entrada utilizada para el cálculo del hash
+
+
+        }
+
+        /// <summary>
         /// Añade los datos del último elemento al archivo de control
         /// de la cadena.
         /// </summary>
-        private void WriteData()
+        /// <param name="csvLines">Líneas de control a incluir en el
+        /// archivo csv de control.</param>
+        private void WriteData(List<string> csvLines = null)
         {
 
-            string line = $"{CurrentID}{_CsvSeparator}" +
-                $"{CurrentTimeStamp}{_CsvSeparator}" +
-                $"{Current.Huella}{_CsvSeparator}" +
-                $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +
-                $"{Current.IDFactura.IDEmisor}{_CsvSeparator}" +
-                $"{Current.IDFactura.NumSerie}{_CsvSeparator}" +
-                $"[{Current.GetHashTextInput()}]";
+            string line = GetControFilelLine();
 
             if (File.Exists(BlockchainDataPreviousFileName))
                 File.Delete(BlockchainDataPreviousFileName);
@@ -360,7 +379,10 @@ namespace VeriFactu.Blockchain
             if (File.Exists(BlockchainDataFileName))
                 File.Copy(BlockchainDataFileName, BlockchainDataPreviousFileName);
 
-            File.AppendAllText(BlockchainDataFileName, $"{line}\n");
+            if (csvLines == null)
+                File.AppendAllText(BlockchainDataFileName, $"{line}\n");
+            else
+                File.AppendAllLines(BlockchainDataFileName, csvLines);
 
         }
 
@@ -533,10 +555,12 @@ namespace VeriFactu.Blockchain
                 try
                 {
 
-                    for(int r = 0; r < registros.Count; r++)
-                        Insert(registros[r]);
+                    var csvLines = new List<string>();
 
-                    Write();
+                    for(int r = 0; r < registros.Count; r++)
+                        csvLines.Add(Insert(registros[r]));
+
+                    Write(csvLines);
 
                 }
                 catch (Exception ex)

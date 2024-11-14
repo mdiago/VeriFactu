@@ -628,25 +628,35 @@ namespace VeriFactu.Business
         /// <summary>
         /// Procesa y guarda respuesta de la AEAT al envío.
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="response">Texto del xml de respuesta.</param>
         internal void ProcessResponse(string response)
         {
 
             ResponseEnvelope = GetResponseEnvelope(response);
+            ProcessResponse(ResponseEnvelope);
+
+        }
+
+        /// <summary>
+        /// Procesa y guarda respuesta de la AEAT al envío.
+        /// </summary>
+        /// <param name="envelope">Sobre con la respuesta de la AEAT.</param>
+        internal void ProcessResponse(Envelope envelope)
+        {
 
             var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GeErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
             var responseFilePath = string.IsNullOrEmpty(CSV) ? GetErrorResponseFilePath() : ResponseFilePath;
 
             // Almaceno xml envíado
             File.WriteAllBytes(invoiceEntryFilePath, Xml);
+            
             // Almaceno xml de respuesta
-            File.WriteAllText(responseFilePath, response);
+            if(!string.IsNullOrEmpty(Response))
+                File.WriteAllText(responseFilePath, Response);
 
             // Si la respuesta no ha sido correcta renombro archivo de factura
-            if (Status != "Correcto" && File.Exists(InvoiceFilePath)) 
-                File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());                
-
-            ResponseProcessed = true;
+            if (Status != "Correcto" && File.Exists(InvoiceFilePath))
+                File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());            
 
         }
 
@@ -657,6 +667,7 @@ namespace VeriFactu.Business
         {
 
             ProcessResponse(Response);
+            ResponseProcessed = true;
 
         }
 
@@ -668,7 +679,7 @@ namespace VeriFactu.Business
         /// Identificador de la factura en formato
         /// hexadecimal.
         /// </summary>
-        public virtual string EncodedInvoiceID => BitConverter.ToString(Encoding.UTF8.GetBytes(Invoice.InvoiceID)).Replace("-", "");
+        public virtual string EncodedInvoiceID => Invoice.GetEncodedToHex(Invoice.InvoiceID);
 
         /// <summary>
         /// Identificador del eslabón de la cadena asociado
