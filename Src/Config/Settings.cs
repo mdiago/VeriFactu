@@ -163,6 +163,7 @@ namespace VeriFactu.Config
                 OutboxPath = $"{Path}Outbox{_PathSep}",
                 BlockchainPath = $"{Path}Blockchains{_PathSep}",
                 InvoicePath = $"{Path}Invoices{_PathSep}",
+                LogPath = $"{Path}Log{_PathSep}",
                 CertificateSerial = "",
                 CertificateThumbprint = "",
                 CertificatePath = "",
@@ -182,7 +183,10 @@ namespace VeriFactu.Config
                     TipoUsoPosibleSoloVerifactu = "S",
                     TipoUsoPosibleMultiOT = "S",
                     IndicadorMultiplesOT = "S"
-                }
+                },
+                SkipNifAeatValidation = true,
+                SkipViesVatNumberValidation = true,
+                LoggingEnabled = false
             };
 
         }
@@ -246,6 +250,13 @@ namespace VeriFactu.Config
         /// </summary>
         [XmlElement("InvoicePath")]
         public string InvoicePath { get; set; }
+
+        /// <summary>
+        /// Ruta al directorio que actuará almacenamiento
+        /// del registro de mensajes del sistema.
+        /// </summary>
+        [XmlElement("LogPath")]
+        public string LogPath { get; set; }
 
         /// <summary>
         /// Número de serie del certificado a utilizar. Mediante este número
@@ -322,6 +333,13 @@ namespace VeriFactu.Config
         [XmlElement("SkipViesVatNumberValidation")]
         public bool SkipViesVatNumberValidation { get; set; }
 
+        /// <summary>
+        /// Indica si está activado el log de mensajes
+        /// del sistema.
+        /// </summary>
+        [XmlElement("LoggingEnabled")]
+        public bool LoggingEnabled { get; set; }
+
         #endregion
 
         #region Métodos Públicos Estáticos
@@ -364,6 +382,9 @@ namespace VeriFactu.Config
 
             if (!Directory.Exists(_Current.InvoicePath))
                 Directory.CreateDirectory(_Current.InvoicePath);
+
+            if (!Directory.Exists(_Current.LogPath))
+                Directory.CreateDirectory(_Current.LogPath);
 
         }
 

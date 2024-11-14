@@ -39,7 +39,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using VeriFactu.Common;
 using VeriFactu.Net;
 
 namespace VeriFactu.Business.FlowControl
@@ -183,7 +183,7 @@ namespace VeriFactu.Business.FlowControl
             catch (Exception ex)
             {
 
-                Debug.Print($"InvoiceQueue error {ex}.");
+                Utils.Log($"InvoiceQueue error {ex}.");
 
             }
 
@@ -202,7 +202,7 @@ namespace VeriFactu.Business.FlowControl
             var cert = Wsd.GetCheckedCertificate();
 
             if (cert == null)
-                Debug.Print("Existe algún problema con el certificado.");
+                Utils.Log("Existe algún problema con el certificado.");
 
             Exception processException = null;
 
@@ -231,7 +231,7 @@ namespace VeriFactu.Business.FlowControl
                 }
 
                 if (processException != null)
-                    Debug.Print($"Error procesando InvoiceQueue: {processException}");
+                    Utils.Log($"Error procesando InvoiceQueue: {processException}");
                 
                 break;
 

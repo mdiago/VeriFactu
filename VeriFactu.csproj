@@ -114,6 +114,7 @@
     <Compile Include="Src\Business\Validation\Validators\ValidatorRegistroFactura.cs" />
     <Compile Include="Src\Business\Validation\Validators\ValidatorCabecera.cs" />
     <Compile Include="Src\Business\Validation\VIES\ViesVatNumber.cs" />
+    <Compile Include="Src\Common\Logger.cs" />
     <Compile Include="Src\Common\SingletonByKey.cs" />
     <Compile Include="Src\Common\Utils.cs" />
     <Compile Include="Src\DataStore\Document.cs" />

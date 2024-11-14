@@ -85,6 +85,11 @@ namespace VeriFactu.Common
         /// </summary>
         internal static Encoding Encoding { get; private set; }
 
+        /// <summary>
+        /// Gestor de log.
+        /// </summary>
+        internal static Logger Logger { get; private set; }
+
         #endregion
 
         #region Construtores Estáticos
@@ -105,6 +110,8 @@ namespace VeriFactu.Common
 
             HashAlgorithm = _HashAlgorithms[Settings.Current.VeriFactuHashAlgorithm];
             Encoding = _Encodings[Settings.Current.VeriFactuHashInputEncoding];
+
+            Logger = new Logger();
 
         }
 
@@ -145,6 +152,18 @@ namespace VeriFactu.Common
                 buff.Add(Convert.ToByte($"{text[b]}{text[b + 1]}", 16));
 
             return Utils.Encoding.GetString(buff.ToArray());
+
+        }
+
+        /// <summary>
+        /// Almacena un mensaje en el log.
+        /// </summary>
+        /// <param name="msg">Mensaje.</param>
+        public static void Log(string msg)
+        {
+
+            if (Settings.Current.LoggingEnabled)
+                Logger.Log(msg);
 
         }
 

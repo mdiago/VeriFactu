@@ -39,7 +39,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using VeriFactu.Common;
 using VeriFactu.Xml;
@@ -114,7 +113,7 @@ namespace VeriFactu.Business.FlowControl
         private List<InvoiceAction> Post()
         {
 
-            Debug.Print($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
+            Utils.Log($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
                 $" {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
 
             var recordCount = 0;
@@ -136,7 +135,7 @@ namespace VeriFactu.Business.FlowControl
                 else
                 {
 
-                    Debug.Print($"Error en el proceso por lotes ({SellerID}) se ha intentado agregar al envío un registro ya contabilizado: {invoiceAction}");
+                    Utils.Log($"Error en el proceso por lotes ({SellerID}) se ha intentado agregar al envío un registro ya contabilizado: {invoiceAction}");
 
                 }
 
@@ -146,13 +145,13 @@ namespace VeriFactu.Business.FlowControl
 
             // Añado los registros a la cadena de bloques
             blockchainManager.Add(registros);
-            Debug.Print($"Actualizando datos de la cadena de bloques ({SellerID}) en {registros.Count} elementos {DateTime.Now}");
+            Utils.Log($"Actualizando datos de la cadena de bloques ({SellerID}) en {registros.Count} elementos {DateTime.Now}");
 
             // Actualizo los cambios
             for (int i = 0; i < invoiceActions.Count; i++)
                 invoiceActions[i].SaveBlockchainChanges();
 
-            Debug.Print($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
+            Utils.Log($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
 
             return invoiceActions;
 
@@ -166,7 +165,7 @@ namespace VeriFactu.Business.FlowControl
         private RespuestaRegFactuSistemaFacturacion Send(List<InvoiceAction> invoiceActions)
         {
 
-            Debug.Print($"Enviando datos a la AEAT {SellerID} de {invoiceActions.Count} elementos {DateTime.Now}");
+            Utils.Log($"Enviando datos a la AEAT {SellerID} de {invoiceActions.Count} elementos {DateTime.Now}");
 
             if (invoiceActions == null || invoiceActions.Count == 0)
                 throw new ArgumentException("El argumento invoiceActions debe contener elementos.");
@@ -204,8 +203,8 @@ namespace VeriFactu.Business.FlowControl
             if (respuesta != null)
                 _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
 
-            Debug.Print($"Finalizado envío de datos {SellerID} a la AEAT de {invoiceActions.Count} elementos (quedan {_InvoiceActions.Count} registros) {DateTime.Now}");
-            Debug.Print($"Establecido momento próxima ejecución {SellerID} (LastProcessMoment: {_LastProcessMoment} + " +
+            Utils.Log($"Finalizado envío de datos {SellerID} a la AEAT de {invoiceActions.Count} elementos (quedan {_InvoiceActions.Count} registros) {DateTime.Now}");
+            Utils.Log($"Establecido momento próxima ejecución {SellerID} (LastProcessMoment: {_LastProcessMoment} + " +
                 $"CurrentWaitSecods: {_CurrentWaitSecods}) = {_LastProcessMoment.AddSeconds(_CurrentWaitSecods)}");
 
             return respuesta;

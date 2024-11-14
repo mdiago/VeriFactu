@@ -38,8 +38,8 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Threading;
+using VeriFactu.Common;
 
 namespace VeriFactu.Business.FlowControl
 {
@@ -114,7 +114,7 @@ namespace VeriFactu.Business.FlowControl
             }
             catch (Exception ex)
             {
-                Debug.Print($"Error IntervalWorker.Start:\n{ex.Message}");
+                Utils.Log($"Error IntervalWorker.Start:\n{ex.Message}");
             }
         }
 
@@ -130,7 +130,7 @@ namespace VeriFactu.Business.FlowControl
             }
             catch (Exception ex)
             {
-                Debug.Print($"Error IntervalWorker.End:\n{ex.Message}");
+                Utils.Log($"Error IntervalWorker.End:\n{ex.Message}");
             }
         }
 
