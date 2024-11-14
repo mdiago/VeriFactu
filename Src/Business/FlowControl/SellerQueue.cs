@@ -41,6 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using VeriFactu.Common;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Respuesta;
@@ -53,7 +54,7 @@ namespace VeriFactu.Business.FlowControl
     /// Representa la cola de envío de documentos de un emisor
     /// determinado.
     /// </summary>
-    public class SellerQueue
+    public class SellerQueue : SingletonByKey<SellerQueue>
     {
 
         #region Variables Privadas Estáticas
@@ -66,14 +67,6 @@ namespace VeriFactu.Business.FlowControl
         #endregion
 
         #region Variables Privadas de Instancia
-
-        /// <summary>
-        /// Diccionario dónde se registran todas las instancias
-        /// de la clase Blockchain generadas durante la ejecución de la biblioteca.
-        /// Se registran todas en este diccionario estático para únicamente permitir
-        /// la creación de una clase por vendedor.
-        /// </summary>
-        static readonly Dictionary<string, SellerQueue> _SellerQueuesLoaded = new Dictionary<string, SellerQueue>();
 
         /// <summary>
         /// Lista de procesamiento. En esta lista
@@ -101,11 +94,9 @@ namespace VeriFactu.Business.FlowControl
         /// Constructor.
         /// </summary>
         /// <param name="sellerID">Vendedor al que pertenece la cola de proceso.</param>
-        internal SellerQueue(string sellerID)
+        public SellerQueue(string sellerID) : base(sellerID)
         {
 
-            Check(sellerID);
-            Register(sellerID);
             SellerID = sellerID;
             _LastProcessMoment = new DateTime(1, 1, 1);
 
@@ -116,40 +107,6 @@ namespace VeriFactu.Business.FlowControl
         #region Métodos Privados de Instancia
 
         /// <summary>
-        /// Si el emisor facilitado como parámetro ya tiene una instancia
-        /// en ejecución registrada lanza una excepción.
-        /// </summary>
-        /// <param name="sellerID"></param>
-        /// <exception cref="ArgumentException">Cuando ya hay registrada una instancia
-        /// para el emisor, o el valor del emisor es una cadena nula o vacía.</exception>
-        private void Check(string sellerID)
-        {
-
-            if (string.IsNullOrEmpty(sellerID))
-                throw new ArgumentException($"El valor del parámetro sellerID no puede" +
-                    $"ser nulo o una cadena vacía.");
-
-
-            if (_SellerQueuesLoaded.ContainsKey(sellerID))
-                throw new ArgumentException($"Ya existe una instancia" +
-                    $" de SellerQueue creada para el vendedor {sellerID}.");
-
-        }
-
-        /// <summary>
-        /// Registra la instancia de control Blockchain de un
-        /// emisor determinado.
-        /// </summary>
-        /// <param name="sellerID">Emisor al que pertenece la
-        /// cadena de bloques a gestionar.</param>
-        private void Register(string sellerID)
-        {
-
-            _SellerQueuesLoaded.Add(sellerID, this);
-
-        }
-
-        /// <summary>
         /// Contabiliza los elementos a envíar eliminándolos de la cola
         /// de envío y devolviendolos en una lista.
         /// </summary>
@@ -157,7 +114,8 @@ namespace VeriFactu.Business.FlowControl
         private List<InvoiceAction> Post()
         {
 
-            Debug.Print($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos: {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
+            Debug.Print($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
+                $" {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
 
             var recordCount = 0;
             var registros = new List<Registro>();
@@ -184,7 +142,7 @@ namespace VeriFactu.Business.FlowControl
 
             }
 
-            var blockchainManager = Blockchain.Blockchain.GetInstance(SellerID);
+            var blockchainManager = Blockchain.Blockchain.GetInstance(SellerID) as Blockchain.Blockchain;
 
             // Añado los registros a la cadena de bloques
             blockchainManager.Add(registros);
@@ -325,27 +283,6 @@ namespace VeriFactu.Business.FlowControl
         /// establecido por la AEAT.
         /// </summary>
         internal bool IsAllowedMaxRecordNumber => _InvoiceActions.Count >= MaxRecordNumber;
-
-        #endregion
-
-        #region Métodos Públicos Estáticos
-
-        /// <summary>
-        /// Devuelve la instancia correspondiente a la cola de proceso
-        /// de un emisor de facturas.
-        /// </summary>
-        /// <param name="sellerID">Id. del emisor de factura.</param>
-        /// <returns>Instancia correspondiente a la cola de proceso
-        /// de un emisor de facturas.</returns>
-        internal static SellerQueue GetInstance(string sellerID)
-        {
-
-            if (_SellerQueuesLoaded.ContainsKey(sellerID))
-                return _SellerQueuesLoaded[sellerID];
-
-            return new SellerQueue(sellerID);
-
-        }
 
         #endregion
 

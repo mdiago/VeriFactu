@@ -155,7 +155,7 @@ namespace VeriFactu.Business
             if (errors.Count > 0)
                 throw new InvalidOperationException(string.Join("\n", errors));            
 
-            BlockchainManager = Blockchain.Blockchain.GetInstance(Invoice.SellerID);
+            BlockchainManager = Blockchain.Blockchain.GetInstance(Invoice.SellerID) as Blockchain.Blockchain;
 
         }
 

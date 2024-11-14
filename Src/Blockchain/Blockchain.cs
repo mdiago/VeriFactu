@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using VeriFactu.Common;
 using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
@@ -50,18 +51,10 @@ namespace VeriFactu.Blockchain
     /// <summary>
     /// Representa una cadena de bloques.
     /// </summary>
-    public class Blockchain
+    public class Blockchain : SingletonByKey<Blockchain>
     {
 
         #region Variables Privadas Estáticas
-
-        /// <summary>
-        /// Diccionario dónde se registran todas las instancias
-        /// de la clase Blockchain generadas durante la ejecución de la biblioteca.
-        /// Se registran todas en este diccionario estático para únicamente permitir
-        /// la creación de una clase por vendedor.
-        /// </summary>
-        static readonly Dictionary<string, Blockchain> _BlockchainsLoaded = new Dictionary<string, Blockchain>();
 
         /// <summary>
         /// Separador para los archivos csv.
@@ -99,11 +92,9 @@ namespace VeriFactu.Blockchain
         /// Constructor.
         /// </summary>
         /// <param name="sellerID">Vendedor al que pertenece la cadena de bloques.</param>
-        public Blockchain(string sellerID)
+        public Blockchain(string sellerID) : base(sellerID)
         {
 
-            Check(sellerID);
-            Register(sellerID);
             BlockchainPath = GetBlockchainPath(sellerID);
             SellerID = sellerID;
 
@@ -166,40 +157,6 @@ namespace VeriFactu.Blockchain
         #endregion
 
         #region Métodos Privados de Instancia
-
-        /// <summary>
-        /// Si el emisor facilitado como parámetro ya tiene una instancia
-        /// en ejecución registrada lanza una excepción.
-        /// </summary>
-        /// <param name="sellerID"></param>
-        /// <exception cref="ArgumentException">Cuando ya hay registrada una instancia
-        /// para el emisor, o el valor del emisor es una cadena nula o vacía.</exception>
-        private void Check(string sellerID)
-        {
-
-            if (string.IsNullOrEmpty(sellerID))
-                throw new ArgumentException($"El valor del parámetro sellerID no puede" +
-                    $"ser nulo o una cadena vacía.");
-
-
-            if (_BlockchainsLoaded.ContainsKey(sellerID))
-                throw new ArgumentException($"Ya existe una instancia" +
-                    $" de Blockchain creada para el vendedor {sellerID}.");
-
-        }
-
-        /// <summary>
-        /// Registra la instancia de control Blockchain de un
-        /// emisor determinado.
-        /// </summary>
-        /// <param name="sellerID">Emisor al que pertenece la
-        /// cadena de bloques a gestionar.</param>
-        private void Register(string sellerID)
-        {
-
-            _BlockchainsLoaded.Add(sellerID, this);
-
-        }
 
         /// <summary>
         /// Devuelve la ruta de almacenamiento de la cadena
@@ -457,7 +414,6 @@ namespace VeriFactu.Blockchain
         /// </summary>
         public Registro Previous { get; private set; }
 
-
         /// <summary>
         /// Path del directorio de archivado de los datos de la
         /// cadena.
@@ -481,27 +437,6 @@ namespace VeriFactu.Blockchain
         /// a los movimientos de un mes.
         /// </summary>
         public string BlockchainDataFileName => $"{BlockchainPath}{CurrentTimeStamp:yyyyMM}.csv";
-
-        #endregion
-
-        #region Métodos Públicos Estáticos
-
-        /// <summary>
-        /// Devuelve la instancia correspondiente a la cadena de bloques
-        /// de un emisor de facturas.
-        /// </summary>
-        /// <param name="sellerID">Id. del emisor de factura.</param>
-        /// <returns>Instancia correspondiente a la cadena de bloques
-        /// de un emisor de facturas.</returns>
-        public static Blockchain GetInstance(string sellerID)
-        {
-
-            if (_BlockchainsLoaded.ContainsKey(sellerID))
-                return _BlockchainsLoaded[sellerID];
-
-            return new Blockchain(sellerID);
-
-        }
 
         #endregion
 
@@ -576,7 +511,6 @@ namespace VeriFactu.Blockchain
                 throw new Exception($"Error añadiendo eslabón de la cadena.", addException);
 
         }
-
 
         /// <summary>
         /// Elimina el último elememto añadido a la cadena.

@@ -158,7 +158,7 @@ namespace VeriFactu.Business.FlowControl
             if (busErrors.Count > 0)
                 throw new Exception($"No se puede añadir un elemento con errores en validación: {string.Join("\n", busErrors)}");
 
-            var queue = SellerQueue.GetInstance(invoiceAction.SellerID);
+            var queue = SellerQueue.GetInstance(invoiceAction.SellerID) as SellerQueue;
 
             queue.Add(invoiceAction);
 

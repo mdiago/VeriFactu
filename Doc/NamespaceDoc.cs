@@ -66,6 +66,20 @@ namespace VeriFactu.Blockchain
 
 }
 
+namespace VeriFactu.Common
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidades
+    /// generales.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
 namespace VeriFactu.Business
 {
 
