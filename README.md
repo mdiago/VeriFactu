@@ -484,6 +484,17 @@ Al ejecutar este código, si tenemos el log activado obtendremos la siguiente in
 
 ```
 
+> [!IMPORTANT]
+> Es importante señalar que el control de flujo se desarrolla en un hilo diferente al principal. Es importante asegurarnos,
+> antes de finalizar la ejecución de nuestra aplicación en el hilo principal, de que finalizamos el proceso de control
+> de flujo.
 
+El control de flujo se finaliza de la siguiente manera:
 
+```C#
 
+// Cerramos la cola asegurandonos previamente de que no queda nada pendiente
+if (InvoiceQueue.ActiveInvoiceQueue.Count == 0)
+    InvoiceQueue.Exit();
+
+```
