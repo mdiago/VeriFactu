@@ -129,6 +129,7 @@ var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814"
 
 // Creamos la cancelación de la factura
 var invoiceCancellation = new InvoiceCancellation(invoice);
+var z = invoiceCancellation.InvoiceEntryFilePath;
 
 // Guardamos la cancelación factura
 invoiceCancellation.Save();
@@ -143,15 +144,11 @@ Debug.Print($"Respuesta de la AEAT:\n{invoiceCancellation.Response}");
 ## 1. Generación de la huella o hash de un registro de alta de factura
 
 ```C#
-          
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("GITHUB-EJ-003", new DateTime(2024, 11, 4), "B72877814")
 {
-    //InvoiceType = TipoFactura.F1,
-    //SellerName = "WEFINZ GANDIA SL",
     BuyerID = "B44531218",
     BuyerName = "WEFINZ SOLUTIONS SL",
-    //Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -173,7 +170,7 @@ var invoice = new Invoice("GITHUB-EJ-003", new DateTime(2024, 11, 4), "B72877814
 var registro = invoice.GetRegistroAlta();
 
 // El registro no ha sido envíado, pero forzamos el valor de
-// FechaHoraHusoGenRegistro para que coincida con el último envío a la AEAT
+// FechaHoraHusoGenRegistro para que coincida con el últomo envío a la AEAT
 var fechaHoraHusoGenRegistro = new DateTime(2024, 11, 4, 12, 36, 39); //2024-01-01T19:20:30+01:00 en España peninsula
 registro.FechaHoraHusoGenRegistro = XmlParser.GetXmlDateTimeIso8601(fechaHoraHusoGenRegistro);
 
