@@ -122,7 +122,7 @@ Seguimos con la anulación de una factura previamente remitida:
 ```C#
 
 // Creamos una instacia de la clase factura con los datos del documento a anular
-var invoice = new Invoice("GITHUB-EJ-002", new DateTime(2024, 11, 4), "B72877814")
+var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
 {
     SellerName = "WEFINZ GANDIA SL",
 };
