@@ -359,21 +359,36 @@ El sistema informático debe esperar antes de realizar otro envío a que transcu
 
 ```C#
           
+// En este ejemplo añadimos a la cola de envío de registros 1.005 registros de
+// alta y 10 registros de cancelación (de los 10 primeros registros de alta)
+// Si activamos el log podremos revisar en el mismo que el sistema realiza 2
+// envíos. El primero al alcanzar los 1.000 resgistros, y el segundo al transcurrir
+// el tiempo de espera establecido en la respuesta a la primera llamada.
+
+// Activo el log
+Settings.Current.LoggingEnabled = true;
+
+var testId = "08";
+int start = 0;
+
 // Deshabilito la validación de NIF en linea con la AEAT
 Settings.Current.SkipNifAeatValidation = true;
+// Deshabilito la validación de NIFs intracomunitarios
+Settings.Current.SkipViesVatNumberValidation = true;
 
-for (int i = 1; i < 1006; i++) 
+// Añado 1.005 registros de alta
+for (int i = 1; i < 1006; i++)
 {
 
-    // Creamos una instacia de la clase factura
-    var invoice = new Invoice("" + $"{i}".PadLeft(5, '0'), new DateTime(2024, 10, 29), "B12959755")
-    {
-        InvoiceType = TipoFactura.F1,
-        SellerName = "IRENE SOLUTIONS SL",
-        BuyerID = "B44531218",
-        BuyerName = "WEFINZ SOLUTIONS SL",
-        Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
-        TaxItems = new List<TaxItem>() {
+// Creamos una instacia de la clase factura
+var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new DateTime(2024, 10, 29), "B10795649")
+{
+    InvoiceType = TipoFactura.F1,
+    SellerName = "KIVU SOLUTIONS SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+    TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
             TaxScheme = ClaveRegimen.RegimenGeneral,
@@ -391,21 +406,80 @@ for (int i = 1; i < 1006; i++)
             TaxAmount = 21
         }
     }
-    };
+};
 
-    // Creamos el documento de alta
-    Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
-    var invoiceEntry = new InvoiceEntry(invoice);
+// Creamos el documento de alta
+Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
+var invoiceEntry = new InvoiceEntry(invoice);
 
-    // Añadimos el documentos a la cola de procesamiento:
-    // En la cola se irán realizando los envíos cuando
-    // los documentos en espera sean 1.000 o cuando el
-    // tiempo de espera haya finalizado
-    InvoiceQueue.ActiveInvoiceQueue.Add(invoiceEntry);
+// Añadimos el documentos a la cola de procesamiento:
+// En la cola se irán realizando los envíos cuando
+// los documentos en espera sean 1.000 o cuando el
+// tiempo de espera haya finalizado
+InvoiceQueue.ActiveInvoiceQueue.Add(invoiceEntry);
 
 }
 
+// Añado la cancelación de los primeros 10 registros
+for (int i = 1; i < 11; i++)
+{
+
+// Creamos una instacia de la clase factura
+var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new DateTime(2024, 10, 29), "B10795649")
+{
+    InvoiceType = TipoFactura.F1,
+    SellerName = "KIVU SOLUTIONS SL",
+    BuyerID = "B44531218",
+    BuyerName = "WEFINZ SOLUTIONS SL",
+    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+    TaxItems = new List<TaxItem>() {
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 4,
+            TaxBase = 10,
+            TaxAmount = 0.4m
+        },
+        new TaxItem()
+        {
+            TaxScheme = ClaveRegimen.RegimenGeneral,
+            TaxType = CalificacionOperacion.S1,
+            TaxRate = 21,
+            TaxBase = 100,
+            TaxAmount = 21
+        }
+    }
+};
+
+// Creamos el documento de alta
+Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
+var invoiceCencellation = new InvoiceCancellation(invoice);
+
+// Añadimos el documentos a la cola de procesamiento:
+// En la cola se irán realizando los envíos cuando
+// los documentos en espera sean 1.000 o cuando el
+// tiempo de espera haya finalizado
+InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCencellation);
+
 ```
+
+Al ejecutar este código, si tenemos el log activado obtendremos la siguiente información en el mismo:
+
+[000001] 2024-11-15 17:31:48: Ejecutando por cola (B10795649) tras tiempo espera en segundos: 60 desde 01/01/0001 0:00:00 hasta 01/01/0001 0:01:00
+[000002] 2024-11-15 17:31:48: Actualizando datos de la cadena de bloques (B10795649) en 1000 elementos 15/11/2024 17:31:48
+[000003] 2024-11-15 17:31:49: Finalizada actualización de datos de la cadena de bloques en 1000 elementos 15/11/2024 17:31:49
+[000004] 2024-11-15 17:31:49: Enviando datos a la AEAT B10795649 de 1000 elementos 15/11/2024 17:31:49
+[000005] 2024-11-15 17:31:52: Finalizado envío de datos B10795649 a la AEAT de 1000 elementos (quedan 15 registros) 15/11/2024 17:31:52
+[000006] 2024-11-15 17:31:52: Establecido momento próxima ejecución B10795649 (LastProcessMoment: 15/11/2024 17:31:52 + CurrentWaitSecods: 60) = 15/11/2024 17:32:52
+[000007] 2024-11-15 17:32:53: Ejecutando por cola (B10795649) tras tiempo espera en segundos: 60 desde 15/11/2024 17:31:52 hasta 15/11/2024 17:32:52
+[000008] 2024-11-15 17:32:53: Actualizando datos de la cadena de bloques (B10795649) en 15 elementos 15/11/2024 17:32:53
+[000009] 2024-11-15 17:32:53: Finalizada actualización de datos de la cadena de bloques en 15 elementos 15/11/2024 17:32:53
+[000010] 2024-11-15 17:32:53: Enviando datos a la AEAT B10795649 de 15 elementos 15/11/2024 17:32:53
+[000011] 2024-11-15 17:32:53: Finalizado envío de datos B10795649 a la AEAT de 15 elementos (quedan 0 registros) 15/11/2024 17:32:53
+[000012] 2024-11-15 17:32:53: Establecido momento próxima ejecución B10795649 (LastProcessMoment: 15/11/2024 17:32:53 + CurrentWaitSecods: 60) = 15/11/2024 17:33:53
+
+
 
 
 
