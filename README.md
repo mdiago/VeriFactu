@@ -64,7 +64,7 @@ Para empezar, veamos un ejemplo sencillo de registro de una factura; El registro
 
 ```C#
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("GITHUB-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
+var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
