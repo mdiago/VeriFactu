@@ -466,6 +466,8 @@ InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCencellation);
 
 Al ejecutar este código, si tenemos el log activado obtendremos la siguiente información en el mismo:
 
+```
+
 [000001] 2024-11-15 17:31:48: Ejecutando por cola (B10795649) tras tiempo espera en segundos: 60 desde 01/01/0001 0:00:00 hasta 01/01/0001 0:01:00
 [000002] 2024-11-15 17:31:48: Actualizando datos de la cadena de bloques (B10795649) en 1000 elementos 15/11/2024 17:31:48
 [000003] 2024-11-15 17:31:49: Finalizada actualización de datos de la cadena de bloques en 1000 elementos 15/11/2024 17:31:49
@@ -479,6 +481,8 @@ Al ejecutar este código, si tenemos el log activado obtendremos la siguiente in
 [000011] 2024-11-15 17:32:53: Finalizado envío de datos B10795649 a la AEAT de 15 elementos (quedan 0 registros) 15/11/2024 17:32:53
 [000012] 2024-11-15 17:32:53: Establecido momento próxima ejecución B10795649 (LastProcessMoment: 15/11/2024 17:32:53 + CurrentWaitSecods: 60) = 15/11/2024 17:33:53
 
+
+```
 
 
 
