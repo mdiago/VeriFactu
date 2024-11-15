@@ -307,8 +307,8 @@ var invoiceFirst = new Invoice("TEST001", new DateTime(2024, 10, 14), "B72877814
 var registroFirst = invoiceFirst.GetRegistroAlta();
 
 // Ahora obtenemos el controlador de la cadena de bloques del vendedor
-var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID) as Blockchain;
-            
+var blockchain = Blockchain.Get(invoiceFirst.SellerID);
+
 // Añadimos el registro de alta
 blockchain.Add(registroFirst);
 
