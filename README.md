@@ -63,9 +63,8 @@ Settings.Save();
 Para empezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
 
 ```C#
-
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("GITHUB-EJ-002", new DateTime(2024, 11, 4), "B72877814")
+var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
@@ -104,7 +103,7 @@ if (invoiceEntry.Status == "Correcto")
     Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.CSV}");
 
 }
-else 
+else
 {
 
     // Consultamos el error
@@ -123,7 +122,7 @@ Seguimos con la anulación de una factura previamente remitida:
 ```C#
 
 // Creamos una instacia de la clase factura con los datos del documento a anular
-var invoice = new Invoice("GITHUB-EJ-002", new DateTime(2024, 11, 4), "B72877814")
+var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
 {
     SellerName = "WEFINZ GANDIA SL",
 };
@@ -314,7 +313,7 @@ var invoiceFirst = new Invoice("TEST001", new DateTime(2024, 10, 14), "B72877814
 var registroFirst = invoiceFirst.GetRegistroAlta();
 
 // Ahora obtenemos el controlador de la cadena de bloques del vendedor
-var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID);
+var blockchain = Blockchain.GetInstance(invoiceFirst.SellerID) as Blockchain;
             
 // Añadimos el registro de alta
 blockchain.Add(registroFirst);
