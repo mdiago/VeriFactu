@@ -63,9 +63,8 @@ Settings.Save();
 Para empezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
 
 ```C#
-
 // Creamos una instacia de la clase factura
-var invoice = new Invoice("GITHUB-EJ-002", new DateTime(2024, 11, 4), "B72877814")
+var invoice = new Invoice("GITHUB-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
 {
     InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
@@ -104,7 +103,7 @@ if (invoiceEntry.Status == "Correcto")
     Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.CSV}");
 
 }
-else 
+else
 {
 
     // Consultamos el error
