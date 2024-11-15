@@ -193,7 +193,6 @@ var hash = registro.GetHashOutput(); // 4EECCE4DD48C0539665385D61D451BA921B7160C
 En este ejemplo obtendremos la url para el servicio de validación de una factura envíada al entorno de pruebas de la AEAT.
 
 ```C#
-          
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("GITHUB-EJ-004", new DateTime(2024, 11, 4), "B72877814")
 {
@@ -235,15 +234,13 @@ En este ejemplo obtendremos la imágen del QR de la url para el servicio de vali
 
 
 ```C#
-          
+
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("GITHUB-EJ-004", new DateTime(2024, 11, 4), "B72877814")
 {
-    InvoiceType = TipoFactura.F1,
     SellerName = "WEFINZ GANDIA SL",
     BuyerID = "B44531218",
     BuyerName = "WEFINZ SOLUTIONS SL",
-    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
     TaxItems = new List<TaxItem>() {
         new TaxItem()
         {
@@ -267,7 +264,7 @@ var registro = invoice.GetRegistroAlta();
 // Obtenemos la imágen del QR
 var bmQr = registro.GetValidateQr();
 
-File.WriteAllBytes(@"C:\Users\usuario\Downloads\Verifactu\ValidateQrSampe.bmp", bmQr);
+File.WriteAllBytes(@"C:\Users\usuario\Downloads\ValidateQrSampe.bmp", bmQr);
 
 ```
 
