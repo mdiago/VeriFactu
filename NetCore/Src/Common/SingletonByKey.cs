@@ -79,6 +79,27 @@ namespace VeriFactu.Common
 
         #endregion
 
+        #region Métodos Privados Estáticos
+
+        /// <summary>
+        /// Devuelve la instancia correspondiente a la cadena de bloques
+        /// de un emisor de facturas.
+        /// </summary>
+        /// <param name="key">Clave asociada a esta instancia.</param>
+        /// <returns>Instancia correspondiente a la clave
+        /// facilitada en el parámetro key.</returns>
+        protected static SingletonByKey<T> GetInstance(string key)
+        {
+
+            if (_InstancesLoaded.ContainsKey(key))
+                return _InstancesLoaded[key];
+
+            return Activator.CreateInstance(typeof(T), new object[] { key }) as SingletonByKey<T>;
+
+        }
+
+        #endregion
+
         #region Métodos Privados de Instancia
 
         /// <summary>
@@ -123,27 +144,6 @@ namespace VeriFactu.Common
         /// Identificador único de la instancia.
         /// </summary>        
         public string Key { get; private set; }
-
-        #endregion
-
-        #region Métodos Públicos Estáticos
-
-        /// <summary>
-        /// Devuelve la instancia correspondiente a la cadena de bloques
-        /// de un emisor de facturas.
-        /// </summary>
-        /// <param name="key">Id. del emisor de factura.</param>
-        /// <returns>Instancia correspondiente a la cadena de bloques
-        /// de un emisor de facturas.</returns>
-        public static SingletonByKey<T> GetInstance(string key)
-        {
-
-            if (_InstancesLoaded.ContainsKey(key))
-                return _InstancesLoaded[key];
-
-            return Activator.CreateInstance(typeof(T), new object[] { key }) as SingletonByKey<T>;
-
-        }
 
         #endregion
 

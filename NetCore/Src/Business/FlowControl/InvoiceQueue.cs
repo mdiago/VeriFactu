@@ -55,7 +55,6 @@ namespace VeriFactu.Business.FlowControl
     public class InvoiceQueue : IntervalWorker
     {
 
-
         #region Variables Privadas de Instancia
 
         /// <summary>
@@ -140,6 +139,46 @@ namespace VeriFactu.Business.FlowControl
 
         #endregion
 
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Número total de elementos en cola.
+        /// </summary>
+        public int Count 
+        { 
+            get 
+            {
+
+                int count = 0;
+
+                foreach (KeyValuePair<string, SellerQueue> kvp in _SellerPendingQueue) 
+                    count = count + kvp.Value.Count;
+
+                return count; 
+
+            } 
+        }
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
+
+        /// <summary>
+        /// Finaliza la revisión de cola.
+        /// </summary>
+        public static void Exit() 
+        {
+
+            if (ActiveInvoiceQueue.Count > 0)
+                throw new OperationCanceledException($"No se puede finalizar la cola de factura con" +
+                    $" {ActiveInvoiceQueue.Count} documentos pendientes. Debe estar vacía.");
+
+            ActiveInvoiceQueue.End();
+
+        }
+
+        #endregion
+
         #region Métodos Públicos de Instancia
 
         /// <summary>
@@ -159,7 +198,7 @@ namespace VeriFactu.Business.FlowControl
             if (busErrors.Count > 0)
                 throw new Exception($"No se puede añadir un elemento con errores en validación: {string.Join("\n", busErrors)}");
 
-            var queue = SellerQueue.GetInstance(invoiceAction.SellerID) as SellerQueue;
+            var queue = SellerQueue.Get(invoiceAction.SellerID);
 
             queue.Add(invoiceAction);
 

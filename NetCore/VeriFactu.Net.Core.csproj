@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
+    <Version>1.0.10</Version>
+    <Title>VeriFactu</Title>
+    <Authors>Manuel Diago</Authors>
+    <Company>Irene Solutions SL</Company>
+    <Description>Generación, conservación y envío facturas VERI*FACTU</Description>
+    <Copyright>Irene Solutions SL 2024</Copyright>
+    <PackageProjectUrl>https://github.com/mdiago/VeriFactu</PackageProjectUrl>
+    <PackageIcon>VeriFactu.png</PackageIcon>
+    <RepositoryUrl>https://github.com/mdiago/VeriFactu</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>VeriFactu;Facturas;AEAT</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <AssemblyName>VeriFactu</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  
+   <Target Name="CustomContentTarget">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="C:\Users\usuario\Desktop\TRABAJO\VeriFactu\NetFramework\bin\Debug\VeriFactu.dll">
+        <PackagePath>lib/net48</PackagePath>
+      </TfmSpecificPackageFile>
+       <TfmSpecificPackageFile Include="C:\Users\usuario\Desktop\TRABAJO\VeriFactu\NetFramework\bin\Debug\VeriFactu.xml">
+        <PackagePath>lib/net48</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <Content Include="VeriFactu.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="VeriFactu.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Src\Config\" />
+  </ItemGroup>
+
+</Project>

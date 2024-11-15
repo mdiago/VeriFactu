@@ -88,6 +88,37 @@ namespace VeriFactu.Business.FlowControl
 
         #endregion
 
+        #region Propiedades Privadas de Instancia
+
+        /// <summary>
+        /// Identificador del vendedor.
+        /// Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+        /// En caso de no existir, se puede utilizar el número DUNS 
+        /// o cualquier otro identificador acordado.
+        /// </summary>        
+        internal string SellerID { get; private set; }
+
+        /// <summary>
+        /// Momento a partir del cual ya se pueden realizar envíos.
+        /// </summary>
+        internal DateTime AllowedFrom => _LastProcessMoment.AddSeconds(_CurrentWaitSecods);
+
+        /// <summary>
+        /// Si es true indica que el envío ya está permitido
+        /// por haberse superado el último tiempo de espera comunicado
+        /// por la AEAT.
+        /// </summary>
+        internal bool IsAllowedFrom => AllowedFrom < DateTime.Now;
+
+        /// <summary>
+        /// Si es true indica que el envío ya está permitido
+        /// por haberse alcanzado el máximo de registros por lote
+        /// establecido por la AEAT.
+        /// </summary>
+        internal bool IsAllowedMaxRecordNumber => _InvoiceActions.Count >= MaxRecordNumber;
+
+        #endregion
+
         #region Construtores de Instancia
 
         /// <summary>
@@ -258,31 +289,29 @@ namespace VeriFactu.Business.FlowControl
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Identificador del vendedor.
-        /// Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
-        /// En caso de no existir, se puede utilizar el número DUNS 
-        /// o cualquier otro identificador acordado.
-        /// </summary>        
-        internal string SellerID { get; private set; }
-
-        /// <summary>
-        /// Momento a partir del cual ya se pueden realizar envíos.
-        /// </summary>
-        internal DateTime AllowedFrom => _LastProcessMoment.AddSeconds(_CurrentWaitSecods);
-
-        /// <summary>
-        /// Si es true indica que el envío ya está permitido
-        /// por haberse superado el último tiempo de espera comunicado
-        /// por la AEAT.
-        /// </summary>
-        internal bool IsAllowedFrom => AllowedFrom < DateTime.Now;
-
-        /// <summary>
         /// Si es true indica que el envío ya está permitido
         /// por haberse alcanzado el máximo de registros por lote
         /// establecido por la AEAT.
         /// </summary>
-        internal bool IsAllowedMaxRecordNumber => _InvoiceActions.Count >= MaxRecordNumber;
+        internal int Count => _InvoiceActions.Count;
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
+
+        /// <summary>
+        /// Devuelve la instancia correspondiente a la cola de registros
+        /// de un emisor de facturas.
+        /// </summary>
+        /// <param name="sellerID">Id. del emisor de factura.</param>
+        /// <returns>Instancia correspondiente a la cola de registros
+        /// de un emisor de facturas.</returns>
+        public static SellerQueue Get(string sellerID)
+        {
+
+            return GetInstance(sellerID) as SellerQueue;
+
+        }
 
         #endregion
 

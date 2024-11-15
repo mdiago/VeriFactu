@@ -71,7 +71,7 @@ namespace VeriFactu.Business.Operations
         public InvoiceActionPost(Invoice invoice) : base(invoice)
         {
 
-            BlockchainManager = Blockchain.Blockchain.GetInstance(Invoice.SellerID) as Blockchain.Blockchain;
+            BlockchainManager = Blockchain.Blockchain.Get(Invoice.SellerID);
 
         }
 

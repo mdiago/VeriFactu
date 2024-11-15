@@ -88,7 +88,7 @@ namespace VeriFactu.Common
         /// <summary>
         /// Gestor de log.
         /// </summary>
-        internal static Logger Logger { get; private set; }
+        public static Logger Logger { get; private set; }
 
         #endregion
 

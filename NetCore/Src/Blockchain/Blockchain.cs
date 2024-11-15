@@ -1,4 +1,4 @@
-﻿/*
+﻿/* 
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -384,7 +384,6 @@ namespace VeriFactu.Blockchain
 
         #endregion
 
-
         #region Propiedades Públicas de Instancia
 
         /// <summary>
@@ -448,6 +447,24 @@ namespace VeriFactu.Blockchain
         /// a los movimientos de un mes.
         /// </summary>
         public string BlockchainDataFileName => $"{BlockchainPath}{CurrentTimeStamp:yyyyMM}.csv";
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
+
+        /// <summary>
+        /// Devuelve la instancia correspondiente a la cadena de bloques
+        /// de un emisor de facturas.
+        /// </summary>
+        /// <param name="sellerID">Id. del emisor de factura.</param>
+        /// <returns>Instancia correspondiente a la cadena de bloques
+        /// de un emisor de facturas.</returns>
+        public static Blockchain Get(string sellerID)
+        {
+
+            return GetInstance(sellerID) as Blockchain;
+
+        }
 
         #endregion
 

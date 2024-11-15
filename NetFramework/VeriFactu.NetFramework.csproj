@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{27BBCBE0-0FDF-4989-B218-514388D81CE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VeriFactu</RootNamespace>
+    <AssemblyName>VeriFactu</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\VeriFactu.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo-heart.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\NetCore\Src\Blockchain\Blockchain.cs">
+      <Link>Src\Blockchain\Blockchain.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\FlowControl\IntervalWorker.cs">
+      <Link>Src\Business\FlowControl\IntervalWorker.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\FlowControl\InvoiceQueue.cs">
+      <Link>Src\Business\FlowControl\InvoiceQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\FlowControl\SellerQueue.cs">
+      <Link>Src\Business\FlowControl\SellerQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Invoice.cs">
+      <Link>Src\Business\Invoice.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\InvoiceCancellation.cs">
+      <Link>Src\Business\InvoiceCancellation.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\InvoiceEntry.cs">
+      <Link>Src\Business\InvoiceEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Operations\InvoiceAction.cs">
+      <Link>Src\Business\Operations\InvoiceAction.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Operations\InvoiceActionData.cs">
+      <Link>Src\Business\Operations\InvoiceActionData.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Operations\InvoiceActionMessage.cs">
+      <Link>Src\Business\Operations\InvoiceActionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Operations\InvoiceActionPost.cs">
+      <Link>Src\Business\Operations\InvoiceActionPost.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\TaxClass.cs">
+      <Link>Src\Business\TaxClass.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\TaxItem.cs">
+      <Link>Src\Business\TaxItem.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\InvoiceValidation.cs">
+      <Link>Src\Business\Validation\InvoiceValidation.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\IValidator.cs">
+      <Link>Src\Business\Validation\IValidator.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\NifValidation.cs">
+      <Link>Src\Business\Validation\NIF\NifValidation.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEs.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEs.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEsDCDniNie.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEsDCDniNie.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEsDCNif.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEsDCNif.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEsError.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEsError.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEsException.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEsException.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEsPersonTypeCode.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEsPersonTypeCode.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\NIF\TaxId\TaxIdEsTypes.cs">
+      <Link>Src\Business\Validation\NIF\TaxId\TaxIdEsTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimen.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimen.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenArrendamientoLocalNecocio.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenArrendamientoLocalNecocio.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenCobroTerceros.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenCobroTerceros.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenIpsiIgic.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenIpsiIgic.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenObraPteDevengoAdmonPublica.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenObraPteDevengoAdmonPublica.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenOroInversion.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenOroInversion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRebu.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRebu.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRecc.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRecc.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesglose.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesglose.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseBaseImponibleACoste.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseBaseImponibleACoste.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseCalificacionOperacion.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseCalificacionOperacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseCuotaRepercutida.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseCuotaRepercutida.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseOperacionExenta.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseOperacionExenta.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseTipoImpositivo.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseTipoImpositivo.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseTipoRecargoEquivalencia.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesgloseTipoRecargoEquivalencia.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAlta.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAlta.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCuotaTotal.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCuotaTotal.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCupon.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCupon.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaDestinatarios.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaDestinatarios.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaEmitidaPorTerceroODestinatario.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaEmitidaPorTerceroODestinatario.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturaSimplificada.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturaSimplificada.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturaSimplificadaArt7273.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturaSimplificadaArt7273.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturaSinIdentifDestinatarioArt61d.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturaSinIdentifDestinatarioArt61d.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturasRectificadas.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturasRectificadas.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturasSustituidas.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFacturasSustituidas.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFechaOperacion.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaFechaOperacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaHuella.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaHuella.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaIDFactura.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaIDFactura.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaImporteRectificacion.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaImporteRectificacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaImporteTotal.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaImporteTotal.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaInterlocutor.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaInterlocutor.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaMacrodato.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaMacrodato.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaRechazoPrevio.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaRechazoPrevio.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTercero.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTercero.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTipoRectificativa.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTipoRectificativa.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacion.cs">
+      <Link>Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionGeneradoPor.cs">
+      <Link>Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionGeneradoPor.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionGenerador.cs">
+      <Link>Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionGenerador.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionHuella.cs">
+      <Link>Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionHuella.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionInterlocutor.cs">
+      <Link>Src\Business\Validation\Validators\Anulacion\ValidatorRegistroAnulacionInterlocutor.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\ValidatorCabecera.cs">
+      <Link>Src\Business\Validation\Validators\ValidatorCabecera.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\ValidatorRegistroFactura.cs">
+      <Link>Src\Business\Validation\Validators\ValidatorRegistroFactura.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\ValidatorSistemaInformatico.cs">
+      <Link>Src\Business\Validation\Validators\ValidatorSistemaInformatico.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\VIES\ViesVatNumber.cs">
+      <Link>Src\Business\Validation\VIES\ViesVatNumber.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Common\Logger.cs">
+      <Link>Src\Common\Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Common\SingletonByKey.cs">
+      <Link>Src\Common\SingletonByKey.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Common\Utils.cs">
+      <Link>Src\Common\Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Config\Settings.cs">
+      <Link>Src\Config\Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\Document.cs">
+      <Link>Src\DataStore\Document.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\Period.cs">
+      <Link>Src\DataStore\Period.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\Seller.cs">
+      <Link>Src\DataStore\Seller.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Wsd.cs">
+      <Link>Src\Net\Wsd.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\BitArray.cs">
+      <Link>Src\Qrcode\BitArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\BitMatrix.cs">
+      <Link>Src\Qrcode\BitMatrix.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\BitVector.cs">
+      <Link>Src\Qrcode\BitVector.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\BlockPair.cs">
+      <Link>Src\Qrcode\BlockPair.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\ByteArray.cs">
+      <Link>Src\Qrcode\ByteArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\ByteMatrix.cs">
+      <Link>Src\Qrcode\ByteMatrix.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\CharacterSetECI.cs">
+      <Link>Src\Qrcode\CharacterSetECI.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\EncodeHintType.cs">
+      <Link>Src\Qrcode\EncodeHintType.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\Encoder.cs">
+      <Link>Src\Qrcode\Encoder.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\ErrorCorrectionLevel.cs">
+      <Link>Src\Qrcode\ErrorCorrectionLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\Exceptions\BarcodeExceptionMessageConstant.cs">
+      <Link>Src\Qrcode\Exceptions\BarcodeExceptionMessageConstant.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\Exceptions\WriterException.cs">
+      <Link>Src\Qrcode\Exceptions\WriterException.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\FormatInformation.cs">
+      <Link>Src\Qrcode\FormatInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\GF256.cs">
+      <Link>Src\Qrcode\GF256.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\GF256Poly.cs">
+      <Link>Src\Qrcode\GF256Poly.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\MaskUtil.cs">
+      <Link>Src\Qrcode\MaskUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\MatrixUtil.cs">
+      <Link>Src\Qrcode\MatrixUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\Mode.cs">
+      <Link>Src\Qrcode\Mode.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\QrBitmap.cs">
+      <Link>Src\Qrcode\QrBitmap.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\QRCode.cs">
+      <Link>Src\Qrcode\QRCode.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\QrcodeExtensions.cs">
+      <Link>Src\Qrcode\QrcodeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\QRCodeWriter.cs">
+      <Link>Src\Qrcode\QRCodeWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\QrRawBm.cs">
+      <Link>Src\Qrcode\QrRawBm.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\ReedSolomonEncoder.cs">
+      <Link>Src\Qrcode\ReedSolomonEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Qrcode\Version.cs">
+      <Link>Src\Qrcode\Version.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\VeriFactuEndPointPrefixes.cs">
+      <Link>Src\VeriFactuEndPointPrefixes.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\CalificacionOperacion.cs">
+      <Link>Src\Xml\Factu\Alta\CalificacionOperacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\CausaExencion.cs">
+      <Link>Src\Xml\Factu\Alta\CausaExencion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\ClaveRegimen.cs">
+      <Link>Src\Xml\Factu\Alta\ClaveRegimen.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\DetalleDesglose.cs">
+      <Link>Src\Xml\Factu\Alta\DetalleDesglose.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\EmitidaPorTercerosODestinatario.cs">
+      <Link>Src\Xml\Factu\Alta\EmitidaPorTercerosODestinatario.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\ImporteRectificacion.cs">
+      <Link>Src\Xml\Factu\Alta\ImporteRectificacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\RegistroAlta.cs">
+      <Link>Src\Xml\Factu\Alta\RegistroAlta.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\TipoFactura.cs">
+      <Link>Src\Xml\Factu\Alta\TipoFactura.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Alta\TipoRectificativa.cs">
+      <Link>Src\Xml\Factu\Alta\TipoRectificativa.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Anulacion\RegistroAnulacion.cs">
+      <Link>Src\Xml\Factu\Anulacion\RegistroAnulacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Cabecera.cs">
+      <Link>Src\Xml\Factu\Cabecera.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\CodigoPais.cs">
+      <Link>Src\Xml\Factu\CodigoPais.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\DatosControl.cs">
+      <Link>Src\Xml\Factu\DatosControl.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Encadenamiento.cs">
+      <Link>Src\Xml\Factu\Encadenamiento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Fault\detail.cs">
+      <Link>Src\Xml\Factu\Fault\detail.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Fault\Fault.cs">
+      <Link>Src\Xml\Factu\Fault\Fault.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\IDFactura.cs">
+      <Link>Src\Xml\Factu\IDFactura.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\IDOtro.cs">
+      <Link>Src\Xml\Factu\IDOtro.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\IDType.cs">
+      <Link>Src\Xml\Factu\IDType.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Impuesto.cs">
+      <Link>Src\Xml\Factu\Impuesto.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Interlocutor.cs">
+      <Link>Src\Xml\Factu\Interlocutor.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\RechazoPrevio.cs">
+      <Link>Src\Xml\Factu\RechazoPrevio.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\RegFactuSistemaFacturacion.cs">
+      <Link>Src\Xml\Factu\RegFactuSistemaFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Registro.cs">
+      <Link>Src\Xml\Factu\Registro.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\RegistroAnterior.cs">
+      <Link>Src\Xml\Factu\RegistroAnterior.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\RegistroFactura.cs">
+      <Link>Src\Xml\Factu\RegistroFactura.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\Cabecera.cs">
+      <Link>Src\Xml\Factu\Respuesta\Cabecera.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\DatosPresentacion.cs">
+      <Link>Src\Xml\Factu\Respuesta\DatosPresentacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\IDFactura.cs">
+      <Link>Src\Xml\Factu\Respuesta\IDFactura.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\Iterlocutor.cs">
+      <Link>Src\Xml\Factu\Respuesta\Iterlocutor.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\Operacion.cs">
+      <Link>Src\Xml\Factu\Respuesta\Operacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RegistroDuplicado.cs">
+      <Link>Src\Xml\Factu\Respuesta\RegistroDuplicado.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RemisionVoluntaria.cs">
+      <Link>Src\Xml\Factu\Respuesta\RemisionVoluntaria.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RespuestaLinea.cs">
+      <Link>Src\Xml\Factu\Respuesta\RespuestaLinea.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RespuestaRegFactuSistemaFacturacion.cs">
+      <Link>Src\Xml\Factu\Respuesta\RespuestaRegFactuSistemaFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\SistemaInformatico.cs">
+      <Link>Src\Xml\Factu\SistemaInformatico.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\TipoHuella.cs">
+      <Link>Src\Xml\Factu\TipoHuella.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\TipoRegistroAEAT.cs">
+      <Link>Src\Xml\Factu\TipoRegistroAEAT.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\TipoUsoSistema.cs">
+      <Link>Src\Xml\Factu\TipoUsoSistema.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Namespaces.cs">
+      <Link>Src\Xml\Namespaces.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Nif\Contribuyente.cs">
+      <Link>Src\Xml\Nif\Contribuyente.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Nif\ContribuyenteSal.cs">
+      <Link>Src\Xml\Nif\ContribuyenteSal.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Nif\VNifV2Sal.cs">
+      <Link>Src\Xml\Nif\VNifV2Sal.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Nif\VNifVEnt.cs">
+      <Link>Src\Xml\Nif\VNifVEnt.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Soap\Body.cs">
+      <Link>Src\Xml\Soap\Body.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Soap\Envelope.cs">
+      <Link>Src\Xml\Soap\Envelope.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Soap\Header.cs">
+      <Link>Src\Xml\Soap\Header.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\XmlParser.cs">
+      <Link>Src\Xml\XmlParser.cs</Link>
+    </Compile>
+    <Compile Include="Doc\NamespaceDoc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo-heart.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Doc\AnexoAlta_VERIFACTU.xlsx" />
+    <None Include="Doc\AnexoAnulacion_VERIFACTU.xlsx" />
+    <None Include="Doc\Help\VeriFactu.chm" />
+    <None Include="Doc\Legal\Declaracion Responsable v1.0.4-alpha.docx" />
+    <None Include="Doc\Legal\Declaracion Responsable v1.0.4-alpha.pdf" />
+    <None Include="Doc\Seminario_EEDD_Novedades_SII_SIF_25_octubre_2022.pdf" />
+    <None Include="Doc\VERIFACTU_ServicioWeb.pdf" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
