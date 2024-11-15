@@ -81,6 +81,7 @@ namespace VeriFactu.Blockchain
         {
 
             LoadBlockchainsFromDisk();
+            Initialized = true;
 
         }
 
@@ -373,6 +374,16 @@ namespace VeriFactu.Blockchain
         }
 
         #endregion
+
+        #region Propiedades Públicas Estáticas
+
+        /// <summary>
+        /// Indica si el sistema de cadena de bloques está inicializado.
+        /// </summary>
+        public static bool Initialized { get; private set; }
+
+        #endregion
+
 
         #region Propiedades Públicas de Instancia
 

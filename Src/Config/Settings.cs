@@ -84,13 +84,19 @@ namespace VeriFactu.Config
         /// <summary>
         /// Ruta al directorio de configuración.
         /// </summary>
-        internal static string Path = System.Environment.GetFolderPath(
+        internal static string Path = Environment.GetFolderPath(
             Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
 
         /// <summary>
         /// Nombre del fichero de configuración.
         /// </summary>
-        internal static string FileName = "VeriFactu.xml";
+        internal static string FileName = "cnf.xml";
+
+        /// <summary>
+        /// Indicador de si el sistema de cadena de bloques está
+        /// inicializado.
+        /// </summary>
+        internal static bool BlockchainInitialized;
 
         #endregion
 
@@ -108,6 +114,8 @@ namespace VeriFactu.Config
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
 
             Get();
+
+            BlockchainInitialized = Blockchain.Blockchain.Initialized;
 
         }
 
