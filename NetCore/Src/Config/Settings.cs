@@ -90,7 +90,7 @@ namespace VeriFactu.Config
         /// <summary>
         /// Nombre del fichero de configuración.
         /// </summary>
-        internal static string FileName = "cnf.xml";
+        internal static string FileName = "Settings.xml";
 
         /// <summary>
         /// Indicador de si el sistema de cadena de bloques está
