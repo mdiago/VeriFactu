@@ -38,9 +38,6 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 `dotnet add package Verifactu`
 
-
-## Establecer en la configuración los valores para el uso del certificado
-
 <br>
 <br>
  
@@ -50,6 +47,9 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 <br>
 <br>
+
+## Establecer en la configuración los valores para el uso del certificado
+
 
 | Propiedad  | Descripción |
 | ------------- | ------------- |
