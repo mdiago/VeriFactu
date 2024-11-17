@@ -34,7 +34,7 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 ![image](https://github.com/user-attachments/assets/2f872bc8-51f9-49c3-a8dc-3551d56adc20)
 
-### Instalar con dotnet CLI
+### Instalar el paquete con dotnet CLI
 
 `dotnet add package Verifactu`
 
