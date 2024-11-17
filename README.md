@@ -22,6 +22,17 @@ Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
+## Quickstart
+
+### Instalar el paquete con el administrador de paquetes NuGet
+
+![image](https://github.com/user-attachments/assets/2f872bc8-51f9-49c3-a8dc-3551d56adc20)
+
+### Instalar con dotnet CLI
+
+`dotnet add package Verifactu`
+
+
 ## Establecer en la configuración los valores para el uso del certificado
 
  
