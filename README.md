@@ -9,13 +9,13 @@
 La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/NetFramework/Doc/Legal/Declaracion%20Responsable%20v1.0.9-beta.pdf)).
 <br>
 <br>
-
-
 > ### La funcionalidad de Verifactu está disponible ( :wink: gratis) también en línea:
 >
 > :globe_with_meridians: [Acceso al API REST](https://facturae.irenesolutions.com/verifactu/go)
 > 
 > Con el API REST disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales.
+<br>
+<br>
 
 Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente cualquier tipo de colaboración o sugerencia. 
 
