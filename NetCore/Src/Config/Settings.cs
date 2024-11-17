@@ -224,7 +224,13 @@ namespace VeriFactu.Config
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Versión de la aplicación.
+        /// <para>Identificación de la versión actual del esquema o
+        /// estructura de información utilizada para la generación y
+        /// conservación / remisión de los registros de facturación.
+        /// Este campo forma parte del detalle de las circunstancias
+        /// de generación de los registros de facturación.</para>
+        /// <para>Alfanumérico(3) L15:</para>
+        /// <para>1.0: Versión actual (1.0) del esquema utilizado </para>
         /// </summary>
         [XmlElement("IDVersion")]
         public string IDVersion { get; set; }
@@ -246,7 +252,7 @@ namespace VeriFactu.Config
         public string OutboxPath { get; set; }
 
         /// <summary>
-        /// Ruta al directorio que actuará almacenamiento
+        /// Ruta al directorio que actuará como almacén
         /// de las distintas cadenas de bloques por emisor.
         /// </summary>
         [XmlElement("BlockchainPath")]
@@ -284,6 +290,7 @@ namespace VeriFactu.Config
 
         /// <summary>
         /// Ruta al archivo del certificado a utilizar.
+        /// Sólo se utiliza en los certificados cargados desde el sistema de archivos. 
         /// </summary>
         [XmlElement("CertificatePath")]
         public string CertificatePath { get; set; }
@@ -298,19 +305,21 @@ namespace VeriFactu.Config
         public string CertificatePassword { get; set; }
 
         /// <summary>
-        /// EndPoint del web service de la AEAT.
+        /// EndPoint del web service de la AEAT para envío registros alta y anulación.
         /// </summary>
         [XmlElement("VeriFactuEndPointPrefix")]
         public string VeriFactuEndPointPrefix { get; set; }
 
         /// <summary>
-        /// EndPoint del web service de la AEAT de validación.
+        /// EndPoint del web service de la AEAT de validación de Verifactu.
         /// </summary>
         [XmlElement("VeriFactuEndPointValidatePrefix")]
         public string VeriFactuEndPointValidatePrefix { get; set; }
 
         /// <summary>
-        /// Algoritmo para el cálculo de hash.
+        /// Algoritmo a utilizar para el cálculo de hash.
+        /// Clave que identifica Tipo de hash aplicado para
+        /// obtener la huella. Alfanumérico(2) L12.
         /// </summary>
         [XmlElement("VeriFactuHashAlgorithm")]
         public TipoHuella VeriFactuHashAlgorithm { get; set; }
@@ -328,15 +337,14 @@ namespace VeriFactu.Config
         public SistemaInformatico SistemaInformatico { get; set; }
 
         /// <summary>
-        /// Salta la validación en línea de NIF con
-        /// la AEAT.
+        /// Indica si salta la validación en línea de NIF con la AEAT.
         /// </summary>
         [XmlElement("SkipNifAeatValidation")]
         public bool SkipNifAeatValidation { get; set; }
 
         /// <summary>
-        /// Salta la validación en línea de en el censo VIES
-        /// de los VAT numbers intracomunitarios.
+        /// Indica si salta la validación en línea de en el
+        /// censo VIES de los VAT numbers intracomunitarios.
         /// </summary>
         [XmlElement("SkipViesVatNumberValidation")]
         public bool SkipViesVatNumberValidation { get; set; }

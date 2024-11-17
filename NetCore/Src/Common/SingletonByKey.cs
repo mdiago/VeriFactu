@@ -47,6 +47,8 @@ namespace VeriFactu.Common
     /// Representa una clase en la que sólo puede existir
     /// una instancia por clave o identificador asignado.
     /// </summary>
+    /// <typeparam name="T">Tipo de la clase a desplegar como
+    /// de instancia única por clave (Blockchain o SellerQeue).</typeparam>
     public class SingletonByKey<T>
     {
 
