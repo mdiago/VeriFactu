@@ -140,7 +140,6 @@ var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814"
 
 // Creamos la cancelación de la factura
 var invoiceCancellation = new InvoiceCancellation(invoice);
-var z = invoiceCancellation.InvoiceEntryFilePath;
 
 // Guardamos la cancelación factura
 invoiceCancellation.Save();
