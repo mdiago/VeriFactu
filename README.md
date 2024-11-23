@@ -469,15 +469,15 @@ var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new 
     }
 };
 
-// Creamos el documento de alta
+// Creamos el documento de anulación
 Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
-var invoiceCencellation = new InvoiceCancellation(invoice);
+var invoiceCancellation = new InvoiceCancellation(invoice);
 
 // Añadimos el documentos a la cola de procesamiento:
 // En la cola se irán realizando los envíos cuando
 // los documentos en espera sean 1.000 o cuando el
 // tiempo de espera haya finalizado
-InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCencellation);
+InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCancellation);
 
 ```
 
