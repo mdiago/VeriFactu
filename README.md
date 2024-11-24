@@ -4,9 +4,12 @@
 
 ![workflow](https://github.com/mdiago/VeriFactu/actions/workflows/Verifactu.yml/badge.svg)
 
-:receipt: ¡Automatiza el envío de facturas con la AEAT de forma fácil y eficiente utilizando VeriFactu!
+## :receipt: ¡Automatiza el envío de facturas con la AEAT de forma fácil y eficiente utilizando VeriFactu!
+<br>
 
-La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/NetFramework/Doc/Legal/Declaracion%20Responsable%20v1.0.9-beta.pdf)).
+La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/NetFramework/Doc/Legal/Declaracion%20Responsable%20v1.0.10-beta.pdf)).
+
+<br>
 
 > ### La funcionalidad de Verifactu está disponible ( :wink: gratis) también en línea:
 >
@@ -14,23 +17,38 @@ La finalidad de esta biblioteca es la generación, conservación y envío de reg
 > 
 > Con el API REST disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales.
 
+<br>
+<br>
+
 Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente cualquier tipo de colaboración o sugerencia. 
 
-En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas...
+En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas... y si queremos profundizar más siempre podemos recurrier a la wiki del proyecto.
 
 Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
-## Establecer en la configuración los valores para el uso del certificado
+## Quickstart
 
+### Instalar el paquete con el administrador de paquetes NuGet
+
+![image](https://github.com/user-attachments/assets/2f872bc8-51f9-49c3-a8dc-3551d56adc20)
+
+### Instalar el paquete con dotnet CLI
+
+`dotnet add package Verifactu`
+
+<br>
+<br>
  
 > [!IMPORTANT]
 > Antes de comenzar a probar los envíos a la AEAT hay que configurar correctamente el certificado con el que vamos a trabajar.
 > Podemos cargar el certificado desde un archivo .pfx / .p12 guardado en el disco, o (en Windows) cargar un certificado del  almacén de certificados de windows. La configuración del sistema esta accesible mediante la propiedad estática 'Current' del objeto `Settings'. En la siguiente tabla se describen los valores de configuración relacionados con el   certificado a utilizar:
 
+<br>
+<br>
 
-
+## Establecer en la configuración los valores para el uso del certificado
 
 
 | Propiedad  | Descripción |
@@ -129,7 +147,6 @@ var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814"
 
 // Creamos la cancelación de la factura
 var invoiceCancellation = new InvoiceCancellation(invoice);
-var z = invoiceCancellation.InvoiceEntryFilePath;
 
 // Guardamos la cancelación factura
 invoiceCancellation.Save();
@@ -452,15 +469,15 @@ var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new 
     }
 };
 
-// Creamos el documento de alta
+// Creamos el documento de anulación
 Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
-var invoiceCencellation = new InvoiceCancellation(invoice);
+var invoiceCancellation = new InvoiceCancellation(invoice);
 
 // Añadimos el documentos a la cola de procesamiento:
 // En la cola se irán realizando los envíos cuando
 // los documentos en espera sean 1.000 o cuando el
 // tiempo de espera haya finalizado
-InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCencellation);
+InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCancellation);
 
 ```
 
