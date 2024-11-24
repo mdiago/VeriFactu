@@ -437,8 +437,9 @@ namespace VeriFactu.Blockchain
         public string BlockchainVarFileName => $"{BlockchainPath}_{SellerID}.csv";
 
         /// <summary>
-        /// Archivo que almacena una porción del Blockchain correspondiente
-        /// a los movimientos de un mes.
+        /// Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
+        /// a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
+        /// con el nombre BlockchainDataFileName antes del registro del último movimiento.
         /// </summary>
         public string BlockchainDataPreviousFileName => $"{BlockchainPath}{CurrentTimeStamp:yyyyMM}.PREV.csv";
 
