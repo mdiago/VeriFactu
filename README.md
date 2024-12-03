@@ -97,6 +97,7 @@ Settings.Save()
 
 Para empezar, veamos un ejemplo sencillo de registro de una factura; El registro implica el almacenamiento de la factura en el sistema y el envío del documento a la AEAT:
 
+### C#
 ```C#
 // Creamos una instacia de la clase factura
 var invoice = new Invoice("GIT-EJ-0002", new DateTime(2024, 11, 15), "B72877814")
@@ -148,6 +149,59 @@ else
 
 // Consultamos el resultado devuelto por la AEAT
 Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}");
+
+```
+
+### VB
+```VB
+
+' Creamos una instacia de la clase factura
+Dim invoice = New Invoice("GIT-EJ-0052", New DateTime(2024, 12, 3), "B72877814")
+ With invoice
+     .InvoiceType = TipoFactura.F1
+     .SellerName = "WEFINZ GANDIA SL"
+     .BuyerID = "B44531218"
+     .BuyerName = "WEFINZ SOLUTIONS SL"
+     .Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE"
+     .TaxItems = New List(Of TaxItem) From {
+         New TaxItem() With
+         {
+             .TaxRate = 4,
+             .TaxBase = 10,
+             .TaxAmount = 0.4
+         },
+         New TaxItem() With
+         {
+             .TaxRate = 21,
+             .TaxBase = 100,
+             .TaxAmount = 21
+         }
+     }
+ End With
+
+ ' Creamos la entrada de la factura
+ Dim invoiceEntry As InvoiceEntry = New InvoiceEntry(invoice)
+
+ ' Guardamos la factura
+ invoiceEntry.Save()
+
+ ' Consultamos el estado
+ Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Status}")
+
+ If (invoiceEntry.Status = "Correcto") Then
+
+     ' Consultamos el CSV
+     Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.CSV}")
+
+ Else
+
+     ' Consultamos el error
+     Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.ErrorCode}: {invoiceEntry.ErrorDescription}")
+
+ End If
+
+ ' Consultamos el resultado devuelto por la AEAT
+ Debug.Print($"Respuesta de la AEAT:\n{invoiceEntry.Response}")
 
 ```
 ## Anulación de facturas
