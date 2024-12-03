@@ -37,50 +37,67 @@
     address: info@irenesolutions.com
  */
 
+using VeriFactu.Net.Rest.Json.Parser;
+using VeriFactu.Net.Rest.Json.Parser.Lexer;
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Core.Net.Rest.Json.Parser
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Deserializador JSON.
     /// </summary>
-    public enum CausaExencion
+    public class JsonParser 
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Variables Privadas de Instacia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Analizador léxico.
         /// </summary>
-        E1,
+        JsonLexer _JsonLexer;
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Lector de fragmentos utilizado
+        /// para compener el objeto resultado.
         /// </summary>
-        E2,
+        JsonParserReader _JsonParserReader;
+
+        #endregion
+
+        #region Construtores de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 22.
+        /// Constructor.
         /// </summary>
-        E3,
+        /// <param name="jsonText">Texto JSON.</param>
+        public JsonParser(string jsonText)
+        {
+
+            _JsonLexer = new JsonLexer(jsonText);
+            _JsonParserReader = new JsonParserReader(_JsonLexer);
+
+            _JsonParserReader.Read();
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Exenta por los artículos 23 y 24.
+        /// Devuelve el resultado de la deserialización
+        /// de la cadena JSON.
         /// </summary>
-        E4,
+        /// <returns>resultado de la deserialización
+        /// de la cadena JSON.</returns>
+        public dynamic GetResult() 
+        {
 
-        /// <summary>
-        /// Exenta por el artículo 25.
-        /// </summary>
-        E5,
+            return _JsonParserReader.GetResult();
 
-        /// <summary>
-        /// Exenta por otros.
-        /// </summary>
-        E6
+        }
+
+        #endregion
 
     }
 

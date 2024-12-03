@@ -37,50 +37,91 @@
     address: info@irenesolutions.com
  */
 
+using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Fragmento obtenido del análisis léxico de una cadena
+    /// JSON que representa un valor de propiedad numérica.
     /// </summary>
-    public enum CausaExencion
+    internal class JsonNumber : JsonToken
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Propiedades Privadas de Instacia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Longitud de la cadena de texto.
         /// </summary>
-        E1,
+        internal override int Length
+        {
+
+            get
+            {
+
+                var curCharIndex = Start;
+                var curChar = JsonLexer.JsonText[++curCharIndex];
+
+                while (curCharIndex < JsonLexer.JsonText.Length && Regex.IsMatch($"{curChar}", @"[0-9.]"))
+                    curChar = JsonLexer.JsonText[++curCharIndex];
+
+                return curCharIndex - Start;
+
+            }
+
+        }
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Valor de la cadena de texto.
         /// </summary>
-        E2,
+        internal override string Value
+        {
+
+            get
+            {
+
+                return JsonLexer.JsonText.Substring(Start, Length);
+
+            }
+
+        }
+
+        #endregion
+
+        #region Construtores de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 22.
+        /// Constructor.
         /// </summary>
-        E3,
+        /// <param name="jsonLexer">Analizador léxico al que
+        /// pertenece el fragmento de texto.</param>
+        /// <param name="start">Posición del inicio del
+        /// fragmento de texto dentro de la cadena completa JSON.</param>
+        internal JsonNumber(JsonLexer jsonLexer, int start) : base(jsonLexer, start) 
+        { 
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
 
         /// <summary>
-        /// Exenta por los artículos 23 y 24.
+        /// Convierte el valor del fragmento de texto
+        /// en el tipo al que se interpreta que pertenece.
         /// </summary>
-        E4,
+        /// <returns>Valor del fragmento de texto
+        /// en el tipo al que se interpreta que pertenece.</returns>
+        internal override object Covert()
+        {
 
-        /// <summary>
-        /// Exenta por el artículo 25.
-        /// </summary>
-        E5,
+            return Convert.ToDecimal(Value, new NumberFormatInfo() { NumberDecimalSeparator = "." });
 
-        /// <summary>
-        /// Exenta por otros.
-        /// </summary>
-        E6
+        }
+
+        #endregion
 
     }
 

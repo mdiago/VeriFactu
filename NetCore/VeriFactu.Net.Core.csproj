@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
     <Title>VeriFactu</Title>
     <Authors>Manuel Diago</Authors>
     <Company>Irene Solutions SL</Company>

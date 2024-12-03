@@ -37,50 +37,82 @@
     address: info@irenesolutions.com
  */
 
+using System;
 
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Core.Net.Rest.Json
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Esta clase se define para asociar a los objetos y a sus propiedades los datos necesarios
+    /// para la serialización de datos. La serialización de datos se encarga de convertir los 
+    /// objetos definidos mediante clases en cadenas formato JSON.
     /// </summary>
-    public enum CausaExencion
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Class)]
+    public class JsonAttribute : Attribute
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Private Member Variables
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Excluir si el valor del tipo
+        /// es el valor por defecto.
         /// </summary>
-        E1,
+        private bool _ExcludeOnDefault;
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Nombre a asignar a la propiedad en el 
+        /// proceso de serialización.
         /// </summary>
-        E2,
+        private string _Name;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
-        /// Exenta por el artículo 22.
+        /// Construye una nueva instancia de la clase JsonAttribute.
         /// </summary>
-        E3,
+        public JsonAttribute()
+        {
+        }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
-        /// Exenta por los artículos 23 y 24.
+        /// Indica que la serialización no se debe realizar si la propiedad
+        /// tiene el valor por defecto.
         /// </summary>
-        E4,
+        public virtual bool ExcludeOnDefault
+        {
+            get
+            {
+                return _ExcludeOnDefault;
+            }
+            set
+            {
+                _ExcludeOnDefault = value;
+            }
+        }
 
         /// <summary>
-        /// Exenta por el artículo 25.
+        /// Nombre a asignar a la propiedad en el 
+        /// proceso de serialización.
         /// </summary>
-        E5,
+        public virtual string Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                _Name = value;
+            }
+        }
 
-        /// <summary>
-        /// Exenta por otros.
-        /// </summary>
-        E6
+        #endregion
 
     }
 

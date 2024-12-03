@@ -37,6 +37,8 @@
     address: info@irenesolutions.com
  */
 
+using VeriFactu.Net.Core.Net.Rest.Json;
+using VeriFactu.Net.Rest.Json;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 
@@ -46,7 +48,7 @@ namespace VeriFactu.Business
     /// <summary>
     /// Representa una línea de impuesto.
     /// </summary>
-    public class TaxItem
+    public class TaxItem : JsonSerializable
     {
 
         #region Propiedades Públicas de Instancia
@@ -55,7 +57,8 @@ namespace VeriFactu.Business
         /// Indicador que determina si la línea de impuestos
         /// contiene información de impuestos repecutidos 
         /// (IVA, IGIC, IPSI...) o de retenciones.
-        /// </summary>
+        /// </summary>       
+        [Json(ExcludeOnDefault = true)]
         public TaxClass TaxClass { get; set; }
 
         /// <summary>
@@ -69,6 +72,7 @@ namespace VeriFactu.Business
         /// <para>03: Impuesto General Indirecto Canario (IGIC)</para>
         /// <para>05: Otros</para>
         /// </summary>
+        [Json(ExcludeOnDefault = true)]
         public Impuesto Tax { get; set; }
 
         /// <summary>
@@ -85,6 +89,7 @@ namespace VeriFactu.Business
         /// <para>Campo que especifica la causa de exención.</para>
         /// <para>Alfanumérico(2). L10.</para>
         /// </summary>
+        [Json(ExcludeOnDefault = true)]
         public CausaExencion TaxException { get; set; }
 
         /// <summary>

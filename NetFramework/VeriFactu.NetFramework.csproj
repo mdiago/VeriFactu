@@ -273,6 +273,90 @@
     <Compile Include="..\NetCore\Src\DataStore\Seller.cs">
       <Link>Src\DataStore\Seller.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Api.cs">
+      <Link>Src\Net\Rest\Api.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\ApiClient.cs">
+      <Link>Src\Net\Rest\ApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\JsonAttribute.cs">
+      <Link>Src\Net\Rest\Json\JsonAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\JsonSerializable.cs">
+      <Link>Src\Net\Rest\Json\JsonSerializable.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\JsonParser.cs">
+      <Link>Src\Net\Rest\Json\Parser\JsonParser.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\JsonParserReader.cs">
+      <Link>Src\Net\Rest\Json\Parser\JsonParserReader.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\JsonLexer.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\JsonLexer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonColon.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonColon.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonComma.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonComma.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonFalse.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonFalse.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonLeftBrace.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonLeftBrace.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonLeftBracket.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonLeftBracket.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonNull.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonNull.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonNumber.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonNumber.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonRightBrace.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonRightBrace.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonRightBracket.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonRightBracket.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonString.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonString.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonToken.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonToken.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonTrue.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonTrue.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\IJsonSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\IJsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonByteArraySerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonByteArraySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonDateTimeSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonDateTimeSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonDecimalSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonDecimalSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonDefaulSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonDefaulSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonEnumSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonEnumSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonIntSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonIntSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonStringSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonStringSerializer.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Net\Wsd.cs">
       <Link>Src\Net\Wsd.cs</Link>
     </Compile>

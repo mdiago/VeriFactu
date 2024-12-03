@@ -37,50 +37,50 @@
     address: info@irenesolutions.com
  */
 
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Fragmento obtenido del análisis léxico de una cadena
+    /// JSON que representa un valor de propiedad booleana de
+    /// false.
     /// </summary>
-    public enum CausaExencion
+    internal class JsonFalse : JsonToken
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Construtores de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Constructor.
         /// </summary>
-        E1,
+        /// <param name="jsonLexer">Analizador léxico.</param>
+        /// <param name="start">Posición del inicio del
+        /// fragmento de texto dentro de la cadena completa JSON.</param>
+        internal JsonFalse(JsonLexer jsonLexer, int start) : base(jsonLexer, start) 
+        { 
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Convierte el valor del fragmento de texto
+        /// en el tipo al que se interpreta que pertenece.
         /// </summary>
-        E2,
+        /// <returns>Valor del fragmento de texto
+        /// en el tipo al que se interpreta que pertenece.</returns>
+        internal override object Covert()
+        {
 
-        /// <summary>
-        /// Exenta por el artículo 22.
-        /// </summary>
-        E3,
+            if (Value.Length == 0)
+                return null;
 
-        /// <summary>
-        /// Exenta por los artículos 23 y 24.
-        /// </summary>
-        E4,
+            return false;
 
-        /// <summary>
-        /// Exenta por el artículo 25.
-        /// </summary>
-        E5,
+        }
 
-        /// <summary>
-        /// Exenta por otros.
-        /// </summary>
-        E6
+        #endregion
 
     }
 

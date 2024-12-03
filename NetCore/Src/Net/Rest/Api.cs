@@ -37,50 +37,50 @@
     address: info@irenesolutions.com
  */
 
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Rest
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Representa el API REST de Irene Solutions para Verifactu.
     /// </summary>
-    public enum CausaExencion
+    public class Api
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Endpoint creación de factruas.
         /// </summary>
-        E1,
+        public string EndPointCreate { get; set; }
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Endpoint anulación de factruas.
         /// </summary>
-        E2,
+        public string EndPointCancel { get; set; }
 
         /// <summary>
-        /// Exenta por el artículo 22.
+        /// Endpoint generación código QR.
         /// </summary>
-        E3,
+        public string EndPointGetQrCode { get; set; }
 
         /// <summary>
-        /// Exenta por los artículos 23 y 24.
+        /// Endpoint consulta emisores.
         /// </summary>
-        E4,
+        public string EndPointGetSellers { get; set; }
 
         /// <summary>
-        /// Exenta por el artículo 25.
+        /// Endpoint consulta registros envíados.
         /// </summary>
-        E5,
+        public string EndPointGetRecords { get; set; }
 
         /// <summary>
-        /// Exenta por otros.
+        /// Clave de acceso al API REST para Verifactu de
+        /// Irene Solutions. Puede conseguir su clave en
+        /// https://facturae.irenesolutions.com/verifactu/go
         /// </summary>
-        E6
+        public string ServiceKey { get; set; }
+
+        #endregion
 
     }
 

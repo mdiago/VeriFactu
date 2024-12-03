@@ -304,6 +304,94 @@ namespace VeriFactu.Net
 
 }
 
+namespace VeriFactu.Net.Rest
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para las comunicaciones mediante el API
+    /// REST para Verifactu de Irene Solutions.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Net.Rest.Json
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la serialización JSON.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Net.Rest.Json.Parser
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la serialización JSON.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Net.Rest.Json.Parser.Lexer
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la serialización JSON en cuanto a 
+    /// analisis léxico.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la serialización JSON en cuanto a la 
+    /// descomposición en fragmentos de texto procedentes
+    /// de un analisis léxico.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Net.Rest.Json.Serializer
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la serialización JSON.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
 namespace VeriFactu.Qrcode
 {
 

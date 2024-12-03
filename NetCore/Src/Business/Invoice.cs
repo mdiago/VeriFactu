@@ -41,6 +41,8 @@ using System;
 using System.Collections.Generic;
 using VeriFactu.Business.Validation.NIF.TaxId;
 using VeriFactu.Config;
+using VeriFactu.Net.Core.Net.Rest.Json;
+using VeriFactu.Net.Rest.Json;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
@@ -52,7 +54,7 @@ namespace VeriFactu.Business
     /// <summary>
     /// Representa un factura en el sistema VeriFactu.
     /// </summary>
-    public class Invoice
+    public class Invoice : JsonSerializable
     {
 
         #region Variables Privadas de Instancia
@@ -191,7 +193,7 @@ namespace VeriFactu.Business
             catch (Exception ex) 
             {
 
-                throw (ex);
+                throw;
 
             }
 
@@ -259,6 +261,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Nombre del vendedor.
         /// </summary>        
+        [Json(Name = "CompanyName")]
         public string SellerName { get; set; }
 
         /// <summary>
@@ -267,11 +270,13 @@ namespace VeriFactu.Business
         /// En caso de no existir, se puede utilizar el número DUNS 
         /// o cualquier otro identificador acordado.
         /// </summary>        
+        [Json(Name = "RelatedPartyID")]
         public string BuyerID { get; set; }
 
         /// <summary>
         /// Nombre del comprador.
         /// </summary>        
+        [Json(Name = "RelatedPartyName")]
         public string BuyerName { get; set; }
 
         /// <summary>
@@ -285,6 +290,7 @@ namespace VeriFactu.Business
         /// Clave para establecer el tipo de identificación
         /// en el pais de residencia. L7.
         /// </summary>        
+        [Json(ExcludeOnDefault = true)]
         public IDType BuyerIDType { get; set; }
 
         /// <summary>

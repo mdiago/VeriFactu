@@ -43,6 +43,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 using VeriFactu.DataStore;
+using VeriFactu.Net.Rest;
 using VeriFactu.Xml.Factu;
 
 namespace VeriFactu.Config
@@ -194,6 +195,15 @@ namespace VeriFactu.Config
                     TipoUsoPosibleMultiOT = "S",
                     IndicadorMultiplesOT = "S"
                 },
+                Api = new Api() 
+                {
+                    EndPointCreate = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/Create",
+                    EndPointCancel = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/Cancel",
+                    EndPointGetQrCode = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetQrCode",
+                    EndPointGetSellers = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetSellers",
+                    EndPointGetRecords = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetFilteredList",
+                    ServiceKey = "1234"
+                },
                 SkipNifAeatValidation = true,
                 SkipViesVatNumberValidation = true,
                 LoggingEnabled = false
@@ -337,6 +347,12 @@ namespace VeriFactu.Config
         /// </summary>
         [XmlElement("SistemaInformatico")]
         public SistemaInformatico SistemaInformatico { get; set; }
+
+        /// <summary>
+        /// Datos del API REST para Verifactu de Irene Solutions.
+        /// </summary>
+        [XmlElement("Api")] 
+        public Api Api { get; set; }
 
         /// <summary>
         /// Indica si salta la validación en línea de NIF con la AEAT.

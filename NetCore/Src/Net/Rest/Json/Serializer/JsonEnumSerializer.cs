@@ -37,51 +37,54 @@
     address: info@irenesolutions.com
  */
 
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Rest.Json.Serializer
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Serializador para enumeraciones.
     /// </summary>
-    public enum CausaExencion
+    internal class JsonEnumSerializer : IJsonSerializer
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Variables Privadas de Instancia
+
+        string _Value = null;
+
+        #endregion
+
+
+        #region Construtores de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Valor a aplicar en la serialización.
         /// </summary>
-        E1,
+        /// <param name="value">Valor a aplicar en la serialización.</param>
+        public JsonEnumSerializer(string value = null) 
+        {
+
+            _Value = value;
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Devuelve la representación en JSON
+        /// de la propiedad facilitada para la
+        /// instancia facilitada.
         /// </summary>
-        E2,
+        /// <param name="value">Valor a serializar.</param>
+        /// <returns>Representación JSON de la propiedad.</returns>
+        public string ToJson(object value)
+        {
 
-        /// <summary>
-        /// Exenta por el artículo 22.
-        /// </summary>
-        E3,
+            return _Value == null ? $"\"{value}\"" : $"\"{_Value}\"";
 
-        /// <summary>
-        /// Exenta por los artículos 23 y 24.
-        /// </summary>
-        E4,
+        }
 
-        /// <summary>
-        /// Exenta por el artículo 25.
-        /// </summary>
-        E5,
-
-        /// <summary>
-        /// Exenta por otros.
-        /// </summary>
-        E6
+        #endregion
 
     }
-
 }

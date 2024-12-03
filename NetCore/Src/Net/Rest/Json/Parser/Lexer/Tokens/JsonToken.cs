@@ -37,50 +37,100 @@
     address: info@irenesolutions.com
  */
 
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Representa un fragmento de texto resultado
+    /// del análisis léxico de la cadena JSON.
     /// </summary>
-    public enum CausaExencion
+    internal class JsonToken
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Propiedades Privadas de Instacia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Analizador léxico al cual pertenece
+        /// el fragmento de texto obtenido.
         /// </summary>
-        E1,
+        internal JsonLexer JsonLexer { get; private set; }
 
         /// <summary>
-        /// Exenta por el artículo 21.
+        /// Posición del inicio del
+        /// fragmento de texto dentro de la cadena completa JSON.
         /// </summary>
-        E2,
+        internal int Start { get; private set; }
 
         /// <summary>
-        /// Exenta por el artículo 22.
+        /// Longitud de la cadena de texto.
         /// </summary>
-        E3,
+        internal virtual int Length => 1;
 
         /// <summary>
-        /// Exenta por los artículos 23 y 24.
+        /// Valor de la cadena de texto.
         /// </summary>
-        E4,
+        internal virtual string Value
+        {
+
+            get
+            {
+
+                return $"{JsonLexer.JsonText[Start]}";
+
+            }
+
+        }
+
+        #endregion
+
+        #region Construtores de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 25.
+        /// Constructor.
         /// </summary>
-        E5,
+        /// <param name="jsonLexer">Analizador léxico al que
+        /// pertenece el fragmento de texto.</param>
+        /// <param name="start">Posición del inicio del
+        /// fragmento de texto dentro de la cadena completa JSON.</param>
+        internal JsonToken(JsonLexer jsonLexer, int start)
+        {
+
+            JsonLexer = jsonLexer;
+            Start = start;
+
+        }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
 
         /// <summary>
-        /// Exenta por otros.
+        /// Convierte el valor del fragmento de texto
+        /// en el tipo al que se interpreta que pertenece.
         /// </summary>
-        E6
+        /// <returns>Valor del fragmento de texto
+        /// en el tipo al que se interpreta que pertenece.</returns>
+        internal virtual object Covert()
+        {
+
+            return Value;
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns>Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Value}";
+        }
+
+        #endregion
 
     }
 

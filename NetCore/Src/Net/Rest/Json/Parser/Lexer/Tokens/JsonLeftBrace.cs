@@ -37,50 +37,29 @@
     address: info@irenesolutions.com
  */
 
-
-namespace VeriFactu.Xml.Factu.Alta
+namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 {
 
     /// <summary>
-    /// Causas de exención. L10.
+    /// Fragmento obtenido del análisis léxico de una cadena
+    /// JSON que representa una apertura de objeto '{'.
     /// </summary>
-    public enum CausaExencion
+    internal class JsonLeftBrace : JsonToken
     {
 
-        /// <summary>
-        /// No asignada causa exención.
-        /// </summary>
-        NA,
+        #region Construtores de Instancia
 
         /// <summary>
-        /// Exenta por el artículo 20.
+        /// Constructor.
         /// </summary>
-        E1,
+        /// <param name="jsonLexer">Analizador léxico.</param>
+        /// <param name="start">Posición del inicio del
+        /// fragmento de texto dentro de la cadena completa JSON.</param>
+        internal JsonLeftBrace(JsonLexer jsonLexer, int start) : base(jsonLexer, start) 
+        { 
+        }
 
-        /// <summary>
-        /// Exenta por el artículo 21.
-        /// </summary>
-        E2,
-
-        /// <summary>
-        /// Exenta por el artículo 22.
-        /// </summary>
-        E3,
-
-        /// <summary>
-        /// Exenta por los artículos 23 y 24.
-        /// </summary>
-        E4,
-
-        /// <summary>
-        /// Exenta por el artículo 25.
-        /// </summary>
-        E5,
-
-        /// <summary>
-        /// Exenta por otros.
-        /// </summary>
-        E6
+        #endregion
 
     }
 
