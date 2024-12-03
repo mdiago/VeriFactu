@@ -208,6 +208,7 @@ Dim invoice = New Invoice("GIT-EJ-0052", New DateTime(2024, 12, 3), "B72877814")
 
 Seguimos con la anulación de una factura previamente remitida:
 
+### C#
 ```C#
 
 // Creamos una instacia de la clase factura con los datos del documento a anular
@@ -224,6 +225,25 @@ invoiceCancellation.Save();
 
 // Consultamos el resultado devuelto por la AEAT
 Debug.Print($"Respuesta de la AEAT:\n{invoiceCancellation.Response}");
+
+```
+### VB
+```VB
+
+ ' Creamos una instacia de la clase factura
+ Dim invoice = New Invoice("GIT-EJ-0052", New DateTime(2024, 12, 3), "B72877814")
+ With invoice
+     .SellerName = "WEFINZ GANDIA SL"
+ End With
+
+ ' Creamos la cancelación de la factura
+ Dim invoiceCancellation As InvoiceCancellation = New InvoiceCancellation(invoice)
+
+ ' Guardamos la cancelación factura
+ invoiceCancellation.Save()
+
+ ' Consultamos el resultado devuelto por la AEAT
+ Debug.Print($"Respuesta de la AEAT:\n{invoiceCancellation.Response}")
 
 ```
 
