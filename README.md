@@ -488,43 +488,43 @@ Settings.Current.SkipViesVatNumberValidation = true;
 for (int i = 1; i < 1006; i++)
 {
 
-// Creamos una instacia de la clase factura
-var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new DateTime(2024, 10, 29), "B10795649")
-{
-    InvoiceType = TipoFactura.F1,
-    SellerName = "KIVU SOLUTIONS SL",
-    BuyerID = "B44531218",
-    BuyerName = "WEFINZ SOLUTIONS SL",
-    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
-    TaxItems = new List<TaxItem>() {
-        new TaxItem()
-        {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
-            TaxRate = 4,
-            TaxBase = 10,
-            TaxAmount = 0.4m
-        },
-        new TaxItem()
-        {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
-            TaxRate = 21,
-            TaxBase = 100,
-            TaxAmount = 21
+    // Creamos una instacia de la clase factura
+    var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new DateTime(2024, 10, 29), "B10795649")
+    {
+        InvoiceType = TipoFactura.F1,
+        SellerName = "KIVU SOLUTIONS SL",
+        BuyerID = "B44531218",
+        BuyerName = "WEFINZ SOLUTIONS SL",
+        Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+        TaxItems = new List<TaxItem>() {
+            new TaxItem()
+            {
+                TaxScheme = ClaveRegimen.RegimenGeneral,
+                TaxType = CalificacionOperacion.S1,
+                TaxRate = 4,
+                TaxBase = 10,
+                TaxAmount = 0.4m
+            },
+            new TaxItem()
+            {
+                TaxScheme = ClaveRegimen.RegimenGeneral,
+                TaxType = CalificacionOperacion.S1,
+                TaxRate = 21,
+                TaxBase = 100,
+                TaxAmount = 21
+            }
         }
-    }
-};
+    };
 
-// Creamos el documento de alta
-Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
-var invoiceEntry = new InvoiceEntry(invoice);
+    // Creamos el documento de alta
+    Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
+    var invoiceEntry = new InvoiceEntry(invoice);
 
-// Añadimos el documentos a la cola de procesamiento:
-// En la cola se irán realizando los envíos cuando
-// los documentos en espera sean 1.000 o cuando el
-// tiempo de espera haya finalizado
-InvoiceQueue.ActiveInvoiceQueue.Add(invoiceEntry);
+    // Añadimos el documentos a la cola de procesamiento:
+    // En la cola se irán realizando los envíos cuando
+    // los documentos en espera sean 1.000 o cuando el
+    // tiempo de espera haya finalizado
+    InvoiceQueue.ActiveInvoiceQueue.Add(invoiceEntry);
 
 }
 
@@ -532,43 +532,45 @@ InvoiceQueue.ActiveInvoiceQueue.Add(invoiceEntry);
 for (int i = 1; i < 11; i++)
 {
 
-// Creamos una instacia de la clase factura
-var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new DateTime(2024, 10, 29), "B10795649")
-{
-    InvoiceType = TipoFactura.F1,
-    SellerName = "KIVU SOLUTIONS SL",
-    BuyerID = "B44531218",
-    BuyerName = "WEFINZ SOLUTIONS SL",
-    Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
-    TaxItems = new List<TaxItem>() {
-        new TaxItem()
-        {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
-            TaxRate = 4,
-            TaxBase = 10,
-            TaxAmount = 0.4m
-        },
-        new TaxItem()
-        {
-            TaxScheme = ClaveRegimen.RegimenGeneral,
-            TaxType = CalificacionOperacion.S1,
-            TaxRate = 21,
-            TaxBase = 100,
-            TaxAmount = 21
+    // Creamos una instacia de la clase factura
+    var invoice = new Invoice($"TEST{testId}" + $"{start + i}".PadLeft(8, '0'), new DateTime(2024, 10, 29), "B10795649")
+    {
+        InvoiceType = TipoFactura.F1,
+        SellerName = "KIVU SOLUTIONS SL",
+        BuyerID = "B44531218",
+        BuyerName = "WEFINZ SOLUTIONS SL",
+        Text = "PRESTACION SERVICIOS DESARROLLO SOFTWARE",
+        TaxItems = new List<TaxItem>() {
+            new TaxItem()
+            {
+                TaxScheme = ClaveRegimen.RegimenGeneral,
+                TaxType = CalificacionOperacion.S1,
+                TaxRate = 4,
+                TaxBase = 10,
+                TaxAmount = 0.4m
+            },
+            new TaxItem()
+            {
+                TaxScheme = ClaveRegimen.RegimenGeneral,
+                TaxType = CalificacionOperacion.S1,
+                TaxRate = 21,
+                TaxBase = 100,
+                TaxAmount = 21
+            }
         }
-    }
-};
+    };
 
-// Creamos el documento de anulación
-Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
-var invoiceCancellation = new InvoiceCancellation(invoice);
+    // Creamos el documento de alta
+    Debug.Print($"Añadiendo factura {invoice} {DateTime.Now}");
+    var invoiceCencellation = new InvoiceCancellation(invoice);
 
-// Añadimos el documentos a la cola de procesamiento:
-// En la cola se irán realizando los envíos cuando
-// los documentos en espera sean 1.000 o cuando el
-// tiempo de espera haya finalizado
-InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCancellation);
+    // Añadimos el documentos a la cola de procesamiento:
+    // En la cola se irán realizando los envíos cuando
+    // los documentos en espera sean 1.000 o cuando el
+    // tiempo de espera haya finalizado
+    InvoiceQueue.ActiveInvoiceQueue.Add(invoiceCencellation);
+
+}
 
 ```
 
