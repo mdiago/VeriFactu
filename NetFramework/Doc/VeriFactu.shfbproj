@@ -21,7 +21,7 @@
       <DocumentationSource sourceFile="..\bin\Debug\VeriFactu.dll" />
       <DocumentationSource sourceFile="..\bin\Debug\VeriFactu.xml" />
     </DocumentationSources>
-    <HelpFileVersion>1.0.0.10</HelpFileVersion>
+    <HelpFileVersion>1.0.12</HelpFileVersion>
     <MaximumGroupParts>2</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>Standard</SyntaxFilters>

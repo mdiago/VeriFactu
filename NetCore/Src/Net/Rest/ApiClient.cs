@@ -43,7 +43,7 @@ using System.Net;
 using System.Text;
 using VeriFactu.Business;
 using VeriFactu.Config;
-using VeriFactu.Net.Core.Net.Rest.Json.Parser;
+using VeriFactu.Net.Rest.Json.Parser;
 
 namespace VeriFactu.Net.Rest
 {

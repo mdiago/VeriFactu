@@ -41,7 +41,6 @@ using System;
 using System.Collections.Generic;
 using VeriFactu.Business.Validation.NIF.TaxId;
 using VeriFactu.Config;
-using VeriFactu.Net.Core.Net.Rest.Json;
 using VeriFactu.Net.Rest.Json;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;

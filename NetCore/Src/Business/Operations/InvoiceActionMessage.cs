@@ -60,12 +60,21 @@ namespace VeriFactu.Business.Operations
     public class InvoiceActionMessage : InvoiceActionData
     {
 
+        #region Propiedades Privadas Estáticas
+
+        /// <summary>
+        /// Acción para el webservice.
+        /// </summary>
+        static string _Action = "?op=RegFactuSistemaFacturacion";
+
+        #endregion
+
         #region Propiedades Privadas de Instacia
 
         /// <summary>
         /// Acción para el webservice.
         /// </summary>
-        internal virtual string Action => "?op=RegFactuSistemaFacturacion";
+        internal virtual string Action => _Action;
 
         /// <summary>
         /// Sobre SOAP de respuesta de la AEAT.
@@ -263,15 +272,7 @@ namespace VeriFactu.Business.Operations
         internal string Send(byte[] xml)
         {
 
-            XmlDocument xmlDocument = new XmlDocument();
-
-            using (var msXml = new MemoryStream(xml))
-                xmlDocument.Load(msXml);
-
-            var url = Settings.Current.VeriFactuEndPointPrefix;
-            var action = $"{url}{Action}";
-
-            return Wsd.Call(url, action, xmlDocument);
+            return SendXmlBytes(xml, Action);
 
         }
 
@@ -517,6 +518,64 @@ namespace VeriFactu.Business.Operations
         /// sido procesada de la AEAT.
         /// </summary>
         public bool ResponseProcessed { get; private set; }
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
+
+        /// <summary>
+        /// Envía un xml en formato binario a la AEAT.
+        /// </summary>
+        /// <param name="xml">Archivo xml en formato binario a la AEAT.</param>
+        /// /// <param name="op"> Acción para el webservice.</param>
+        /// <returns>Devuelve las respuesta de la AEAT.</returns>
+        public static string SendXmlBytes(byte[] xml, string op)
+        {
+
+            XmlDocument xmlDocument = new XmlDocument();
+
+            using (var msXml = new MemoryStream(xml))
+                xmlDocument.Load(msXml);
+
+            var url = Settings.Current.VeriFactuEndPointPrefix;
+            var action = $"{url}{op}";
+
+            return Wsd.Call(url, action, xmlDocument);
+
+        }
+
+        /// <summary>
+        /// Envía un sobre SOAP.
+        /// </summary>
+        /// <param name="envelope">Sobre a enviar.</param>
+        /// <param name="op">Acción del webservice.</param>
+        /// <returns>Respuesta del servidor.</returns>
+        public static string SendEnvelope(Envelope envelope, string op) 
+        {
+
+            // Generamos el xml
+            var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
+
+            return SendXmlBytes(xml, op);
+
+        }
+
+        /// <summary>
+        /// Envía un sobre SOAP.
+        /// </summary>
+        /// <param name="envelope">Sobre a enviar.</param>
+        /// <returns>Respuesta del servidor.</returns>
+        public static Envelope SendEnvelope(Envelope envelope)
+        {
+
+            // Generamos el xml
+            var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
+            var response =  SendXmlBytes(xml, _Action);
+
+            return Envelope.FromXml(response);
+
+        }
+        
 
         #endregion
 

@@ -37,7 +37,6 @@
     address: info@irenesolutions.com
  */
 
-using VeriFactu.Net.Core.Net.Rest.Json;
 using VeriFactu.Net.Rest.Json;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;

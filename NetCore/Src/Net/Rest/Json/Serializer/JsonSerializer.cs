@@ -41,7 +41,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Serialization;
-using VeriFactu.Net.Core.Net.Rest.Json;
 
 namespace VeriFactu.Net.Rest.Json.Serializer
 {

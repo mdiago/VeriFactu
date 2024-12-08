@@ -39,7 +39,7 @@
 
 using System;
 
-namespace VeriFactu.Net.Core.Net.Rest.Json
+namespace VeriFactu.Net.Rest.Json
 {
 
     /// <summary>

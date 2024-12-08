@@ -38,7 +38,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens

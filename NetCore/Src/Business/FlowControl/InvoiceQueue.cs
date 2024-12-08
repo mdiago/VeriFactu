@@ -55,6 +55,15 @@ namespace VeriFactu.Business.FlowControl
     public class InvoiceQueue : IntervalWorker
     {
 
+        #region Variables Privadas Estáticas
+
+        /// <summary>
+        /// Indica si la cola se está cerrando.
+        /// </summary>
+        static bool _IsClosing;
+
+        #endregion
+
         #region Variables Privadas de Instancia
 
         /// <summary>
@@ -127,6 +136,21 @@ namespace VeriFactu.Business.FlowControl
 
         }
 
+        /// <summary>
+        /// Finaliza la revisión de cola.
+        /// </summary>
+        public static void DoExit()
+        {
+
+            if (ActiveInvoiceQueue.Count > 0)
+                throw new OperationCanceledException($"No se puede finalizar la cola de factura con" +
+                    $" {ActiveInvoiceQueue.Count} documentos pendientes. Debe estar vacía.");
+
+            ActiveInvoiceQueue.End();
+
+        }
+
+
         #endregion       
 
         #region Propiedades Públicas Estáticas
@@ -169,11 +193,9 @@ namespace VeriFactu.Business.FlowControl
         public static void Exit() 
         {
 
-            if (ActiveInvoiceQueue.Count > 0)
-                throw new OperationCanceledException($"No se puede finalizar la cola de factura con" +
-                    $" {ActiveInvoiceQueue.Count} documentos pendientes. Debe estar vacía.");
+            _IsClosing = true;
 
-            ActiveInvoiceQueue.End();
+            Utils.Log($"Iniciado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
 
         }
 
@@ -188,6 +210,10 @@ namespace VeriFactu.Business.FlowControl
         /// <param name="invoiceAction">Acción de registro a añadir.</param>
         public void Add(InvoiceAction invoiceAction) 
         {
+
+            if (_IsClosing)
+                throw new InvalidOperationException("No se pueden añadir" +
+                    " elementos ya que se ha establecido el cierre.");
 
             if (invoiceAction.Posted)
                 throw new InvalidOperationException($"La operación {invoiceAction}" +
@@ -244,6 +270,9 @@ namespace VeriFactu.Business.FlowControl
             if (cert == null)
                 Utils.Log("Existe algún problema con el certificado.");
 
+            if(_IsClosing)
+                Utils.Log($"Ejecutando cola con cierre establecido {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
+
             Exception processException = null;
 
             lock (_Locker)
@@ -279,6 +308,9 @@ namespace VeriFactu.Business.FlowControl
 
             lock (_Locker)
                 _IsWorking = false;
+
+            if (_IsClosing && ActiveInvoiceQueue.Count == 0)
+                DoExit();
 
         }
 

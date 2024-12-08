@@ -37,10 +37,9 @@
     address: info@irenesolutions.com
  */
 
-using VeriFactu.Net.Rest.Json.Parser;
 using VeriFactu.Net.Rest.Json.Parser.Lexer;
 
-namespace VeriFactu.Net.Core.Net.Rest.Json.Parser
+namespace VeriFactu.Net.Rest.Json.Parser
 {
 
     /// <summary>
