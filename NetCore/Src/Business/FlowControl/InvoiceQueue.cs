@@ -148,6 +148,10 @@ namespace VeriFactu.Business.FlowControl
 
             ActiveInvoiceQueue.End();
 
+            Utils.Log($"Finalizado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
+
+            ActiveInvoiceQueue = null;
+
         }
 
 
