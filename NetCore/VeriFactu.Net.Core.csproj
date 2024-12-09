@@ -30,10 +30,10 @@
   
    <Target Name="CustomContentTarget">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="C:\Users\usuario\Desktop\TRABAJO\VeriFactu\NetFramework\bin\Debug\VeriFactu.dll">
+      <TfmSpecificPackageFile Include="..\NetFramework\bin\Debug\VeriFactu.dll">
         <PackagePath>lib/net48</PackagePath>
       </TfmSpecificPackageFile>
-       <TfmSpecificPackageFile Include="C:\Users\usuario\Desktop\TRABAJO\VeriFactu\NetFramework\bin\Debug\VeriFactu.xml">
+       <TfmSpecificPackageFile Include="..\NetFramework\bin\Debug\VeriFactu.xml">
         <PackagePath>lib/net48</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
