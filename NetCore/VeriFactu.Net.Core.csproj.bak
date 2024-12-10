@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
-    <Version>1.0.14</Version>
+    <Version>1.0.12</Version>
     <Title>VeriFactu</Title>
     <Authors>Manuel Diago</Authors>
     <Company>Irene Solutions SL</Company>
@@ -17,8 +17,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.0.1.4</AssemblyVersion>
-    <FileVersion>1.0.1.4</FileVersion>
+    <AssemblyVersion>1.0.1.2</AssemblyVersion>
+    <FileVersion>1.0.1.2</FileVersion>
     <AssemblyName>VeriFactu</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -30,10 +30,10 @@
   
    <Target Name="CustomContentTarget">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="..\NetFramework\bin\Debug\VeriFactu.dll">
+      <TfmSpecificPackageFile Include=".\NetFramework\bin\Debug\VeriFactu.dll">
         <PackagePath>lib/net48</PackagePath>
       </TfmSpecificPackageFile>
-       <TfmSpecificPackageFile Include="..\NetFramework\bin\Debug\VeriFactu.xml">
+       <TfmSpecificPackageFile Include=".\NetFramework\bin\Debug\VeriFactu.xml">
         <PackagePath>lib/net48</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
@@ -55,7 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
