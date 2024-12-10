@@ -82,6 +82,9 @@
     <Compile Include="..\NetCore\Src\Business\Operations\InvoiceActionPost.cs">
       <Link>Src\Business\Operations\InvoiceActionPost.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\RectificationItem.cs">
+      <Link>Src\Business\RectificationItem.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\TaxClass.cs">
       <Link>Src\Business\TaxClass.cs</Link>
     </Compile>

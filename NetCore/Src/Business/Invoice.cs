@@ -323,6 +323,11 @@ namespace VeriFactu.Business
         /// </summary>
         public List<TaxItem> TaxItems { get; set; }
 
+        /// <summary>
+        /// Facturas rectificadas.
+        /// </summary>
+        public List<RectificationItem> RectificationItems { get; set; }
+
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -357,6 +362,26 @@ namespace VeriFactu.Business
                 TipoHuella = TipoHuella.Sha256,
                 TipoHuellaSpecified = true
             };
+
+            if (RectificationItems?.Count > 0) 
+            {
+
+                // Establecemos el tipo de rectificativa (Por diferencias es el valor por defecto)
+                registroAlta.TipoRectificativa = TipoRectificativa.I;
+                registroAlta.TipoRectificativaSpecified = true;
+
+                // Añadimos las factura rectificadas
+                registroAlta.FacturasRectificadas = new List<IDFactura>();
+
+                foreach (var rectification in RectificationItems)
+                    registroAlta.FacturasRectificadas.Add(new IDFactura()
+                    {
+                        IDEmisorFactura = SellerID,
+                        NumSerieFactura = rectification.InvoiceID,
+                        FechaExpedicionFactura = XmlParser.GetXmlDate(rectification.InvoiceDate)
+                    });
+
+            }
 
             return registroAlta;
 

@@ -38,77 +38,40 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using VeriFactu.Business.Validation;
+using VeriFactu.Net.Rest.Json;
 
-namespace VeriFactu.Business.Operations
+namespace VeriFactu.Business
 {
 
     /// <summary>
-    /// Representa una acción de alta o anulación de registro
-    /// en todo lo referente a la factura, su envío a la AEAT
-    /// y su gestión contable en la 
-    /// cadena de bloques.
+    /// Representa una factura rectificada.
     /// </summary>
-    public class InvoiceAction : InvoiceActionPost
-    {    
+    public class RectificationItem : JsonSerializable
+    {
 
-        #region Construtores de Instancia
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Constructor.
+        /// Identificador de la factura.
         /// </summary>
-        /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
-        public InvoiceAction(Invoice invoice) : base(invoice)
-        {
+        public string InvoiceID { get; set; }
 
-            // Validamos
-            var errors = GetBusErrors();
-
-            if (errors.Count > 0)
-                throw new InvalidOperationException(string.Join("\n", errors));  
-
-        }
+        /// <summary>
+        /// Fecha emisión de documento.
+        /// </summary>        
+        public DateTime InvoiceDate { get; set; }
 
         #endregion
 
-        #region Métodos Privados de Instancia
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Devuelve una lista con los errores de la
-        /// factura por el incumplimiento de reglas de negocio.
+        /// Representación textual de la instancia.
         /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        public List<string> GetBusErrors()
+        /// <returns>Representación textual de la instancia.</returns>
+        public override string ToString()
         {
-
-            var errors = new List<string>();
-
-            if (File.Exists(InvoiceFilePath))
-                errors.Add($"Ya existe una entrada con SellerID: {Invoice.SellerID}" +
-                    $" en el año {Invoice.InvoiceDate.Year} con el número {Invoice.InvoiceID}.");
-
-            if (string.IsNullOrEmpty(Invoice.SellerName))
-                errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
-
-            errors.AddRange(GetInvoiceValidationErrors());
-
-            return errors;
-
-        }
-
-        /// <summary>
-        /// Devuelve errores de las validaciones de negocio según las
-        /// especificaciones.
-        /// </summary>
-        /// <returns>Lista de errores de validación según las especificaciones.</returns>
-        internal virtual List<string> GetInvoiceValidationErrors() 
-        {
-
-            var validation = new InvoiceValidation(this);
-            return validation.GetErrors();
-
+            return $"{InvoiceID}, {InvoiceDate}";
         }
 
         #endregion
