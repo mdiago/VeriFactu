@@ -135,7 +135,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             {
 
                 // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
-                if (_Interlocutor.IDOtro.IDType != IDType.NIF_IVA)
+                if (_Interlocutor.IDOtro.IDType != IDType.NIF_IVA && !_Interlocutor.IDOtro.CodigoPaisSpecified)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
 

@@ -38,6 +38,7 @@
  */
 
 using System;
+using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu
 {
@@ -57,6 +58,12 @@ namespace VeriFactu.Xml.Factu
         /// <para>Alfanumérico(2) (ISO 3166-1 alpha-2 codes)</para>
         /// </summary>
         public CodigoPais CodigoPais { get; set; }
+
+        /// <summary>
+        /// Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool CodigoPaisSpecified { get; set; }
 
         /// <summary>
         /// <para>Clave para establecer el tipo de

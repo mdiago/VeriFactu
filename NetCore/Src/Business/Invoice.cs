@@ -135,13 +135,13 @@ namespace VeriFactu.Business
 
                 var detalleDesglose = new DetalleDesglose()
                 {
-                    Impuesto = taxitem.Tax,
+                    Impuesto = taxitem.Tax == 0 ? Impuesto.IVA : taxitem.Tax,
                     ClaveRegimen = taxitem.TaxScheme,
                     CalificacionOperacion = taxitem.TaxType,
                     TipoImpositivo = XmlParser.GetXmlDecimal(taxitem.TaxRate),
                     BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxitem.TaxBase),
                     CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount),
-                };
+                };                
 
                 if (taxitem.TaxAmountSurcharge != 0) 
                 {
@@ -151,7 +151,6 @@ namespace VeriFactu.Business
 
                 }
 
-                detalleDesglose.ImpuestoSpecified = (detalleDesglose.Impuesto != Impuesto.IVA);
                 detalleDesglose.ClaveRegimenSpecified = (detalleDesglose.Impuesto == Impuesto.IVA || detalleDesglose.Impuesto == Impuesto.IGIC);
 
                 desglose.Add(detalleDesglose);
@@ -208,11 +207,14 @@ namespace VeriFactu.Business
 
 
             if(string.IsNullOrEmpty(BuyerCountryID))
-                throw new Exception("Si BuyerID no es un identificador español válido" +
+                throw new Exception("Si BuyerCountryID no es un identificador español válido" +
                     " (NIF, DNI, NIE...) es obligatorio que BuyerCountryID tenga un valor.");
 
-            if (!Enum.TryParse<CodigoPais>(BuyerCountryID, out CodigoPais buyerCountryId))
+            bool countryIdValid = Enum.TryParse<CodigoPais>(BuyerCountryID, out CodigoPais buyerCountryId);
+
+            if (!countryIdValid)
                 throw new Exception($"El código de pais consignado en BuyerCountryID='{BuyerCountryID}' no es válido.");
+
 
             return new List<Interlocutor>()
                 {
@@ -222,6 +224,7 @@ namespace VeriFactu.Business
                         IDOtro = new IDOtro()
                         { 
                             CodigoPais = buyerCountryId,
+                            CodigoPaisSpecified = countryIdValid,
                             ID = BuyerID,
                             IDType = BuyerIDType
                         }
@@ -248,6 +251,11 @@ namespace VeriFactu.Business
         /// Fecha emisión de documento.
         /// </summary>        
         public DateTime InvoiceDate { get; private set; }
+
+        /// <summary>
+        /// Fecha operación.
+        /// </summary>        
+        public DateTime? OperationDate { get; set; }
 
         /// <summary>
         /// Identificador del vendedor.
@@ -362,6 +370,9 @@ namespace VeriFactu.Business
                 TipoHuella = TipoHuella.Sha256,
                 TipoHuellaSpecified = true
             };
+
+            if (OperationDate != null)
+                registroAlta.FechaOperacion = XmlParser.GetXmlDate(OperationDate);
 
             if (RectificationItems?.Count > 0) 
             {

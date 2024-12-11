@@ -78,12 +78,6 @@ namespace VeriFactu.Xml.Factu.Alta
         public Impuesto Impuesto { get; set; }
 
         /// <summary>
-        ///  Con true se serializa el dato, con false no.
-        /// </summary>
-        [XmlIgnore]
-        public bool ImpuestoSpecified { get; set; }
-
-        /// <summary>
         /// <para>Clave que identificará el tipo de régimen del
         /// impuesto o una operación con trascendencia tributaria.</para>
         /// <para>Alfanumérico (2) L8A/L8B.</para>

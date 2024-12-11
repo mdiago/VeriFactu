@@ -52,25 +52,25 @@ namespace VeriFactu.Xml.Factu
         /// IVA (01).
         /// </summary>
         [XmlEnum("01")]
-        IVA,
+        IVA = 1,
 
         /// <summary>
         /// IPSI (02).
         /// </summary>
         [XmlEnum("02")]
-        IPSI,
+        IPSI = 2,
 
         /// <summary>
         /// IGIC (03).
         /// </summary>
         [XmlEnum("03")]
-        IGIC,
+        IGIC = 3,
 
         /// <summary>
         /// Otros (05).
         /// </summary>
         [XmlEnum("05")]
-        OTROS
+        OTROS = 5
 
     }
 

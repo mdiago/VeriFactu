@@ -95,8 +95,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             // FechaOperacion, campo de cumplimentación obligatoria y posterior a fecha de expedición.
             // Todos los destinatarios tienen que estar identificados mediante NIF y comenzar por “P”,”Q”,”S” o “V”.
             // TipoFactura: se validará que tipo de factura sea “F1”, “R1”, “R2”, “R3” o “R4”.
-            if (_DetalleDesglose.Impuesto != Impuesto.IVA &&
-                _DetalleDesglose.Impuesto != Impuesto.IGIC)
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
                 if (_FechaOperacion == null || (_FechaOperacion??_FechaExpedicion).CompareTo(_FechaExpedicion) < 0)
