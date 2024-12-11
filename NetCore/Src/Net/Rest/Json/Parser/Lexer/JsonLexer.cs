@@ -65,6 +65,7 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer
             { ']',      typeof(JsonRightBracket)},
             { ':',      typeof(JsonColon)},
             { ',',      typeof(JsonComma)},
+            { '-',      typeof(JsonNumber)},
             { '0',      typeof(JsonNumber)},
             { '1',      typeof(JsonNumber)},
             { '2',      typeof(JsonNumber)},

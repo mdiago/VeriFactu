@@ -51,6 +51,20 @@ namespace VeriFactu.Net.Rest.Json
     public class JsonSerializable
     {
 
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public JsonSerializable() 
+        {
+
+            TransactionID = $"{Assembly.GetExecutingAssembly().GetName().Name}.{Assembly.GetExecutingAssembly().GetName().Version}";
+
+        }
+
+        #endregion
+
         #region Métodos Privados de Instancia
 
         /// <summary>
@@ -168,6 +182,11 @@ namespace VeriFactu.Net.Rest.Json
         /// https://facturae.irenesolutions.com/verifactu/go
         /// </summary>
         public string ServiceKey { get; set; }
+
+        /// <summary>
+        /// Identificación transacción.
+        /// </summary>
+        public string TransactionID { get; set; }
 
         #endregion
 
