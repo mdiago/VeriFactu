@@ -155,14 +155,20 @@ namespace VeriFactu.Net.Rest.Json.Serializer
             {
 
                 var enumItemField = _Value.GetType().GetField($"{value}");
-                var xmlEnumAtt = enumItemField.GetCustomAttribute(typeof(XmlEnumAttribute)) as XmlEnumAttribute;
 
-                string enumValue = null;
+                if (enumItemField != null) 
+                {
 
-                if(xmlEnumAtt != null)
-                    enumValue = xmlEnumAtt.Name;
+                    var xmlEnumAtt = enumItemField.GetCustomAttribute(typeof(XmlEnumAttribute)) as XmlEnumAttribute;
 
-                _Serializer = new JsonEnumSerializer(enumValue);
+                    string enumValue = null;
+
+                    if (xmlEnumAtt != null)
+                        enumValue = xmlEnumAtt.Name;
+
+                    _Serializer = new JsonEnumSerializer(enumValue);
+
+                }                
 
             }
             else 
