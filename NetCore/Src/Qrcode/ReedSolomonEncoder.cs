@@ -40,7 +40,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <summary>Implements Reed-Solomon encoding, as the name implies.</summary>

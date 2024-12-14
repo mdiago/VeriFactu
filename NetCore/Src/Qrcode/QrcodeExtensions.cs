@@ -43,7 +43,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <summary>

@@ -40,9 +40,9 @@
 using System;
 using System.Text;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
-    
+
     /// <summary>A simple, fast array of bits, represented compactly by an array of ints internally.</summary>
     /// <author>Sean Owen</author>
     internal sealed class BitArray 

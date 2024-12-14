@@ -40,7 +40,7 @@
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu
-{   
+{
 
     /// <summary>
     /// Clave que identifica el tipo de uso del

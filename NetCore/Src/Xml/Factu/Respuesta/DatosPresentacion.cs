@@ -41,7 +41,7 @@ using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Respuesta
 {
-    
+
     /// <summary>
     /// Datos relativos a la presentación a la que
     /// se refiere la respuesta.

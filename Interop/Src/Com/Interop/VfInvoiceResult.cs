@@ -1,4 +1,4 @@
-﻿/*
+﻿/* 
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,41 +37,91 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
+using System;
+using System.Runtime.InteropServices;
 
-namespace VeriFactu.Xml.Factu
+namespace VeriFactu.Com.Interop
 {
 
+    #region Interfaz COM
+
     /// <summary>
-    /// Clave que identifica un impuesto. Alfanumérico(2) L1.
+    /// Interfaz COM para la clase RectificationItem.
     /// </summary>
-    public enum Impuesto
+    [Guid("B1C72260-4643-4912-BBD6-ED4635620C5A")]
+    [ComVisible(true)]
+    public interface IVfInvoiceResult
     {
 
         /// <summary>
-        /// IVA (01).
+        /// Código del resultado de la operación. '0' si todo
+        /// ha ido vien.
         /// </summary>
-        [XmlEnum("01")]
-        IVA = 1,
+        string ResultCode { get; set; }
 
         /// <summary>
-        /// IPSI (02).
+        /// Mensaje del resultado de la petición. 'OK' si todo ha ido
+        /// bien.
         /// </summary>
-        [XmlEnum("02")]
-        IPSI = 2,
+        string ResultMessage { get; set; }
 
         /// <summary>
-        /// IGIC (03).
+        /// Código seguro de verificación devuelto por la AEAT
+        /// si todo ha ido bien.
         /// </summary>
-        [XmlEnum("03")]
-        IGIC = 3,
-
-        /// <summary>
-        /// Otros (05).
-        /// </summary>
-        [XmlEnum("05")]
-        OTROS = 5
+        string CSV { get; set; }
 
     }
+
+    #endregion
+
+    #region Clase COM
+
+    /// <summary>
+    /// Resultado de un envio de alta o anulación a la AEAT.
+    /// </summary>
+    [Guid("34182FA2-6E54-471C-A507-AC3C0740EFC4")]
+    [ComVisible(true)]
+    [ProgId("VeriFactu.Com.Interop.InvoiceResult")]
+    public class VfInvoiceResult : IVfInvoiceResult
+    {
+
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor. Para COM necesitamos un constructor
+        /// sin parametros.
+        /// </summary>
+        public VfInvoiceResult()
+        {
+        }
+
+        #endregion
+
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Código del resultado de la operación. '0' si todo
+        /// ha ido vien.
+        /// </summary>
+        public string ResultCode { get; set; }
+
+        /// <summary>
+        /// Mensaje del resultado de la petición. 'OK' si todo ha ido
+        /// bien.
+        /// </summary>
+        public string ResultMessage { get; set; }
+
+        /// <summary>
+        /// Código seguro de verificación devuelto por la AEAT
+        /// si todo ha ido bien.
+        /// </summary>
+        public string CSV { get; set; }
+
+        #endregion
+
+    }
+
+    #endregion
 
 }

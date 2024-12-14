@@ -39,7 +39,7 @@
 
 using System;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <summary>See ISO 18004:2006, 6.5.1.</summary>

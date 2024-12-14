@@ -38,7 +38,7 @@
  */
 using System;
 
-namespace VeriFactu.Qrcode.Exceptions 
+namespace VeriFactu.Qrcode.Exceptions
 {
 
     /// <summary>

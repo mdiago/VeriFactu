@@ -1,4 +1,4 @@
-﻿/*
+﻿/* 
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,41 +37,75 @@
     address: info@irenesolutions.com
  */
 
-using System.Xml.Serialization;
+using System;
+using System.Runtime.InteropServices;
 
-namespace VeriFactu.Xml.Factu
+namespace VeriFactu.Com.Interop
 {
 
+    #region Interfaz COM
+
     /// <summary>
-    /// Clave que identifica un impuesto. Alfanumérico(2) L1.
+    /// Interfaz COM para la clase RectificationItem.
     /// </summary>
-    public enum Impuesto
+    [Guid("4EB987D3-D4FC-4F5F-96F3-9639D9199D8D")]
+    [ComVisible(true)]
+    public interface IVfRectificationItem
     {
 
         /// <summary>
-        /// IVA (01).
+        /// Identificador de la factura.
         /// </summary>
-        [XmlEnum("01")]
-        IVA = 1,
+        string InvoiceID { get; set; }
 
         /// <summary>
-        /// IPSI (02).
-        /// </summary>
-        [XmlEnum("02")]
-        IPSI = 2,
-
-        /// <summary>
-        /// IGIC (03).
-        /// </summary>
-        [XmlEnum("03")]
-        IGIC = 3,
-
-        /// <summary>
-        /// Otros (05).
-        /// </summary>
-        [XmlEnum("05")]
-        OTROS = 5
+        /// Fecha emisión de documento.
+        /// </summary>        
+        DateTime InvoiceDate { get; set; }
 
     }
+
+    #endregion
+
+    #region Clase COM
+
+    /// <summary>
+    /// Representa una línea de impuestos.
+    /// </summary>
+    [Guid("0015E66F-422B-4955-BE0F-F6DFE643C55E")]
+    [ComVisible(true)]
+    [ProgId("VeriFactu.Com.Interop.RectificationItem")]
+    public class VfRectificationItem : IVfRectificationItem
+    {
+
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor. Para COM necesitamos un constructor
+        /// sin parametros.
+        /// </summary>
+        public VfRectificationItem()
+        {
+        }
+
+        #endregion
+
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// Identificador de la factura.
+        /// </summary>
+        public string InvoiceID { get; set; }
+
+        /// <summary>
+        /// Fecha emisión de documento.
+        /// </summary>        
+        public DateTime InvoiceDate { get; set; }
+
+        #endregion
+
+    }
+
+    #endregion
 
 }

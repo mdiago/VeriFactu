@@ -40,7 +40,7 @@
 using System;
 using System.Text;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <summary>

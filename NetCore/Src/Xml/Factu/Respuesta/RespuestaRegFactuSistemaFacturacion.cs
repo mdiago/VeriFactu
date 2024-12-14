@@ -42,7 +42,7 @@ using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Respuesta
 {
-    
+
     /// <summary>
     /// Respuesta a una presentación.
     /// </summary>

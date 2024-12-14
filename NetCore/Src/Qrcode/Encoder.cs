@@ -41,7 +41,7 @@ using System;
 using System.Collections.Generic;
 using VeriFactu.Qrcode.Exceptions;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <author>satorux@google.com (Satoru Takabayashi) - creator</author>

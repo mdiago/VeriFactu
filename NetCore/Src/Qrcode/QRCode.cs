@@ -40,7 +40,7 @@
 using System;
 using System.Text;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <author>satorux@google.com (Satoru Takabayashi) - creator</author>

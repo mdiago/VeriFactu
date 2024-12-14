@@ -40,7 +40,7 @@
 using System;
 using System.Text;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <summary>A class which wraps a 2D array of bytes.</summary>

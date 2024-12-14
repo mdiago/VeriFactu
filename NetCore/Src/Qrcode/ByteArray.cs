@@ -39,7 +39,7 @@
 
 using System;
 
-namespace VeriFactu.Qrcode 
+namespace VeriFactu.Qrcode
 {
 
     /// <summary>This class implements an array of unsigned bytes.</summary>
