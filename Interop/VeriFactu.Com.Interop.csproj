@@ -590,6 +590,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Com\Interop\VfInvoice.cs" />
     <Compile Include="Src\Com\Interop\VfInvoiceResult.cs" />
+    <Compile Include="Src\Com\Interop\VfSettings.cs" />
     <Compile Include="Src\Com\Interop\VfRectificationItem.cs" />
     <Compile Include="Src\Com\Interop\VfTaxItem.cs" />
   </ItemGroup>
