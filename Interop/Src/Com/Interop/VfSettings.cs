@@ -38,13 +38,9 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace VeriFactu.Com.Interop
+namespace Verifactu
 {
 
     #region Interfaz COM
@@ -52,7 +48,8 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Interfaz COM para la clase RectificationItem.
     /// </summary>
-    [Guid("633A1195-2B3D-4502-A034-9FFA48790C0F")]
+    [Guid("A6D145BE-EFFA-4B5B-8322-4BA351C510B5")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     [ComVisible(true)]
     public interface IVfSettings
     {
@@ -257,9 +254,9 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Representa una línea de impuestos.
     /// </summary>
-    [Guid("E3C9CE1C-00F1-4FB7-957E-8871BAB99996")]
+    [Guid("F04D6533-AAC5-453B-A19D-BB76711ED404")]
     [ComVisible(true)]
-    [ProgId("VeriFactu.Com.Interop.VfSettings")]
+    [ProgId("Verifactu.VfSettings")]
     public class VfSettings : IVfSettings
     {
 
@@ -282,10 +279,10 @@ namespace VeriFactu.Com.Interop
         /// de los datos de esta instancia.
         /// </summary>
         /// <returns>Instancia de clase Settings.</returns>
-        private Config.Settings GetSettings()
+        private VeriFactu.Config.Settings GetSettings()
         {
 
-            var result = new Config.Settings()
+            var result = new VeriFactu.Config.Settings()
             {
                 IDVersion = IDVersion,
                 InboxPath = InboxPath,
@@ -300,7 +297,7 @@ namespace VeriFactu.Com.Interop
                 VeriFactuEndPointPrefix = VeriFactuEndPointPrefix,
                 VeriFactuEndPointValidatePrefix = VeriFactuEndPointValidatePrefix,
                 VeriFactuHashInputEncoding = VeriFactuHashInputEncoding,
-                SistemaInformatico = new Xml.Factu.SistemaInformatico() 
+                SistemaInformatico = new VeriFactu.Xml.Factu.SistemaInformatico() 
                 {
                     NombreSistemaInformatico = SistemaInformaticoNombre,
                     IdSistemaInformatico = SistemaId,
@@ -318,7 +315,7 @@ namespace VeriFactu.Com.Interop
 
             var veriFactuHashAlgorithm = string.IsNullOrEmpty(VeriFactuHashAlgorithm) ? "01" : VeriFactuHashAlgorithm;
 
-            if (!Enum.TryParse(veriFactuHashAlgorithm, out Xml.Factu.TipoHuella tipoHuella))
+            if (!Enum.TryParse(veriFactuHashAlgorithm, out VeriFactu.Xml.Factu.TipoHuella tipoHuella))
                 throw new ArgumentException($"El valor de InvoiceType '{veriFactuHashAlgorithm}' no es válido." +
                     $" Consulte en las especificaciones de la AEAT la lista: Clave del tipo de huella (L12)");
 
@@ -338,8 +335,8 @@ namespace VeriFactu.Com.Interop
         public void Save()
         {
 
-            Config.Settings.Current = GetSettings();
-            Config.Settings.Save();
+            VeriFactu.Config.Settings.Current = GetSettings();
+            VeriFactu.Config.Settings.Save();
 
         }
 
@@ -349,7 +346,7 @@ namespace VeriFactu.Com.Interop
         public void Load()
         {
 
-            var settings = Config.Settings.Current;
+            var settings = VeriFactu.Config.Settings.Current;
 
             IDVersion = settings.IDVersion;
                 InboxPath = settings.InboxPath;
@@ -386,7 +383,7 @@ namespace VeriFactu.Com.Interop
         public void SetConfigFileName(string fileName)
         {
 
-            Config.Settings.SetConfigFileName(fileName);
+            VeriFactu.Config.Settings.SetConfigFileName(fileName);
 
         }
 

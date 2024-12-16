@@ -40,7 +40,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace VeriFactu.Com.Interop
+namespace Verifactu
 {
 
     #region Interfaz COM
@@ -48,7 +48,7 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Interfaz COM para la clase RectificationItem.
     /// </summary>
-    [Guid("B1C72260-4643-4912-BBD6-ED4635620C5A")]
+    [Guid("075AAC41-84F6-4C97-A7F5-2E234FCC75F5")]
     [ComVisible(true)]
     public interface IVfInvoiceResult
     {
@@ -80,9 +80,9 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Resultado de un envio de alta o anulación a la AEAT.
     /// </summary>
-    [Guid("34182FA2-6E54-471C-A507-AC3C0740EFC4")]
+    [Guid("674199D6-27FE-4C42-B980-0BEC549CF304")]
     [ComVisible(true)]
-    [ProgId("VeriFactu.Com.Interop.InvoiceResult")]
+    [ProgId("Verifactu.VfInvoiceResult")]
     public class VfInvoiceResult : IVfInvoiceResult
     {
 

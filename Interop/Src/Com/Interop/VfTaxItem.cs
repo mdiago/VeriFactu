@@ -40,7 +40,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace VeriFactu.Com.Interop
+namespace Verifactu
 {
 
     #region Interfaz COM
@@ -48,7 +48,7 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Interfaz COM para la clase TaxItem.
     /// </summary>
-    [Guid("12842BEE-5120-4E64-BCC1-71EB6C9333C6")]
+    [Guid("287B24FC-9D39-4F15-90C0-62266C2C89B3")]
     [ComVisible(true)]
     public interface IVfTaxItem
     {
@@ -116,9 +116,9 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Representa una línea de impuestos.
     /// </summary>
-    [Guid("1BB49501-174C-4C20-BEFA-FE9E10507486")]
+    [Guid("EEA7E98C-B983-4695-AE87-CC07920D32D8")]
     [ComVisible(true)]
-    [ProgId("VeriFactu.Com.Interop.TaxItem")]
+    [ProgId("Verifactu.VfTaxItem")]
     public class VfTaxItem : IVfTaxItem
     {
 

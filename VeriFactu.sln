@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.34031.81
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeriFactu.NetFramework", "NetFramework\VeriFactu.NetFramework.csproj", "{27BBCBE0-0FDF-4989-B218-514388D81CE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeriFactu.Net.Core", "NetCore\VeriFactu.Net.Core.csproj", "{19FDC3FF-9312-4EE5-B064-D91E2A990B9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeriFactu.Com.Interop", "Interop\VeriFactu.Com.Interop.csproj", "{E474B416-6DC8-4EF7-BE65-2CE380D9CD63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerifactuLib", "Interop\VerifactuLib.csproj", "{E474B416-6DC8-4EF7-BE65-2CE380D9CD63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

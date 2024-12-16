@@ -42,7 +42,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace VeriFactu.Com.Interop
+namespace Verifactu
 {
 
     #region Interfaz COM
@@ -50,7 +50,7 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Interfaz COM para la clase VfInvoice.
     /// </summary>
-    [Guid("285F77B5-24EB-4B38-A8BA-FC0048E1E5AA")]
+    [Guid("8404DFF1-C973-44BA-9DFC-E17A02CDA5E3")]
     [ComVisible(true)]
     public interface IVfInvoice
     {
@@ -222,9 +222,9 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Representa una factura.
     /// </summary>
-    [Guid("E3E01EA6-11E5-4FFA-BA2B-F0C4BE33374C")]
+    [Guid("BBADB0CE-A83F-455C-8BCE-1D5E200BF5BC")]
     [ComVisible(true)]
-    [ProgId("VeriFactu.Com.Interop.Invoice")]
+    [ProgId("Verifactu.VfInvoice")]
     public class VfInvoice : IVfInvoice
     {
 
@@ -238,17 +238,17 @@ namespace VeriFactu.Com.Interop
         /// <summary>
         /// Objeto factura generado con los datos.
         /// </summary>
-        Business.Invoice _Invoice;
+        VeriFactu.Business.Invoice _Invoice;
 
         /// <summary>
         /// Lista de líneas de impuestos.
         /// </summary>
-        List<Business.TaxItem> _TaxItems;
+        List<VeriFactu.Business.TaxItem> _TaxItems;
 
         /// <summary>
         /// Facturas rectificadas.
         /// </summary>
-        List<Business.RectificationItem> _RectificationItems { get; set; }
+        List<VeriFactu.Business.RectificationItem> _RectificationItems { get; set; }
 
         #endregion
 
@@ -261,8 +261,8 @@ namespace VeriFactu.Com.Interop
         public VfInvoice()
         {
 
-            _TaxItems = new List<Business.TaxItem>();
-            _RectificationItems = new List<Business.RectificationItem>();
+            _TaxItems = new List<VeriFactu.Business.TaxItem>();
+            _RectificationItems = new List<VeriFactu.Business.RectificationItem>();
 
         }
 
@@ -275,10 +275,10 @@ namespace VeriFactu.Com.Interop
         /// de los datos de esta instancia.
         /// </summary>
         /// <returns>Instancia de clase Invoice.</returns>
-        private Business.Invoice GetInvoice()
+        private VeriFactu.Business.Invoice GetInvoice()
         {
 
-            var result = new Business.Invoice(InvoiceID, InvoiceDate, SellerID)
+            var result = new VeriFactu.Business.Invoice(InvoiceID, InvoiceDate, SellerID)
             {
                 SellerName = SellerName,
                 BuyerID = BuyerID,
@@ -291,7 +291,7 @@ namespace VeriFactu.Com.Interop
 
             var invoiceType = string.IsNullOrEmpty(InvoiceType) ? "F1" : InvoiceType;
 
-            if (!Enum.TryParse(invoiceType, out Xml.Factu.Alta.TipoFactura tipoFactura))
+            if (!Enum.TryParse(invoiceType, out VeriFactu.Xml.Factu.Alta.TipoFactura tipoFactura))
                 throw new ArgumentException($"El valor de InvoiceType '{invoiceType}' no es válido." +
                     $" Consulte en las especificaciones de la AEAT la lista: Clave del tipo de factura (L2)");
 
@@ -305,7 +305,7 @@ namespace VeriFactu.Com.Interop
                 throw new ArgumentException($"El valor de InvoiceType '{BuyerIDType}' no es válido." +
                     $" Debe ser 2,3,4,5,6 o 7.");
 
-            result.BuyerIDType = (Xml.Factu.IDType)buyerIDType;
+            result.BuyerIDType = (VeriFactu.Xml.Factu.IDType)buyerIDType;
 
             result.TaxItems = _TaxItems;
             result.RectificationItems = _RectificationItems;
@@ -467,7 +467,7 @@ namespace VeriFactu.Com.Interop
         {
 
             _Invoice = GetInvoice();
-            return Encoding.UTF8.GetString(new Business.InvoiceEntry(_Invoice).GetXml());
+            return Encoding.UTF8.GetString(new VeriFactu.Business.InvoiceEntry(_Invoice).GetXml());
 
         }
 
@@ -479,7 +479,7 @@ namespace VeriFactu.Com.Interop
         {
 
             _Invoice = GetInvoice();
-            return Encoding.UTF8.GetString(new Business.InvoiceCancellation(_Invoice).GetXml());
+            return Encoding.UTF8.GetString(new VeriFactu.Business.InvoiceCancellation(_Invoice).GetXml());
 
         }
 
@@ -494,7 +494,7 @@ namespace VeriFactu.Com.Interop
         {
 
             _Invoice = GetInvoice();
-            var entry = new Business.InvoiceEntry(_Invoice);
+            var entry = new VeriFactu.Business.InvoiceEntry(_Invoice);
             System.IO.File.WriteAllBytes(path, entry.Registro.GetValidateQr());
 
         }
@@ -507,7 +507,7 @@ namespace VeriFactu.Com.Interop
         {
 
             _Invoice = GetInvoice();
-            var entry = new Business.InvoiceEntry(_Invoice);
+            var entry = new VeriFactu.Business.InvoiceEntry(_Invoice);
             return entry.Registro.GetUrlValidate();
 
         }
@@ -519,30 +519,29 @@ namespace VeriFactu.Com.Interop
         public void InsertTaxItem(IVfTaxItem taxItem)
         {
 
-
             var tax = string.IsNullOrEmpty(taxItem.Tax) ? "01" : taxItem.Tax;
             var taxScheme = string.IsNullOrEmpty(taxItem.TaxScheme) ? "01" : taxItem.TaxScheme;
             var taxType = string.IsNullOrEmpty(taxItem.TaxType) ? "S1" : taxItem.TaxType;
             var taxException = string.IsNullOrEmpty(taxItem.TaxException) ? "NA" : taxItem.TaxException;
 
-            if (!Enum.TryParse(tax, out Xml.Factu.Impuesto eTax))
+            if (!Enum.TryParse(tax, out VeriFactu.Xml.Factu.Impuesto eTax))
                 throw new ArgumentException($"El valor de Tax '{tax}' no es válido." +
                     $" Consulte en las especificaciones de la AEAT la lista: Impuesto (L1)");
 
-            if (!Enum.TryParse(taxScheme, out Xml.Factu.Alta.ClaveRegimen eTaxScheme))
+            if (!Enum.TryParse(taxScheme, out VeriFactu.Xml.Factu.Alta.ClaveRegimen eTaxScheme))
                 throw new ArgumentException($"El valor de TaxScheme '{taxScheme}' no es válido." +
                     $" Consulte en las especificaciones de la AEAT la lista: Regimen (L8A/L8B)");
 
-            if (!Enum.TryParse(taxType, out Xml.Factu.Alta.CalificacionOperacion eTaxType))
+            if (!Enum.TryParse(taxType, out VeriFactu.Xml.Factu.Alta.CalificacionOperacion eTaxType))
                 throw new ArgumentException($"El valor de TaxType '{taxType}' no es válido." +
                     $" Consulte en las especificaciones de la AEAT la lista: Calificacion Operacion (L9)");
 
-            if (!Enum.TryParse(taxException, out Xml.Factu.Alta.CausaExencion eTaxException))
+            if (!Enum.TryParse(taxException, out VeriFactu.Xml.Factu.Alta.CausaExencion eTaxException))
                 throw new ArgumentException($"El valor de TaxException '{taxException}' no es válido." +
                     $" Consulte en las especificaciones de la AEAT la lista: CausaE xencion (L10)");
 
 
-            _TaxItems.Add(new Business.TaxItem()
+            _TaxItems.Add(new VeriFactu.Business.TaxItem()
             {
                 Tax = eTax,
                 TaxScheme = eTaxScheme,
@@ -576,7 +575,7 @@ namespace VeriFactu.Com.Interop
         public void InsertRectificationItem(IVfRectificationItem rectificationItem)
         {
 
-            _RectificationItems.Add(new Business.RectificationItem()
+            _RectificationItems.Add(new VeriFactu.Business.RectificationItem()
             {
                 InvoiceID = rectificationItem.InvoiceID,
                 InvoiceDate = rectificationItem.InvoiceDate
@@ -608,7 +607,7 @@ namespace VeriFactu.Com.Interop
             };
 
             _Invoice = GetInvoice();
-            var entry = new Business.InvoiceEntry(_Invoice);
+            var entry = new VeriFactu.Business.InvoiceEntry(_Invoice);
 
             try
             {
@@ -671,7 +670,7 @@ namespace VeriFactu.Com.Interop
             };
 
             _Invoice = GetInvoice();
-            var cancellation = new Business.InvoiceCancellation(_Invoice);
+            var cancellation = new VeriFactu.Business.InvoiceCancellation(_Invoice);
 
             try
             {

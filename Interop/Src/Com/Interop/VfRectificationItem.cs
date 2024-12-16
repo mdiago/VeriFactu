@@ -40,7 +40,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace VeriFactu.Com.Interop
+namespace Verifactu
 {
 
     #region Interfaz COM
@@ -48,7 +48,8 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Interfaz COM para la clase RectificationItem.
     /// </summary>
-    [Guid("4EB987D3-D4FC-4F5F-96F3-9639D9199D8D")]
+    [Guid("B3476DFA-59DD-4713-AEB3-EA91E43626CB")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     [ComVisible(true)]
     public interface IVfRectificationItem
     {
@@ -72,9 +73,9 @@ namespace VeriFactu.Com.Interop
     /// <summary>
     /// Representa una línea de impuestos.
     /// </summary>
-    [Guid("0015E66F-422B-4955-BE0F-F6DFE643C55E")]
+    [Guid("119A584F-681D-4DE0-BBC1-929057B7F992")]
     [ComVisible(true)]
-    [ProgId("VeriFactu.Com.Interop.RectificationItem")]
+    [ProgId("Verifactu.VfRectificationItem")]
     public class VfRectificationItem : IVfRectificationItem
     {
 
