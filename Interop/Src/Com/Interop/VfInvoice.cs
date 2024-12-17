@@ -161,7 +161,6 @@ namespace Verifactu
         /// Obtiene el registro de alta para verifactu.
         /// </summary>
         /// <returns>Registro de alta para verifactu</returns>
-        [DispId(3)]
         string GetRegistroAnulacion();
 
         /// <summary>
@@ -171,56 +170,48 @@ namespace Verifactu
         /// <param name="path">Ruta donde se guardará el archivo de mapa de bits.</param>
         /// <returns>Bitmap con la url de validación
         /// codificada en un código QR.</returns>
-        [DispId(4)]
         void GetValidateQr(string path);
 
         /// <summary>
         /// Devuelve la url para la validación del documento.
         /// </summary>
         /// <returns>Url para la validación del documento.</returns>
-        [DispId(5)]
         string GetUrlValidate();
 
         /// <summary>
         /// Añade una línea de impuestos a la factura.
         /// </summary>
         /// <param name="taxItem">Línea de impuestos a añadir.</param>
-        [DispId(6)]
         void InsertTaxItem(IVfTaxItem taxItem);
 
         /// <summary>
         /// Elimina una línea de impuestos de la factura.
         /// </summary>
         /// <param name="index">Número de la línea a eliminar.</param>
-        [DispId(7)]
         void DeleteTaxItemAt(int index);
 
         /// <summary>
         /// Añade una línea de factura rectificada.
         /// </summary>
         /// <param name="rectificationItem">Línea de factura rectificada a añadir.</param>
-        [DispId(8)]
         void InsertRectificationItem(IVfRectificationItem rectificationItem);
 
         /// <summary>
         /// Elimina una línea de factura rectificada de la factura.
         /// </summary>
         /// <param name="index">Número de la línea a eliminar.</param>
-        [DispId(9)]
         void DeleteRectificationItemAt(int index);
 
         /// <summary>
         /// Envía la factura a Verifactu de la AEAT.
         /// </summary>
         /// <returns>Resultado de la operación.</returns>
-        [DispId(10)]
         IVfInvoiceResult Send();
 
         /// <summary>
         /// Envía la anulación de la factura a Verifactu de la AEAT.
         /// </summary>
         /// <returns>Resultado de la operación.</returns>
-        [DispId(11)]
         IVfInvoiceResult Delete();
 
         #endregion
@@ -560,11 +551,11 @@ namespace Verifactu
                 TaxScheme = eTaxScheme,
                 TaxType = eTaxType,
                 TaxException = eTaxException,
-                TaxBase = taxItem.TaxBase,
-                TaxRate = taxItem.TaxRate,
-                TaxAmount = taxItem.TaxAmount,
-                TaxRateSurcharge = taxItem.TaxRateSurcharge,
-                TaxAmountSurcharge = taxItem.TaxAmountSurcharge
+                TaxBase = Math.Round(Convert.ToDecimal(taxItem.TaxBase),2),
+                TaxRate = Math.Round(Convert.ToDecimal(taxItem.TaxRate), 2),
+                TaxAmount = Math.Round(Convert.ToDecimal(taxItem.TaxAmount), 2),
+                TaxRateSurcharge = Math.Round(Convert.ToDecimal(taxItem.TaxRateSurcharge), 2),
+                TaxAmountSurcharge = Math.Round(Convert.ToDecimal(taxItem.TaxAmountSurcharge), 2)
             });
 
 

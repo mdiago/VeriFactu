@@ -148,6 +148,18 @@ namespace Verifactu
         string VeriFactuHashInputEncoding { get; set; }
 
         /// <summary>
+        /// <para>Nombre-razón social.</para>
+        /// <para>Alfanumérico(120).</para>
+        /// </summary>
+        string SistemaInformaticoNombreRazon { get; set; }
+
+        /// <summary>
+        /// <para>NIF.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        string SistemaInformaticoNIF { get; set; }
+
+        /// <summary>
         /// <para>Nombre dado por el productor al sistema
         /// informático de facturación utilizado.</para>
         /// <para>Alfanumérico (30).</para>
@@ -300,6 +312,8 @@ namespace Verifactu
                 VeriFactuHashInputEncoding = VeriFactuHashInputEncoding,
                 SistemaInformatico = new VeriFactu.Xml.Factu.SistemaInformatico() 
                 {
+                    NombreRazon = SistemaInformaticoNombreRazon,
+                    NIF = SistemaInformaticoNIF,
                     NombreSistemaInformatico = SistemaInformaticoNombre,
                     IdSistemaInformatico = SistemaId,
                     Version = SistemaInformaticoVersion,
@@ -363,7 +377,8 @@ namespace Verifactu
             VeriFactuEndPointValidatePrefix = settings.VeriFactuEndPointValidatePrefix;
             VeriFactuHashAlgorithm = $"{settings.VeriFactuHashAlgorithm}";
             VeriFactuHashInputEncoding = settings.VeriFactuHashInputEncoding;
-            SistemaInformaticoNombre = settings.SistemaInformatico.NombreSistemaInformatico;
+            SistemaInformaticoNombreRazon = settings.SistemaInformatico.NombreRazon;
+            SistemaInformaticoNIF = settings.SistemaInformatico.NIF;
             SistemaInformaticoNombre = settings.SistemaInformatico.NombreSistemaInformatico;
             SistemaId = settings.SistemaInformatico.IdSistemaInformatico;
             SistemaInformaticoVersion = settings.SistemaInformatico.Version;
@@ -484,6 +499,18 @@ namespace Verifactu
         /// Codificación del texto de entrada para el hash.
         /// </summary>
         public string VeriFactuHashInputEncoding { get; set; }
+
+        /// <summary>
+        /// <para>Nombre-razón social.</para>
+        /// <para>Alfanumérico(120).</para>
+        /// </summary>
+        public string SistemaInformaticoNombreRazon { get; set; }
+
+        /// <summary>
+        /// <para>NIF.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        public string SistemaInformaticoNIF { get; set; }
 
         /// <summary>
         /// <para>Nombre dado por el productor al sistema

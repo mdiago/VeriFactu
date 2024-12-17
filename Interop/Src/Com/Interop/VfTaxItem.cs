@@ -48,7 +48,7 @@ namespace Verifactu
     /// <summary>
     /// Interfaz COM para la clase TaxItem.
     /// </summary>
-    [Guid("287B24FC-9D39-4F15-90C0-62266C2C89B3")]
+    [Guid("3F7B92A3-71FA-4D34-8ACF-5CDD9C5738CA")]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     [ComVisible(true)]
     public interface IVfTaxItem
@@ -86,27 +86,27 @@ namespace Verifactu
         /// <summary>
         /// Base imponible.
         /// </summary>
-        decimal TaxBase { get; set; }
+        float TaxBase { get; set; }
 
         /// <summary>
         /// Tipo impositivo.
         /// </summary>
-        decimal TaxRate { get; set; }
+        float TaxRate { get; set; }
 
         /// <summary>
         /// Importe cuota impuesto.
         /// </summary>
-        decimal TaxAmount { get; set; }
+        float TaxAmount { get; set; }
 
         /// <summary>
         /// Tipo impositivo recargo.
         /// </summary>
-        decimal TaxRateSurcharge { get; set; }
+        float TaxRateSurcharge { get; set; }
 
         /// <summary>
         /// Importe cuota recargo impuesto.
         /// </summary>
-        decimal TaxAmountSurcharge { get; set; }
+        float TaxAmountSurcharge { get; set; }
 
     }
 
@@ -117,7 +117,7 @@ namespace Verifactu
     /// <summary>
     /// Representa una línea de impuestos.
     /// </summary>
-    [Guid("EEA7E98C-B983-4695-AE87-CC07920D32D8")]
+    [Guid("F861507A-AFB0-4922-B694-554112103F75")]    
     [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     [ProgId("Verifactu.VfTaxItem")]
@@ -170,27 +170,27 @@ namespace Verifactu
         /// <summary>
         /// Base imponible.
         /// </summary>
-        public decimal TaxBase { get; set; }
+        public float TaxBase { get; set; }
 
         /// <summary>
         /// Tipo impositivo.
         /// </summary>
-        public decimal TaxRate { get; set; }
+        public float TaxRate { get; set; }
 
         /// <summary>
         /// Importe cuota impuesto.
         /// </summary>
-        public decimal TaxAmount { get; set; }
+        public float TaxAmount { get; set; }
 
         /// <summary>
         /// Tipo impositivo recargo.
         /// </summary>
-        public decimal TaxRateSurcharge { get; set; }
+        public float TaxRateSurcharge { get; set; }
 
         /// <summary>
         /// Importe cuota recargo impuesto.
         /// </summary>
-        public decimal TaxAmountSurcharge { get; set; }
+        public float TaxAmountSurcharge { get; set; }
 
         #endregion
 
