@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
 [assembly: AssemblyTitle("VerifactuLib")]
-[assembly: AssemblyDescription("Verifactu x86 32 bits")]
+[assembly: AssemblyDescription("Verifactu x64 64 bits")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Irene Solutions SL")]
 [assembly: AssemblyProduct("VeriFactu.Com.Interop")]
