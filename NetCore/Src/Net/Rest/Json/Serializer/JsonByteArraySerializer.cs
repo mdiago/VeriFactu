@@ -30,7 +30,7 @@
     develop commercial activities involving the VeriFactu software without
     disclosing the source code of your own applications.
     These activities include: offering paid services to customers as an ASP,
-    serving sii XML data on the fly in a web application, shipping VeriFactu
+    serving VeriFactu XML data on the fly in a web application, shipping VeriFactu
     with a closed source product.
     
     For more information, please contact Irene Solutions SL. at this

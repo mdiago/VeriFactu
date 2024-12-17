@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("VerifactuLib")]
+[assembly: AssemblyTitle("Verifactu")]
 [assembly: AssemblyDescription("Verifactu x64 64 bits")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Irene Solutions SL")]
-[assembly: AssemblyProduct("VeriFactu.Com.Interop")]
+[assembly: AssemblyProduct("Verifactu")]
 [assembly: AssemblyCopyright("Copyright ©  Irene Solutions SL 2024")]
 [assembly: AssemblyTrademark("Irene Solutions")]
 [assembly: AssemblyCulture("")]

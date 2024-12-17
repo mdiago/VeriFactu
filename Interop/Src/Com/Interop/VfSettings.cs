@@ -30,7 +30,7 @@
     develop commercial activities involving the VeriFactu software without
     disclosing the source code of your own applications.
     These activities include: offering paid services to customers as an ASP,
-    serving sii XML data on the fly in a web application, shipping VeriFactu
+    serving VeriFactu XML data on the fly in a web application, shipping VeriFactu
     with a closed source product.
     
     For more information, please contact Irene Solutions SL. at this
@@ -53,6 +53,8 @@ namespace Verifactu
     [ComVisible(true)]
     public interface IVfSettings
     {
+
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
         /// <para>Identificación de la versión actual del esquema o
@@ -241,6 +243,10 @@ namespace Verifactu
         /// </summary>
         bool LoggingEnabled { get; set; }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Guarda la configuración.
         /// </summary>
@@ -256,6 +262,8 @@ namespace Verifactu
         /// </summary>
         /// <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
         void SetConfigFileName(string fileName);
+
+        #endregion
 
     }
 
@@ -364,7 +372,7 @@ namespace Verifactu
             var settings = VeriFactu.Config.Settings.Current;
 
             IDVersion = settings.IDVersion;
-                InboxPath = settings.InboxPath;
+            InboxPath = settings.InboxPath;
             OutboxPath = settings.OutboxPath;
             BlockchainPath = settings.BlockchainPath;
             InvoicePath = settings.InvoicePath;
