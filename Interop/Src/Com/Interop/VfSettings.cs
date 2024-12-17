@@ -49,7 +49,7 @@ namespace Verifactu
     /// Interfaz COM para la clase RectificationItem.
     /// </summary>
     [Guid("A6D145BE-EFFA-4B5B-8322-4BA351C510B5")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     [ComVisible(true)]
     public interface IVfSettings
     {
@@ -255,6 +255,7 @@ namespace Verifactu
     /// Representa una línea de impuestos.
     /// </summary>
     [Guid("F04D6533-AAC5-453B-A19D-BB76711ED404")]
+    [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     [ProgId("Verifactu.VfSettings")]
     public class VfSettings : IVfSettings

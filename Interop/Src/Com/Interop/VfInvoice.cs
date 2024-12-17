@@ -51,6 +51,7 @@ namespace Verifactu
     /// Interfaz COM para la clase VfInvoice.
     /// </summary>
     [Guid("8404DFF1-C973-44BA-9DFC-E17A02CDA5E3")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     [ComVisible(true)]
     public interface IVfInvoice
     {
@@ -146,18 +147,21 @@ namespace Verifactu
         /// de que se necesaria.
         /// </summary>
         /// <param name="operationDate">Fecha operación.</param>
+        [DispId(1)]
         void SeOperationDate(DateTime operationDate);
 
         /// <summary>
         /// Obtiene el registro de alta para verifactu.
         /// </summary>
         /// <returns>Registro de alta para verifactu</returns>
+        [DispId(2)]
         string GetRegistroAlta();
 
         /// <summary>
         /// Obtiene el registro de alta para verifactu.
         /// </summary>
         /// <returns>Registro de alta para verifactu</returns>
+        [DispId(3)]
         string GetRegistroAnulacion();
 
         /// <summary>
@@ -167,48 +171,56 @@ namespace Verifactu
         /// <param name="path">Ruta donde se guardará el archivo de mapa de bits.</param>
         /// <returns>Bitmap con la url de validación
         /// codificada en un código QR.</returns>
+        [DispId(4)]
         void GetValidateQr(string path);
 
         /// <summary>
         /// Devuelve la url para la validación del documento.
         /// </summary>
         /// <returns>Url para la validación del documento.</returns>
+        [DispId(5)]
         string GetUrlValidate();
 
         /// <summary>
         /// Añade una línea de impuestos a la factura.
         /// </summary>
         /// <param name="taxItem">Línea de impuestos a añadir.</param>
+        [DispId(6)]
         void InsertTaxItem(IVfTaxItem taxItem);
 
         /// <summary>
         /// Elimina una línea de impuestos de la factura.
         /// </summary>
         /// <param name="index">Número de la línea a eliminar.</param>
+        [DispId(7)]
         void DeleteTaxItemAt(int index);
 
         /// <summary>
         /// Añade una línea de factura rectificada.
         /// </summary>
         /// <param name="rectificationItem">Línea de factura rectificada a añadir.</param>
+        [DispId(8)]
         void InsertRectificationItem(IVfRectificationItem rectificationItem);
 
         /// <summary>
         /// Elimina una línea de factura rectificada de la factura.
         /// </summary>
         /// <param name="index">Número de la línea a eliminar.</param>
+        [DispId(9)]
         void DeleteRectificationItemAt(int index);
 
         /// <summary>
         /// Envía la factura a Verifactu de la AEAT.
         /// </summary>
         /// <returns>Resultado de la operación.</returns>
+        [DispId(10)]
         IVfInvoiceResult Send();
 
         /// <summary>
         /// Envía la anulación de la factura a Verifactu de la AEAT.
         /// </summary>
         /// <returns>Resultado de la operación.</returns>
+        [DispId(11)]
         IVfInvoiceResult Delete();
 
         #endregion
@@ -223,6 +235,7 @@ namespace Verifactu
     /// Representa una factura.
     /// </summary>
     [Guid("BBADB0CE-A83F-455C-8BCE-1D5E200BF5BC")]
+    [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     [ProgId("Verifactu.VfInvoice")]
     public class VfInvoice : IVfInvoice

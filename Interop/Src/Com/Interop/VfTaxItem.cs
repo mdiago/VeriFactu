@@ -49,6 +49,7 @@ namespace Verifactu
     /// Interfaz COM para la clase TaxItem.
     /// </summary>
     [Guid("287B24FC-9D39-4F15-90C0-62266C2C89B3")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     [ComVisible(true)]
     public interface IVfTaxItem
     {
@@ -117,6 +118,7 @@ namespace Verifactu
     /// Representa una línea de impuestos.
     /// </summary>
     [Guid("EEA7E98C-B983-4695-AE87-CC07920D32D8")]
+    [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     [ProgId("Verifactu.VfTaxItem")]
     public class VfTaxItem : IVfTaxItem

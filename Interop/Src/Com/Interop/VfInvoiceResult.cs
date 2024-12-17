@@ -49,6 +49,7 @@ namespace Verifactu
     /// Interfaz COM para la clase RectificationItem.
     /// </summary>
     [Guid("075AAC41-84F6-4C97-A7F5-2E234FCC75F5")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     [ComVisible(true)]
     public interface IVfInvoiceResult
     {
@@ -81,6 +82,7 @@ namespace Verifactu
     /// Resultado de un envio de alta o anulación a la AEAT.
     /// </summary>
     [Guid("674199D6-27FE-4C42-B980-0BEC549CF304")]
+    [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     [ProgId("Verifactu.VfInvoiceResult")]
     public class VfInvoiceResult : IVfInvoiceResult
