@@ -70,12 +70,18 @@ namespace VeriFactu.Xml.Factu.Alta
         R1,
 
         /// <summary>
-        /// Factura Rectificativa (Art. 80.3).
+        /// Factura Rectificativa (Art. 80.3). Cuando el destinatario
+        /// de las operaciones sujetas al Impuesto no haya hecho
+        /// efectivo el pago de las cuotas repercutidas y siempre que,
+        /// con posterioridad al devengo de la operación, se dicte
+        /// auto de declaración de concurso.
         /// </summary>
         R2,
 
         /// <summary>
-        /// Factura Rectificativa (Art. 80.4).
+        /// Factura Rectificativa (Art. 80.4). Cuando los créditos
+        /// correspondientes a las cuotas repercutidas por las
+        /// operaciones gravadas sean total o parcialmente incobrables.
         /// </summary>
         R3,
 
@@ -85,7 +91,8 @@ namespace VeriFactu.Xml.Factu.Alta
         R4,
 
         /// <summary>
-        /// Factura Rectificativa en facturas simplificadas.
+        /// Factura Rectificativa en facturas simplificadas. Factura
+        /// emitida en sustitución de facturas simplificadas facturadas y declaradas
         /// </summary>
         R5
 

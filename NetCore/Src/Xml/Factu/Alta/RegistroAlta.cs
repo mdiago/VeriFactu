@@ -227,7 +227,6 @@ namespace VeriFactu.Xml.Factu.Alta
         /// El ID de las facturas rectificadas, únicamente se rellena
         /// en el caso de rectificación de facturas.
         /// </summary>
-        //[XmlElement("FacturasRectificadas", Namespace = Namespaces.NamespaceSF, Order = 9)]
         [XmlArray("FacturasRectificadas", Namespace = Namespaces.NamespaceSF, Order = 9)]
         [XmlArrayItem(ElementName = "IDFacturaRectificada")]
         public List<IDFactura> FacturasRectificadas { get; set; }
@@ -236,7 +235,8 @@ namespace VeriFactu.Xml.Factu.Alta
         /// El ID de las facturas sustituidas, únicamente se rellena
         /// en el caso de facturas sustituidas.
         /// </summary>
-        [XmlElement("FacturasSustituidas", Namespace = Namespaces.NamespaceSF, Order = 10)]
+        [XmlArray("FacturasSustituidas", Namespace = Namespaces.NamespaceSF, Order = 10)]
+        [XmlArrayItem(ElementName = "IDFacturaSustituida")]
         public List<IDFactura> FacturasSustituidas { get; set; }
 
         /// <summary>
