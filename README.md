@@ -22,7 +22,7 @@ La finalidad de esta biblioteca es la generación, conservación y envío de reg
 
 Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente cualquier tipo de colaboración o sugerencia. 
 
-En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas... y si queremos profundizar más siempre podemos recurrier a la [wiki del proyecto](https://github.com/mdiago/VeriFactu/wiki).
+En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas... y si queremos profundizar más siempre podemos recurrir a la [wiki del proyecto](https://github.com/mdiago/VeriFactu/wiki).
 
 Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
 
