@@ -120,6 +120,12 @@ namespace VeriFactu.Xml.Factu.Alta
         public CalificacionOperacion CalificacionOperacion { get; set; }
 
         /// <summary>
+        ///  Con true se serializa el dato, con false no.
+        /// </summary>
+        [XmlIgnore]
+        public bool CalificacionOperacionSpecified { get; set; }
+
+        /// <summary>
         /// <para>Campo que especifica la causa de exención.</para>
         /// <para>Alfanumérico(2). L10.</para>
         /// </summary>

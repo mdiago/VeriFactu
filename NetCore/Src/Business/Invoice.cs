@@ -138,10 +138,18 @@ namespace VeriFactu.Business
                     Impuesto = taxitem.Tax == 0 ? Impuesto.IVA : taxitem.Tax,
                     ClaveRegimen = taxitem.TaxScheme,
                     CalificacionOperacion = taxitem.TaxType,
+                    CalificacionOperacionSpecified = taxitem.TaxException == CausaExencion.NA,
                     TipoImpositivo = XmlParser.GetXmlDecimal(taxitem.TaxRate),
                     BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxitem.TaxBase),
                     CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount),
-                };                
+                };
+
+                if (taxitem.TaxException != CausaExencion.NA) 
+                {
+                    detalleDesglose.OperacionExentaSpecified = true;
+                    detalleDesglose.OperacionExenta = taxitem.TaxException;
+                    detalleDesglose.CuotaRepercutida = detalleDesglose.TipoImpositivo = null;
+                }
 
                 if (taxitem.TaxAmountSurcharge != 0) 
                 {
