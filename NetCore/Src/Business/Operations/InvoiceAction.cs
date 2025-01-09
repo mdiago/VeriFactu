@@ -75,6 +75,65 @@ namespace VeriFactu.Business.Operations
 
         #region Métodos Privados de Instancia
 
+
+        /// <summary>
+        /// Devuelve errores de las validaciones de negocio según las
+        /// especificaciones.
+        /// </summary>
+        /// <returns>Lista de errores de validación según las especificaciones.</returns>
+        internal virtual List<string> GetInvoiceValidationErrors() 
+        {
+
+            var validation = new InvoiceValidation(this);
+            return validation.GetErrors();
+
+        }
+
+        /// <summary>
+        /// Devuelve una lista con los errores de la
+        /// línea de impuesto por el incumplimiento de reglas de negocio.
+        /// </summary>
+        /// <returns>Lista con los errores encontrados.</returns>
+        private List<string> GetTaxItemValidationErrors(TaxItem taxItem) 
+        {
+
+            var errors = new List<string>();
+
+            // Validaciones en líneas exentas
+            if (taxItem.TaxException != VeriFactu.Xml.Factu.Alta.CausaExencion.NA) 
+            { 
+            
+                if(taxItem.TaxRate + taxItem.TaxAmount + taxItem.TaxRateSurcharge + taxItem.TaxAmountSurcharge != 0)
+                    errors.Add($"Taxitem [{taxItem}] con TaxException asignada '{taxItem.TaxException}' no puede tener un valor distinto de 0 en las propiedades" +
+                        $" TaxRate, TaxAmount, TaxRateSurcharge y TaxAmountSurcharge.");
+
+            }
+
+            return errors;
+
+        }
+
+        /// <summary>
+        /// Devuelve una lista con los errores de las
+        /// líneas de impuesto por el incumplimiento de reglas de negocio.
+        /// </summary>
+        /// <returns>Lista con los errores encontrados.</returns>
+        private List<string> GetTaxItemsValidationErrors()
+        {
+
+            var errors = new List<string>();
+
+            foreach (var taxItem in Invoice.TaxItems)
+                errors.AddRange(GetTaxItemValidationErrors(taxItem));
+
+            return errors;
+
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Devuelve una lista con los errores de la
         /// factura por el incumplimiento de reglas de negocio.
@@ -92,22 +151,10 @@ namespace VeriFactu.Business.Operations
             if (string.IsNullOrEmpty(Invoice.SellerName))
                 errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
 
+            errors.AddRange(GetTaxItemsValidationErrors());
             errors.AddRange(GetInvoiceValidationErrors());
 
             return errors;
-
-        }
-
-        /// <summary>
-        /// Devuelve errores de las validaciones de negocio según las
-        /// especificaciones.
-        /// </summary>
-        /// <returns>Lista de errores de validación según las especificaciones.</returns>
-        internal virtual List<string> GetInvoiceValidationErrors() 
-        {
-
-            var validation = new InvoiceValidation(this);
-            return validation.GetErrors();
 
         }
 
