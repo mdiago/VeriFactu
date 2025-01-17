@@ -16,6 +16,7 @@ La finalidad de esta biblioteca es la generación, conservación y envío de reg
 > :globe_with_meridians: [Acceso al API REST](https://facturae.irenesolutions.com/verifactu/go)
 > 
 > Con el API REST disponemos de una herramienta de trabajo sencilla sin la complicación de preocuparnos de la gestión de certificados digitales.
+> ( :nerd_face: [Declaración responsable del API REST](https://github.com/mdiago/VeriFactu/blob/main/NetFramework/Doc/Legal/Declaracion%20Responsable%20v1.0.17-beta.pdf)).
 
 <br>
 <br>
