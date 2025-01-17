@@ -123,8 +123,9 @@ namespace VeriFactu.Business.Operations
 
             var errors = new List<string>();
 
-            foreach (var taxItem in Invoice.TaxItems)
-                errors.AddRange(GetTaxItemValidationErrors(taxItem));
+            if(Invoice.TaxItems != null)
+                foreach (var taxItem in Invoice.TaxItems)
+                    errors.AddRange(GetTaxItemValidationErrors(taxItem));
 
             return errors;
 
