@@ -53,44 +53,44 @@ namespace VeriFactu.Xml.Factu.Alta
         /// Operación de régimen general ('01').
         /// </summary>
         [XmlEnum("01")]
-        RegimenGeneral,
+        RegimenGeneral = 1,
 
         /// <summary>
         /// Exportación ('02').
         /// </summary>
         [XmlEnum("02")]
-        Exportacion,
+        Exportacion = 2,
 
         /// <summary>
         /// Operaciones a las que se aplique el régimen especial de bienes usados, 
         /// objetos de arte, antigüedades y objetos de colección ('03').
         /// </summary>
         [XmlEnum("03")]
-        Rebu,
+        Rebu = 3,
 
         /// <summary>
         /// Régimen especial del oro de inversión ('04').
         /// </summary>
         [XmlEnum("04")]
-        OroInversion,
+        OroInversion = 4,
 
         /// <summary>
         /// Régimen especial de las agencias de viajes ('05').
         /// </summary>
         [XmlEnum("05")]
-        AgenciasViajes,
+        AgenciasViajes = 5,
 
         /// <summary>
         /// Régimen especial grupo de entidades en IVA/IGIC (Nivel Avanzado) ('06').
         /// </summary>
         [XmlEnum("06")]
-        GrupoEntidades,
+        GrupoEntidades = 6,
 
         /// <summary>
         /// Régimen especial del criterio de caja ('07').
         /// </summary>
         [XmlEnum("07")]
-        Recc,
+        Recc = 7,
 
         /// <summary>
         /// <para> L8A: Operaciones sujetas al IPSI  / IGIC (Impuesto sobre la Producción, los Servicios y la Importación  / Impuesto General Indirecto Canario)</para>
@@ -98,7 +98,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// ('08').
         /// </summary>
         [XmlEnum("08")]
-        IpsiIgic,
+        IpsiIgic = 8,
 
         /// <summary>
         /// Facturación de las prestaciones de servicios
@@ -106,7 +106,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// en nombre y por cuenta ajena (D.A.4ª RD1619/2012) ('09').
         /// </summary>
         [XmlEnum("09")]
-        MediadoresAgenciasViaje,
+        MediadoresAgenciasViaje = 9,
 
         /// <summary>
         /// Cobros por cuenta de terceros de honorarios profesionales
@@ -117,13 +117,13 @@ namespace VeriFactu.Xml.Factu.Alta
         /// que realicen estas funciones de cobro ('10').
         /// </summary>
         [XmlEnum("10")]
-        CobroTerceros,
+        CobroTerceros = 10,
 
         /// <summary>
         /// Operaciones de arrendamiento de local de negocio ('11').
         /// </summary>
         [XmlEnum("11")]
-        ArrendamientoLocalNecocio,
+        ArrendamientoLocalNecocio = 11,
 
         /// <summary>
         /// <para> L8A: Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
@@ -131,7 +131,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para> ('14')</para>
         /// </summary>
         [XmlEnum("14")]
-        ObraPteDevengoAdmonPublica,
+        ObraPteDevengoAdmonPublica = 14,
 
         /// <summary>
         /// <para> L8A: Factura con IVA pendiente de devengo en operaciones de tracto sucesivo.</para>
@@ -139,7 +139,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para> ('15')</para>
         /// </summary>
         [XmlEnum("15")]
-        TractoSucesivoPteDevengo,
+        TractoSucesivoPteDevengo = 15,
 
         /// <summary>
         /// <para> L8A: OSS e IOSS IVA.</para>
@@ -147,7 +147,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para> ('17')</para>
         /// </summary>
         [XmlEnum("17")]
-        IossRegEspMin,
+        IossRegEspMin = 17,
 
         /// <summary>
         /// <para> L8A: Recargo de equivalencia.</para>
@@ -155,7 +155,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para> ('18')</para>
         /// </summary>
         [XmlEnum("18")]
-        RecEquivPeqEmp,
+        RecEquivPeqEmp = 18,
 
         /// <summary>
         /// <para> L8A: Operaciones de actividades incluidas en el Régimen Especial de Agricultura, Ganadería y Pesca (REAGYP).</para>
@@ -163,13 +163,13 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para> ('19')</para>
         /// </summary>
         [XmlEnum("19")]
-        RegimenEspecialAgriculturaArt25Ley19_1994,
+        RegimenEspecialAgriculturaArt25Ley19_1994 = 19,
 
         /// <summary>
         /// Régimen simplificado sólo para IVA ('20').
         /// </summary>
         [XmlEnum("20")]
-        RegimenSimplificado
+        RegimenSimplificado = 20
 
     }
 
