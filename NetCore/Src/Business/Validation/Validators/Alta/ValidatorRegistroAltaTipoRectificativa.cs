@@ -82,13 +82,13 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             if (!_IsRectificativa && _RegistroAlta.TipoRectificativaSpecified)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                   $" Solo podrá incluirse este campo si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
+                   $" Solo podrá incluirse el campo TipoRectificativa si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
                    $" “R4” o “R5”.");
 
             // Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
             if (_IsRectificativa && !_RegistroAlta.TipoRectificativaSpecified)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                   $" Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
+                   $" Campo TipoRectificativa obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
 
             return result;
 

@@ -48,6 +48,11 @@ namespace VeriFactu.Xml.Factu.Alta
     {
 
         /// <summary>
+        /// No asignada tipo rectificativa.
+        /// </summary>
+        NA,
+
+        /// <summary>
         /// Por sustitución.
         /// </summary>
         S,

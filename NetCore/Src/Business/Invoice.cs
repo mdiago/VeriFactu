@@ -251,6 +251,12 @@ namespace VeriFactu.Business
         public TipoFactura InvoiceType { get; set; }
 
         /// <summary>
+        ///  Identifica si el tipo de factura rectificativa
+        ///  es por sustitución o por diferencia (L3).
+        /// </summary>
+        public TipoRectificativa RectificationType { get; set; }
+
+        /// <summary>
         /// Identificador de la factura.
         /// </summary>
         public string InvoiceID { get; private set; }
@@ -386,7 +392,10 @@ namespace VeriFactu.Business
             {
 
                 // Establecemos el tipo de rectificativa (Por diferencias es el valor por defecto)
-                registroAlta.TipoRectificativa = TipoRectificativa.I;
+
+                if (RectificationType == TipoRectificativa.NA)
+                    registroAlta.TipoRectificativa = TipoRectificativa.I; // Por defecto
+                
                 registroAlta.TipoRectificativaSpecified = true;
 
                 // Añadimos las factura rectificadas
@@ -400,6 +409,12 @@ namespace VeriFactu.Business
                         FechaExpedicionFactura = XmlParser.GetXmlDate(rectification.InvoiceDate)
                     });
 
+            }
+
+            if (RectificationType != TipoRectificativa.NA)
+            {
+                registroAlta.TipoRectificativa = RectificationType;
+                registroAlta.TipoRectificativaSpecified = true;
             }
 
             return registroAlta;
