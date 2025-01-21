@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
-    <Version>1.0.20</Version>
+    <Version>1.0.19</Version>
     <Title>VeriFactu</Title>
     <Authors>Manuel Diago</Authors>
     <Company>Irene Solutions SL</Company>
@@ -17,8 +17,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <AssemblyVersion>1.0.1.9</AssemblyVersion>
+    <FileVersion>1.0.1.9</FileVersion>
     <AssemblyName>VeriFactu</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -39,10 +39,10 @@
     </ItemGroup>
 	   <ItemGroup>
       <TfmSpecificPackageFile Include="..\NetFramework472\bin\Debug\VeriFactu.dll">
-        <PackagePath>lib/net472</PackagePath>
+        <PackagePath>lib/net47</PackagePath>
       </TfmSpecificPackageFile>
        <TfmSpecificPackageFile Include="..\NetFramework472\bin\Debug\VeriFactu.xml">
-        <PackagePath>lib/net472</PackagePath>
+        <PackagePath>lib/net47</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target> 
