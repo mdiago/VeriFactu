@@ -180,6 +180,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAlta.cs">
       <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAlta.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCampoObligatorio.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCampoObligatorio.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCuotaTotal.cs">
       <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaCuotaTotal.cs</Link>
     </Compile>

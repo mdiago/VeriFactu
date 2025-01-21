@@ -135,6 +135,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var result = new List<string>();
 
+            // 0. Campos obligatorios
+            result.AddRange(new ValidatorRegistroAltaCampoObligatorio(_Envelope, _RegistroAlta).GetErrors());
             // 1. Agrupación IDFactura
             result.AddRange(new ValidatorRegistroAltaIDFactura(_Envelope, _RegistroAlta).GetErrors());
             // 2. RechazoPrevio
