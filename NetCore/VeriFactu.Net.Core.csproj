@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
-    <Version>1.0.20</Version>
+    <Version>1.0.21</Version>
     <Title>VeriFactu</Title>
     <Authors>Manuel Diago</Authors>
     <Company>Irene Solutions SL</Company>
     <Description>Generación, conservación y envío facturas VERI*FACTU</Description>
-    <Copyright>Irene Solutions SL 2024</Copyright>
+    <Copyright>Irene Solutions SL 2025</Copyright>
     <PackageProjectUrl>https://github.com/mdiago/VeriFactu</PackageProjectUrl>
     <PackageIcon>VeriFactu.png</PackageIcon>
     <RepositoryUrl>https://github.com/mdiago/VeriFactu</RepositoryUrl>
@@ -17,8 +17,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <AssemblyVersion>1.0.2.1</AssemblyVersion>
+    <FileVersion>1.0.2.1</FileVersion>
     <AssemblyName>VeriFactu</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>

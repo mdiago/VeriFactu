@@ -133,15 +133,26 @@ namespace VeriFactu.Business
             foreach (var taxitem in TaxItems)
             {
 
+                // Valores por defecto
+                var tax = Enum.IsDefined(typeof(Impuesto), taxitem.Tax) ? taxitem.Tax : Impuesto.IVA;
+                var taxScheme = Enum.IsDefined(typeof(ClaveRegimen), taxitem.TaxScheme) ? taxitem.TaxScheme : ClaveRegimen.RegimenGeneral;
+
+                // Máximo dos decimales
+                var taxRate = Math.Round(taxitem.TaxRate, 2);
+                var taxBase = Math.Round(taxitem.TaxBase, 2);
+                var taxAmount = Math.Round(taxitem.TaxAmount, 2);
+                var taxRateSurcharge = Math.Round(taxitem.TaxRateSurcharge, 2);
+                var taxAmountSurcharge = Math.Round(taxitem.TaxAmountSurcharge, 2);
+
                 var detalleDesglose = new DetalleDesglose()
                 {
-                    Impuesto = taxitem.Tax == 0 ? Impuesto.IVA : taxitem.Tax,
-                    ClaveRegimen = taxitem.TaxScheme,
+                    Impuesto = tax,
+                    ClaveRegimen = taxScheme,
                     CalificacionOperacion = taxitem.TaxType,
                     CalificacionOperacionSpecified = taxitem.TaxException == CausaExencion.NA,
-                    TipoImpositivo = XmlParser.GetXmlDecimal(taxitem.TaxRate),
-                    BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxitem.TaxBase),
-                    CuotaRepercutida = XmlParser.GetXmlDecimal(taxitem.TaxAmount),
+                    TipoImpositivo = XmlParser.GetXmlDecimal(taxRate),
+                    BaseImponibleOimporteNoSujeto = XmlParser.GetXmlDecimal(taxBase),
+                    CuotaRepercutida = XmlParser.GetXmlDecimal(taxAmount),
                 };
 
                 if (taxitem.TaxException != CausaExencion.NA) 
@@ -154,8 +165,8 @@ namespace VeriFactu.Business
                 if (taxitem.TaxAmountSurcharge != 0) 
                 {
 
-                    detalleDesglose.TipoRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxRateSurcharge);
-                    detalleDesglose.CuotaRecargoEquivalencia = XmlParser.GetXmlDecimal(taxitem.TaxAmountSurcharge);
+                    detalleDesglose.TipoRecargoEquivalencia = XmlParser.GetXmlDecimal(taxRateSurcharge);
+                    detalleDesglose.CuotaRecargoEquivalencia = XmlParser.GetXmlDecimal(taxAmountSurcharge);
 
                 }
 
@@ -361,7 +372,11 @@ namespace VeriFactu.Business
         public RegistroAlta GetRegistroAlta()
         {
 
-            CalculateTotals();            
+            CalculateTotals();
+
+            // Máximo dos decimales
+            var totalTaxAmount = Math.Round(TotalTaxOutput + TotalTaxOutputSurcharge, 2);
+            var totalAmount = Math.Round(TotalAmount, 2);
 
             var registroAlta = new RegistroAlta()
             {
@@ -378,8 +393,8 @@ namespace VeriFactu.Business
                 DescripcionOperacion = Text,
                 Destinatarios = GetDestinatarios(),
                 Desglose = GetDesglose(),
-                CuotaTotal = XmlParser.GetXmlDecimal(TotalTaxOutput + TotalTaxOutputSurcharge),
-                ImporteTotal = XmlParser.GetXmlDecimal(TotalAmount),
+                CuotaTotal = XmlParser.GetXmlDecimal(totalTaxAmount),
+                ImporteTotal = XmlParser.GetXmlDecimal(totalAmount),
                 SistemaInformatico = Settings.Current.SistemaInformatico,
                 TipoHuella = TipoHuella.Sha256,
                 TipoHuellaSpecified = true
