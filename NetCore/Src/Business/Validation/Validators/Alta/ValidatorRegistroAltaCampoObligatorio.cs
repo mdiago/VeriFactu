@@ -147,7 +147,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Destinatarios
 
-            if (_RegistroAlta.Destinatarios.Count > 0)
+            if (_RegistroAlta.Destinatarios?.Count > 0)
             {
 
                 foreach (var destinatario in _RegistroAlta.Destinatarios)
