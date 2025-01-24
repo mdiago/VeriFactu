@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -498,8 +499,15 @@ namespace Verifactu
         {
 
             _Invoice = GetInvoice();
-            var entry = new VeriFactu.Business.InvoiceEntry(_Invoice);
-            System.IO.File.WriteAllBytes(path, entry.Registro.GetValidateQr());
+
+            // Obtenemos una instancia de la clase RegistroAlta a partir de
+            // la instancia del objeto de negocio Invoice
+            var registro = _Invoice.GetRegistroAlta();
+
+            // Obtenemos la imágen del QR
+            var bmQr = registro.GetValidateQr();
+
+            File.WriteAllBytes(path, bmQr);
 
         }
 
