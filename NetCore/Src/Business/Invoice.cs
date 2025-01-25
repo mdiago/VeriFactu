@@ -128,6 +128,10 @@ namespace VeriFactu.Business
         private List<DetalleDesglose> GetDesglose() 
         {
 
+            if (TaxItems == null || TaxItems?.Count == 0) 
+                throw new InvalidOperationException("No se puede obtener el bloque obligatorio" +
+                    " 'DetalleDesglose' ya que la lista de TaxItems no contiene elementos.");
+
             var desglose = new List<DetalleDesglose>(); 
 
             foreach (var taxitem in TaxItems)
