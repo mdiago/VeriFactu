@@ -529,8 +529,11 @@ namespace VeriFactu.Business.Operations
         /// <param name="xml">Archivo xml en formato binario a la AEAT.</param>
         /// /// <param name="op"> Acción para el webservice.</param>
         /// <returns>Devuelve las respuesta de la AEAT.</returns>
-        public static string SendXmlBytes(byte[] xml, string op)
+        public static string SendXmlBytes(byte[] xml, string op = null)
         {
+
+            if (op == null)
+                op = _Action;
 
             XmlDocument xmlDocument = new XmlDocument();
 
