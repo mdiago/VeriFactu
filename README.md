@@ -1,3 +1,6 @@
+
+<meta name="google-site-verification" content="OBmGTPTtEme81CwpYWRLxQWoG2t6tjANpNFTN9w1Ers" />
+
 ![image](https://github.com/mdiago/VeriFactu/assets/22330809/97e3b3d1-3e54-4834-bf71-911743cee8d7)
 
 # VeriFactu - Facturación sistema VERI*FACTU de la AEAT
