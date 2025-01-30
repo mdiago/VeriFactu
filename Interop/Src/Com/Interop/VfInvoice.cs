@@ -65,6 +65,12 @@ namespace Verifactu
         string InvoiceType { get; set; }
 
         /// <summary>
+        ///  Identifica si el tipo de factura rectificativa
+        ///  es por sustitución o por diferencia (L3).
+        /// </summary>
+        string RectificationType { get; set; }
+
+        /// <summary>
         /// Identificador de la factura.
         /// </summary>
         string InvoiceID { get; set; }
@@ -302,6 +308,15 @@ namespace Verifactu
 
             result.InvoiceType = tipoFactura;
 
+            var rectificationType = string.IsNullOrEmpty(RectificationType) ? "NA" : RectificationType;
+
+            if (!Enum.TryParse(rectificationType, out VeriFactu.Xml.Factu.Alta.TipoRectificativa tipoRectificativa))
+                throw new ArgumentException($"El valor de RectificationType '{rectificationType}' no es válido." +
+                    $" Consulte en las especificaciones de la AEAT la lista: Identifica si el tipo de factura rectificativa" +
+                    $" es por sustitución o por diferencia (L3).");
+
+            result.RectificationType = tipoRectificativa;
+
             var buyerIDType = BuyerIDType == 0 ? 2 : BuyerIDType;
 
             var buyerIDTypes = new int[] { 2, 3, 4, 5, 6, 7 };
@@ -328,6 +343,12 @@ namespace Verifactu
         /// <para>Clave del tipo de factura (L2).</para>
         /// </summary>
         public string InvoiceType { get; set; }
+
+        /// <summary>
+        ///  Identifica si el tipo de factura rectificativa
+        ///  es por sustitución o por diferencia (L3).
+        /// </summary>
+        public string RectificationType { get; set; }
 
         /// <summary>
         /// Identificador de la factura.
