@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
-    <Version>1.0.21</Version>
+    <Version>1.0.22</Version>
     <Title>VeriFactu</Title>
     <Authors>Manuel Diago</Authors>
     <Company>Irene Solutions SL</Company>
@@ -17,8 +17,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.0.2.1</AssemblyVersion>
-    <FileVersion>1.0.2.1</FileVersion>
+    <AssemblyVersion>1.0.2.2</AssemblyVersion>
+    <FileVersion>1.0.2.2</FileVersion>
     <AssemblyName>VeriFactu</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -37,12 +37,20 @@
         <PackagePath>lib/net48</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
-	   <ItemGroup>
+	<ItemGroup>
       <TfmSpecificPackageFile Include="..\NetFramework472\bin\Debug\VeriFactu.dll">
         <PackagePath>lib/net472</PackagePath>
       </TfmSpecificPackageFile>
        <TfmSpecificPackageFile Include="..\NetFramework472\bin\Debug\VeriFactu.xml">
         <PackagePath>lib/net472</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
+	<ItemGroup>
+      <TfmSpecificPackageFile Include="..\NetFramework461\bin\Debug\VeriFactu.dll">
+        <PackagePath>lib/net461</PackagePath>
+      </TfmSpecificPackageFile>
+       <TfmSpecificPackageFile Include="..\NetFramework461\bin\Debug\VeriFactu.xml">
+        <PackagePath>lib/net461</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
   </Target> 
@@ -69,7 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="VeriFactu.png">
+    <None Include="VeriFactu.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

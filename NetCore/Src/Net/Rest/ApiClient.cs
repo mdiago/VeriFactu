@@ -42,7 +42,9 @@ using System.Dynamic;
 using System.Net;
 using System.Text;
 using VeriFactu.Business;
+using VeriFactu.Common;
 using VeriFactu.Config;
+using VeriFactu.Net.Rest.Json;
 using VeriFactu.Net.Rest.Json.Parser;
 
 namespace VeriFactu.Net.Rest
@@ -80,20 +82,20 @@ namespace VeriFactu.Net.Rest
         /// Realiza una llamada al API y recupera el 
         /// resultado.
         /// </summary>
-        /// <param name="invoice">Factura para realizar la llamada.</param>
+        /// <param name="input">Entrada para realizar la llamada.</param>
         /// <param name="url">Endpoint de la llamada.</param>
         /// <returns>Resultado llamada API.</returns>
-        public static ExpandoObject Post(Invoice invoice, string url)
+        public static ExpandoObject Post(JsonSerializable input, string url)
         {
 
             byte[] buff = null;
 
-            invoice.ServiceKey = Settings.Current.Api.ServiceKey;
+            input.ServiceKey = Settings.Current.Api.ServiceKey;
 
             using (WebClient wc = new WebClient())
             {
                 wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                buff = wc.UploadData(url, Encoding.UTF8.GetBytes(invoice.ToJson()));
+                buff = wc.UploadData(url, Encoding.UTF8.GetBytes(input.ToJson()));
             }
 
             var json = Encoding.UTF8.GetString(buff);
@@ -167,6 +169,30 @@ namespace VeriFactu.Net.Rest
 
             var invoice = new Invoice("", new DateTime(1, 1, 1), "");
             return Post(invoice, Api.EndPointGetSellers);
+
+        }
+
+        /// <summary>
+        /// Crea Ct.
+        /// </summary>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject Ct()
+        {
+
+            try
+            {
+
+                var ct = new Ct();
+                return Post(ct, Api.EndPointCt);
+
+            }
+            catch (Exception ex)
+            {
+
+                Utils.Log($"Error ApiClient.Ct:\n{ex.Message}");
+                return null;
+
+            }
 
         }
 

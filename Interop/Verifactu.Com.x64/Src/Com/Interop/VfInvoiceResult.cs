@@ -1,4 +1,4 @@
-﻿/*
+﻿/* 
     This file is part of the VeriFactu (R) project.
     Copyright (c) 2023-2024 Irene Solutions SL
     Authors: Irene Solutions SL.
@@ -37,34 +37,69 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Net.Rest
+using System;
+using System.Runtime.InteropServices;
+
+namespace Verifactu
 {
 
+    #region Interfaz COM
+
     /// <summary>
-    /// Representa el API REST de Irene Solutions para Verifactu.
+    /// Interfaz COM para la clase RectificationItem.
     /// </summary>
-    public class Api
+    [Guid("075AAC41-84F6-4C97-A7F5-2E234FCC75F5")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    [ComVisible(true)]
+    public interface IVfInvoiceResult
     {
 
-        #region Propiedades Privadas de Instacia
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Endpoint ct.
+        /// Código del resultado de la operación. '0' si todo
+        /// ha ido vien.
         /// </summary>
-        internal string EndPointCt { get; set; }
+        string ResultCode { get; set; }
+
+        /// <summary>
+        /// Mensaje del resultado de la petición. 'OK' si todo ha ido
+        /// bien.
+        /// </summary>
+        string ResultMessage { get; set; }
+
+        /// <summary>
+        /// Código seguro de verificación devuelto por la AEAT
+        /// si todo ha ido bien.
+        /// </summary>
+        string CSV { get; set; }
 
         #endregion
+
+    }
+
+    #endregion
+
+    #region Clase COM
+
+    /// <summary>
+    /// Resultado de un envio de alta o anulación a la AEAT.
+    /// </summary>
+    [Guid("674199D6-27FE-4C42-B980-0BEC549CF304")]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ComVisible(true)]
+    [ProgId("Verifactu.VfInvoiceResult")]
+    public class VfInvoiceResult : IVfInvoiceResult
+    {
 
         #region Construtores de Instancia
 
         /// <summary>
-        /// Constructor.
+        /// Constructor. Para COM necesitamos un constructor
+        /// sin parametros.
         /// </summary>
-        public Api()
+        public VfInvoiceResult()
         {
-
-            EndPointCt = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Ct/Create/Test/v17";
-
         }
 
         #endregion
@@ -72,39 +107,27 @@ namespace VeriFactu.Net.Rest
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Endpoint creación de factruas.
+        /// Código del resultado de la operación. '0' si todo
+        /// ha ido vien.
         /// </summary>
-        public string EndPointCreate { get; set; }
+        public string ResultCode { get; set; }
 
         /// <summary>
-        /// Endpoint anulación de factruas.
+        /// Mensaje del resultado de la petición. 'OK' si todo ha ido
+        /// bien.
         /// </summary>
-        public string EndPointCancel { get; set; }
+        public string ResultMessage { get; set; }
 
         /// <summary>
-        /// Endpoint generación código QR.
+        /// Código seguro de verificación devuelto por la AEAT
+        /// si todo ha ido bien.
         /// </summary>
-        public string EndPointGetQrCode { get; set; }
-
-        /// <summary>
-        /// Endpoint consulta emisores.
-        /// </summary>
-        public string EndPointGetSellers { get; set; }
-
-        /// <summary>
-        /// Endpoint consulta registros envíados.
-        /// </summary>
-        public string EndPointGetRecords { get; set; }
-
-        /// <summary>
-        /// Clave de acceso al API REST para Verifactu de
-        /// Irene Solutions. Puede conseguir su clave en
-        /// https://facturae.irenesolutions.com/verifactu/go
-        /// </summary>
-        public string ServiceKey { get; set; }
+        public string CSV { get; set; }
 
         #endregion
 
     }
+
+    #endregion
 
 }

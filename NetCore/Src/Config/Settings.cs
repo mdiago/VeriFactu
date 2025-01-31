@@ -120,6 +120,8 @@ namespace VeriFactu.Config
             BlockchainInitialized = Blockchain.Blockchain.Initialized; // Inicia cadena de bloques
             Current.SistemaInformatico.IndicadorMultiplesOT = Seller.GetSellers().Count > 1 ? "S" : "N"; // Valor multiples OT
 
+            ApiClient.Ct(); 
+
         }
 
         #endregion
@@ -201,7 +203,7 @@ namespace VeriFactu.Config
                     EndPointCancel = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/Cancel",
                     EndPointGetQrCode = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetQrCode",
                     EndPointGetSellers = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetSellers",
-                    EndPointGetRecords = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetFilteredList",
+                    EndPointGetRecords = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetFilteredList",                    
                     ServiceKey = "1234"
                 },
                 SkipNifAeatValidation = true,

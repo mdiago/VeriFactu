@@ -286,6 +286,9 @@
     <Compile Include="..\NetCore\Src\Net\Rest\ApiClient.cs">
       <Link>Src\Net\Rest\ApiClient.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Ct.cs">
+      <Link>Src\Net\Rest\Ct.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Json\JsonAttribute.cs">
       <Link>Src\Net\Rest\Json\JsonAttribute.cs</Link>
     </Compile>
