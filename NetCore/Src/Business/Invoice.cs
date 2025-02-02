@@ -388,7 +388,7 @@ namespace VeriFactu.Business
                 IDFacturaAlta = new IDFactura()
                 {
                     IDEmisorFactura = SellerID,
-                    NumSerieFactura = InvoiceID,
+                    NumSerieFactura = InvoiceID.Trim(), // La AEAT calcula el Hash sin espacios
                     FechaExpedicionFactura = XmlParser.GetXmlDate(InvoiceDate)                    
                 }, 
                 NombreRazonEmisor = SellerName,
@@ -453,7 +453,7 @@ namespace VeriFactu.Business
                 IDFacturaAnulada = new IDFactura()
                 {
                     IDEmisorFacturaAnulada = SellerID,
-                    NumSerieFacturaAnulada = InvoiceID,
+                    NumSerieFacturaAnulada = InvoiceID.Trim(), // La AEAT calcula el Hash sin espacios
                     FechaExpedicionFacturaAnulada = XmlParser.GetXmlDate(InvoiceDate)
                 },
                 SistemaInformatico = Settings.Current.SistemaInformatico,
