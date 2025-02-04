@@ -418,15 +418,15 @@ namespace VeriFactu.Business
                 registroAlta.TipoRectificativaSpecified = true;
 
                 // Añadimos las factura rectificadas
-                registroAlta.FacturasRectificadas = new List<IDFactura>();
+                registroAlta.FacturasRectificadas = new IDFactura[RectificationItems.Count];
 
-                foreach (var rectification in RectificationItems)
-                    registroAlta.FacturasRectificadas.Add(new IDFactura()
+                for(int rectificationIndex = 0; rectificationIndex< RectificationItems.Count; rectificationIndex++)
+                    registroAlta.FacturasRectificadas[rectificationIndex] =new IDFactura()
                     {
                         IDEmisorFactura = SellerID,
-                        NumSerieFactura = rectification.InvoiceID,
-                        FechaExpedicionFactura = XmlParser.GetXmlDate(rectification.InvoiceDate)
-                    });
+                        NumSerieFactura = RectificationItems[rectificationIndex].InvoiceID,
+                        FechaExpedicionFactura = XmlParser.GetXmlDate(RectificationItems[rectificationIndex].InvoiceDate)
+                    };
 
             }
 

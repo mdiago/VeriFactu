@@ -82,10 +82,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             if (facturasRecticadas != null)
             {
 
-                if (facturasRecticadas.Count > 1000)
+                if (facturasRecticadas.Length > 1000)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                        $" La colección FacturasRectificadas no puede" +
-                       $" contener más de 1000 elementos y contiene {facturasRecticadas.Count}”.");
+                       $" contener más de 1000 elementos y contiene {facturasRecticadas.Length}”.");
 
 
                 if (!_IsRectificativa)

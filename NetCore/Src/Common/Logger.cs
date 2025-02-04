@@ -156,6 +156,11 @@ namespace VeriFactu.Common
         public void Save(string path = null)
         {
 
+            var text = $"{this}";
+
+            if (string.IsNullOrEmpty(text))
+                return;
+
             path = string.IsNullOrEmpty(path) ? $"{Settings.Current.LogPath}{DateTime.Now:yyyyMMddHHmmss}.txt" : path;
             File.WriteAllText(path, $"{this}");
 

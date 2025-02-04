@@ -939,14 +939,6 @@
             <returns>Si todo funciona correctamente devuelve null.
             En caso contrario devuelve una excepción con el error.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetResponseEnvelope(System.String)">
-            <summary>
-            Serializa como sobre soap un string de respuesta
-            de la AEAT.
-            </summary>
-            <param name="response">Texto con la respuesta xml de la AEAT.</param>
-            <returns>Objeto Envelope con la respuesta.</returns>
-        </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.ProcessResponse(System.String)">
             <summary>
             Procesa y guarda respuesta de la AEAT al envío.
@@ -1069,6 +1061,14 @@
             </summary>
             <param name="envelope">Sobre a enviar.</param>
             <returns>Respuesta del servidor.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetResponseEnvelope(System.String)">
+            <summary>
+            Serializa como sobre soap un string de respuesta
+            de la AEAT.
+            </summary>
+            <param name="response">Texto con la respuesta xml de la AEAT.</param>
+            <returns>Objeto Envelope con la respuesta.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetXml">
             <summary>
@@ -6578,22 +6578,6 @@
             Datos de contexto de un suministro.
             </summary>
         </member>
-        <member name="F:VeriFactu.Xml.Factu.Cabecera._IDVersions">
-            <summary>
-            Versiones VeriFactu.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Xml.Factu.Cabecera._Version">
-            <summary>
-            Versión VER*FACTU.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Cabecera.IDVersion">
-            <summary>
-            <para>Identificación de la versión.</para>
-            <para>Alfanumérico(3)L15</para>
-            </summary>
-        </member>
         <member name="P:VeriFactu.Xml.Factu.Cabecera.ObligadoEmision">
             <summary>
             Obligado que suministra la información.
@@ -6607,28 +6591,14 @@
             de los registros de facturación.
             </summary>
         </member>
-        <member name="P:VeriFactu.Xml.Factu.Cabecera.TipoRegistroAEAT">
+        <member name="P:VeriFactu.Xml.Factu.Cabecera.RemisionVoluntaria">
             <summary>
-            <para>Tipo de registro (alta inicial, alta sustitutiva). 
-            Contiene la operación a realizar en el sistema de la AEAT, 
-            lo que forma parte del detalle de las circunstancias de 
-            generación del registro.</para>
-            <para>Alfanumérico (2) L16</para>
+            Datos referentes a la remisión voluntaria.
             </summary>
         </member>
-        <member name="P:VeriFactu.Xml.Factu.Cabecera.TipoRegistroAEATSpecified">
+        <member name="P:VeriFactu.Xml.Factu.Cabecera.RemisionRequerimiento">
             <summary>
-             Con true se serializa el dato, con false no.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Cabecera.FechaFinVeriFactu">
-            <summary>
-            <para>Última fecha en la que el sistema informático actuará 
-            como VERIFACTU. Después de la misma, el sistema dejará de 
-            funcionar como VERI*FACTU. Este campo forma parte del detalle 
-            de las circunstancias de generación de los registros de 
-            facturación actuales y futuros.</para>
-            <para>Fecha (dd-mm-yyyy)</para>
+            Datos referentes a la remisión por requerimiento de la AEAT.
             </summary>
         </member>
         <member name="M:VeriFactu.Xml.Factu.Cabecera.ToString">
@@ -8413,6 +8383,77 @@
             </summary>
             <returns> Representación textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.Xml.Factu.RemisionRequerimiento">
+            <summary>
+            Datos de la remisión por requerimiento de la AEAT del registro.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.RemisionRequerimiento.RefRequerimiento">
+            <summary>
+            <para>Sólo cuando el motivo de la remisión sea para dar respuesta a un
+            requerimiento de información previo efectuado por parte de la AEAT,
+            se deberá indicar aquí la referencia de dicho requerimiento, lo que
+            forma parte del detalle de las circunstancias de generación del
+            registro de facturación. Por lo tanto, NO deberá informarse este
+            campo en el caso de una remisión voluntaria «VERI*FACTU».</para>
+            <para>Alfanumérico (18)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.RemisionRequerimiento.FinRequerimiento">
+            <summary>
+            <para>Indicador que especifica que se ha finalizado la remisión de registros
+            de facturación tras un requerimiento, especialmente útil cuando se realice
+            un envío o remisión múltiple y se ha de dejar constancia de que se trata del
+            último envío. Si no se informa este campo se entenderá que tiene valor “N”.
+            Solo puede cumplimentarse si el campo RefRequerimiento viene informado.</para>
+            <para>Alfanumérico (1) L4:</para>
+            <para>S: Sí</para>
+            <para>N: No</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.RemisionRequerimiento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.RemisionVoluntaria">
+            <summary>
+            Datos de la remisión voluntaria del registro.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.RemisionVoluntaria.FechaFinVeriFactu">
+            <summary>
+            <para>Última fecha en la que el sistema informático actuará como «VERI*FACTU». 
+            Después de la misma, el sistema dejará de funcionar como «VERI*FACTU». 
+            Este campo forma parte del detalle de las circunstancias de generación de
+            los registros de facturación actuales y futuros.
+            A rellenar sólo en los casos de remisión voluntaria «VERI*FACTU» ante una
+            futura renuncia a continuar con las remisiones voluntarias «VERI*FACTU».</para>
+            <para>Fecha(dd-mm-yyyy)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.RemisionVoluntaria.Incidencia">
+            <summary>
+            <para>Indicador que especifica si la remisión voluntaria de los registros de
+            facturación se ha visto afectada por algún tipo de incidencia técnica
+            (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet,
+            fallo del sistema informático de facturación…). Si no se informa este campo
+            se entenderá que tiene valor “N”. Este campo forma parte del detalle de las
+            circunstancias de generación de los registros de facturación.
+            A rellenar sólo en los casos de remisión voluntaria «VERI*FACTU»
+            cuando haya ocurrido alguna situación de este tipo.</para>
+            <para>Alfanumérico (1) L4:</para>
+            <para>S: Sí</para>
+            <para>N: No</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.RemisionVoluntaria.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Respuesta.Cabecera">
             <summary>
             Cabecera de respuesta.
@@ -8538,44 +8579,6 @@
             Representación textual de la instancia.
             </summary>
             <returns>Representación textual de la instancia.</returns>
-        </member>
-        <member name="T:VeriFactu.Xml.Factu.Respuesta.RemisionVoluntaria">
-            <summary>
-            <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-            de los registros de facuración al sistema «VERI*FACTU».</para>
-            <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-            los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-            (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-            sistema informático de facturación…)</para>
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Respuesta.RemisionVoluntaria.FechaFinVeriFactu">
-            <summary>
-            <para>Última fecha en la que el sistema informático actuará como «VERI*FACTU».
-            Después de la misma, el sistema dejará de funcionar como «VERI*FACTU».
-            Este campo forma parte del detalle de las circunstancias de generación de los
-            registros de facturación actuales y futuros. A rellenar sólo en los casos de
-            remisión voluntaria «VERI*FACTU» ante una futura renuncia a continuar con las
-            remisiones voluntarias «VERI*FACTU».</para>
-            <para>Fecha(dd-mm-yyyy).</para>
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Respuesta.RemisionVoluntaria.Incidencia">
-            <summary>
-            Indicador que especifica si la remisión voluntaria de los registros de facturación
-            se ha visto afectada por algún tipo de incidencia técnica (por ej. ausencia de corriente
-            eléctrica, problemas de conexión a Internet, fallo del sistema informático de facturación…).
-            Si no se informa este campo se entenderá que tiene valor “N”. Este campo forma parte del
-            detalle de las circunstancias de generación de los registros de facturación. A rellenar
-            sólo en los casos de remisión voluntaria «VERI*FACTU» cuando haya ocurrido alguna
-            situación de este tipo.
-            </summary>
-        </member>
-        <member name="M:VeriFactu.Xml.Factu.Respuesta.RemisionVoluntaria.ToString">
-            <summary>
-            Representación textual de la instancia.
-            </summary>
-            <returns> Representación textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Respuesta.RespuestaLinea">
             <summary>
@@ -8749,41 +8752,6 @@
         <member name="F:VeriFactu.Xml.Factu.TipoHuella.Sha256">
             <summary>
             SHA-256 ('01').
-            </summary>
-        </member>
-        <member name="T:VeriFactu.Xml.Factu.TipoRegistroAEAT">
-            <summary>
-            Tipo de registro (alta inicial, alta sustitutiva). 
-            Contiene la operación a realizar en el sistema de.
-            la AEAT, lo que forma parte del detalle de las 
-            circunstancias de generación del registro de facturación.
-            Alfanumérico (2)  L16.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Xml.Factu.TipoRegistroAEAT.T0">
-            <summary>
-            Alta inicial del registro de facturación en la AEAT.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Xml.Factu.TipoRegistroAEAT.T1">
-             <summary>
-            Alta inicial del registro de facturación en la AEAT.
-             </summary>
-        </member>
-        <member name="F:VeriFactu.Xml.Factu.TipoRegistroAEAT.T2">
-            <summary>
-            Anulación inicial del registro de facturación en la AEAT.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Xml.Factu.TipoRegistroAEAT.T3">
-             <summary>
-            Anulación inicial del registro de facturación en la AEAT.
-             </summary>
-        </member>
-        <member name="F:VeriFactu.Xml.Factu.TipoRegistroAEAT.T4">
-            <summary>
-            Anulación inicial del registro de facturación cuando no existe
-            el registro de facturacion que se quiere anular en la AEAT.
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Factu.TipoUsoSistema">

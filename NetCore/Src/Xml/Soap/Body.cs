@@ -83,7 +83,7 @@ namespace VeriFactu.Xml.Soap
         /// </summary>
         [XmlArray("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
         [XmlArrayItem("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
-        public List<ContribuyenteSal> Contribuyentes { get; set; }
+        public ContribuyenteSal[] Contribuyentes { get; set; }
 
         #endregion
 

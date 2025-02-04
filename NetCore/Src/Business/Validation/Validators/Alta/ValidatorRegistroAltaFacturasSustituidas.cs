@@ -82,10 +82,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             if (facturasSustituidas != null)
             {
 
-                if (facturasSustituidas.Count > 1000)
+                if (facturasSustituidas.Length > 1000)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                        $" La colección FacturasSustituidas no puede" +
-                       $" contener más de 1000 elementos y contiene {facturasSustituidas.Count}”.");
+                       $" contener más de 1000 elementos y contiene {facturasSustituidas.Length}”.");
 
 
                 if (_RegistroAlta.TipoFacturaSpecified && _RegistroAlta.TipoFactura == TipoFactura.F3)

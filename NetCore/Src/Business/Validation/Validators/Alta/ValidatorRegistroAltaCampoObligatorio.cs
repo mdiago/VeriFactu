@@ -99,7 +99,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" El campo TipoFactura es obligatorio");
 
-            if (_RegistroAlta.FacturasRectificadas!= null &&_RegistroAlta.FacturasRectificadas.Count > 0) 
+            if (_RegistroAlta.FacturasRectificadas!= null &&_RegistroAlta.FacturasRectificadas.Length > 0) 
             {
 
                 foreach (var rectificada in _RegistroAlta.FacturasRectificadas) 
@@ -116,7 +116,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     if (string.IsNullOrEmpty(rectificada.FechaExpedicionFactura))
                         result.Add($"Error en el bloque RegistroAlta.FacturasRectificadas ({rectificada}):" +
                                 $" El campo FechaExpedicionFactura es obligatorio");
-
 
                 }
 

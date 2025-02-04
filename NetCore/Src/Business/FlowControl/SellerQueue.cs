@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Xml;
@@ -266,19 +267,42 @@ namespace VeriFactu.Business.FlowControl
                 var externKey = line.RefExterna;
                 var invoice = invoices[externKey];
 
-                invoice.ProcessResponse(new Envelope() { 
-                     Body = new Body() 
-                     { 
-                        Registro = new RespuestaRegFactuSistemaFacturacion() 
-                        { 
+                var invoiceEnvelope = new Envelope()
+                {
+                    Body = new Body()
+                    {
+                        Registro = new RespuestaRegFactuSistemaFacturacion()
+                        {
                             Cabecera = aeatResponse.Cabecera,
                             CSV = aeatResponse.CSV,
                             EstadoEnvio = aeatResponse.EstadoEnvio,
                             DatosPresentacion = aeatResponse.DatosPresentacion,
-                            RespuestaLinea = new List<RespuestaLinea>(){ line }
+                            RespuestaLinea = new List<RespuestaLinea>() { line }
                         }
-                     }
-                });
+                    }
+                };
+
+                var respuesta = invoiceEnvelope.Body.Registro as RespuestaRegFactuSistemaFacturacion;
+
+                Utils.Log($"El resultado del envío del documento {invoice} ha sido '{line.EstadoRegistro}'.");
+
+                if (line.EstadoRegistro == "Incorrecto")
+                {
+
+                    respuesta.CSV = null;
+                    respuesta.EstadoEnvio = line.EstadoRegistro;
+                    
+
+                }
+                else if (line.EstadoRegistro == "Correcto")
+                {
+                    
+                    respuesta.EstadoEnvio = line.EstadoRegistro;
+
+                }
+
+                invoice.ResponseEnvelope = invoiceEnvelope;
+                invoice.ProcessResponse(invoiceEnvelope);
 
             }
         

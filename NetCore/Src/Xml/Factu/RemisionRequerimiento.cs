@@ -37,44 +37,58 @@
     address: info@irenesolutions.com
  */
 
+using System;
+using System.Xml.Serialization;
+
 namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// Tipo de registro (alta inicial, alta sustitutiva). 
-    /// Contiene la operación a realizar en el sistema de.
-    /// la AEAT, lo que forma parte del detalle de las 
-    /// circunstancias de generación del registro de facturación.
-    /// Alfanumérico (2)  L16.
+    /// Datos de la remisión por requerimiento de la AEAT del registro.
     /// </summary>
-    public enum TipoRegistroAEAT
+    public class RemisionRequerimiento
     {
 
-        /// <summary>
-        /// Alta inicial del registro de facturación en la AEAT.
-        /// </summary>
-        T0,
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        ///Alta inicial del registro de facturación en la AEAT.
+        /// <para>Sólo cuando el motivo de la remisión sea para dar respuesta a un
+        /// requerimiento de información previo efectuado por parte de la AEAT,
+        /// se deberá indicar aquí la referencia de dicho requerimiento, lo que
+        /// forma parte del detalle de las circunstancias de generación del
+        /// registro de facturación. Por lo tanto, NO deberá informarse este
+        /// campo en el caso de una remisión voluntaria «VERI*FACTU».</para>
+        /// <para>Alfanumérico (18)</para>
         /// </summary>
-        T1,
+        public string RefRequerimiento { get; set; }
 
         /// <summary>
-        /// Anulación inicial del registro de facturación en la AEAT.
+        /// <para>Indicador que especifica que se ha finalizado la remisión de registros
+        /// de facturación tras un requerimiento, especialmente útil cuando se realice
+        /// un envío o remisión múltiple y se ha de dejar constancia de que se trata del
+        /// último envío. Si no se informa este campo se entenderá que tiene valor “N”.
+        /// Solo puede cumplimentarse si el campo RefRequerimiento viene informado.</para>
+        /// <para>Alfanumérico (1) L4:</para>
+        /// <para>S: Sí</para>
+        /// <para>N: No</para>
         /// </summary>
-        T2,
+        public string FinRequerimiento { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        ///Anulación inicial del registro de facturación en la AEAT.
+        /// Representación textual de la instancia.
         /// </summary>
-        T3,
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{RefRequerimiento}-{FinRequerimiento}";
+        }
 
-        /// <summary>
-        /// Anulación inicial del registro de facturación cuando no existe
-        /// el registro de facturacion que se quiere anular en la AEAT.
-        /// </summary>
-        T4
+        #endregion
+
 
     }
 

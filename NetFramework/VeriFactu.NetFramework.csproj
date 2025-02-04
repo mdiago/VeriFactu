@@ -526,6 +526,12 @@
     <Compile Include="..\NetCore\Src\Xml\Factu\RegistroFactura.cs">
       <Link>Src\Xml\Factu\RegistroFactura.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\RemisionRequerimiento.cs">
+      <Link>Src\Xml\Factu\RemisionRequerimiento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\RemisionVoluntaria.cs">
+      <Link>Src\Xml\Factu\RemisionVoluntaria.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\Cabecera.cs">
       <Link>Src\Xml\Factu\Respuesta\Cabecera.cs</Link>
     </Compile>
@@ -544,9 +550,6 @@
     <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RegistroDuplicado.cs">
       <Link>Src\Xml\Factu\Respuesta\RegistroDuplicado.cs</Link>
     </Compile>
-    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RemisionVoluntaria.cs">
-      <Link>Src\Xml\Factu\Respuesta\RemisionVoluntaria.cs</Link>
-    </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\RespuestaLinea.cs">
       <Link>Src\Xml\Factu\Respuesta\RespuestaLinea.cs</Link>
     </Compile>
@@ -558,9 +561,6 @@
     </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\TipoHuella.cs">
       <Link>Src\Xml\Factu\TipoHuella.cs</Link>
-    </Compile>
-    <Compile Include="..\NetCore\Src\Xml\Factu\TipoRegistroAEAT.cs">
-      <Link>Src\Xml\Factu\TipoRegistroAEAT.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\TipoUsoSistema.cs">
       <Link>Src\Xml\Factu\TipoUsoSistema.cs</Link>

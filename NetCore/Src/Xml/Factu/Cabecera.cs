@@ -53,47 +53,7 @@ namespace VeriFactu.Xml.Factu
     public class Cabecera
     {
 
-        #region Variables Privadas de Instancia
-
-        /// <summary>
-        /// Versiones VeriFactu.
-        /// </summary>
-        readonly string[] _IDVersions = new string[1]
-        {
-            // Versión 2024.01
-            "1.0"
-        };
-
-        /// <summary>
-        /// Versión VER*FACTU.
-        /// </summary>
-        string _Version;
-
-        #endregion
-
         #region Propiedades Públicas de Instancia
-
-        /// <summary>
-        /// <para>Identificación de la versión.</para>
-        /// <para>Alfanumérico(3)L15</para>
-        /// </summary>
-        [XmlElement("IDVersion")]
-        public string IDVersion
-        {
-            get
-            {
-                return _Version;
-            }
-            set
-            {
-
-                if (Array.IndexOf(_IDVersions, value) == -1)
-                    throw new ArgumentException($"Versión {value} no reconocida." +
-                        $"La versiones aceptada son {string.Join(", ", _IDVersions)}");
-
-                _Version = value;
-            }
-        }
 
         /// <summary>
         /// Obligado que suministra la información.
@@ -111,32 +71,16 @@ namespace VeriFactu.Xml.Factu
         public Interlocutor Representante { get; set; }
 
         /// <summary>
-        /// <para>Tipo de registro (alta inicial, alta sustitutiva). 
-        /// Contiene la operación a realizar en el sistema de la AEAT, 
-        /// lo que forma parte del detalle de las circunstancias de 
-        /// generación del registro.</para>
-        /// <para>Alfanumérico (2) L16</para>
+        /// Datos referentes a la remisión voluntaria.
         /// </summary>
-        [XmlElement("TipoRegistroAEAT")]
-        public TipoRegistroAEAT TipoRegistroAEAT { get; set; }
+        [XmlElement("RemisionVoluntaria", Namespace = Namespaces.NamespaceSF)]
+        public RemisionVoluntaria RemisionVoluntaria { get; set; }
 
         /// <summary>
-        ///  Con true se serializa el dato, con false no.
+        /// Datos referentes a la remisión por requerimiento de la AEAT.
         /// </summary>
-        [XmlIgnore]
-        public bool TipoRegistroAEATSpecified { get; set; }
-
-        /// <summary>
-        /// <para>Última fecha en la que el sistema informático actuará 
-        /// como VERIFACTU. Después de la misma, el sistema dejará de 
-        /// funcionar como VERI*FACTU. Este campo forma parte del detalle 
-        /// de las circunstancias de generación de los registros de 
-        /// facturación actuales y futuros.</para>
-        /// <para>Fecha (dd-mm-yyyy)</para>
-        /// </summary>
-        [XmlElement("FechaFinVeriFactu")]
-        public string FechaFinVeriFactu { get; set; }
-
+        [XmlElement("RemisionRequerimiento", Namespace = Namespaces.NamespaceSF)]
+        public RemisionRequerimiento RemisionRequerimiento { get; set; }
 
         #endregion
 
@@ -149,7 +93,7 @@ namespace VeriFactu.Xml.Factu
         public override string ToString()
         {
 
-            return $"[{IDVersion}] {ObligadoEmision}";
+            return $"{ObligadoEmision}";
 
         }
 

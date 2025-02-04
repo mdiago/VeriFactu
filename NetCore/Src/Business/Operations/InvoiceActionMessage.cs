@@ -304,22 +304,6 @@ namespace VeriFactu.Business.Operations
         }
 
         /// <summary>
-        /// Serializa como sobre soap un string de respuesta
-        /// de la AEAT.
-        /// </summary>
-        /// <param name="response">Texto con la respuesta xml de la AEAT.</param>
-        /// <returns>Objeto Envelope con la respuesta.</returns>
-        internal Envelope GetResponseEnvelope(string response)
-        {
-
-            if (string.IsNullOrEmpty(response))
-                throw new InvalidOperationException("No existe ninguna respuesta que guardar.");
-
-            return Envelope.FromXml(response);
-
-        }
-
-        /// <summary>
         /// Procesa y guarda respuesta de la AEAT al envío.
         /// </summary>
         /// <param name="response">Texto del xml de respuesta.</param>
@@ -578,11 +562,27 @@ namespace VeriFactu.Business.Operations
             return Envelope.FromXml(response);
 
         }
-        
+
 
         #endregion
 
         #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Serializa como sobre soap un string de respuesta
+        /// de la AEAT.
+        /// </summary>
+        /// <param name="response">Texto con la respuesta xml de la AEAT.</param>
+        /// <returns>Objeto Envelope con la respuesta.</returns>
+        public Envelope GetResponseEnvelope(string response)
+        {
+
+            if (string.IsNullOrEmpty(response))
+                throw new InvalidOperationException("No existe ninguna respuesta que guardar.");
+
+            return Envelope.FromXml(response);
+
+        }
 
         /// <summary>
         /// Devuelve los bytes del XML serializado con los 

@@ -100,17 +100,17 @@ namespace VeriFactu.Business.Validation.Validators
             }
 
             // 3. FechaFinVeriFactu
-            if (cabecera.FechaFinVeriFactu != null)
+            if (cabecera.RemisionVoluntaria?.FechaFinVeriFactu != null)
             {
 
                 // Sólo se permite contenido en sistemas que emite facturas verificables (Es el caso siempre)
                 // La fecha debe tener el formato 31-12-20XX.
-                if (!Regex.IsMatch(cabecera.FechaFinVeriFactu, @"31-12-20\d{2}"))
+                if (!Regex.IsMatch(cabecera.RemisionVoluntaria.FechaFinVeriFactu, @"31-12-20\d{2}"))
                     result.Add("Error en el bloque Cabecera: La fecha FechaFinVeriFactu debe tener el formato 31-12-20XX.");
 
                 // El año de la fecha deberá ser igual al año de la fecha del sistema de la AEAT, o al año anterior(para admitir
                 // casos excepcionales y puntuales que pudieran darse a finales de año y comienzo del siguiente).
-                var fechaFinVeriFactuYear = Convert.ToInt32(cabecera.FechaFinVeriFactu.Substring(6, 4));
+                var fechaFinVeriFactuYear = Convert.ToInt32(cabecera.RemisionVoluntaria.FechaFinVeriFactu.Substring(6, 4));
 
                 if (fechaFinVeriFactuYear > DateTime.Now.Year && fechaFinVeriFactuYear < DateTime.Now.Year - 1)
                     result.Add("Error en el bloque Cabecera: El año de la fecha FechaFinVeriFactu deberá ser igual" +
@@ -120,7 +120,10 @@ namespace VeriFactu.Business.Validation.Validators
 
             // 4. Incidencia: Sólo se permite contenido en sistemas que emite facturas verificables. (Es el caso siempre)
 
-            // 5. RefRequerimiento: Sólo se permite contenido en sistemas que emiten facturas no verificables. (En nuestro caso no existe el bloque)
+            // 5. RefRequerimiento: Sólo se permite contenido en sistemas que emiten facturas no verificables. 
+            if(cabecera.RemisionRequerimiento != null)
+                result.Add("Error en el bloque Cabecera: RefRequerimiento: Sólo se permite contenido en sistemas que emiten facturas no verificables," +
+                        " la biblioteca Verifactu ha sido diseñada para funcionar únicamente como sistema verificable.");
 
             return result;
 
