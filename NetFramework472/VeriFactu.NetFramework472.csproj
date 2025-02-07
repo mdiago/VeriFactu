@@ -271,11 +271,17 @@
     <Compile Include="..\NetCore\Src\Config\Settings.cs">
       <Link>Src\Config\Settings.cs</Link>
     </Compile>
-    <Compile Include="..\NetCore\Src\DataStore\Document.cs">
-      <Link>Src\DataStore\Document.cs</Link>
+    <Compile Include="..\NetCore\Src\DataStore\DocumentBox.cs">
+      <Link>Src\DataStore\DocumentBox.cs</Link>
     </Compile>
-    <Compile Include="..\NetCore\Src\DataStore\Period.cs">
-      <Link>Src\DataStore\Period.cs</Link>
+    <Compile Include="..\NetCore\Src\DataStore\PeriodBox.cs">
+      <Link>Src\DataStore\PeriodBox.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\PeriodInbox.cs">
+      <Link>Src\DataStore\PeriodInbox.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\PeriodOutbox.cs">
+      <Link>Src\DataStore\PeriodOutbox.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\DataStore\Seller.cs">
       <Link>Src\DataStore\Seller.cs</Link>

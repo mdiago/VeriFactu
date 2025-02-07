@@ -40,7 +40,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Xml;
@@ -380,7 +379,12 @@ namespace VeriFactu.Business.FlowControl
             var postedInvoiceActions = Post();
             var aeatResponse = Send(postedInvoiceActions);
             
-            ProcessReponse(aeatResponse, postedInvoiceActions);          
+            ProcessReponse(aeatResponse, postedInvoiceActions);
+
+            // Ejecuto manejador del evento SentFinished en su caso
+            if (InvoiceQueue.SentFinished != null)
+                InvoiceQueue.SentFinished(postedInvoiceActions);
+
 
         }
 

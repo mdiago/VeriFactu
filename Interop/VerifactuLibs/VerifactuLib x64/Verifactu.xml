@@ -301,6 +301,11 @@
             el sitema.
             </summary>
         </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceQueue.SentFinished">
+            <summary>
+            Acción a ejecutar en la finalización del envío.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Business.FlowControl.InvoiceQueue.Count">
             <summary>
             Número total de elementos en cola.
@@ -451,6 +456,12 @@
             Suma de las bases imponibles.
             </summary>   
         </member>
+        <member name="F:VeriFactu.Business.Invoice._RegistroAltaSource">
+            <summary>
+            Registro de alta a partir del cual se ha
+            generado la factura
+            </summary>
+        </member>
         <member name="M:VeriFactu.Business.Invoice.#ctor(System.String,System.DateTime,System.String)">
             <summary>
             Constructor.
@@ -459,6 +470,12 @@
             <param name="invoiceDate">Fecha emisión de documento.</param>
             <param name="sellerID">Identificador del vendedor.</param>        
             <exception cref="T:System.ArgumentNullException">Los argumentos invoiceID y sellerID no pueden ser nulos</exception>
+        </member>
+        <member name="M:VeriFactu.Business.Invoice.#ctor(VeriFactu.Xml.Factu.Alta.RegistroAlta)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="registroAlta">Registro de alta a partir del que se crea la factura.</param>
         </member>
         <member name="M:VeriFactu.Business.Invoice.CalculateTotals">
             <summary>
@@ -576,6 +593,13 @@
         <member name="P:VeriFactu.Business.Invoice.RectificationItems">
             <summary>
             Facturas rectificadas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Invoice.RegistroAltaSource">
+            <summary>
+            RegistroAlta a partir del cual se ha creado la factura, en el
+            caso de que la instancia se haya creado a partir de un registro
+            de alta.
             </summary>
         </member>
         <member name="M:VeriFactu.Business.Invoice.GetRegistroAlta">
@@ -3210,34 +3234,36 @@
             </summary>
             <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
         </member>
-        <member name="T:VeriFactu.DataStore.Document">
+        <member name="T:VeriFactu.DataStore.DocumentBox">
             <summary>
             Representa un documento de facturación.
             </summary>
         </member>
-        <member name="F:VeriFactu.DataStore.Document._Records">
+        <member name="F:VeriFactu.DataStore.DocumentBox._Records">
             <summary>
             Registros del documento (alta / anulación en su caso).
             </summary>
         </member>
-        <member name="M:VeriFactu.DataStore.Document.#ctor(VeriFactu.DataStore.Period,VeriFactu.Xml.Factu.Registro)">
+        <member name="M:VeriFactu.DataStore.DocumentBox.#ctor(VeriFactu.DataStore.PeriodBox,System.Object)">
             <summary>
             Constructor.
             </summary>
             <param name="period">Periodo al que pertenece el documento.</param>
             <param name="record">Registro que pertenece el documento.</param>
         </member>
-        <member name="P:VeriFactu.DataStore.Document.Period">
+        <member name="P:VeriFactu.DataStore.DocumentBox.Period">
             <summary>
             Periodo al que pertenece el documento.
             </summary>
         </member>
-        <member name="P:VeriFactu.DataStore.Document.PeriodID">
+        <member name="P:VeriFactu.DataStore.DocumentBox.PeriodID">
             <summary>
-            Identificador del periodo.
+            Identificador del periodo en el que se ha realizado el envío.
+            Este no tiene porque coincidir con el periodo de la fecha
+            de factura.
             </summary>        
         </member>
-        <member name="P:VeriFactu.DataStore.Document.SellerID">
+        <member name="P:VeriFactu.DataStore.DocumentBox.SellerID">
             <summary>
             Identificador del vendedor.
             Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
@@ -3245,30 +3271,39 @@
             o cualquier otro identificador acordado.
             </summary>        
         </member>
-        <member name="P:VeriFactu.DataStore.Document.SellerName">
+        <member name="P:VeriFactu.DataStore.DocumentBox.SellerName">
             <summary>
             Nombre del vendedor.
             </summary>        
         </member>
-        <member name="M:VeriFactu.DataStore.Document.AddRecord(VeriFactu.Xml.Factu.Registro)">
+        <member name="P:VeriFactu.DataStore.DocumentBox.InvoiceID">
+            <summary>
+            Nombre del vendedor.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentBox.Records">
+            <summary>
+            Registros relacionados con la factura.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentBox.AddRecord(System.Object)">
             <summary>
             Añade un nuevo registro aldocumento.
             </summary>
             <param name="record">Registro a añadir.</param>
         </member>
-        <member name="M:VeriFactu.DataStore.Document.ToString">
+        <member name="M:VeriFactu.DataStore.DocumentBox.ToString">
             <summary>
             Representación textual de la instancia.
             </summary>
             <returns>Representación textual de la instancia.</returns>
         </member>
-        <member name="T:VeriFactu.DataStore.Period">
+        <member name="T:VeriFactu.DataStore.PeriodBox">
             <summary>
-            Representa un periodo de facturación de un vendedor o emisor
-            de facturas.
+            Representa un bandeja de entrada o salida de documentos del sistema.
             </summary>
         </member>
-        <member name="M:VeriFactu.DataStore.Period.#ctor(VeriFactu.DataStore.Seller,System.String,System.Int32)">
+        <member name="M:VeriFactu.DataStore.PeriodBox.#ctor(VeriFactu.DataStore.Seller,System.String,System.Int32)">
             <summary>
             Constructor.
             </summary>
@@ -3277,14 +3312,14 @@
             <param name="periodID">Identificador del periodo.</param>
             <param name="invoiceCount">Número de facturas del periodo.</param>
         </member>
-        <member name="M:VeriFactu.DataStore.Period.GetEnvelopes">
+        <member name="M:VeriFactu.DataStore.PeriodBox.GetEnvelopes">
             <summary>
             Devuelve todos los envíos de un vendedor para un periodo
             determinado.
             </summary>
             <returns>Lista de documentos envíados.</returns>
         </member>
-        <member name="M:VeriFactu.DataStore.Period.GetDocuments(System.Collections.Generic.List{VeriFactu.Xml.Soap.Envelope})">
+        <member name="M:VeriFactu.DataStore.PeriodBox.GetDocuments(System.Collections.Generic.List{VeriFactu.Xml.Soap.Envelope})">
             <summary>
             Diccionario de documentos.
             </summary>
@@ -3292,13 +3327,37 @@
             <returns>Diccionario de mensajes enviados a Verifactu de la AEAT de un
             emisor y periodo determinados.</returns>
         </member>
-        <member name="P:VeriFactu.DataStore.Period.Seller">
+        <member name="M:VeriFactu.DataStore.PeriodBox.GetInvoiceRecords(VeriFactu.Xml.Soap.Envelope)">
+            <summary>
+            Devuelve una lista de objetos relacionados cada uno con
+            una factura.
+            </summary>
+            <param name="envelope">Sobre SOAP.</param>
+            <returns>lista de objetos relacionados cada uno con
+            una factura.</returns>
+        </member>
+        <member name="M:VeriFactu.DataStore.PeriodBox.SetRegistro(System.Object)">
+            <summary>
+            Actualiza el campo de IDFactura en el registro que
+            se pasa como parámetro, y devuelve un identificador
+            basado en el mismo.
+            </summary>
+            <param name="record">Registro a actualizar.</param>
+            <returns>Identificador basado en el IDFactura.</returns>
+        </member>
+        <member name="P:VeriFactu.DataStore.PeriodBox.EnvelopeDir">
+            <summary>
+            Ruta a la bandeja. Por defecto la bandeja de salida
+            de registros.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.PeriodBox.Seller">
             <summary>
             Vendedor o emisor de facturas al que 
             corresponde el periodo.
             </summary>
         </member>
-        <member name="P:VeriFactu.DataStore.Period.SellerID">
+        <member name="P:VeriFactu.DataStore.PeriodBox.SellerID">
             <summary>
             Identificador del vendedor.
             Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
@@ -3306,33 +3365,89 @@
             o cualquier otro identificador acordado.
             </summary>        
         </member>
-        <member name="P:VeriFactu.DataStore.Period.SellerName">
+        <member name="P:VeriFactu.DataStore.PeriodBox.SellerName">
             <summary>
             Nombre del vendedor.
             </summary>        
         </member>
-        <member name="P:VeriFactu.DataStore.Period.PeriodID">
+        <member name="P:VeriFactu.DataStore.PeriodBox.PeriodID">
             <summary>
             Identificador del periodo.
             </summary>
         </member>
-        <member name="P:VeriFactu.DataStore.Period.InvoiceCount">
+        <member name="P:VeriFactu.DataStore.PeriodBox.InvoiceCount">
             <summary>
             Número de facturas del periodo.
             </summary>
         </member>
-        <member name="M:VeriFactu.DataStore.Period.GetDocuments">
+        <member name="M:VeriFactu.DataStore.PeriodBox.GetDocuments">
             <summary>
-            Recupera un diccionario de documentos del periodo
+            Recupera un diccionario de documentos envíados del periodo
             cuya clave es el IDFactura.
             </summary>
             <returns>Diccionario de documentos del periodo.</returns>
         </member>
-        <member name="M:VeriFactu.DataStore.Period.ToString">
+        <member name="M:VeriFactu.DataStore.PeriodBox.ToString">
             <summary>
             Representación textual de la instancia.
             </summary>
             <returns>Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.DataStore.PeriodInbox">
+            <summary>
+            Representa un periodo de facturación de un vendedor o emisor
+            de facturas en lo que se refiere a documentos de entrada o
+            respuesta por parte de la AEAT a los envíos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.PeriodInbox.#ctor(VeriFactu.DataStore.Seller,System.String,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="seller">Vendedor o emisor de facturas al
+            que corresponde el periodo.</param>
+            <param name="periodID">Identificador del periodo.</param>
+            <param name="invoiceCount">Número de facturas del periodo.</param>
+        </member>
+        <member name="M:VeriFactu.DataStore.PeriodInbox.GetInvoiceRecords(VeriFactu.Xml.Soap.Envelope)">
+            <summary>
+            Devuelve una lista de objetos relacionados cada uno con
+            una factura.
+            </summary>
+            <param name="envelope">Sobre SOAP.</param>
+            <returns>lista de objetos relacionados cada uno con
+            una factura.</returns>
+        </member>
+        <member name="M:VeriFactu.DataStore.PeriodInbox.SetRegistro(System.Object)">
+            <summary>
+            Actualiza el campo de IDFactura en el registro que
+            se pasa como parámetro, y devuelve un identificador
+            basado en el mismo.
+            </summary>
+            <param name="record">Registro a actualizar.</param>
+            <returns>Identificador basado en el IDFactura.</returns>
+        </member>
+        <member name="P:VeriFactu.DataStore.PeriodInbox.EnvelopeDir">
+            <summary>
+            Ruta a la bandeja. Por defecto la bandeja de salida
+            de registros.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.DataStore.PeriodOutbox">
+            <summary>
+            Representa un periodo de facturación de un vendedor o emisor
+            de facturas en cuanto a los documentos de salida del sistema
+            en forma de registros de alta o anulación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.PeriodOutbox.#ctor(VeriFactu.DataStore.Seller,System.String,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="seller">Vendedor o emisor de facturas al
+            que corresponde el periodo.</param>
+            <param name="periodID">Identificador del periodo.</param>
+            <param name="invoiceCount">Número de facturas del periodo.</param>
         </member>
         <member name="T:VeriFactu.DataStore.Seller">
             <summary>
@@ -8174,7 +8289,7 @@
         </member>
         <member name="P:VeriFactu.Xml.Factu.RegFactuSistemaFacturacion.RegistroFactura">
             <summary>
-            Datos correspondientes a los registro de facturacion de alta.
+            Datos correspondientes a los registro de facturacion de alta o anulación.
             </summary>
         </member>
         <member name="P:VeriFactu.Xml.Factu.RegFactuSistemaFacturacion.DatosControl">
@@ -9101,6 +9216,14 @@
             de un campo de xml que representa un valor decimal.
             </summary>
             <param name="amount">Impote a convertir</param>
+            <returns>Importe convertido.</returns>
+        </member>
+        <member name="M:VeriFactu.Xml.XmlParser.ToDate(System.String)">
+            <summary>
+            Devuelve una fecha a partir de un string
+            de un campo de xml que representa un valor decimal.
+            </summary>
+            <param name="date">Fecha a convertir</param>
             <returns>Importe convertido.</returns>
         </member>
         <member name="M:VeriFactu.Xml.XmlParser.GetString(System.Object,System.Collections.Generic.Dictionary{System.String,System.String},System.Boolean,System.Boolean)">

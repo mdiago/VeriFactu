@@ -129,6 +129,18 @@ namespace VeriFactu.Xml
             return Convert.ToDecimal(amount, Settings.DefaultNumberFormatInfo);
         }
 
+        /// <summary>
+        /// Devuelve una fecha a partir de un string
+        /// de un campo de xml que representa un valor decimal.
+        /// </summary>
+        /// <param name="date">Fecha a convertir</param>
+        /// <returns>Importe convertido.</returns>
+        public static DateTime ToDate(string date)
+        {
+            return Convert.ToDateTime(date);
+        }
+
+
         #endregion
 
         #region Métodos Públicos de Instancia

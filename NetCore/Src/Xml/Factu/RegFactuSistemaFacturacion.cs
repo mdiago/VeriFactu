@@ -19,7 +19,7 @@ namespace VeriFactu.Xml.Factu
         public Cabecera Cabecera { get; set; }
 
         /// <summary>
-        /// Datos correspondientes a los registro de facturacion de alta.
+        /// Datos correspondientes a los registro de facturacion de alta o anulación.
         /// </summary>
         [XmlElement("RegistroFactura", Namespace = Namespaces.NamespaceSFLR)]
         public List<RegistroFactura> RegistroFactura { get; set; }

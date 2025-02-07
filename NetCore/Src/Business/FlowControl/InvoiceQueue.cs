@@ -165,6 +165,11 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         public static InvoiceQueue ActiveInvoiceQueue { get; private set; }
 
+        /// <summary>
+        /// Acción a ejecutar en la finalización del envío.
+        /// </summary>
+        public static Action<List<InvoiceAction>> SentFinished { get; set; }
+
         #endregion
 
         #region Propiedades Públicas de Instancia

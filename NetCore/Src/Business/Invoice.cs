@@ -63,6 +63,12 @@ namespace VeriFactu.Business
         /// </summary>   
         decimal _NetAmount;
 
+        /// <summary>
+        /// Registro de alta a partir del cual se ha
+        /// generado la factura
+        /// </summary>
+        RegistroAlta _RegistroAltaSource;
+
         #endregion
 
         #region Construtores de Instancia
@@ -80,9 +86,59 @@ namespace VeriFactu.Business
             if (invoiceID == null || sellerID == null)
                 throw new ArgumentNullException($"Los argumentos invoiceID y sellerID no pueden ser nulos.");
 
-            InvoiceID = invoiceID;
+            InvoiceID = invoiceID.Trim(); // La AEAT calcula el Hash sin espacios
             InvoiceDate = invoiceDate;
-            SellerID = sellerID;
+            SellerID = sellerID.Trim(); 
+
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="registroAlta">Registro de alta a partir del que se crea la factura.</param>
+        public Invoice(RegistroAlta registroAlta) : this(registroAlta.IDFacturaAlta.NumSerieFactura,
+                XmlParser.ToDate(registroAlta.IDFacturaAlta.FechaExpedicionFactura), $"{registroAlta.IDFacturaAlta.IDEmisorFactura}")
+        {
+
+            _RegistroAltaSource = registroAlta;
+
+            InvoiceType = registroAlta.TipoFactura;
+            SellerName = registroAlta.NombreRazonEmisor;
+
+            if (registroAlta.Destinatarios.Count > 1)
+                throw new NotImplementedException("El método estático Invoice.FromRegistroAlta" +
+                    " no implementa la conversión de RegistrosAlta con más de un destinatario.");
+
+            if (registroAlta.Destinatarios.Count == 1)
+            {
+
+                var destinatario = registroAlta.Destinatarios[0];
+                BuyerID = $"{destinatario.NIF}{destinatario?.IDOtro?.ID}";
+                BuyerName = $"{destinatario.NombreRazon}";
+
+                if (!string.IsNullOrEmpty($"{destinatario?.IDOtro?.CodigoPais}"))
+                    BuyerCountryID = $"{destinatario?.IDOtro?.CodigoPais}";
+
+                if (!string.IsNullOrEmpty($"{destinatario?.IDOtro?.IDType}"))
+                    BuyerIDType = destinatario?.IDOtro?.IDType ?? IDType.NIF_IVA;
+
+            }
+
+            TaxItems = new List<TaxItem>();
+
+            foreach (var desglose in registroAlta.Desglose)
+            {
+
+                TaxItems.Add(new TaxItem()
+                {
+                    TaxBase = XmlParser.ToDecimal(desglose.BaseImponibleOimporteNoSujeto),
+                    TaxRate = XmlParser.ToDecimal(desglose.TipoImpositivo),
+                    TaxAmount = XmlParser.ToDecimal(desglose.CuotaRepercutida),
+                    TaxRateSurcharge = XmlParser.ToDecimal(desglose.TipoRecargoEquivalencia),
+                    TaxAmountSurcharge = XmlParser.ToDecimal(desglose.CuotaRecargoEquivalencia)
+                });
+
+            }
 
         }
 
@@ -365,7 +421,24 @@ namespace VeriFactu.Business
         /// </summary>
         public List<RectificationItem> RectificationItems { get; set; }
 
-        #endregion
+        /// <summary>
+        /// RegistroAlta a partir del cual se ha creado la factura, en el
+        /// caso de que la instancia se haya creado a partir de un registro
+        /// de alta.
+        /// </summary>
+        public RegistroAlta RegistroAltaSource 
+        {
+
+            get 
+            {
+
+                return _RegistroAltaSource;
+
+            }
+
+        }
+
+        #endregion     
 
         #region Métodos Públicos de Instancia
 
@@ -375,6 +448,9 @@ namespace VeriFactu.Business
         /// <returns>Registro de alta para verifactu</returns>
         public RegistroAlta GetRegistroAlta()
         {
+
+            if (_RegistroAltaSource != null)
+                return _RegistroAltaSource;
 
             CalculateTotals();
 
@@ -388,7 +464,7 @@ namespace VeriFactu.Business
                 IDFacturaAlta = new IDFactura()
                 {
                     IDEmisorFactura = SellerID,
-                    NumSerieFactura = InvoiceID.Trim(), // La AEAT calcula el Hash sin espacios
+                    NumSerieFactura = InvoiceID,
                     FechaExpedicionFactura = XmlParser.GetXmlDate(InvoiceDate)                    
                 }, 
                 NombreRazonEmisor = SellerName,

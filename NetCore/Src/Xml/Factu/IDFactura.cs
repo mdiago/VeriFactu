@@ -192,7 +192,7 @@ namespace VeriFactu.Xml
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{IDEmisor}-{NumSerie}-{FechaExpedicion}";
+            return $"{IDEmisorFactura}: {NumSerieFactura} ({FechaExpedicionFactura})"; 
         }
 
         #endregion

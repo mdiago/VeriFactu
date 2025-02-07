@@ -76,10 +76,10 @@ namespace VeriFactu.DataStore
         /// Recupera los vendedores en el sistema.
         /// </summary>
         /// <returns>Vendedores en el sistema.</returns>
-        public static Dictionary<string, List<Period>> GetSellers()
+        public static Dictionary<string, List<PeriodOutbox>> GetSellers()
         {
 
-            var sellersDic = new Dictionary<string, List<Period>>();
+            var sellersDic = new Dictionary<string, List<PeriodOutbox>>();
 
             foreach (var sellerDir in Directory.GetDirectories(Settings.Current.OutboxPath))
             {
@@ -101,12 +101,12 @@ namespace VeriFactu.DataStore
                             SellerName = $"{registro?.Cabecera?.ObligadoEmision?.NombreRazon}"
                         };
 
-                        var period = new Period(seller, periodID, invoiceFiles.Length);
+                        var period = new PeriodOutbox(seller, periodID, invoiceFiles.Length);
 
                         if (sellersDic.ContainsKey(seller.SellerID))
                             sellersDic[seller.SellerID].Add(period);
                         else
-                            sellersDic.Add(seller.SellerID, new List<Period>() { period });
+                            sellersDic.Add(seller.SellerID, new List<PeriodOutbox>() { period });
 
                     }
 
