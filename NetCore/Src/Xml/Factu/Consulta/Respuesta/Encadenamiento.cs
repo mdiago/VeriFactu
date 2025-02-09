@@ -39,40 +39,47 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    /// Encadenamiento con la factura anterior. 
+    /// Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    public class Encadenamiento
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// <para>Indicador que especifica que no existe registro de facturación anterior
+        /// en este sistema informático por tratarse del primer registro de facturación
+        /// generado en él. En este caso, se informará con el valor "S".
+        /// Si no se informa este campo se entenderá que no es el primer registro de
+        /// facturación, en cuyo caso es obligatorio informar los campos de que consta
+        /// «RegistroAnterior».</para>
+        /// <para>Alfanumérico (1).</para>
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        public string PrimerRegistro { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// Datos registro anterior.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior RegistroAnterior { get; set; }      
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// Representación textual de la instancia.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{RegistroAnterior}";
+        }
 
         #endregion
 

@@ -39,40 +39,55 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    /// Representa un periodo con información del
+    /// año y el mes.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    public class PeriodoImputacion
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// <para>
+        /// Año de la fecha de la operación a consultar (obtenido del año de
+        ///  la fecha de operación o en su defecto de la fecha de expedición)
+        ///  </para>
+        ///  <para>
+        ///  Númerico(4) formato YYYY
+        /// </para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        public string Ejercicio { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// <para>        /// Mes de la fecha de la operación a consultar (obtenido del mes de
+        /// la fecha de operación o en su defecto de la fecha de expedición)
+        ///  </para>
+        ///  <para>
+        ///  Alfanumérico (2) L2C
+        /// </para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        public string Periodo { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// Representacioón textual de la instancia.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+        /// <returns>Representacioón textual de la instancia.</returns>
+        public override string ToString()
+        {
+
+            return $"{Ejercicio}.{Periodo}";
+
+        }
 
         #endregion
 

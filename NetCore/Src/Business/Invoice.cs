@@ -105,6 +105,9 @@ namespace VeriFactu.Business
             InvoiceType = registroAlta.TipoFactura;
             SellerName = registroAlta.NombreRazonEmisor;
 
+            if (registroAlta.TipoRectificativaSpecified)
+                RectificationType = registroAlta.TipoRectificativa;
+
             if (registroAlta.Destinatarios.Count > 1)
                 throw new NotImplementedException("El método estático Invoice.FromRegistroAlta" +
                     " no implementa la conversión de RegistrosAlta con más de un destinatario.");
@@ -124,21 +127,49 @@ namespace VeriFactu.Business
 
             }
 
-            TaxItems = new List<TaxItem>();
+            TaxItems = FromDesglose(registroAlta.Desglose);           
 
-            foreach (var desglose in registroAlta.Desglose)
+        }
+
+        #endregion
+
+        #region Métodos Privados Estáticos
+
+        /// <summary>
+        /// Devuelve una lista de TaxItem a partir
+        /// de una lista de objetos DetalleDesglose.
+        /// </summary>
+        /// <param name="Desglose"> Lista de objetos DetalleDesglose.</param>
+        /// <returns> Lista de TaxItems</returns>
+        internal static List<TaxItem> FromDesglose(List<DetalleDesglose> Desglose)
+        {
+
+            var taxitems = new List<TaxItem>();
+
+            foreach (var desglose in Desglose)
             {
-
-                TaxItems.Add(new TaxItem()
+                var taxItem = new TaxItem()
                 {
                     TaxBase = XmlParser.ToDecimal(desglose.BaseImponibleOimporteNoSujeto),
                     TaxRate = XmlParser.ToDecimal(desglose.TipoImpositivo),
                     TaxAmount = XmlParser.ToDecimal(desglose.CuotaRepercutida),
                     TaxRateSurcharge = XmlParser.ToDecimal(desglose.TipoRecargoEquivalencia),
                     TaxAmountSurcharge = XmlParser.ToDecimal(desglose.CuotaRecargoEquivalencia)
-                });
+                };
+
+                taxItem.Tax = desglose.Impuesto;
+
+                if(desglose.ClaveRegimenSpecified)
+                    taxItem.TaxScheme = desglose.ClaveRegimen;
+
+                if (desglose.CalificacionOperacionSpecified)
+                    taxItem.TaxType = desglose.CalificacionOperacion;
+
+                taxitems.Add(taxItem);
 
             }
+
+            return taxitems;
 
         }
 
@@ -469,7 +500,6 @@ namespace VeriFactu.Business
                 }, 
                 NombreRazonEmisor = SellerName,
                 TipoFactura = InvoiceType,
-                TipoFacturaSpecified = true,
                 DescripcionOperacion = Text,
                 Destinatarios = GetDestinatarios(),
                 Desglose = GetDesglose(),

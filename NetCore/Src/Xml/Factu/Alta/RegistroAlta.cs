@@ -205,12 +205,6 @@ namespace VeriFactu.Xml.Factu.Alta
         public TipoFactura TipoFactura { get; set; }
 
         /// <summary>
-        ///  Con true se serializa el dato, con false no.
-        /// </summary>
-        [XmlIgnore]
-        public bool TipoFacturaSpecified { get; set; }
-
-        /// <summary>
         ///  Identifica si el tipo de factura rectificativa
         ///  es por sustitución o por diferencia (L3).
         /// </summary>

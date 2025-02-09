@@ -88,7 +88,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                        $" contener más de 1000 elementos y contiene {facturasSustituidas.Length}”.");
 
 
-                if (_RegistroAlta.TipoFacturaSpecified && _RegistroAlta.TipoFactura == TipoFactura.F3)
+                if (_RegistroAlta.TipoFactura == TipoFactura.F3)
                 {
 
                     // El NIF del campo IDEmisorFactura debe estar identificado.

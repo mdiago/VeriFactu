@@ -477,6 +477,14 @@
             </summary>
             <param name="registroAlta">Registro de alta a partir del que se crea la factura.</param>
         </member>
+        <member name="M:VeriFactu.Business.Invoice.FromDesglose(System.Collections.Generic.List{VeriFactu.Xml.Factu.Alta.DetalleDesglose})">
+            <summary>
+            Devuelve una lista de TaxItem a partir
+            de una lista de objetos DetalleDesglose.
+            </summary>
+            <param name="Desglose"> Lista de objetos DetalleDesglose.</param>
+            <returns> Lista de TaxItems</returns>
+        </member>
         <member name="M:VeriFactu.Business.Invoice.CalculateTotals">
             <summary>
             Calcula los totales de la factura.
@@ -6169,11 +6177,6 @@
             <para>Clave del tipo de factura (L2).</para>
             </summary>
         </member>
-        <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.TipoFacturaSpecified">
-            <summary>
-             Con true se serializa el dato, con false no.
-            </summary>
-        </member>
         <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.TipoRectificativa">
             <summary>
              Identifica si el tipo de factura rectificativa
@@ -8027,6 +8030,645 @@
              Zimbabwe. The Republic of Zimbabwe.
             </summary>
         </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Cabecera">
+            <summary>
+            Cabecera de respuesta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Cabecera.IDVersion">
+            <summary>
+            <para>Identificación de la versión actual del esquema o
+            estructura de información utilizada para la generación y
+            conservación / remisión de los registros de facturación.
+            Este campo forma parte del detalle de las circunstancias
+            de generación de los registros de facturación.</para>
+            <para>Alfanumérico(3) L15:</para>
+            <para>1.0: Versión actual (1.0) del esquema utilizado </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Cabecera.ObligadoEmision">
+            <summary>
+            Obligado tributario emisión.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Cabecera.Destinatario">
+            <summary>
+            Destinatario.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Cabecera.IndicadorRepresentante">
+            <summary>
+            <para>Flag opcional que tendrá valor S si quien realiza la cosulta es el
+            representante/asesor del obligado tributario.Permite, a quien
+            realiza la cosulta, obtener los registros de facturación en los que
+            figura como representante.Este flag solo se puede cumplimentar
+            cuando esté informado el obligado tributario en la consulta
+            </para>
+            <para>Alfanumérico (1) L1C </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Cabecera.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion">
+            <summary>
+            Consulta de la información presentada por el emisor de la factura.
+            La cosulta la puede realizar tanto el emisor del registro de
+            facturación como el destinatario (servicio solo disponible en.
+            remisión voluntaria «VERI*FACTU»).
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion.Cabecera">
+            <summary>
+            Cabecera de la consulta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion.FiltroConsulta">
+            <summary>
+            Filtro consulta.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.DatosAdicionalesRespuesta">
+            <summary>
+            Datos adicionales para la respuesta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.DatosAdicionalesRespuesta.MostrarNombreRazonEmisor">
+            <summary>
+            <para> Indicador que especifica si se quiere obtener en la respuesta
+            el campo NombreRazonEmisor en la información del registro se facturacion.
+            Si el Valor es S aumenta el tiempo de respuesta en la cosulta por detinatario.
+            Si no se informa este campo se entenderá que tiene valor “N”.</para>
+            <para> Alfanumérico(1) Valores posibles: “S” o “N”</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.DatosAdicionalesRespuesta.MostrarSistemaInformatico">
+            <summary>
+            <para> Indicador que especifica si se quiere obtener en la respuesta el bloque
+            SistemaInformatico en la información del registro se facturacion.
+            Si el Valor es S aumenta el tiempo de respuesta en la cosulta.
+            Si se consulta por Destinatario el valor del campo MostrarSistemaInformatico
+            debe ser 'N' o no estar cumplimentado.</para>
+            <para> Alfanumérico(1) Valores posibles: “S” o “N”</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.DatosAdicionalesRespuesta.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.FiltroConsulta">
+            <summary>
+            Filtro consulta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.PeriodoImputacion">
+            <summary>
+            Periodo a filtrar.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.Contraparte">
+            <summary>
+            Datos contraparte factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.FechaExpedicionFactura">
+            <summary>
+            <para> Fecha de emisión del registro de facturacion.</para>
+            <para> Fecha (dd-mm-yyyy)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.RangoFechaExpedicion">
+            <summary>
+            Rango fechas de expedición.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.SistemaInformatico">
+            <summary>
+            Sistema informático.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.ClavePaginacion">
+            <summary>
+            Id. de la factura de corte para la paginación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.DatosAdicionalesRespuesta">
+            <summary>
+            Datos adicionales respuesta.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.PeriodoImputacion">
+            <summary>
+            Representa un periodo con información del
+            año y el mes.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.PeriodoImputacion.Ejercicio">
+            <summary>
+            <para>
+            Año de la fecha de la operación a consultar (obtenido del año de
+             la fecha de operación o en su defecto de la fecha de expedición)
+             </para>
+             <para>
+             Númerico(4) formato YYYY
+            </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.PeriodoImputacion.Periodo">
+            <summary>
+            <para>        /// Mes de la fecha de la operación a consultar (obtenido del mes de
+            la fecha de operación o en su defecto de la fecha de expedición)
+             </para>
+             <para>
+             Alfanumérico (2) L2C
+            </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.PeriodoImputacion.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.RangoFechaExpedicion">
+            <summary>
+            Representa un rango de fechas de expedición.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.RangoFechaExpedicion.Desde">
+            <summary>
+            <para> Fecha desde la que se consulta</para>
+            <para>Fecha (dd-mm-yyyy)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.RangoFechaExpedicion.Hasta">
+            <summary>
+            <para> Fecha hasta  la que se consulta</para>
+            <para>Fecha (dd-mm-yyyy)</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.RangoFechaExpedicion.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.Cabecera">
+            <summary>
+            Cabecera de respuesta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Cabecera.IDVersion">
+            <summary>
+            <para>Identificación de la versión actual del esquema o
+            estructura de información utilizada para la generación y
+            conservación / remisión de los registros de facturación.
+            Este campo forma parte del detalle de las circunstancias
+            de generación de los registros de facturación.</para>
+            <para>Alfanumérico(3) L15:</para>
+            <para>1.0: Versión actual (1.0) del esquema utilizado </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Cabecera.ObligadoEmision">
+            <summary>
+            Obligado tributario emisión.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Cabecera.Destinatario">
+            <summary>
+            Destinatario.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Cabecera.IndicadorRepresentante">
+            <summary>
+            <para>Flag opcional que tendrá valor S si quien realiza la cosulta es el
+            representante/asesor del obligado tributario.Permite, a quien
+            realiza la cosulta, obtener los registros de facturación en los que
+            figura como representante.Este flag solo se puede cumplimentar
+            cuando esté informado el obligado tributario en la consulta
+            </para>
+            <para>Alfanumérico (1) L1C </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.Cabecera.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosPresentacion">
+            <summary>
+            Bloque que contiene los campos con información de la presentación realizada:
+            <para> NIFPresentador</para>
+            <para> TimestampPresentacion</para>
+            <para> IdPeticion</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosPresentacion.NIFPresentador">
+            <summary>
+            NIF presentador.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosPresentacion.TimestampPresentacion">
+            <summary>
+            Marca tiempo presentación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosPresentacion.IdPeticion">
+            <summary>
+            identificador de la petición de presentación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosPresentacion.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion">
+            <summary>
+            Datos de un registro de facturación en la AEAT.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.RefExterna">
+            <summary>
+            <para>Dato adicional de contenido libre con el objetivo de que se pueda
+            asociar opcionalmente información interna del sistema informático de facturación
+            al registro de facturación. Este dato puede ayudar a completar la identificación
+            o calificación de la factura y/o su registro de facturación.</para>
+            <para>Alfanumérico (60)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.TipoFactura">
+            <summary>
+            <para>Clave del tipo de factura (L2).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.TipoRectificativa">
+            <summary>
+             Identifica si el tipo de factura rectificativa
+             es por sustitución o por diferencia (L3).
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.TipoRectificativaSpecified">
+            <summary>
+             Con true se serializa el dato, con false no.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.DescripcionOperacion">
+            <summary>
+            <para>Descripción del objeto de la factura.</para>
+            <para>Alfanumérico (500)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Destinatarios">
+            <summary>
+            Destinatarios de la factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Desglose">
+            <summary>
+            Líneas de desglose de factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.CuotaTotal">
+            <summary>
+            <para>Importe total de la cuota (sumatorio de la Cuota Repercutida
+            y Cuota de Recargo de Equivalencia).</para>
+            <para>Decimal(12,2).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.ImporteTotal">
+            <summary>
+            <para>Importe total de la factura.</para>
+            <para>Decimal(12,2).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Encadenamiento">
+            <summary>
+            Encadenamiento con la factura anterior..
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.FechaHoraHusoGenRegistro">
+            <summary>
+            <para>Fecha, hora y huso horario de generación del registro de facturación.
+            El huso horario es el que está usando el sistema informático de facturación
+            en el momento de generación del registro de facturación.</para>
+            <para>DateTime. Formato: YYYY-MM-DDThh:mm:ssTZD (ej: 2024-01-01T19:20:30+01:00) (ISO 8601)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.TipoHuella">
+            <summary>
+             Tipo de algoritmo aplicado a cierto contenido del registro
+             de facturación para obtener la huella o «hash».
+            <para>Alfanumérico (2) L12</para> 
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Huella">
+            <summary>
+            <para>Huella o «hash» de cierto contenido de este registro
+            de facturación. Dicho contenido se detallará en la documentación
+            correspondiente en la sede electrónica de la AEAT (documento de huella...).</para>
+            <para> El Artículo 137 de la Orden HAC/1177/2024 de 17 de octubre establece el contenido:</para>
+            <para> a) Para el registro de facturación de alta:</para>
+            <para> 1.º NIF del emisor.</para>
+            <para> 2.º Numero de factura y serie.</para>
+            <para> 3.º Fecha de expedición de la factura.</para>
+            <para> 4.º Tipo de factura.</para>
+            <para> 5.º Cuota total.</para>
+            <para> 6.º Importe total.</para>
+            <para> 7.º Huella del registro de facturación anterior.</para>
+            <para> 8.º Fecha, hora y huso horario de generación del registro.</para>
+            <para>Alfanumérico (64)</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario">
+            <summary>
+             Datos parte interviniente en algún modo en la facturación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario.NombreRazon">
+            <summary>
+            <para>Nombre-razón social.</para>
+            <para>Alfanumérico(120).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario.NIF">
+            <summary>
+            <para>NIF.</para>
+            <para>FormatoNIF(9).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario.IDOtro">
+            <summary>
+            Id. fiscal no español.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario.NombreRazonRepresentante">
+            <summary>
+            <para>Nombre-razón del representante.</para>
+            <para>Alfanumérico(120).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario.NIFRepresentante">
+            <summary>
+            <para>NIFRepresentante.</para>
+            <para>FormatoNIF(9).</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.Destinatario.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.Encadenamiento">
+            <summary>
+            Encadenamiento con la factura anterior. 
+            Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Encadenamiento.PrimerRegistro">
+            <summary>
+            <para>Indicador que especifica que no existe registro de facturación anterior
+            en este sistema informático por tratarse del primer registro de facturación
+            generado en él. En este caso, se informará con el valor "S".
+            Si no se informa este campo se entenderá que no es el primer registro de
+            facturación, en cuyo caso es obligatorio informar los campos de que consta
+            «RegistroAnterior».</para>
+            <para>Alfanumérico (1).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.Encadenamiento.RegistroAnterior">
+            <summary>
+            Datos registro anterior.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.Encadenamiento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.EstadoRegistro">
+            <summary>
+            Bloque que contiene los campos del estado del registro de facturación registrado:
+            <para> TimestampUltimaModificacion</para>
+            <para> EstadoRegistro</para>
+            <para> CodigoErrorRegistro</para>
+            <para> DescripcionErrorRegistro</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.EstadoRegistro.TimestampUltimaModificacion">
+            <summary>
+            NIF presentador.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.EstadoRegistro.EstadoReg">
+            <summary>
+            Marca tiempo presentación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.EstadoRegistro.CodigoErrorRegistro">
+            <summary>
+            identificador de la petición de presentación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.EstadoRegistro.DescripcionErrorRegistro">
+            <summary>
+            identificador de la petición de presentación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.EstadoRegistro.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.PeriodoImputacion">
+            <summary>
+            Representa un periodo con información del
+            año y el mes.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.PeriodoImputacion.Ejercicio">
+            <summary>
+            <para>
+            Año de la fecha de la operación a consultar (obtenido del año de
+             la fecha de operación o en su defecto de la fecha de expedición)
+             </para>
+             <para>
+             Númerico(4) formato YYYY
+            </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.PeriodoImputacion.Periodo">
+            <summary>
+            <para>        /// Mes de la fecha de la operación a consultar (obtenido del mes de
+            la fecha de operación o en su defecto de la fecha de expedición)
+             </para>
+             <para>
+             Alfanumérico (2) L2C
+            </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.PeriodoImputacion.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior">
+            <summary>
+            Datos registro anterior. Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
+            <para>Datos del registro anterior: </para>
+            NIF + NumSerieFactura + FechaExpedicionFactura + HuellaAnterior.Substring(0, 64)
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior.IDEmisorFactura">
+            <summary>
+            <para>NIF del obligado a expedir la factura a que se refiere el
+            registro de facturación anterior (sea de alta o de anulación)
+            generado en este sistema informático. Este campo forma parte del
+            detalle de las circunstancias de generación de los registros de
+            facturación, ya que es necesario para completar la identificación
+            de la factura contenida en el registro de facturación anterior
+            a encadenar en casos excepcionales y puntuales en los que no
+            coincida con el actual, como al cambiar en un momento dado el
+            NIF tras fusiones, absorciones, etc.</para>
+            <para>FormatoNIF(9).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior.NumSerieFactura">
+            <summary>
+            <para>Nº Serie+Nº Factura que identifica a la factura a que
+            se refiere el registro de facturación anterior
+            (sea de alta o de anulación) generado en este sistema
+            informático.</para>
+            <para>Alfanumérico(60).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior.FechaExpedicionFactura">
+            <summary>
+            <para>Fecha de expedición de la factura a que se refiere
+            el registro de facturación anterior (sea de alta o de anulación)
+            generado en este sistema informático.</para>
+            <para>Fecha(dd-mm-yyyy).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior.Huella">
+            <summary>
+            <para>Primeros 64 caracteres de la huella o «hash» del registro
+            de facturación anterior (sea de alta o de anulación) generado
+            en este sistema informático.</para>
+            <para>Alfanumérico(64).</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroAnterior.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion">
+            <summary>
+            Bloque que contiene todos los campos de una factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion.IDFactura">
+            <summary>
+            Bloque que contiene los campos que identifican al registros de facturación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion.DatosRegistroFacturacion">
+            <summary>
+            Bloque que contiene los campos del registros de facturación registrado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion.DatosPresentacion">
+            <summary>
+            Bloque que contiene los campos con información de la presentación realizada:
+            <para> NIFPresentador</para>
+            <para> TimestampPresentacion</para>
+            <para> IdPeticion</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion.EstadoRegistro">
+            <summary>
+            Bloque que contiene los campos del estado del registro de facturación registrado:
+            <para> TimestampUltimaModificacion</para>
+            <para> EstadoRegistro</para>
+            <para> CodigoErrorRegistro</para>
+            <para> DescripcionErrorRegistro</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion">
+            <summary>
+            Respuesta de la AEAT a una consulta de datos del sistema
+            VERI*FACTU.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.Cabecera">
+            <summary>
+            Cabecera de la consulta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.PeriodoImputacion">
+            <summary>
+            Periodo a filtrar.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.IndicadorPaginacion">
+            <summary>
+            <para> Indica si hay más registros de facturación en la consulta realizada 
+            (Ver 6.4.3 Consulta paginada). Si hay más datos pendientes, este campo 
+            tendrá valor “S” y se podrán realizar nuevas consultas indicando la
+            identificación del último registro a partir de la cual se devolverán
+            los siguientes registros ordenados por fecha de presentación.</para>
+            <para>Alfanumérico(1) Valores posibles: “S” o “N”</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.ResultadoConsulta">
+            <summary>
+            <para> Indica si hay registros de facturación para la consulta realizada.</para>
+            <para> Alfanumérico(8) Valores posibles: “ConDatos” o “SinDatos”</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.RegistroRespuestaConsultaFactuSistemaFacturacion">
+            <summary>
+            Bloque con los datos de la factura recuperados. Se obtendrán como
+            máximo 10.000 veces.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.DatosControl">
             <summary>
             Información del sistema informático.
@@ -8639,23 +9281,6 @@
             </summary>
             <returns> Representación textual de la instancia.</returns>
         </member>
-        <member name="T:VeriFactu.Xml.Factu.Respuesta.Iterlocutor">
-            <summary>
-            Datos interlocutor.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Respuesta.Iterlocutor.NombreRazon">
-            <summary>
-            Nombre-razón social del interlocutor.
-            <para> Alfanumérico(120).</para>
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Respuesta.Iterlocutor.NIF">
-            <summary>
-            NIF del interlocutor.
-            <para> FormatoNIF(9).</para>
-            </summary>
-        </member>
         <member name="T:VeriFactu.Xml.Factu.Respuesta.Operacion">
             <summary>
             Contiene el tipo de operación y los parámetros opcionales asociados al mismo. 
@@ -8977,7 +9602,7 @@
         </member>
         <member name="F:VeriFactu.Xml.Namespaces.NamespaceSF">
             <summary>
-            Espacio de nombres SF (sum1)
+            Espacio de nombres SF (sum1) y (sum) para Consulta
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Namespaces.NamespaceSFLR">
@@ -8988,6 +9613,16 @@
         <member name="F:VeriFactu.Xml.Namespaces.NamespaceTikR">
             <summary>
             Espacio de nombres RespuestaSuministro
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Namespaces.NamespaceCon">
+            <summary>
+            Espacio de nombres ConsultaLR (con)
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Namespaces.NamespaceTikLRRC">
+            <summary>
+            Espacio de nombres RespuestaConsultaLR (tikLRRC)
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Namespaces.NamespaceVNifV2Ent">

@@ -37,42 +37,69 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    ///  Datos parte interviniente en algún modo en la facturación.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    [Serializable]
+    public class Destinatario
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// <para>Nombre-razón social.</para>
+        /// <para>Alfanumérico(120).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        public string NombreRazon { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// <para>NIF.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        public string NIF { get; set; }
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// Id. fiscal no español.
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+        public IDOtro IDOtro { get; set; }
+
+        /// <summary>
+        /// <para>Nombre-razón del representante.</para>
+        /// <para>Alfanumérico(120).</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public string NombreRazonRepresentante { get; set; }
+
+        /// <summary>
+        /// <para>NIFRepresentante.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public string NIFRepresentante { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representacioón textual de la instancia.
+        /// </summary>
+        /// <returns>Representacioón textual de la instancia.</returns>
+        public override string ToString()
+        {
+
+            return $"{NIF}{IDOtro?.ID}";
+
+        }
 
         #endregion
 

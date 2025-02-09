@@ -95,10 +95,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" El campo NombreRazonEmisor es obligatorio");
 
-            if (!_RegistroAlta.TipoFacturaSpecified)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" El campo TipoFactura es obligatorio");
-
             if (_RegistroAlta.FacturasRectificadas!= null &&_RegistroAlta.FacturasRectificadas.Length > 0) 
             {
 

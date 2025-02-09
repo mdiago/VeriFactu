@@ -39,17 +39,29 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
 
     /// <summary>
     /// Cabecera de respuesta.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikLRRC)]
     public partial class Cabecera
     {
 
         #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// <para>Identificación de la versión actual del esquema o
+        /// estructura de información utilizada para la generación y
+        /// conservación / remisión de los registros de facturación.
+        /// Este campo forma parte del detalle de las circunstancias
+        /// de generación de los registros de facturación.</para>
+        /// <para>Alfanumérico(3) L15:</para>
+        /// <para>1.0: Versión actual (1.0) del esquema utilizado </para>
+        /// </summary>
+        [XmlElement("IDVersion", Namespace = Namespaces.NamespaceSF)]
+        public string IDVersion { get; set; }
 
         /// <summary>
         /// Obligado tributario emisión.
@@ -58,21 +70,37 @@ namespace VeriFactu.Xml.Factu.Respuesta
         public Interlocutor ObligadoEmision { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// Destinatario.
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        public Interlocutor Destinatario { get; set; }
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// <para>Flag opcional que tendrá valor S si quien realiza la cosulta es el
+        /// representante/asesor del obligado tributario.Permite, a quien
+        /// realiza la cosulta, obtener los registros de facturación en los que
+        /// figura como representante.Este flag solo se puede cumplimentar
+        /// cuando esté informado el obligado tributario en la consulta
+        /// </para>
+        /// <para>Alfanumérico (1) L1C </para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+        public string IndicadorRepresentante { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representacioón textual de la instancia.
+        /// </summary>
+        /// <returns>Representacioón textual de la instancia.</returns>
+        public override string ToString()
+        {
+
+            return $"{ObligadoEmision}, {Destinatario}, {IndicadorRepresentante}";
+
+        }
 
         #endregion
 

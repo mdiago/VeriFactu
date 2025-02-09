@@ -39,40 +39,53 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    /// Datos adicionales para la respuesta.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    public class DatosAdicionalesRespuesta
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// <para> Indicador que especifica si se quiere obtener en la respuesta
+        /// el campo NombreRazonEmisor en la información del registro se facturacion.
+        /// Si el Valor es S aumenta el tiempo de respuesta en la cosulta por detinatario.
+        /// Si no se informa este campo se entenderá que tiene valor “N”.</para>
+        /// <para> Alfanumérico(1) Valores posibles: “S” o “N”</para>
         /// </summary>
+
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        public string MostrarNombreRazonEmisor { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// <para> Indicador que especifica si se quiere obtener en la respuesta el bloque
+        /// SistemaInformatico en la información del registro se facturacion.
+        /// Si el Valor es S aumenta el tiempo de respuesta en la cosulta.
+        /// Si se consulta por Destinatario el valor del campo MostrarSistemaInformatico
+        /// debe ser 'N' o no estar cumplimentado.</para>
+        /// <para> Alfanumérico(1) Valores posibles: “S” o “N”</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        public string MostrarSistemaInformatico { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// Representacioón textual de la instancia.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+        /// <returns>Representacioón textual de la instancia.</returns>
+        public override string ToString()
+        {
+
+            return $"MostrarNombreRazonEmisor: {MostrarNombreRazonEmisor}, MostrarSistemaInformatico: {MostrarSistemaInformatico}";
+
+        }
 
         #endregion
 

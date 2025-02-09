@@ -39,40 +39,62 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    /// Bloque que contiene todos los campos de una factura.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    public class RegistroRespuestaConsultaFactuSistemaFacturacion
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// Bloque que contiene los campos que identifican al registros de facturación.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public Factu.Respuesta.IDFactura IDFactura { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// Bloque que contiene los campos del registros de facturación registrado.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public DatosRegistroFacturacion DatosRegistroFacturacion { get; set; }
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// Bloque que contiene los campos con información de la presentación realizada:
+        /// <para> NIFPresentador</para>
+        /// <para> TimestampPresentacion</para>
+        /// <para> IdPeticion</para>
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public DatosPresentacion DatosPresentacion { get; set; }
+
+        /// <summary>
+        /// Bloque que contiene los campos del estado del registro de facturación registrado:
+        /// <para> TimestampUltimaModificacion</para>
+        /// <para> EstadoRegistro</para>
+        /// <para> CodigoErrorRegistro</para>
+        /// <para> DescripcionErrorRegistro</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public EstadoRegistro EstadoRegistro { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representacioón textual de la instancia.
+        /// </summary>
+        /// <returns>Representacioón textual de la instancia.</returns>
+        public override string ToString()
+        {
+
+            return $"{IDFactura}, {EstadoRegistro}";
+
+        }
 
         #endregion
 

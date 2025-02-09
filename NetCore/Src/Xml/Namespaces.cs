@@ -56,7 +56,7 @@ namespace VeriFactu.Xml
         public const string NamespacePrefix = "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/";
 
         /// <summary>
-        /// Espacio de nombres SF (sum1)
+        /// Espacio de nombres SF (sum1) y (sum) para Consulta
         /// </summary>
         public const string NamespaceSF = NamespacePrefix + "SuministroInformacion.xsd";
 
@@ -69,6 +69,16 @@ namespace VeriFactu.Xml
         /// Espacio de nombres RespuestaSuministro
         /// </summary>
         public const string NamespaceTikR = NamespacePrefix + "RespuestaSuministro.xsd";
+
+        /// <summary>
+        /// Espacio de nombres ConsultaLR (con)
+        /// </summary>
+        public const string NamespaceCon = NamespacePrefix + "ConsultaLR.xsd";
+
+        /// <summary>
+        /// Espacio de nombres RespuestaConsultaLR (tikLRRC)
+        /// </summary>
+        public const string NamespaceTikLRRC = NamespacePrefix + "RespuestaConsultaLR.xsd";
 
         /// <summary>
         /// Espacio de nombres web service validación NIF.
@@ -92,7 +102,8 @@ namespace VeriFactu.Xml
         {
             { "soapenv",    NamespaceSoap},
             { "sum",        NamespaceSFLR },
-            { "sum1",       NamespaceSF }
+            { "sum1",       NamespaceSF },
+            { "con",       NamespaceCon }
         };
 
         /// <summary>

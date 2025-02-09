@@ -39,40 +39,71 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    /// Respuesta de la AEAT a una consulta de datos del sistema
+    /// VERI*FACTU.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikLRRC)]
+    public class RespuestaConsultaFactuSistemaFacturacion
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// Cabecera de la consulta.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceTikLRRC)]
+        public Cabecera Cabecera { get; set; }
 
         /// <summary>
-        /// Representante.
+        /// Periodo a filtrar.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public PeriodoImputacion PeriodoImputacion { get; set; }
 
         /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
+        /// <para> Indica si hay más registros de facturación en la consulta realizada 
+        /// (Ver 6.4.3 Consulta paginada). Si hay más datos pendientes, este campo 
+        /// tendrá valor “S” y se podrán realizar nuevas consultas indicando la
+        /// identificación del último registro a partir de la cual se devolverán
+        /// los siguientes registros ordenados por fecha de presentación.</para>
+        /// <para>Alfanumérico(1) Valores posibles: “S” o “N”</para>
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
+
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public string IndicadorPaginacion { get; set; }
+
+        /// <summary>
+        /// <para> Indica si hay registros de facturación para la consulta realizada.</para>
+        /// <para> Alfanumérico(8) Valores posibles: “ConDatos” o “SinDatos”</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public string ResultadoConsulta { get; set; }
+
+        /// <summary>
+        /// Bloque con los datos de la factura recuperados. Se obtendrán como
+        /// máximo 10.000 veces.
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public RegistroRespuestaConsultaFactuSistemaFacturacion[] RegistroRespuestaConsultaFactuSistemaFacturacion { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representacioón textual de la instancia.
+        /// </summary>
+        /// <returns>Representacioón textual de la instancia.</returns>
+        public override string ToString()
+        {
+
+            return $"{Cabecera}, {ResultadoConsulta}";
+
+        }
 
         #endregion
 

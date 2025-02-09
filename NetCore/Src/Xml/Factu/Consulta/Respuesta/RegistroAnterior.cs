@@ -37,56 +37,63 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Xml.Serialization;
-using VeriFactu.Xml.Factu;
-using VeriFactu.Xml.Factu.Consulta;
-using VeriFactu.Xml.Factu.Consulta.Respuesta;
-using VeriFactu.Xml.Factu.Fault;
-using VeriFactu.Xml.Factu.Respuesta;
-using VeriFactu.Xml.Nif;
 
-namespace VeriFactu.Xml.Soap
+namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
+
     /// <summary>
-    /// SOAP body.
+    /// Datos registro anterior. Artículo 7 de la Orden HAC/1177/2024 de 17 de octubre.
+    /// <para>Datos del registro anterior: </para>
+    /// NIF + NumSerieFactura + FechaExpedicionFactura + HuellaAnterior.Substring(0, 64)
     /// </summary>
-    [Serializable]
-    [XmlRoot("Body")]
-    public class Body
-    {      
+    public class RegistroAnterior
+    {
 
-        #region Construtores de Instancia
+        #region Propiedades Públicas de Instancia   
 
         /// <summary>
-        /// Body del envelope.
+        /// <para>NIF del obligado a expedir la factura a que se refiere el
+        /// registro de facturación anterior (sea de alta o de anulación)
+        /// generado en este sistema informático. Este campo forma parte del
+        /// detalle de las circunstancias de generación de los registros de
+        /// facturación, ya que es necesario para completar la identificación
+        /// de la factura contenida en el registro de facturación anterior
+        /// a encadenar en casos excepcionales y puntuales en los que no
+        /// coincida con el actual, como al cambiar en un momento dado el
+        /// NIF tras fusiones, absorciones, etc.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
-        public Body()
-        {
-        }
-
-        #endregion
-
-        #region Propiedades Públicas de Instancia
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public string IDEmisorFactura { get; set; }
 
         /// <summary>
-        /// Registro.
+        /// <para>Nº Serie+Nº Factura que identifica a la factura a que
+        /// se refiere el registro de facturación anterior
+        /// (sea de alta o de anulación) generado en este sistema
+        /// informático.</para>
+        /// <para>Alfanumérico(60).</para>
         /// </summary>
-        [XmlElement("RegFactuSistemaFacturacion", typeof(RegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceSFLR)]
-        [XmlElement("ConsultaFactuSistemaFacturacion", typeof(ConsultaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceCon)]
-        [XmlElement("RespuestaRegFactuSistemaFacturacion", typeof(RespuestaRegFactuSistemaFacturacion), Namespace = Namespaces.NamespaceTikR)]
-        [XmlElement("RespuestaConsultaFactuSistemaFacturacion", typeof(RespuestaConsultaFactuSistemaFacturacion), Namespace = Namespaces.NamespaceTikLRRC)]
-        [XmlElement("Fault", typeof(Fault), Namespace = Namespaces.NamespaceSoap)]
-        [XmlElement("VNifV2Ent", typeof(VNifVEnt), Namespace = Namespaces.NamespaceVNifV2Ent)]
-        public object Registro { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public string NumSerieFactura { get; set; }
 
         /// <summary>
-        /// Lista de contribuyentes en respuesta web service
-        /// de validación de NIF.
+        /// <para>Fecha de expedición de la factura a que se refiere
+        /// el registro de facturación anterior (sea de alta o de anulación)
+        /// generado en este sistema informático.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
-        [XmlArray("VNifV2Sal", Namespace = Namespaces.NamespaceVNifV2Sal)]
-        [XmlArrayItem("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Sal)]
-        public ContribuyenteSal[] Contribuyentes { get; set; }
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public string FechaExpedicionFactura { get; set; }
+
+        /// <summary>
+        /// <para>Primeros 64 caracteres de la huella o «hash» del registro
+        /// de facturación anterior (sea de alta o de anulación) generado
+        /// en este sistema informático.</para>
+        /// <para>Alfanumérico(64).</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        public string Huella { get; set; }
 
         #endregion
 
@@ -98,7 +105,7 @@ namespace VeriFactu.Xml.Soap
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{Registro}";
+            return $"{NumSerieFactura} ({FechaExpedicionFactura})";
         }
 
         #endregion

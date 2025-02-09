@@ -39,42 +39,30 @@
 
 using System.Xml.Serialization;
 
-namespace VeriFactu.Xml.Factu.Respuesta
+namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// Cabecera de respuesta.
+    /// Consulta de la información presentada por el emisor de la factura.
+    /// La cosulta la puede realizar tanto el emisor del registro de
+    /// facturación como el destinatario (servicio solo disponible en.
+    /// remisión voluntaria «VERI*FACTU»).
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikR)]
-    public partial class Cabecera
+    public class ConsultaFactuSistemaFacturacion
     {
 
-        #region Propiedades Públicas de Instancia
+        /// <summary>
+        /// Cabecera de la consulta.
+        /// </summary>
+        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceCon)]
+        public Cabecera Cabecera { get; set; }
 
         /// <summary>
-        /// Obligado tributario emisión.
+        /// Filtro consulta.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor ObligadoEmision { get; set; }
+        [XmlElement("FiltroConsulta", Namespace = Namespaces.NamespaceCon)]
+        public FiltroConsulta FiltroConsulta { get; set; }
 
-        /// <summary>
-        /// Representante.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Representante { get; set; }
-
-        /// <summary>
-        /// <para>Información relativa a las circustancias que afectan a la remisión voluntaria
-        /// de los registros de facuración al sistema «VERI*FACTU».</para>
-        /// <para>Contine información de la renuncia al sistema o si la remisión voluntaria de
-        /// los registros de facturación se ha visto afectada por algún tipo de incidencia técnica
-        /// (por ej. ausencia de corriente eléctrica, problemas de conexión a Internet, fallo del
-        /// sistema informático de facturación…)</para>
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public RemisionVoluntaria RemisionVoluntaria { get; set; }
-
-        #endregion
 
     }
 

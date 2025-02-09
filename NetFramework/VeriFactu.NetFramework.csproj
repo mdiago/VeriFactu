@@ -82,6 +82,9 @@
     <Compile Include="..\NetCore\Src\Business\Operations\InvoiceActionPost.cs">
       <Link>Src\Business\Operations\InvoiceActionPost.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\Operations\InvoiceQuery.cs">
+      <Link>Src\Business\Operations\InvoiceQuery.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\RectificationItem.cs">
       <Link>Src\Business\RectificationItem.cs</Link>
     </Compile>
@@ -496,6 +499,54 @@
     <Compile Include="..\NetCore\Src\Xml\Factu\CodigoPais.cs">
       <Link>Src\Xml\Factu\CodigoPais.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Cabecera.cs">
+      <Link>Src\Xml\Factu\Consulta\Cabecera.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\ConsultaFactuSistemaFacturacion.cs">
+      <Link>Src\Xml\Factu\Consulta\ConsultaFactuSistemaFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\DatosAdicionalesRespuesta.cs">
+      <Link>Src\Xml\Factu\Consulta\DatosAdicionalesRespuesta.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\FiltroConsulta.cs">
+      <Link>Src\Xml\Factu\Consulta\FiltroConsulta.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\PeriodoImputacion.cs">
+      <Link>Src\Xml\Factu\Consulta\PeriodoImputacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\RangoFechaExpedicion.cs">
+      <Link>Src\Xml\Factu\Consulta\RangoFechaExpedicion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\Cabecera.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\Cabecera.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\DatosPresentacion.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\DatosPresentacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\DatosRegistroFacturacion.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\DatosRegistroFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\Destinatario.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\Destinatario.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\Encadenamiento.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\Encadenamiento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\EstadoRegistro.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\EstadoRegistro.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\PeriodoImputacion.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\PeriodoImputacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\RegistroAnterior.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\RegistroAnterior.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\RegistroRespuestaConsultaFactuSistemaFacturacion.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\RegistroRespuestaConsultaFactuSistemaFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\RespuestaConsultaFactuSistemaFacturacion.cs">
+      <Link>Src\Xml\Factu\Consulta\Respuesta\RespuestaConsultaFactuSistemaFacturacion.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\DatosControl.cs">
       <Link>Src\Xml\Factu\DatosControl.cs</Link>
     </Compile>
@@ -552,9 +603,6 @@
     </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\IDFactura.cs">
       <Link>Src\Xml\Factu\Respuesta\IDFactura.cs</Link>
-    </Compile>
-    <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\Iterlocutor.cs">
-      <Link>Src\Xml\Factu\Respuesta\Iterlocutor.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Respuesta\Operacion.cs">
       <Link>Src\Xml\Factu\Respuesta\Operacion.cs</Link>
