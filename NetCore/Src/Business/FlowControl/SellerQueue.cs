@@ -251,9 +251,6 @@ namespace VeriFactu.Business.FlowControl
         private void ProcessReponse(RespuestaRegFactuSistemaFacturacion aeatResponse, List<InvoiceAction> invoiceActions) 
         {
 
-            if (aeatResponse.EstadoEnvio == "Correcto")
-                return;
-
             var invoices = new Dictionary<string, InvoiceAction>();
 
             foreach (var invoiceAction in invoiceActions) 
@@ -290,7 +287,6 @@ namespace VeriFactu.Business.FlowControl
 
                     respuesta.CSV = null;
                     respuesta.EstadoEnvio = line.EstadoRegistro;
-                    
 
                 }
                 else if (line.EstadoRegistro == "Correcto")
@@ -383,7 +379,7 @@ namespace VeriFactu.Business.FlowControl
 
             // Ejecuto manejador del evento SentFinished en su caso
             if (InvoiceQueue.SentFinished != null)
-                InvoiceQueue.SentFinished(postedInvoiceActions);
+                InvoiceQueue.SentFinished(postedInvoiceActions, aeatResponse);
 
 
         }

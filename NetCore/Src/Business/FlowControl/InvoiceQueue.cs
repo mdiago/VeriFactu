@@ -42,6 +42,7 @@ using System.Collections.Generic;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Net;
+using VeriFactu.Xml.Factu.Respuesta;
 
 namespace VeriFactu.Business.FlowControl
 {
@@ -168,7 +169,7 @@ namespace VeriFactu.Business.FlowControl
         /// <summary>
         /// Acción a ejecutar en la finalización del envío.
         /// </summary>
-        public static Action<List<InvoiceAction>> SentFinished { get; set; }
+        public static Action<List<InvoiceAction>, RespuestaRegFactuSistemaFacturacion> SentFinished { get; set; }
 
         #endregion
 
