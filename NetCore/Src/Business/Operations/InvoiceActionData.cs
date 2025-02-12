@@ -235,7 +235,11 @@ namespace VeriFactu.Business.Operations
         internal bool IsSaved { get; set; }
 
         /// <summary>
-        /// Indica si el resgistro ha sido envíado a la AEAT.
+        /// Indica si el resgistro ha sido envíado a la AEAT
+        /// en un envío sincrono con el método Save. Si el
+        /// envío se ha realizado de manera asíncrona mediante
+        /// el mecanismo de control de flujo de InvoiceQueue
+        /// su valor no será true aunque se haya envíado.
         /// </summary>
         public bool IsSent { get; protected set; }
 
