@@ -9,6 +9,8 @@
 
 La finalidad de esta biblioteca es la generación, conservación y envío de registros; relacionados con la emisión de facturas a la AEAT mediante un sistema VERI*FACTU ( :nerd_face: [Declaración responsable del software](https://github.com/mdiago/VeriFactu/blob/main/NetFramework/Doc/Legal/Declaracion%20Responsable%20v1.0.25-beta.pdf)).
 
+🚀 **Si esta librería te resulta útil, ayúdanos a seguir creciendo marcando ⭐ el repositorio en GitHub**. ¡Cada estrella nos motiva a seguir mejorando!
+
 <br>
 
 > ### La funcionalidad de Verifactu está disponible ( :wink: gratis) también en línea:
@@ -25,7 +27,8 @@ Esperamos que esta documentación sea de utilidad, y agradeceremos profundamente
 
 En primer lugar se encuentran los ejemplos de la operativa básica más común. Después encontraremos causísticas más complejas... y si queremos profundizar más siempre podemos recurrir a la [wiki del proyecto](https://github.com/mdiago/VeriFactu/wiki).
 
-Podéis dirigir cualquier duda o consulta a info@irenesolutions.com.
+📩 **Contacto**  
+Para cualquier duda o consulta, puedes escribirnos a **info@irenesolutions.com**.
 
 [Irene Solutions](http://www.irenesolutions.com)
 
