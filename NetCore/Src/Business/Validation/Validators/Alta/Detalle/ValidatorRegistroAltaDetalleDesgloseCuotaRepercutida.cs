@@ -117,7 +117,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                         // [CuotaRepercutida]=([BaseImponibleOimporteNoSujeto] * TipoImpositivo) +/- 1% de[BaseImponibleOimporteNoSujeto]
                         // (y en todo caso se admite una diferencia de +/- 10,00 euros). (CREO QUE ESTO ESTÁ MAL REDACTADO !!!)
 
-                        var maxDiff = (Math.Abs(taxBase) <= 1000m) ? Math.Abs(0.01m * taxBase) : 10m;
+                        var maxDiff = 10m;
 
                         if (Math.Abs(taxBase * tipoImpositivo / 100 - cuotaRepercutida) > maxDiff)
                             result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
