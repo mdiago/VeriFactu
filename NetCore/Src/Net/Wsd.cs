@@ -186,20 +186,20 @@ namespace VeriFactu.Net
         /// Si no existe devuelve null.</returns>
         public static X509Certificate2 GetCertificateBySerial()
         {
-            X509Store store = new X509Store();
-            store.Open(OpenFlags.ReadOnly);
-            foreach (X509Certificate2 cert in store.Certificates)
-                if (cert.SerialNumber == Settings.Current.CertificateSerial)
-                    return cert;
 
-            // Probamos en LocalMachine
-            X509Store storeLM = new X509Store(StoreLocation.LocalMachine);
-            storeLM.Open(OpenFlags.ReadOnly);
-            foreach (X509Certificate2 cert in storeLM.Certificates)
-                if (cert.SerialNumber == Settings.Current.CertificateSerial)
-                    return cert;
+            foreach (var store in new X509Store[] { new X509Store(), new X509Store(StoreLocation.LocalMachine) }) 
+            {
+
+                store.Open(OpenFlags.ReadOnly);
+
+                foreach (X509Certificate2 cert in store.Certificates)
+                    if (cert.SerialNumber.Equals(Settings.Current.CertificateSerial, StringComparison.OrdinalIgnoreCase))
+                        return cert;
+
+            }
 
             return null;
+
         }
 
         /// <summary>
@@ -212,18 +212,16 @@ namespace VeriFactu.Net
         public static X509Certificate2 GetCertificateByThumbprint()
         {
 
-            X509Store store = new X509Store();
-            store.Open(OpenFlags.ReadOnly);
-            foreach (X509Certificate2 cert in store.Certificates)
-                if (cert.Thumbprint.ToUpper() == $"{Settings.Current?.CertificateThumbprint}".ToUpper())
-                    return cert;
+            foreach (var store in new X509Store[] { new X509Store(), new X509Store(StoreLocation.LocalMachine) })
+            {
 
-            // Probamos en LocalMachine
-            X509Store storeLM = new X509Store(StoreLocation.LocalMachine);
-            storeLM.Open(OpenFlags.ReadOnly);
-            foreach (X509Certificate2 cert in storeLM.Certificates)
-                if (cert.Thumbprint.ToUpper() == $"{Settings.Current?.CertificateThumbprint}".ToUpper())
-                    return cert;
+                store.Open(OpenFlags.ReadOnly);
+
+                foreach (X509Certificate2 cert in store.Certificates)
+                    if (cert.Thumbprint.Equals(Settings.Current.CertificateThumbprint, StringComparison.OrdinalIgnoreCase))
+                        return cert;
+
+            }         
 
             return null;
 
