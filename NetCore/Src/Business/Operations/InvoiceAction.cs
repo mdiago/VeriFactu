@@ -153,10 +153,10 @@ namespace VeriFactu.Business.Operations
                 errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
 
             // Limite listas
-            if(Invoice.RectificationItems.Count > 1000)
+            if(Invoice.RectificationItems?.Count > 1000)
                 errors.Add($"Invoice.RectificationItems.Count no puede ser mayor de 1.000.");
 
-            if (Invoice.TaxItems.Count > 12)
+            if (Invoice.TaxItems?.Count > 12)
                 errors.Add($"Invoice.TaxItems.Count no puede ser mayor de 12.");
 
             errors.AddRange(GetTaxItemsValidationErrors());
