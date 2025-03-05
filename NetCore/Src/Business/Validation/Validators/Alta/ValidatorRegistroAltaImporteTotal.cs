@@ -1,6 +1,6 @@
 ﻿/*
     This file is part of the VeriFactu (R) project.
-    Copyright (c) 2023-2024 Irene Solutions SL
+    Copyright (c) 2024-2025 Irene Solutions SL
     Authors: Irene Solutions SL.
 
     This program is free software; you can redistribute it and/or modify

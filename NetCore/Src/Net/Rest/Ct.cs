@@ -1,6 +1,6 @@
 ﻿/*
     This file is part of the VeriFactu (R) project.
-    Copyright (c) 2023-2024 Irene Solutions SL
+    Copyright (c) 2024-2025 Irene Solutions SL
     Authors: Irene Solutions SL.
 
     This program is free software; you can redistribute it and/or modify
@@ -58,6 +58,7 @@ namespace VeriFactu.Net.Rest
         public Ct()
         {
 
+            NIF = $"{Settings.Current.SistemaInformatico.NIF}{Settings.Current.SistemaInformatico.IDOtro?.ID}";
             SystemName = Settings.Current.SistemaInformatico.NombreSistemaInformatico;
             SystemID = Settings.Current.SistemaInformatico.IdSistemaInformatico;
             VersionID = Settings.Current.SistemaInformatico.Version;
@@ -72,6 +73,12 @@ namespace VeriFactu.Net.Rest
         #endregion
 
         #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// <para>NIF productor sistema informático.</para>
+        /// <para>FormatoNIF(9).</para>
+        /// </summary>
+        public string NIF { get; set; }
 
         /// <summary>
         /// <para>Nombre dado por el productor al sistema
