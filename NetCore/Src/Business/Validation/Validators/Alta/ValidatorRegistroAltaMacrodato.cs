@@ -37,7 +37,9 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -80,11 +82,16 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Campo obligatorio si ImporteTotal >= |100.000.000,00| (valor absoluto).
 
-            if (XmlParser.ToDecimal(_RegistroAlta.ImporteTotal) > 100000000m && 
+            if (Math.Abs(XmlParser.ToDecimal(_RegistroAlta.ImporteTotal)) > 100000000m && 
                 (_RegistroAlta.Macrodato == null || _RegistroAlta.Macrodato == "N"))
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" El campo Macrodato debe contener el valor 'S' obligatoriamente" +
                         $" si ImporteTotal >= |100.000.000,00| (valor absoluto).");
+
+            // 1138 = El campo Macrodato solo debe ser informado con valor S si el valor de ImporteTotal es igual o superior a +-100.000.000
+            if (Math.Abs(XmlParser.ToDecimal(_RegistroAlta.ImporteTotal)) < 100000000m && _RegistroAlta?.Macrodato == "S")
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                        $" El campo Macrodato solo debe ser informado con valor S si el valor de ImporteTotal es igual o superior a +-100.000.000.");
 
             return result;
 
