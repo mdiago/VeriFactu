@@ -49,22 +49,40 @@ namespace VeriFactu.Xml.Nif
 	[XmlRoot("Contribuyente", Namespace = Namespaces.NamespaceVNifV2Ent)]
 	public class Contribuyente
 	{
-		/// <summary>
-		/// NIF del contribuyente.
-		/// Numérico(4).
-		/// </summary>
-		public string Nif { get; set; }
 
-		/// <summary>
-		/// Nombre del contribuyente.	
-		/// </summary>
-		public string Nombre { get; set; }
+        #region Propiedades Públicas de Instancia
 
-		/// <summary>
-		/// Nombre del contribuyente.	
-		/// </summary>
-		public string Resultado { get; set; }
+        /// <summary>
+        /// NIF del contribuyente.
+        /// Numérico(4).
+        /// </summary>
+        public string Nif { get; set; }
 
-	}
+        /// <summary>
+        /// Nombre del contribuyente.	
+        /// </summary>
+        public string Nombre { get; set; }
+
+        /// <summary>
+        /// Resultado.	
+        /// </summary>
+        public string Resultado { get; set; }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns> Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{Nif} ({Nombre})";
+        }
+
+        #endregion
+
+    }
 
 }

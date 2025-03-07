@@ -140,7 +140,7 @@ namespace VeriFactu.Common
         /// </summary>
         /// <param name="text">Texto codificado a decodificar.</param>
         /// <returns>Texto decodificado.</returns>
-        public static string GetFromEncodedToHex(string text)
+        internal static string GetFromEncodedToHex(string text)
         {
 
             if (string.IsNullOrEmpty(text) || text.Length % 2 != 0)
@@ -159,7 +159,7 @@ namespace VeriFactu.Common
         /// Almacena un mensaje en el log.
         /// </summary>
         /// <param name="msg">Mensaje.</param>
-        public static void Log(string msg)
+        internal static void Log(string msg)
         {
 
             if (Settings.Current.LoggingEnabled)

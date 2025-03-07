@@ -48,6 +48,8 @@ namespace VeriFactu.Business.Validation
     public interface IValidator
     {
 
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// Ejecuta las validaciones y devuelve una lista
         /// con los errores encontrados.
@@ -56,5 +58,8 @@ namespace VeriFactu.Business.Validation
         /// errores encontrado.</returns>
         List<string> GetErrors();
 
+        #endregion
+
     }
+
 }

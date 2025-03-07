@@ -69,4 +69,5 @@ namespace VeriFactu.Net.Rest.Json.Serializer
         #endregion
 
     }
+
 }

@@ -145,4 +145,5 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
         #endregion
 
     }
+
 }

@@ -39,7 +39,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;

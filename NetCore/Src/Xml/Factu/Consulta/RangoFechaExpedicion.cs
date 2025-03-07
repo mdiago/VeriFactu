@@ -42,7 +42,6 @@ using System.Xml.Serialization;
 namespace VeriFactu.Xml.Factu.Consulta
 {
 
-
     /// <summary>
     /// Representa un rango de fechas de expedición.
     /// </summary>

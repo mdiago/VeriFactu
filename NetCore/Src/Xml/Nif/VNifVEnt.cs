@@ -51,20 +51,29 @@ namespace VeriFactu.Xml.Nif
 	[XmlRoot("VNifV2Ent", Namespace = Namespaces.NamespaceVNifV2Ent)]
 	public class VNifVEnt
 	{
-		/// <summary>
-		/// NIF del contribuyente.
-		/// Numérico(4).
-		/// </summary>
-		public List<Contribuyente> Contribuyente { get; set; }
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public VNifVEnt()
-		{
-			Contribuyente = new List<Contribuyente>();
-		}
+        #region Construtores de Instancia
 
-	}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public VNifVEnt()
+        {
+            Contribuyente = new List<Contribuyente>();
+        }
+
+        #endregion
+
+        #region Propiedades Públicas de Instancia
+
+        /// <summary>
+        /// NIF del contribuyente.
+        /// Numérico(4).
+        /// </summary>
+        public List<Contribuyente> Contribuyente { get; set; }
+
+        #endregion
+
+    }
 
 }

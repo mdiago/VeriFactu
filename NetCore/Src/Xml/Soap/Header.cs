@@ -43,6 +43,8 @@ using System.Xml.Serialization;
 namespace VeriFactu.Xml.Soap
 {
 
+    #region Propiedades Públicas de Instancia
+
     /// <summary>
     /// SOAP header.
     /// </summary>
@@ -51,5 +53,7 @@ namespace VeriFactu.Xml.Soap
     public class Header
     {
     }
+
+    #endregion
 
 }

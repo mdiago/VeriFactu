@@ -50,37 +50,71 @@ namespace VeriFactu.DataStore
     public class Document
     {
 
+        #region Variables Privadas Estáticas
+
         /// <summary>
         /// Información de vendedores y periodos.
         /// </summary>
         static Dictionary<string, List<PeriodOutbox>> _Sellers = Seller.GetSellers();
 
+        #endregion
+
+        #region Propiedades Privadas de Instacia
+
+        /// <summary>
+        /// Bandeja salida periodo.
+        /// </summary>
+        internal PeriodOutbox PeriodOutbox { get; private set; }
+
+        #endregion
+
+        #region Construtores de Instancia
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public Document(string sellerID, string periodID) 
+        public Document(string sellerID, string periodID)
         {
 
             PeriodID = periodID;
             PeriodOutbox = GetPeriodOutbox(sellerID, periodID);
 
             if (PeriodOutbox == null)
-                return; 
+                return;
 
             Seller = PeriodOutbox.Seller;
 
+        }
 
-            //var outDocs = pOut.GetDocuments();
+        #endregion
 
+        #region Métodos Privados de Instancia
 
-            //var pIn = new PeriodInbox(seller, periodID, 1000);
-            //var inDocs = pIn.GetDocuments();
+        /// <summary>
+        /// Obtiene los documentos de la bandeja de salida
+        /// de un vendedor y periodo determinados.
+        /// </summary>
+        /// <param name="sellerID">Id. vendedor.</param>
+        /// <param name="periodID">Periodo.</param>
+        /// <returns>Bandeja de salida del vendedor para un periodo.</returns>
+        private PeriodOutbox GetPeriodOutbox(string sellerID, string periodID)
+        {
 
+            PeriodOutbox periodOutbox = null;
 
+            var periodOutboxes = _Sellers[sellerID];
+
+            foreach (var pOutbox in periodOutboxes)
+                if (pOutbox.PeriodID == periodID)
+                    periodOutbox = pOutbox;
+
+            return periodOutbox;
 
         }
 
-        internal PeriodOutbox PeriodOutbox { get; private set; }
+        #endregion
+
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
         /// Periodo del documento.
@@ -92,21 +126,8 @@ namespace VeriFactu.DataStore
         /// </summary>
         public Seller Seller { get; private set; }
 
-        private PeriodOutbox GetPeriodOutbox(string sellerID, string periodID) 
-        {
-
-            PeriodOutbox periodOutbox = null;
-
-            var periodOutboxes = _Sellers[sellerID];
-
-            foreach (var pOutbox in periodOutboxes) 
-                if (pOutbox.PeriodID == periodID) 
-                    periodOutbox = pOutbox;
-
-            return periodOutbox;
-                
-        }
-
+        #endregion
 
     }
+
 }

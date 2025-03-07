@@ -51,6 +51,8 @@ namespace VeriFactu.Xml.Factu.Consulta
     public class ConsultaFactuSistemaFacturacion
     {
 
+        #region Propiedades Públicas de Instancia
+
         /// <summary>
         /// Cabecera de la consulta.
         /// </summary>
@@ -63,6 +65,7 @@ namespace VeriFactu.Xml.Factu.Consulta
         [XmlElement("FiltroConsulta", Namespace = Namespaces.NamespaceCon)]
         public FiltroConsulta FiltroConsulta { get; set; }
 
+        #endregion
 
     }
 

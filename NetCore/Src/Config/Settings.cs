@@ -40,8 +40,10 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Xml.Serialization;
+using VeriFactu.Common;
 using VeriFactu.DataStore;
 using VeriFactu.Net.Rest;
 using VeriFactu.Xml.Factu;
@@ -162,12 +164,47 @@ namespace VeriFactu.Config
         }
 
         /// <summary>
+        /// Devuelve MAC address.
+        /// </summary>
+        /// <returns> MAC local</returns>
+        internal static string GetLocalMacAddress()
+        {
+
+            var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface nic in networkInterfaces)
+                if (nic.OperationalStatus == OperationalStatus.Up)
+                    return $"{nic.GetPhysicalAddress()}";
+
+            return null;
+
+        }
+
+        /// <summary>
         /// Devuelve un objeto Settings con las opciones
         /// por defecto de configuración.
         /// </summary>
         /// <returns></returns>
         internal static Settings GetDefault() 
         {
+
+            var numeroInstalacion = "01";
+
+            try 
+            {
+
+                var mac = GetLocalMacAddress();
+
+                if (!string.IsNullOrEmpty(mac))
+                    numeroInstalacion = mac;
+
+            }
+            catch (Exception ex) 
+            {
+
+                Utils.Log($"{ex}");
+
+            }
 
             return new Settings()
             {
@@ -192,7 +229,7 @@ namespace VeriFactu.Config
                     NombreSistemaInformatico = $"{Assembly.GetExecutingAssembly().GetName().Name}",
                     IdSistemaInformatico = "01",
                     Version = $"{Assembly.GetExecutingAssembly().GetName().Version}",
-                    NumeroInstalacion = "1",
+                    NumeroInstalacion = numeroInstalacion,
                     TipoUsoPosibleSoloVerifactu = "S",
                     TipoUsoPosibleMultiOT = "S",
                     IndicadorMultiplesOT = "S"

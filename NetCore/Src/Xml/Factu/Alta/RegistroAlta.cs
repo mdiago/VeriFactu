@@ -410,7 +410,18 @@ namespace VeriFactu.Xml.Factu.Alta
 
         /// <summary>
         /// <para>Número de registro obtenido al enviar la autorización
-        /// en materia de facturación o de libros registro</para>
+        /// en materia de facturación o de libros registro a que se refiere
+        /// la disposición adicional primera del Real Decreto que aprueba
+        /// el Reglamento. Este campo forma parte del detalle de las
+        /// circunstancias de generación del registro de facturación.</para>
+        /// <para>La disposición adicional primera del Real Decreto 1007/2023,
+        /// de 5 de diciembre, establece que, cuando exista una autorización
+        /// concedida por el Departamento de Gestión Tributaria según el
+        /// Reglamento de facturación (Real Decreto 1619/2012), y en virtud
+        /// de la cual no se disponga de ciertos datos de facturación
+        /// mencionados en el artículo 10.1 del nuevo Reglamento, no será
+        /// obligatorio incluir dichos datos en los registros de facturación.
+        /// En estos casos, deberá indicarse tal circunstancia en el registro. </para>
         /// <para>Alfanumérico(15)</para>
         /// </summary>
         [XmlElement("NumRegistroAcuerdoFacturacion", Namespace = Namespaces.NamespaceSFLR, Order = 27)]
@@ -420,7 +431,17 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para>Identificación del acuerdo (resolución) a que se refiere
         /// el artículo 5 del Reglamento. Este campo forma parte del detalle
         /// de las circunstancias de generación del registro de facturación.</para>
-        /// <para>Alfanumérico (15)</para>
+        /// <para>El artículo 5 del mismo Reglamento permite que el titular del
+        /// Departamento de Inspección Financiera y Tributaria de la AEAT,
+        /// previa solicitud del interesado, pueda resolver la no aplicación
+        /// del reglamento en relación con ciertos sectores empresariales,
+        /// profesionales o contribuyentes, cuando quede justificado por
+        /// prácticas comerciales o administrativas del sector, o para
+        /// evitar perturbaciones en el desarrollo de actividades económicas.
+        /// También se contempla la no aplicación en operaciones con
+        /// circunstancias técnicas excepcionales que imposibiliten el
+        /// cumplimiento del reglamento</para>
+        /// <para>Alfanumérico (16)</para>
         /// </summary>
         [XmlElement("IdAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSFLR, Order = 28)]
         public string IdAcuerdoSistemaInformatico { get; set; }

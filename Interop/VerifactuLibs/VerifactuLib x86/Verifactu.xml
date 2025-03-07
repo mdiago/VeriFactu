@@ -3606,6 +3606,12 @@
             Constructor
             </summary>
         </member>
+        <member name="P:VeriFactu.Net.Rest.Ct.NIF">
+            <summary>
+            <para>NIF productor sistema informático.</para>
+            <para>FormatoNIF(9).</para>
+            </summary>
+        </member>
         <member name="P:VeriFactu.Net.Rest.Ct.SystemName">
             <summary>
             <para>Nombre dado por el productor al sistema
