@@ -46,12 +46,13 @@ namespace VeriFactu.Net.Rest
     public class Api
     {
 
-        #region Propiedades Privadas de Instacia
+        #region Propiedades Privadas Estáticas
+
 
         /// <summary>
         /// Endpoint ct.
         /// </summary>
-        internal string EndPointCt { get; set; }
+        internal static readonly string EndPointCt = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Ct/Create/Test/v17";
 
         #endregion
 
@@ -62,9 +63,6 @@ namespace VeriFactu.Net.Rest
         /// </summary>
         public Api()
         {
-
-            EndPointCt = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Ct/Create/Test/v17";
-
         }
 
         #endregion

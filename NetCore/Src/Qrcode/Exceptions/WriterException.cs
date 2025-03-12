@@ -49,7 +49,9 @@ namespace VeriFactu.Qrcode.Exceptions
     /// <author>dswitkin@google.com (Daniel Switkin)</author>
     public sealed class WriterException : Exception 
     {
-        
+
+        #region Construtores de Instancia        
+
         /// <summary>Creates a WriterException.</summary>
         public WriterException()
             : base() {
@@ -60,6 +62,8 @@ namespace VeriFactu.Qrcode.Exceptions
         public WriterException(String message)
             : base(message) {
         }
+
+        #endregion
 
     }
 

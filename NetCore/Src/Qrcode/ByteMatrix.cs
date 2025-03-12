@@ -54,29 +54,42 @@ namespace VeriFactu.Qrcode
     public sealed class ByteMatrix 
     {
 
+        #region Variables Privadas de Instancia
+
         private readonly byte[][] bytes;
 
         private readonly int width;
 
         private readonly int height;
 
+        #endregion
+
+        #region Construtores de Instancia
+
         /// <summary>Create a ByteMatix of given width and height, with the values initialized to 0</summary>
         /// <param name="width">width of the matrix</param>
         /// <param name="height">height of the matrix</param>
-        public ByteMatrix(int width, int height) {
+        public ByteMatrix(int width, int height)
+        {
             bytes = new byte[height][];
-            for (int i = 0; i < height; i++) {
+            for (int i = 0; i < height; i++)
+            {
                 bytes[i] = new byte[width];
             }
             this.width = width;
             this.height = height;
         }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <summary>
         /// height of the matrix
         /// </summary>
         /// <returns>height of the matrix</returns>
-        public int GetHeight() {
+        public int GetHeight()
+        {
             return height;
         }
 
@@ -84,7 +97,8 @@ namespace VeriFactu.Qrcode
         /// width of the matrix
         /// </summary>
         /// <returns>width of the matrix</returns>
-        public int GetWidth() {
+        public int GetWidth()
+        {
             return width;
         }
 
@@ -92,7 +106,8 @@ namespace VeriFactu.Qrcode
         /// <param name="x">the width coordinate</param>
         /// <param name="y">the height coordinate</param>
         /// <returns>the byte value at position (x,y)</returns>
-        public byte Get(int x, int y) {
+        public byte Get(int x, int y)
+        {
             return bytes[y][x];
         }
 
@@ -100,7 +115,8 @@ namespace VeriFactu.Qrcode
         /// Returns matrix as byte[][]
         /// </summary>
         /// <returns> Matrix as byte[][]</returns>
-        public byte[][] GetArray() {
+        public byte[][] GetArray()
+        {
             return bytes;
         }
 
@@ -108,7 +124,8 @@ namespace VeriFactu.Qrcode
         /// <param name="x">the width coordinate</param>
         /// <param name="y">the height coordinate</param>
         /// <param name="value">the new byte value</param>
-        public void Set(int x, int y, byte value) {
+        public void Set(int x, int y, byte value)
+        {
             bytes[y][x] = value;
         }
 
@@ -116,15 +133,19 @@ namespace VeriFactu.Qrcode
         /// <param name="x">the width coordinate</param>
         /// <param name="y">the height coordinate</param>
         /// <param name="value">the new byte value</param>
-        public void Set(int x, int y, int value) {
+        public void Set(int x, int y, int value)
+        {
             bytes[y][x] = (byte)value;
         }
 
         /// <summary>Resets the contents of the entire matrix to value</summary>
         /// <param name="value">new value of every element</param>
-        public void Clear(byte value) {
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
+        public void Clear(byte value)
+        {
+            for (int y = 0; y < height; ++y)
+            {
+                for (int x = 0; x < width; ++x)
+                {
                     bytes[y][x] = value;
                 }
             }
@@ -134,31 +155,40 @@ namespace VeriFactu.Qrcode
         /// String representation
         /// </summary>
         /// <returns>String representation</returns>
-        public override String ToString() {
+        public override String ToString()
+        {
             StringBuilder result = new StringBuilder(2 * width * height + 2);
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; ++x) {
-                    switch (bytes[y][x]) {
-                        case 0: {
-                            result.Append(" 0");
-                            break;
-                        }
+            for (int y = 0; y < height; ++y)
+            {
+                for (int x = 0; x < width; ++x)
+                {
+                    switch (bytes[y][x])
+                    {
+                        case 0:
+                            {
+                                result.Append(" 0");
+                                break;
+                            }
 
-                        case 1: {
-                            result.Append(" 1");
-                            break;
-                        }
+                        case 1:
+                            {
+                                result.Append(" 1");
+                                break;
+                            }
 
-                        default: {
-                            result.Append("  ");
-                            break;
-                        }
+                        default:
+                            {
+                                result.Append("  ");
+                                break;
+                            }
                     }
                 }
                 result.Append('\n');
             }
             return result.ToString();
         }
+
+        #endregion
 
     }
 

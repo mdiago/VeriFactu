@@ -49,6 +49,19 @@ namespace VeriFactu.Qrcode.Exceptions
     public sealed class BarcodeExceptionMessageConstant 
     {
 
+        #region Construtores de Instancia
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        private BarcodeExceptionMessageConstant()
+        {
+        }
+
+        #endregion
+
+        #region Propiedades Públicas de Instancia
+
         /// <summary>
         /// Codabar must have at least start and stop character.
         /// </summary>
@@ -116,12 +129,7 @@ namespace VeriFactu.Qrcode.Exceptions
         /// </summary>
         public const String THERE_ARE_ILLEGAL_CHARACTERS_FOR_BARCODE_128 = "There are illegal characters for " + "barcode 128 in {0}.";
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        private BarcodeExceptionMessageConstant() 
-        {
-        }
+        #endregion
 
     }
 

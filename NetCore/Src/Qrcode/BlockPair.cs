@@ -47,24 +47,39 @@ namespace VeriFactu.Qrcode
     internal sealed class BlockPair 
     {
 
+        #region Variables Privadas de Instancia
+
         private readonly ByteArray dataBytes;
 
         private readonly ByteArray errorCorrectionBytes;
 
-        internal BlockPair(ByteArray data, ByteArray errorCorrection) {
+        #endregion
+
+        #region Construtores de Instancia
+
+        internal BlockPair(ByteArray data, ByteArray errorCorrection)
+        {
             dataBytes = data;
             errorCorrectionBytes = errorCorrection;
         }
 
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
         /// <returns>data block of the pair</returns>
-        public ByteArray GetDataBytes() {
+        public ByteArray GetDataBytes()
+        {
             return dataBytes;
         }
 
         /// <returns>error correction block of the pair</returns>
-        public ByteArray GetErrorCorrectionBytes() {
+        public ByteArray GetErrorCorrectionBytes()
+        {
             return errorCorrectionBytes;
         }
+
+        #endregion
 
     }
 

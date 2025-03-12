@@ -3098,6 +3098,12 @@
             </summary>
             <returns>La configuración cargada.</returns>
         </member>
+        <member name="M:VeriFactu.Config.Settings.GetLocalMacAddress">
+            <summary>
+            Devuelve MAC address.
+            </summary>
+            <returns> MAC local</returns>
+        </member>
         <member name="M:VeriFactu.Config.Settings.GetDefault">
             <summary>
             Devuelve un objeto Settings con las opciones
@@ -3497,7 +3503,7 @@
             Representa el API REST de Irene Solutions para Verifactu.
             </summary>
         </member>
-        <member name="P:VeriFactu.Net.Rest.Api.EndPointCt">
+        <member name="F:VeriFactu.Net.Rest.Api.EndPointCt">
             <summary>
             Endpoint ct.
             </summary>
@@ -4457,12 +4463,30 @@
             <summary>A simple, fast array of bits, represented compactly by an array of ints internally.</summary>
             <author>Sean Owen</author>
         </member>
+        <member name="M:VeriFactu.Qrcode.BitArray.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="size">Tamaño.</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:VeriFactu.Qrcode.BitArray.GetSize">
+            <summary>
+            Devuelve el tamaño.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:VeriFactu.Qrcode.BitArray.Get(System.Int32)">
+            <summary>
+            Devuelve un bit determinado.
+            </summary>
             <param name="i">bit to get.</param>
-            <returns>true iff bit i is set</returns>
+            <returns>true if bit i is set</returns>
         </member>
         <member name="M:VeriFactu.Qrcode.BitArray.Set(System.Int32)">
-            <summary>Sets bit i.</summary>
+            <summary>
+            Establece un bit determinado.
+            </summary>
             <param name="i">bit to set</param>
         </member>
         <member name="M:VeriFactu.Qrcode.BitArray.Flip(System.Int32)">
@@ -4495,6 +4519,12 @@
         </member>
         <member name="M:VeriFactu.Qrcode.BitArray.Reverse">
             <summary>Reverses all bits in the array.</summary>
+        </member>
+        <member name="M:VeriFactu.Qrcode.BitArray.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns>Representación textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Qrcode.BitMatrix">
             <summary>Represents a 2D matrix of bits.</summary>
@@ -4578,6 +4608,13 @@
         <member name="M:VeriFactu.Qrcode.BitVector.#ctor">
             <summary>Create a bitvector usng the default size</summary>
         </member>
+        <member name="M:VeriFactu.Qrcode.BitVector.AppendByte(System.Int32)">
+            <summary>
+            Add a new byte to the end, possibly reallocating and doubling the size of the array if we've
+            run out of room.
+            </summary>
+            <param name="value">byte to add.</param>
+        </member>
         <member name="M:VeriFactu.Qrcode.BitVector.At(System.Int32)">
             <summary>Return the bit value at "index".</summary>
             <param name="index">index in the vector</param>
@@ -4622,13 +4659,6 @@
             sizeInBits - it will typically be larger for efficiency.
             </summary>
             <returns>size of the array containing the bitvector</returns>
-        </member>
-        <member name="M:VeriFactu.Qrcode.BitVector.AppendByte(System.Int32)">
-            <summary>
-            Add a new byte to the end, possibly reallocating and doubling the size of the array if we've
-            run out of room.
-            </summary>
-            <param name="value">byte to add.</param>
         </member>
         <member name="T:VeriFactu.Qrcode.BlockPair">
             <summary>
@@ -4756,12 +4786,6 @@
             </summary>
             <author>Sean Owen</author>
         </member>
-        <member name="M:VeriFactu.Qrcode.CharacterSetECI.GetEncodingName">
-            <returns>name of the encoding.</returns>
-        </member>
-        <member name="M:VeriFactu.Qrcode.CharacterSetECI.GetValue">
-            <returns>the value of the encoding.</returns>
-        </member>
         <member name="M:VeriFactu.Qrcode.CharacterSetECI.GetCharacterSetECIByName(System.String)">
             <param name="name">character set ECI encoding name</param>
             <returns>
@@ -4770,6 +4794,12 @@
             representing ECI for character encoding, or null if it is legal
             but unsupported
             </returns>
+        </member>
+        <member name="M:VeriFactu.Qrcode.CharacterSetECI.GetEncodingName">
+            <returns>name of the encoding.</returns>
+        </member>
+        <member name="M:VeriFactu.Qrcode.CharacterSetECI.GetValue">
+            <returns>the value of the encoding.</returns>
         </member>
         <member name="T:VeriFactu.Qrcode.EncodeHintType">
             <summary>These are a set of hints that you may pass to Writers to specify their behavior.</summary>
@@ -4939,6 +4969,11 @@
             </summary>
             <author>bruno@lowagie.com (Bruno Lowagie, Paulo Soares, et al.) - creator</author>
         </member>
+        <member name="M:VeriFactu.Qrcode.Exceptions.BarcodeExceptionMessageConstant.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
         <member name="F:VeriFactu.Qrcode.Exceptions.BarcodeExceptionMessageConstant.CODABAR_MUST_HAVE_AT_LEAST_START_AND_STOP_CHARACTER">
             <summary>
             Codabar must have at least start and stop character.
@@ -5002,11 +5037,6 @@
         <member name="F:VeriFactu.Qrcode.Exceptions.BarcodeExceptionMessageConstant.THERE_ARE_ILLEGAL_CHARACTERS_FOR_BARCODE_128">
             <summary>
             There are illegal characters for " + "barcode 128.
-            </summary>
-        </member>
-        <member name="M:VeriFactu.Qrcode.Exceptions.BarcodeExceptionMessageConstant.#ctor">
-            <summary>
-            Constructor.
             </summary>
         </member>
         <member name="T:VeriFactu.Qrcode.Exceptions.WriterException">
@@ -6345,7 +6375,18 @@
         <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.NumRegistroAcuerdoFacturacion">
             <summary>
             <para>Número de registro obtenido al enviar la autorización
-            en materia de facturación o de libros registro</para>
+            en materia de facturación o de libros registro a que se refiere
+            la disposición adicional primera del Real Decreto que aprueba
+            el Reglamento. Este campo forma parte del detalle de las
+            circunstancias de generación del registro de facturación.</para>
+            <para>La disposición adicional primera del Real Decreto 1007/2023,
+            de 5 de diciembre, establece que, cuando exista una autorización
+            concedida por el Departamento de Gestión Tributaria según el
+            Reglamento de facturación (Real Decreto 1619/2012), y en virtud
+            de la cual no se disponga de ciertos datos de facturación
+            mencionados en el artículo 10.1 del nuevo Reglamento, no será
+            obligatorio incluir dichos datos en los registros de facturación.
+            En estos casos, deberá indicarse tal circunstancia en el registro. </para>
             <para>Alfanumérico(15)</para>
             </summary>
         </member>
@@ -6354,7 +6395,17 @@
             <para>Identificación del acuerdo (resolución) a que se refiere
             el artículo 5 del Reglamento. Este campo forma parte del detalle
             de las circunstancias de generación del registro de facturación.</para>
-            <para>Alfanumérico (15)</para>
+            <para>El artículo 5 del mismo Reglamento permite que el titular del
+            Departamento de Inspección Financiera y Tributaria de la AEAT,
+            previa solicitud del interesado, pueda resolver la no aplicación
+            del reglamento en relación con ciertos sectores empresariales,
+            profesionales o contribuyentes, cuando quede justificado por
+            prácticas comerciales o administrativas del sector, o para
+            evitar perturbaciones en el desarrollo de actividades económicas.
+            También se contempla la no aplicación en operaciones con
+            circunstancias técnicas excepcionales que imposibiliten el
+            cumplimiento del reglamento</para>
+            <para>Alfanumérico (16)</para>
             </summary>
         </member>
         <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.TipoHuella">
@@ -9679,8 +9730,14 @@
         </member>
         <member name="P:VeriFactu.Xml.Nif.Contribuyente.Resultado">
             <summary>
-            Nombre del contribuyente.	
+            Resultado.	
             </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Nif.Contribuyente.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Xml.Nif.ContribuyenteSal">
             <summary>
@@ -9701,8 +9758,14 @@
         </member>
         <member name="P:VeriFactu.Xml.Nif.ContribuyenteSal.Resultado">
             <summary>
-            Nombre del contribuyente.	
+            Resultado.	
             </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Nif.ContribuyenteSal.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Xml.Nif.VNifV2Sal">
             <summary>
@@ -9710,14 +9773,14 @@
             de validación de NIF de la AEAT.
             </summary>
         </member>
-        <member name="P:VeriFactu.Xml.Nif.VNifV2Sal.Contribuyente">
-            <summary>
-            NIF del contribuyente.
-            </summary>
-        </member>
         <member name="M:VeriFactu.Xml.Nif.VNifV2Sal.#ctor">
             <summary>
             Constructor
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Nif.VNifV2Sal.Contribuyente">
+            <summary>
+            NIF del contribuyente.
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Nif.VNifVEnt">
@@ -9726,15 +9789,15 @@
             de validación de NIF de la AEAT.
             </summary>
         </member>
+        <member name="M:VeriFactu.Xml.Nif.VNifVEnt.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
         <member name="P:VeriFactu.Xml.Nif.VNifVEnt.Contribuyente">
             <summary>
             NIF del contribuyente.
             Numérico(4).
-            </summary>
-        </member>
-        <member name="M:VeriFactu.Xml.Nif.VNifVEnt.#ctor">
-            <summary>
-            Constructor
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Soap.Body">

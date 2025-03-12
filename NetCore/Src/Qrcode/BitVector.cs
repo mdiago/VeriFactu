@@ -57,6 +57,8 @@ namespace VeriFactu.Qrcode
     internal sealed class BitVector 
     {
 
+        #region Variables Privadas de Instancia
+
         private int sizeInBits;
 
         private byte[] array;
@@ -64,18 +66,50 @@ namespace VeriFactu.Qrcode
         // For efficiency, start out with some room to work.
         private const int DEFAULT_SIZE_IN_BYTES = 32;
 
+        #endregion
+
+        #region Construtores de Instancia
+
         /// <summary>Create a bitvector usng the default size</summary>
-        public BitVector() {
+        public BitVector()
+        {
             sizeInBits = 0;
             array = new byte[DEFAULT_SIZE_IN_BYTES];
         }
+
+        #endregion
+
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Add a new byte to the end, possibly reallocating and doubling the size of the array if we've
+        /// run out of room.
+        /// </summary>
+        /// <param name="value">byte to add.</param>
+        private void AppendByte(int value)
+        {
+            if ((sizeInBits >> 3) == array.Length)
+            {
+                byte[] newArray = new byte[(array.Length << 1)];
+                Array.Copy(array, 0, newArray, 0, array.Length);
+                array = newArray;
+            }
+            array[sizeInBits >> 3] = (byte)value;
+            sizeInBits += 8;
+        }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
 
         // Return the bit value at "index".
         /// <summary>Return the bit value at "index".</summary>
         /// <param name="index">index in the vector</param>
         /// <returns>bit value at "index"</returns>
-        public int At(int index) {
-            if (index < 0 || index >= sizeInBits) {
+        public int At(int index)
+        {
+            if (index < 0 || index >= sizeInBits)
+            {
                 throw new ArgumentException("Bad index: " + index);
             }
             int value = array[index >> 3] & 0xff;
@@ -83,25 +117,30 @@ namespace VeriFactu.Qrcode
         }
 
         /// <returns>the number of bits in the bit vector.</returns>
-        public int Size() {
+        public int Size()
+        {
             return sizeInBits;
         }
 
         /// <returns>the number of bytes in the bit vector.</returns>
-        public int SizeInBytes() {
+        public int SizeInBytes()
+        {
             return (sizeInBits + 7) >> 3;
         }
 
         // Append one bit to the bit vector.
         /// <summary>Append the a bit to the bit vector</summary>
         /// <param name="bit">0 or 1</param>
-        public void AppendBit(int bit) {
-            if (!(bit == 0 || bit == 1)) {
+        public void AppendBit(int bit)
+        {
+            if (!(bit == 0 || bit == 1))
+            {
                 throw new ArgumentException("Bad bit");
             }
             int numBitsInLastByte = sizeInBits & 0x7;
             // We'll expand array if we don't have bits in the last byte.
-            if (numBitsInLastByte == 0) {
+            if (numBitsInLastByte == 0)
+            {
                 AppendByte(0);
                 sizeInBits -= 8;
             }
@@ -127,19 +166,24 @@ namespace VeriFactu.Qrcode
         /// </remarks>
         /// <param name="value">int interpreted as bitvector</param>
         /// <param name="numBits">0 &lt;= numBits &lt;= 32.</param>
-        public void AppendBits(int value, int numBits) {
-            if (numBits < 0 || numBits > 32) {
+        public void AppendBits(int value, int numBits)
+        {
+            if (numBits < 0 || numBits > 32)
+            {
                 throw new ArgumentException("Num bits must be between 0 and 32");
             }
             int numBitsLeft = numBits;
-            while (numBitsLeft > 0) {
+            while (numBitsLeft > 0)
+            {
                 // Optimization for byte-oriented appending.
-                if ((sizeInBits & 0x7) == 0 && numBitsLeft >= 8) {
+                if ((sizeInBits & 0x7) == 0 && numBitsLeft >= 8)
+                {
                     int newByte = (value >> (numBitsLeft - 8)) & 0xff;
                     AppendByte(newByte);
                     numBitsLeft -= 8;
                 }
-                else {
+                else
+                {
                     int bit = (value >> (numBitsLeft - 1)) & 1;
                     AppendBit(bit);
                     --numBitsLeft;
@@ -149,21 +193,26 @@ namespace VeriFactu.Qrcode
 
         /// <summary>Append a different BitVector to this BitVector</summary>
         /// <param name="bits">BitVector to append</param>
-        public void AppendBitVector(BitVector bits) {
+        public void AppendBitVector(BitVector bits)
+        {
             int size = bits.Size();
-            for (int i = 0; i < size; ++i) {
+            for (int i = 0; i < size; ++i)
+            {
                 AppendBit(bits.At(i));
             }
         }
 
         /// <summary>XOR the contents of this bitvector with the contetns of "other"</summary>
         /// <param name="other">Bitvector of equal length</param>
-        public void Xor(BitVector other) {
-            if (sizeInBits != other.Size()) {
+        public void Xor(BitVector other)
+        {
+            if (sizeInBits != other.Size())
+            {
                 throw new ArgumentException("BitVector sizes don't match");
             }
             int sizeInBytes = (sizeInBits + 7) >> 3;
-            for (int i = 0; i < sizeInBytes; ++i) {
+            for (int i = 0; i < sizeInBytes; ++i)
+            {
                 // The last byte could be incomplete (i.e. not have 8 bits in
                 // it) but there is no problem since 0 XOR 0 == 0.
                 array[i] ^= other.array[i];
@@ -172,17 +221,23 @@ namespace VeriFactu.Qrcode
 
         // Return String like "01110111" for debugging.
         /// <returns>String representation of the bitvector</returns>
-        public override String ToString() {
+        public override String ToString()
+        {
             StringBuilder result = new StringBuilder(sizeInBits);
-            for (int i = 0; i < sizeInBits; ++i) {
-                if (At(i) == 0) {
+            for (int i = 0; i < sizeInBits; ++i)
+            {
+                if (At(i) == 0)
+                {
                     result.Append('0');
                 }
-                else {
-                    if (At(i) == 1) {
+                else
+                {
+                    if (At(i) == 1)
+                    {
                         result.Append('1');
                     }
-                    else {
+                    else
+                    {
                         throw new ArgumentException("Byte isn't 0 or 1");
                     }
                 }
@@ -197,26 +252,12 @@ namespace VeriFactu.Qrcode
         /// sizeInBits - it will typically be larger for efficiency.
         /// </summary>
         /// <returns>size of the array containing the bitvector</returns>
-        public byte[] GetArray() {
+        public byte[] GetArray()
+        {
             return array;
         }
 
-        //
-        //
-        /// <summary>
-        /// Add a new byte to the end, possibly reallocating and doubling the size of the array if we've
-        /// run out of room.
-        /// </summary>
-        /// <param name="value">byte to add.</param>
-        private void AppendByte(int value) {
-            if ((sizeInBits >> 3) == array.Length) {
-                byte[] newArray = new byte[(array.Length << 1)];
-                Array.Copy(array, 0, newArray, 0, array.Length);
-                array = newArray;
-            }
-            array[sizeInBits >> 3] = (byte)value;
-            sizeInBits += 8;
-        }
+        #endregion
 
     }
 

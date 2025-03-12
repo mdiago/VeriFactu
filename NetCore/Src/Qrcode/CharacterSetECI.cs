@@ -51,9 +51,34 @@ namespace VeriFactu.Qrcode
     internal sealed class CharacterSetECI 
     {
 
+        #region Variables Privadas Estáticas
+
         private static IDictionary<String, CharacterSetECI> NAME_TO_ECI;
 
-        private static void Initialize() {
+        #endregion
+
+        #region Variables Privadas de Instancia
+
+        private readonly String encodingName;
+
+        private readonly int value;
+
+        #endregion
+
+        #region Construtores de Instancia
+
+        private CharacterSetECI(int value, String encodingName)
+        {
+            this.encodingName = encodingName;
+            this.value = value;
+        }
+
+        #endregion
+
+        #region Métodos Privados Estáticos
+
+        private static void Initialize()
+        {
             IDictionary<String, CharacterSetECI> n = new Dictionary<String, CharacterSetECI
                 >(29);
             AddCharacterSet(0, "Cp437", n);
@@ -77,40 +102,27 @@ namespace VeriFactu.Qrcode
             AddCharacterSet(20, new String[] { "SJIS", "Shift_JIS" }, n);
             NAME_TO_ECI = n;
         }
-
-        private readonly String encodingName;
-
-        private readonly int value;
-
-        private CharacterSetECI(int value, String encodingName) {
-            this.encodingName = encodingName;
-            this.value = value;
-        }
-
-        /// <returns>name of the encoding.</returns>
-        public String GetEncodingName() {
-            return encodingName;
-        }
-
-        /// <returns>the value of the encoding.</returns>
-        public int GetValue() {
-            return value;
-        }
-
         private static void AddCharacterSet(int value, String encodingName, IDictionary<String, CharacterSetECI
-            > n) {
+    > n)
+        {
             CharacterSetECI eci = new CharacterSetECI(value, encodingName);
             n.Put(encodingName, eci);
         }
 
         private static void AddCharacterSet(int value, String[] encodingNames, IDictionary<String, CharacterSetECI
-            > n) {
+            > n)
+        {
             CharacterSetECI eci = new CharacterSetECI(value, encodingNames
                 [0]);
-            for (int i = 0; i < encodingNames.Length; i++) {
+            for (int i = 0; i < encodingNames.Length; i++)
+            {
                 n.Put(encodingNames[i], eci);
             }
         }
+
+        #endregion
+
+        #region Métodos Públicos Estáticos
 
         /// <param name="name">character set ECI encoding name</param>
         /// <returns>
@@ -119,12 +131,32 @@ namespace VeriFactu.Qrcode
         /// representing ECI for character encoding, or null if it is legal
         /// but unsupported
         /// </returns>
-        public static CharacterSetECI GetCharacterSetECIByName(String name) {
-            if (NAME_TO_ECI == null) {
+        public static CharacterSetECI GetCharacterSetECIByName(String name)
+        {
+            if (NAME_TO_ECI == null)
+            {
                 Initialize();
             }
             return NAME_TO_ECI.Get(name);
         }
+
+        #endregion
+
+        #region Métodos Públicos de Instancia
+
+        /// <returns>name of the encoding.</returns>
+        public String GetEncodingName()
+        {
+            return encodingName;
+        }
+
+        /// <returns>the value of the encoding.</returns>
+        public int GetValue()
+        {
+            return value;
+        }
+
+        #endregion
 
     }
 
