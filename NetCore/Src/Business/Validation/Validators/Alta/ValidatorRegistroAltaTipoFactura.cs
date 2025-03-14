@@ -46,9 +46,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 {
 
     /// <summary>
-    /// Valida los datos de RegistroAlta Tercero.
+    /// Valida los datos de RegistroAlta TipoFactur.
     /// </summary>
-    public class ValidatorRegistroAltaDestinatarios : ValidatorRegistroAlta
+    public class ValidatorRegistroAltaTipoFactura : ValidatorRegistroAlta
     {
 
         #region Construtores de Instancia
@@ -59,7 +59,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         /// <param name="envelope"> Envelope de envío al
         /// servicio Verifactu de la AEAT.</param>
         /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
-        public ValidatorRegistroAltaDestinatarios(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        public ValidatorRegistroAltaTipoFactura(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
         {
         }
 
@@ -76,42 +76,22 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var result = new List<string>();
 
-            // 13. Agrupación Destinatarios
+            // 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).
+            if (_RegistroAlta.TipoFactura == TipoFactura.R3)
+                if (_RegistroAlta.Destinatarios != null)
+                    foreach (var destinatario in _RegistroAlta.Destinatarios)
+                        if (!(destinatario.IDOtro != null && destinatario.IDOtro.IDType == IDType.NO_CENSADO)||(!string.IsNullOrEmpty(destinatario.NIF)))
+                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                                $" 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).");
 
-            var destinatarios = _RegistroAlta.Destinatarios;
+            // 1192 = Si TipoFactura es R2 sólo se admitirá NIF o IDType = No Censado (07) o NIF-IVA (02).
+            if (_RegistroAlta.TipoFactura == TipoFactura.R2)
+                if (_RegistroAlta.Destinatarios != null)
+                    foreach (var destinatario in _RegistroAlta.Destinatarios)
+                        if (!(destinatario.IDOtro != null && (destinatario.IDOtro.IDType == IDType.NO_CENSADO || destinatario.IDOtro.IDType == IDType.NIF_IVA)) || (!string.IsNullOrEmpty(destinatario.NIF)))
+                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                                $" 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).");
 
-            // Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación Destinatarios tiene que estar cumplimentada, con al menos un destinatario.
-
-            if ((destinatarios == null || destinatarios.Count == 0) && !_IsSimplificada)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación" +
-                    $" Destinatarios tiene que estar cumplimentada, con al menos un destinatario.");
-
-            // Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.
-
-            if ((destinatarios != null && destinatarios.Count > 0) && _IsSimplificada)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.");
-
-            if (destinatarios != null) 
-            {
-
-                foreach (var destinatario in destinatarios) 
-                {
-
-                    // Validaciones de ID
-                    result.AddRange(new ValidatorRegistroAltaInterlocutor(_Envelope, _RegistroAlta, destinatario, "Destinatario", true).GetErrors());
-
-                    // Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”, se validará que TipoFactura sea “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.
-
-                    if (destinatario.IDOtro != null && destinatario.IDOtro.IDType == IDType.NIF_IVA && _IsSimplificada)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                            $" El destinatario {destinatario} tiene un error en el TipoFactura. " +
-                            $"Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”," +
-                            $" el TipoFactura debe ser “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.");
-                }
-
-            }       
 
             return result;
 

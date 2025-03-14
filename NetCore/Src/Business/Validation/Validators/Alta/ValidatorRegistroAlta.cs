@@ -197,6 +197,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // de los registros de facturación” publicado en Sede Electrónica de la AEAT. En caso contrario,
             // se devolverá un aviso de error (no generará rechazo).
 
+            // Validaciones adicionales del listado de errores AEAT
+            result.AddRange(new ValidatorRegistroAltaTipoFactura(_Envelope, _RegistroAlta).GetErrors());
+
             return result;
 
         }

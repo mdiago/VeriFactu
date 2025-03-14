@@ -229,6 +229,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTercero.cs">
       <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTercero.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTipoFactura.cs">
+      <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTipoFactura.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTipoRectificativa.cs">
       <Link>Src\Business\Validation\Validators\Alta\ValidatorRegistroAltaTipoRectificativa.cs</Link>
     </Compile>
