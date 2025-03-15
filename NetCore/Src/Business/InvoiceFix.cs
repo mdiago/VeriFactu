@@ -40,19 +40,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using VeriFactu.Business.Validation;
+using VeriFactu.Xml.Factu.Alta;
 
-namespace VeriFactu.Business.Operations
+namespace VeriFactu.Business
 {
 
     /// <summary>
-    /// Representa una acción de alta o anulación de registro
-    /// en todo lo referente a la factura, su envío a la AEAT
-    /// y su gestión contable en la 
-    /// cadena de bloques.
+    /// Representa una acción de subsanación de un registro
+    /// anteriormente presentado.
     /// </summary>
-    public class InvoiceAction : InvoiceActionPost
-    {    
+    public class InvoiceFix : InvoiceEntry
+    {
 
         #region Construtores de Instancia
 
@@ -60,76 +58,60 @@ namespace VeriFactu.Business.Operations
         /// Constructor.
         /// </summary>
         /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
-        public InvoiceAction(Invoice invoice) : base(invoice)
+        public InvoiceFix(Invoice invoice) : base(invoice)
         {
-
-            // Validamos
-            var errors = GetBusErrors();
-
-            if (errors.Count > 0)
-                throw new InvalidOperationException(string.Join("\n", errors));  
-
         }
+
 
         #endregion
 
         #region Métodos Privados de Instancia
 
-
         /// <summary>
-        /// Devuelve errores de las validaciones de negocio según las
-        /// especificaciones.
+        /// Establece el registro relativo a la entrada
+        /// a contabilizar y enviar.
         /// </summary>
-        /// <returns>Lista de errores de validación según las especificaciones.</returns>
-        internal virtual List<string> GetInvoiceValidationErrors() 
+        internal override void SetRegistro()
         {
 
-            var validation = new InvoiceValidation(this);
-            return validation.GetErrors();
+            base.SetRegistro();
+
+            // Establecemos que se trata de una subsanación
+            var registroAlta = Registro as RegistroAlta;
+
+            if (registroAlta == null)
+                throw new Exception($"No se ha encontrado el RegistroAlta correspondiente a la entrada {this}.");
+
+            registroAlta.Subsanacion = "S";
+
 
         }
 
-        /// <summary>
-        /// Devuelve una lista con los errores de la
-        /// línea de impuesto por el incumplimiento de reglas de negocio.
-        /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        private List<string> GetTaxItemValidationErrors(TaxItem taxItem) 
-        {
+        #endregion
 
-            var errors = new List<string>();
-
-            // Validaciones en líneas exentas
-            if (taxItem.TaxException != VeriFactu.Xml.Factu.Alta.CausaExencion.NA) 
-            { 
-            
-                if(taxItem.TaxRate + taxItem.TaxAmount + taxItem.TaxRateSurcharge + taxItem.TaxAmountSurcharge != 0)
-                    errors.Add($"Taxitem [{taxItem}] con TaxException asignada '{taxItem.TaxException}' no puede tener un valor distinto de 0 en las propiedades" +
-                        $" TaxRate, TaxAmount, TaxRateSurcharge y TaxAmountSurcharge.");
-
-            }
-
-            return errors;
-
-        }
+        #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Devuelve una lista con los errores de las
-        /// líneas de impuesto por el incumplimiento de reglas de negocio.
+        /// Path de la factura original en el directorio de facturas.
         /// </summary>
-        /// <returns>Lista con los errores encontrados.</returns>
-        internal List<string> GetTaxItemsValidationErrors()
-        {
+        public string OriginalInvoiceFilePath => $"{InvoicePostedPath}{EncodedInvoiceID}.xml";
 
-            var errors = new List<string>();
+        /// <summary>
+        /// Path de la factura en el directorio de facturas.
+        /// </summary>
+        public override string InvoiceFilePath => $"{InvoicePostedPath}{EncodedInvoiceID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
 
-            if(Invoice.TaxItems != null)
-                foreach (var taxItem in Invoice.TaxItems)
-                    errors.AddRange(GetTaxItemValidationErrors(taxItem));
+        /// <summary>
+        /// Path de la factura en el directorio de archivado de los datos de la
+        /// cadena.
+        /// </summary>
+        public override string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
 
-            return errors;
-
-        }
+        /// <summary>
+        /// Path del directorio de archivado de los datos de la
+        /// cadena.
+        /// </summary>
+        public override string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
 
         #endregion
 
@@ -140,20 +122,21 @@ namespace VeriFactu.Business.Operations
         /// factura por el incumplimiento de reglas de negocio.
         /// </summary>
         /// <returns>Lista con los errores encontrados.</returns>
-        public virtual List<string> GetBusErrors()
+        public override List<string> GetBusErrors()
         {
 
             var errors = new List<string>();
 
-            if (File.Exists(InvoiceFilePath))
-                errors.Add($"Ya existe una entrada con SellerID: {Invoice.SellerID}" +
+            // Comprobamos que la factura existe
+            if (!File.Exists(base.InvoiceFilePath))
+                errors.Add($"No existe una entrada con SellerID: {Invoice.SellerID}" +
                     $" en el año {Invoice.InvoiceDate.Year} con el número {Invoice.InvoiceID}.");
 
             if (string.IsNullOrEmpty(Invoice.SellerName))
                 errors.Add($"Es necesario que la propiedad Invoice.SellerName tenga un valor.");
 
             // Limite listas
-            if(Invoice.RectificationItems?.Count > 1000)
+            if (Invoice.RectificationItems?.Count > 1000)
                 errors.Add($"Invoice.RectificationItems.Count no puede ser mayor de 1.000.");
 
             if (Invoice.TaxItems?.Count > 12)

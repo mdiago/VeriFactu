@@ -83,7 +83,7 @@ namespace VeriFactu.Xml.Soap
             }
 
             if (envelope == null)
-                throw new Exception("XML SOAP selerailization error");
+                throw new Exception("XML SOAP serialization error");
 
             Header = envelope.Header;
             Body = envelope.Body;

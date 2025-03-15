@@ -149,7 +149,7 @@ namespace VeriFactu.Business.Operations
                     if (File.Exists(InvoiceEntryFilePath))
                     {
 
-                        File.Copy(InvoiceEntryFilePath, GeErrorInvoiceEntryFilePath());
+                        File.Copy(InvoiceEntryFilePath, GetErrorInvoiceEntryFilePath());
                         File.Delete(InvoiceEntryFilePath);
 
                     }

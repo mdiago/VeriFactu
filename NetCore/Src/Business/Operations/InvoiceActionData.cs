@@ -60,6 +60,26 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="invoiceID">Identificador de la factura.</param>
+        /// <param name="invoiceDate">Fecha emisión de documento.</param>
+        /// <param name="sellerID">Identificador del vendedor.</param>        
+        /// <exception cref="ArgumentNullException">Los argumentos invoiceID y sellerID no pueden ser nulos</exception>
+        public InvoiceActionData(string invoiceID, DateTime invoiceDate, string sellerID)
+        {
+
+            if (invoiceID == null || sellerID == null)
+                throw new ArgumentNullException($"Los argumentos invoiceID y sellerID no pueden ser nulos.");
+
+            var invoice = new Invoice(invoiceID, invoiceDate, sellerID);
+            var errors = GetArgErrors(invoice);
+            Invoice = invoice;
+            InvoicePath = GetInvoicePath(Invoice.SellerID);
+
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
         public InvoiceActionData(Invoice invoice)
         {

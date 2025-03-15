@@ -124,6 +124,19 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="invoiceID">Identificador de la factura.</param>
+        /// <param name="invoiceDate">Fecha emisión de documento.</param>
+        /// <param name="sellerID">Identificador del vendedor.</param>        
+        /// <exception cref="ArgumentNullException">Los argumentos invoiceID y sellerID no pueden ser nulos</exception>
+        public InvoiceActionMessage(string invoiceID, DateTime invoiceDate, string sellerID) : base(invoiceID, invoiceDate, sellerID)
+        {
+            OutboxPath = GetOutBoxPath(Invoice.SellerID);
+            InboxPath = GetInBoxPath(Invoice.SellerID);
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="invoice">Instancia de factura de entrada en el sistema.</param>
         public InvoiceActionMessage(Invoice invoice) : base(invoice)
         {
@@ -257,7 +270,7 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <returns>Path de la factura en el directorio de archivado de los datos de la
         /// cadena si el documento a resultado erróneo.</returns>
-        protected string GeErrorInvoiceEntryFilePath()
+        protected string GetErrorInvoiceEntryFilePath()
         {
 
             return $"{InvoiceEntryPath}{InvoiceEntryID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
@@ -322,7 +335,7 @@ namespace VeriFactu.Business.Operations
         internal void ProcessResponse(Envelope envelope)
         {
 
-            var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GeErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
+            var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GetErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
             var responseFilePath = string.IsNullOrEmpty(CSV) ? GetErrorResponseFilePath() : ResponseFilePath;
 
             // Almaceno xml envíado

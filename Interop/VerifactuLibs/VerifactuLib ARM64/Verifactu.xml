@@ -679,6 +679,53 @@
             </summary>
             <param name="invoice">Instancia de factura de entrada en el sistema.</param>
         </member>
+        <member name="T:VeriFactu.Business.InvoiceFix">
+            <summary>
+            Representa una acción de subsanación de un registro
+            anteriormente presentado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceFix.#ctor(VeriFactu.Business.Invoice)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoice">Instancia de factura de entrada en el sistema.</param>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceFix.SetRegistro">
+            <summary>
+            Establece el registro relativo a la entrada
+            a contabilizar y enviar.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceFix.OriginalInvoiceFilePath">
+            <summary>
+            Path de la factura original en el directorio de facturas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceFix.InvoiceFilePath">
+            <summary>
+            Path de la factura en el directorio de facturas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceFix.InvoiceEntryFilePath">
+            <summary>
+            Path de la factura en el directorio de archivado de los datos de la
+            cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceFix.ResponseFilePath">
+            <summary>
+            Path del directorio de archivado de los datos de la
+            cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceFix.GetBusErrors">
+            <summary>
+            Devuelve una lista con los errores de la
+            factura por el incumplimiento de reglas de negocio.
+            </summary>
+            <returns>Lista con los errores encontrados.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Operations.InvoiceAction">
             <summary>
             Representa una acción de alta o anulación de registro
@@ -727,6 +774,15 @@
             en todo lo referente los datos de la factura a la que
             pertenece la acción.
             </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionData.#ctor(System.String,System.DateTime,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoiceID">Identificador de la factura.</param>
+            <param name="invoiceDate">Fecha emisión de documento.</param>
+            <param name="sellerID">Identificador del vendedor.</param>        
+            <exception cref="T:System.ArgumentNullException">Los argumentos invoiceID y sellerID no pueden ser nulos</exception>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionData.#ctor(VeriFactu.Business.Invoice)">
             <summary>
@@ -883,6 +939,15 @@
             Respueta AEAT.
             </summary>
         </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.#ctor(System.String,System.DateTime,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoiceID">Identificador de la factura.</param>
+            <param name="invoiceDate">Fecha emisión de documento.</param>
+            <param name="sellerID">Identificador del vendedor.</param>        
+            <exception cref="T:System.ArgumentNullException">Los argumentos invoiceID y sellerID no pueden ser nulos</exception>
+        </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.#ctor(VeriFactu.Business.Invoice)">
             <summary>
             Constructor.
@@ -947,7 +1012,7 @@
             <returns>Nombre completo de un archivo xml de respuesta
             de la AEAT que ha resultado erróneo.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GeErrorInvoiceEntryFilePath">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetErrorInvoiceEntryFilePath">
             <summary>
             Path de la entrada factura en el directorio de archivado de los datos de la
             cadena si el documento a resultado erróneo.
@@ -2605,6 +2670,25 @@
             <param name="registroAlta"> Registro de alta del bloque Body.</param>
         </member>
         <member name="M:VeriFactu.Business.Validation.Validators.Alta.ValidatorRegistroAltaTercero.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.ValidatorRegistroAltaTipoFactura">
+            <summary>
+            Valida los datos de RegistroAlta TipoFactur.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.ValidatorRegistroAltaTipoFactura.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Envelope de envío al
+            servicio Verifactu de la AEAT.</param>
+            <param name="registroAlta"> Registro de alta del bloque Body.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.ValidatorRegistroAltaTipoFactura.GetBlockErrors">
             <summary>
             Obtiene los errores de un bloque en concreto.
             </summary>
