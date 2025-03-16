@@ -36,7 +36,7 @@ Para cualquier duda o consulta, puedes escribirnos a **info@irenesolutions.com**
 
 ### Instalar el paquete con el administrador de paquetes NuGet
 
-![image](https://github.com/user-attachments/assets/681e30fd-e809-495d-957a-1a07db4d2dd4)
+![image](https://github.com/user-attachments/assets/100efcb1-06fb-4a09-ae12-121fe772e056)
 
 ### Instalar el paquete con dotnet CLI
 
