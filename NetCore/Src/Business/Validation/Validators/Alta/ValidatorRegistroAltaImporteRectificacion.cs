@@ -83,7 +83,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             {
 
                 // Obligatorio si TipoRectificativa = “S”
-
+                // 1118 = Si la factura es de tipo rectificativa por sustitución el bloque ImporteRectificacion es obligatorio.
                 if (importeRectificacion == null)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" Obligatorio informar el bloque ImporteRectificacion si TipoRectificativa = 'S'.");
@@ -93,7 +93,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             {
 
                 // Sólo deberá incluirse esta agrupación si el campo TipoRectificativa = "S".
-
+                // 1119 = Si la factura no es de tipo rectificativa por sustitución el bloque ImporteRectificacion no debe tener valor.
                 if (importeRectificacion != null)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" Sólo deberá incluirse el bloque ImporteRectificacion si el campo TipoRectificativa = 'S'.");

@@ -92,7 +92,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                             result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                                 $" 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).");
 
-
             return result;
 
         }
