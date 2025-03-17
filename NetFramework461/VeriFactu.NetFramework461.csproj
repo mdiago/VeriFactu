@@ -73,6 +73,9 @@
     <Compile Include="..\NetCore\Src\Business\InvoiceFix.cs">
       <Link>Src\Business\InvoiceFix.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\InvoiceRetrySend.cs">
+      <Link>Src\Business\InvoiceRetrySend.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\Operations\InvoiceAction.cs">
       <Link>Src\Business\Operations\InvoiceAction.cs</Link>
     </Compile>

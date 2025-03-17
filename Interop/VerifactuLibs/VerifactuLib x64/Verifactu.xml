@@ -396,11 +396,19 @@
             </summary>
             <param name="sellerID">Vendedor al que pertenece la cola de proceso.</param>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Post">
+        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction}@)">
             <summary>
             Contabiliza los elementos a envíar eliminándolos de la cola
             de envío y devolviendolos en una lista.
             </summary>
+            <param name="invoiceRetrySends">Lista de reenvíos. Cuando en cola
+            existen envíos normales y reenvíos no se puede realizar
+            un único envío, ya que la cabecera difiere en los dos casos.
+            En los reenvíos el bloque 'Cabecera' tiene en 'RemisionVoluntaria'
+            el bloque 'Incidencia'='S'. En estos casos se procesan los
+            envíos normales dándoles prioridad, que coincida en la cola
+            un momento de envío en el que únicamente existan reenvíos; En
+            este momento será cuando se envíen estos registros.</param>
             <returns>Lista de los elementos contabilizados.</returns>
         </member>
         <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Send(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
@@ -445,6 +453,12 @@
             Procesa toda la cola emisor a emisor.
             </summary>
             <returns>Lista de los elementos procesados.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns>Representación textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Business.Invoice">
             <summary>
@@ -726,6 +740,70 @@
             </summary>
             <returns>Lista con los errores encontrados.</returns>
         </member>
+        <member name="T:VeriFactu.Business.InvoiceRetrySend">
+            <summary>
+            Representa una acción de reenvío por fallo técnico
+            en las comunicaciones u otra causa. La factura es
+            correcta, ha sido contabilizada en la cadena de
+            bloques pero no ha sido enviada a la AEAT.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.#ctor(VeriFactu.Business.Invoice)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoice">Instancia de factura de entrada en el sistema.</param>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.SetRegistro">
+            <summary>
+            Establece el registro relativo a la entrada
+            a contabilizar y enviar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.GetEnvelope">
+            <summary>
+            Genera el sobre SOAP.
+            </summary>
+            <returns>Sobre SOAP.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.SaveBlockchainChanges">
+            <summary>
+            Actualiza los datos tras la incorporación del registro
+            a la cadena de bloques.
+            <para> 1. Recalcula Xml con la info Blockchain actualizada.</para>
+            <para> 2. Guarda el registro en disco en el el directorio de registros emitidos.</para>
+            <para> 3. Establece Posted = true.</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceRetrySend.OriginalInvoiceFilePath">
+            <summary>
+            Path de la factura original en el directorio de facturas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceRetrySend.InvoiceFilePath">
+            <summary>
+            Path de la factura en el directorio de facturas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceRetrySend.InvoiceEntryFilePath">
+            <summary>
+            Path de la factura en el directorio de archivado de los datos de la
+            cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceRetrySend.ResponseFilePath">
+            <summary>
+            Path del directorio de archivado de los datos de la
+            cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.GetBusErrors">
+            <summary>
+            Devuelve una lista con los errores de la
+            factura por el incumplimiento de reglas de negocio.
+            </summary>
+            <returns>Lista con los errores encontrados.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Operations.InvoiceAction">
             <summary>
             Representa una acción de alta o anulación de registro
@@ -885,6 +963,11 @@
             <summary>
             Indica si el registro ha sido contabilizado en la 
             cadena de bloques.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Operations.InvoiceActionData.IsRetrySend">
+            <summary>
+            Indica si se trata de un intento de reenvío.
             </summary>
         </member>
         <member name="P:VeriFactu.Business.Operations.InvoiceActionData.IsSaved">

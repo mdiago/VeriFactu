@@ -141,18 +141,45 @@ namespace VeriFactu.Business.FlowControl
         /// Contabiliza los elementos a envíar eliminándolos de la cola
         /// de envío y devolviendolos en una lista.
         /// </summary>
+        /// <param name="invoiceRetrySends">Lista de reenvíos. Cuando en cola
+        /// existen envíos normales y reenvíos no se puede realizar
+        /// un único envío, ya que la cabecera difiere en los dos casos.
+        /// En los reenvíos el bloque 'Cabecera' tiene en 'RemisionVoluntaria'
+        /// el bloque 'Incidencia'='S'. En estos casos se procesan los
+        /// envíos normales dándoles prioridad, que coincida en la cola
+        /// un momento de envío en el que únicamente existan reenvíos; En
+        /// este momento será cuando se envíen estos registros.</param>
         /// <returns>Lista de los elementos contabilizados.</returns>
-        private List<InvoiceAction> Post()
+        private List<InvoiceAction> Post(out List<InvoiceAction> invoiceRetrySends)
         {
 
             Utils.Log($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
                 $" {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
 
+            invoiceRetrySends = new List<InvoiceAction>();
+
             var recordCount = 0;
             var registros = new List<Registro>();
             var invoiceActions = new List<InvoiceAction>();
 
-            while (_InvoiceActions.Count > 0 && SellerQueue.MaxRecordNumber > recordCount++)
+            // Flags para controlar si existen reenvíos y envíos normales
+            bool hasRetrySends = false;
+            bool hasInvoiceActions = false;
+            
+            foreach ( var action in _InvoiceActions )
+            {
+
+                if (action.IsRetrySend)
+                    hasRetrySends = true;
+                else
+                    hasInvoiceActions = true;
+
+            }
+
+            // Si sólo existen reenvíos, estos se procesarán
+            var isOnlyRetrySends = hasRetrySends && !hasInvoiceActions;
+
+            while (_InvoiceActions.Count > 0 && MaxRecordNumber > recordCount++)
             {
 
                 var invoiceAction = _InvoiceActions.Dequeue();
@@ -160,8 +187,13 @@ namespace VeriFactu.Business.FlowControl
                 if (!invoiceAction.Posted)
                 {
 
-                    invoiceActions.Add(invoiceAction);
-                    registros.Add(invoiceAction.Registro);
+                    if (invoiceAction.IsRetrySend && !isOnlyRetrySends) // Si no son sólo reenvíos los almacenamos por devolver a la cola
+                        invoiceRetrySends.Add(invoiceAction);
+                    else
+                        invoiceActions.Add(invoiceAction);
+
+                    if(!invoiceAction.IsRetrySend) // En este caso no está contabilizada
+                        registros.Add(invoiceAction.Registro); // Almaceno el registo para contabilizar
 
                 }
                 else
@@ -176,7 +208,9 @@ namespace VeriFactu.Business.FlowControl
             var blockchainManager = Blockchain.Blockchain.GetInstance(SellerID) as Blockchain.Blockchain;
 
             // Añado los registros a la cadena de bloques
-            blockchainManager.Add(registros);
+            if(registros.Count > 0)
+                blockchainManager.Add(registros);
+
             Utils.Log($"Actualizando datos de la cadena de bloques ({SellerID}) en {registros.Count} elementos {DateTime.Now}");
 
             // Actualizo los cambios
@@ -371,8 +405,21 @@ namespace VeriFactu.Business.FlowControl
             if (_InvoiceActions.Count == 0)
                 return;
 
+            // Reenvíos a devolver a la cola
+            List<InvoiceAction> invoiceRetrySends;
 
-            var postedInvoiceActions = Post();
+            var postedInvoiceActions = Post(out invoiceRetrySends);
+
+            if (invoiceRetrySends.Count > 0)
+            {               
+
+                foreach (var invoiceRetrySend in invoiceRetrySends)
+                    _InvoiceActions.Enqueue(invoiceRetrySend);
+
+                Utils.Log($"Devueltos a la cola {this} {invoiceRetrySends.Count} pendientes.");
+
+            }
+
             var aeatResponse = Send(postedInvoiceActions);
             
             ProcessReponse(aeatResponse, postedInvoiceActions);
@@ -381,7 +428,15 @@ namespace VeriFactu.Business.FlowControl
             if (InvoiceQueue.SentFinished != null)
                 InvoiceQueue.SentFinished(postedInvoiceActions, aeatResponse);
 
+        }
 
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns>Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{SellerID} ({_InvoiceActions.Count})";
         }
 
         #endregion

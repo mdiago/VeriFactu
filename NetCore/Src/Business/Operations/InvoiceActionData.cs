@@ -250,6 +250,11 @@ namespace VeriFactu.Business.Operations
         public bool Posted { get; protected set; }
 
         /// <summary>
+        /// Indica si se trata de un intento de reenvío.
+        /// </summary>
+        public bool IsRetrySend { get; protected set; }
+
+        /// <summary>
         /// Indica si la entrada ya ha sido guardada.
         /// </summary>
         internal bool IsSaved { get; set; }

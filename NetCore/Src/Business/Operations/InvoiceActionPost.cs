@@ -86,7 +86,7 @@ namespace VeriFactu.Business.Operations
         /// <para> 3. Guarda el registro en disco en el el directorio de registros emitidos.</para>
         /// <para> 4. Establece Posted = true.</para>
         /// </summary>
-        protected void Post()
+        internal virtual void Post()
         {
 
             // Añadimos el registro de alta (1)
@@ -104,7 +104,7 @@ namespace VeriFactu.Business.Operations
         /// <para> 2. Guarda el registro en disco en el el directorio de registros emitidos.</para>
         /// <para> 3. Establece Posted = true.</para>
         /// </summary>
-        internal void SaveBlockchainChanges() 
+        internal virtual void SaveBlockchainChanges() 
         {
 
             if (Registro.BlockchainLinkID == 0)
