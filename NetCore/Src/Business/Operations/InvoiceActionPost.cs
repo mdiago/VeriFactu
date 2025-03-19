@@ -147,12 +147,10 @@ namespace VeriFactu.Business.Operations
                     BlockchainManager.Delete(Registro);
 
                     if (File.Exists(InvoiceEntryFilePath))
-                    {
+                        File.Move(InvoiceEntryFilePath, GetErrorInvoiceEntryFilePath());
 
-                        File.Copy(InvoiceEntryFilePath, GetErrorInvoiceEntryFilePath());
-                        File.Delete(InvoiceEntryFilePath);
-
-                    }
+                    if (File.Exists(InvoiceFilePath))
+                        File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());
 
                     Posted = false;
 
