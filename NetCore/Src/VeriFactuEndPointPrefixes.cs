@@ -57,7 +57,7 @@ namespace VeriFactu
         /// <summary>
         /// Prefijo del endpoint de producción.
         /// </summary>
-        public const string Prod = "https://XXXXXX";
+        public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP";
 
         /// <summary>
         /// Prefijo del endpoint de pruebas de validación.
