@@ -5956,27 +5956,29 @@
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E1">
             <summary>
-            Exenta por el artículo 20.
+            Exenta por el artículo 20 (Exenciones en operaciones interiores).
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E2">
             <summary>
-            Exenta por el artículo 21.
+            Exenta por el artículo 21 (Exportaciones).
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E3">
             <summary>
-            Exenta por el artículo 22.
+            Exenta por el artículo 22 (Operaciones asimiladas a las
+            exportaciones: Navegación marítima internacional, aeronaves...).
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E4">
             <summary>
-            Exenta por los artículos 23 y 24.
+            Exenta por los artículos 23 y 24 (Exenciones relativas a
+            regímenes aduaneros y fiscales: Depositos aduaneros...).
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E5">
             <summary>
-            Exenta por el artículo 25.
+            Exenta por el artículo 25 (Operaciones UE).
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E6">
