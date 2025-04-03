@@ -301,6 +301,9 @@
     <Compile Include="..\NetCore\Src\Net\Rest\ApiClient.cs">
       <Link>Src\Net\Rest\ApiClient.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\ApiInvoiceFix.cs">
+      <Link>Src\Net\Rest\ApiInvoiceFix.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Ct.cs">
       <Link>Src\Net\Rest\Ct.cs</Link>
     </Compile>
@@ -357,6 +360,9 @@
     </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\IJsonSerializer.cs">
       <Link>Src\Net\Rest\Json\Serializer\IJsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonBooleanSerializer.cs">
+      <Link>Src\Net\Rest\Json\Serializer\JsonBooleanSerializer.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Json\Serializer\JsonByteArraySerializer.cs">
       <Link>Src\Net\Rest\Json\Serializer\JsonByteArraySerializer.cs</Link>

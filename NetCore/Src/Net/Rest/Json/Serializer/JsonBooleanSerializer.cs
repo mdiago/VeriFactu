@@ -39,77 +39,29 @@
 
 using System;
 
-namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
+namespace VeriFactu.Net.Rest.Json.Serializer
 {
 
     /// <summary>
-    /// Fragmento obtenido del análisis léxico de una cadena
-    /// JSON que representa un valor de propiedad booleana de
-    /// true.
+    /// Serializador para boolean.
     /// </summary>
-    internal class JsonTrue : JsonToken
+    internal class JsonBooleanSerializer : IJsonSerializer
     {
 
-        #region Propiedades Privadas de Instacia
+        #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Longitud de la cadena de texto.
+        /// Devuelve la representación en JSON
+        /// de la propiedad facilitada para la
+        /// instancia facilitada.
         /// </summary>
-
-        internal override int Length => 4;
-
-        /// <summary>
-        /// Valor de la cadena de texto.
-        /// </summary>
-        internal override string Value
+        /// <param name="value">Valor a serializar.</param>
+        /// <returns>Representación JSON de la propiedad.</returns>
+        public string ToJson(object value)
         {
 
-            get
-            {
-
-                var text = JsonLexer.JsonText.Substring(Start, Length);
-
-                if (!string.Equals(text, "true", StringComparison.OrdinalIgnoreCase))
-                    throw new InvalidCastException($"Unexpected value '{text}' when expected 'true'.");
-
-                return text;
-
-            }
-
-        }
-
-        #endregion
-
-        #region Construtores de Instancia
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="jsonLexer">Analizador léxico al que
-        /// pertenece el fragmento de texto.</param>
-        /// <param name="start">Posición del inicio del
-        /// fragmento de texto dentro de la cadena completa JSON.</param>
-        internal JsonTrue(JsonLexer jsonLexer, int start) : base(jsonLexer, start) 
-        { 
-        }
-
-        #endregion
-
-        #region Métodos Privados de Instancia
-
-        /// <summary>
-        /// Convierte el valor del fragmento de texto
-        /// en el tipo al que se interpreta que pertenece.
-        /// </summary>
-        /// <returns>Valor del fragmento de texto
-        /// en el tipo al que se interpreta que pertenece.</returns>
-        internal override object Covert()
-        {
-
-            if (Value.Length == 0)
-                return null;
-
-            return true;
+            var b = value as Boolean?;
+            return (b??false) ? "true" : "false";
 
         }
 

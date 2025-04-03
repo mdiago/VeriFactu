@@ -101,6 +101,12 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 
         #region Métodos Privados de Instancia
 
+        /// <summary>
+        /// Devuelve un entero que representa la longitud
+        /// de la cadena de texto.
+        /// </summary>
+        /// <returns> Entero que representa la longitud
+        /// de la cadena de texto.</returns>
         internal int GetLength() 
         {
 

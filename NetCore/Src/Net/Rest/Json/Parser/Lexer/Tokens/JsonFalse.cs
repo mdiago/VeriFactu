@@ -37,6 +37,8 @@
     address: info@irenesolutions.com
  */
 
+using System;
+
 namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 {
 
@@ -47,6 +49,36 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
     /// </summary>
     internal class JsonFalse : JsonToken
     {
+
+        #region Propiedades Privadas de Instacia
+
+        /// <summary>
+        /// Longitud de la cadena de texto.
+        /// </summary>
+
+        internal override int Length => 5;
+
+        /// <summary>
+        /// Valor de la cadena de texto.
+        /// </summary>
+        internal override string Value
+        {
+
+            get
+            {
+
+                var text = JsonLexer.JsonText.Substring(Start, Length);
+
+                if(!string.Equals(text, "false", StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidCastException($"Unexpected value '{text}' when expected 'false'.");
+
+                return text;
+
+            }
+
+        }
+
+        #endregion
 
         #region Construtores de Instancia
 

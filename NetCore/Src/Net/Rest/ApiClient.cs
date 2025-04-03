@@ -137,6 +137,20 @@ namespace VeriFactu.Net.Rest
         }
 
         /// <summary>
+        /// Crea un registro de alta de subsanación mediante el API.
+        /// </summary>
+        /// <param name="invoice">Factura a remitir de alta como subsanación.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject CreateFix(Invoice invoice)
+        {
+            
+            var invoiceFix = new ApiInvoiceFix(invoice);
+            return Post(invoiceFix, Api.EndPointCreate);
+
+        }
+
+
+        /// <summary>
         /// Crea un registro de anulación mediante el API.
         /// </summary>
         /// <param name="invoice">Factura a anular.</param>

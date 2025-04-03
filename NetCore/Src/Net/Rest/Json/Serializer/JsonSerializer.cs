@@ -67,6 +67,7 @@ namespace VeriFactu.Net.Rest.Json.Serializer
             {typeof(DateTime),  new JsonDateTimeSerializer() },
             {typeof(DateTime?), new JsonDateTimeSerializer() },
             {typeof(byte[]),    new JsonByteArraySerializer() },
+            {typeof(bool),      new JsonBooleanSerializer() },
         };
 
         #endregion

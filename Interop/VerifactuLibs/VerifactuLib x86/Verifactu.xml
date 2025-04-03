@@ -3743,6 +3743,13 @@
             <param name="invoice">Factura a remitir de alta.</param>
             <returns>Resultado llamada API.</returns>
         </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.CreateFix(VeriFactu.Business.Invoice)">
+            <summary>
+            Crea un registro de alta de subsanación mediante el API.
+            </summary>
+            <param name="invoice">Factura a remitir de alta como subsanación.</param>
+            <returns>Resultado llamada API.</returns>
+        </member>
         <member name="M:VeriFactu.Net.Rest.ApiClient.Delete(VeriFactu.Business.Invoice)">
             <summary>
             Crea un registro de anulación mediante el API.
@@ -3768,6 +3775,135 @@
             Crea Ct.
             </summary>
             <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="T:VeriFactu.Net.Rest.ApiInvoiceFix">
+            <summary>
+            Extiende la clase Invoice para poder incluir la propiedad 
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Net.Rest.ApiInvoiceFix._Invoice">
+            <summary>
+            Factura de subsanación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiInvoiceFix.#ctor(VeriFactu.Business.Invoice)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoice">Factura de subsanación</param>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.InvoiceType">
+            <summary>
+            <para>Clave del tipo de factura (L2).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.RectificationType">
+            <summary>
+             Identifica si el tipo de factura rectificativa
+             es por sustitución o por diferencia (L3).
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.InvoiceID">
+            <summary>
+            Identificador de la factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.InvoiceDate">
+            <summary>
+            Fecha emisión de documento.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.OperationDate">
+            <summary>
+            Fecha operación.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.SellerName">
+            <summary>
+            Nombre del vendedor.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.BuyerID">
+            <summary>
+            Identidicador del comprador.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.BuyerName">
+            <summary>
+            Nombre del comprador.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.BuyerCountryID">
+            <summary>
+            Código del país del destinatario (a veces también denominado contraparte,
+            es decir, el cliente) de la operación de la factura expedida.
+            <para>Alfanumérico (2) (ISO 3166-1 alpha-2 codes) </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.BuyerIDType">
+            <summary>
+            Clave para establecer el tipo de identificación
+            en el pais de residencia. L7.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.TotalAmount">
+            <summary>
+            Importe total: Total neto + impuestos soportado
+            - impuestos retenidos.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.TotalTaxOutput">
+            <summary>
+            Total impuestos soportados.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.TotalTaxOutputSurcharge">
+            <summary>
+            Total impuestos soportados.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.TotalTaxWithheld">
+            <summary>
+            Importe total impuestos retenidos.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.Text">
+            <summary>
+            Texto del documento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.TaxItems">
+            <summary>
+            Líneas de impuestos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.RectificationItems">
+            <summary>
+            Facturas rectificadas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.RegistroAltaSource">
+            <summary>
+            RegistroAlta a partir del cual se ha creado la factura, en el
+            caso de que la instancia se haya creado a partir de un registro
+            de alta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFix.IsInvoiceFix">
+            <summary>
+            Indica si se trata de una subsanación de una factura.
+            </summary>
         </member>
         <member name="T:VeriFactu.Net.Rest.Ct">
             <summary>
@@ -4135,6 +4271,16 @@
             false.
             </summary>
         </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonFalse.Length">
+            <summary>
+            Longitud de la cadena de texto.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonFalse.Value">
+            <summary>
+            Valor de la cadena de texto.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonFalse.#ctor(VeriFactu.Net.Rest.Json.Parser.Lexer.JsonLexer,System.Int32)">
             <summary>
             Constructor.
@@ -4296,6 +4442,14 @@
             <param name="start">Posición del inicio del
             fragmento de texto dentro de la cadena completa JSON.</param>
         </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonString.GetLength">
+            <summary>
+            Devuelve un entero que representa la longitud
+            de la cadena de texto.
+            </summary>
+            <returns> Entero que representa la longitud
+            de la cadena de texto.</returns>
+        </member>
         <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonString.Covert">
             <summary>
             Convierte el valor del fragmento de texto
@@ -4362,6 +4516,16 @@
             true.
             </summary>
         </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonTrue.Length">
+            <summary>
+            Longitud de la cadena de texto.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonTrue.Value">
+            <summary>
+            Valor de la cadena de texto.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonTrue.#ctor(VeriFactu.Net.Rest.Json.Parser.Lexer.JsonLexer,System.Int32)">
             <summary>
             Constructor.
@@ -4385,6 +4549,20 @@
             </summary>
         </member>
         <member name="M:VeriFactu.Net.Rest.Json.Serializer.IJsonSerializer.ToJson(System.Object)">
+            <summary>
+            Devuelve la representación en JSON
+            de la propiedad facilitada para la
+            instancia facilitada.
+            </summary>
+            <param name="value">Valor a serializar.</param>
+            <returns>Representación JSON de la propiedad.</returns>
+        </member>
+        <member name="T:VeriFactu.Net.Rest.Json.Serializer.JsonBooleanSerializer">
+            <summary>
+            Serializador para boolean.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Serializer.JsonBooleanSerializer.ToJson(System.Object)">
             <summary>
             Devuelve la representación en JSON
             de la propiedad facilitada para la
