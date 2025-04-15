@@ -473,6 +473,18 @@ namespace VeriFactu.Config
 
         }
 
+        /// <summary>
+        /// Establece la ruta al directorio de configuración.
+        /// </summary>
+        /// <param name="path">Ruta del directorio de configuración acabada en '/'</param>
+        public static void SetRutaDirectorioConfiguracion(string path)
+        {
+
+            Path = path;
+            Get();
+
+        }
+
         #endregion
 
     }
