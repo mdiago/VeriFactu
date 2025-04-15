@@ -71,6 +71,12 @@ namespace VeriFactu.Config
         /// </summary>
         static Settings _Current;
 
+        /// <summary>
+        /// Ruta al directorio de configuración.
+        /// </summary>
+        static string _Path = Environment.GetFolderPath(
+            Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
+
         #endregion
 
         #region Propiedades Privadas Estáticas
@@ -84,12 +90,6 @@ namespace VeriFactu.Config
         /// Seprador decimal.
         /// </summary>
         internal static string DefaultNumberDecimalSeparator = ".";
-
-        /// <summary>
-        /// Ruta al directorio de configuración.
-        /// </summary>
-        internal static string Path = Environment.GetFolderPath(
-            Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
 
         /// <summary>
         /// Nombre del fichero de configuración.
@@ -269,6 +269,30 @@ namespace VeriFactu.Config
             }
         }
 
+        /// <summary>
+        /// Ruta al directorio de configuración.
+        /// </summary>
+        public static string Path
+        {
+            get
+            {
+
+                if(string.IsNullOrEmpty(_Path))
+                    return Environment.GetFolderPath(
+                        Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
+
+                return _Path;
+
+            }
+            set
+            {
+
+                _Path = value;
+                Get();
+
+            }
+
+        }
 
         #endregion
 
