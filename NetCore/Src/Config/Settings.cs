@@ -77,6 +77,11 @@ namespace VeriFactu.Config
         static string _Path = Environment.GetFolderPath(
             Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
 
+        /// <summary>
+        /// Ruta al directorio de la cadena de bloques.
+        /// </summary>
+        string _BlockchainPath;
+
         #endregion
 
         #region Propiedades Privadas Estáticas
@@ -331,7 +336,25 @@ namespace VeriFactu.Config
         /// de las distintas cadenas de bloques por emisor.
         /// </summary>
         [XmlElement("BlockchainPath")]
-        public string BlockchainPath { get; set; }
+        public string BlockchainPath 
+        { 
+            get 
+            { 
+
+                return _BlockchainPath; 
+
+            } 
+            set 
+            { 
+
+                if(Current.BlockchainPath != null && Directory.GetDirectories(Current.BlockchainPath).Length > 0)
+                    throw new InvalidOperationException($"No se puede cambiar el valor" +
+                        $" de 'BlockchainPath' si la carpeta no está vacía.");
+
+                _BlockchainPath = value; 
+
+            } 
+        }
 
         /// <summary>
         /// Ruta al directorio que actuará almacenamiento

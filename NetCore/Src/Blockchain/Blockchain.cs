@@ -113,7 +113,7 @@ namespace VeriFactu.Blockchain
 
             if (string.IsNullOrEmpty(Settings.Current.BlockchainPath) || !Directory.Exists(Settings.Current.BlockchainPath))
                 throw new InvalidOperationException($"Revise el archivo de configuración {Settings.FileName}," +
-                    $" el valor de BlockchainPath debe ser el de un directori válido.");
+                    $" el valor de BlockchainPath debe ser el de un directorio válido.");
 
             var dirs = Directory.GetDirectories(Settings.Current.BlockchainPath);
 

@@ -391,6 +391,12 @@
     <Compile Include="..\NetCore\Src\Net\Wsd.cs">
       <Link>Src\Net\Wsd.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\BigInt\BByte.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\BigInt\BByte.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\BigInt\BInt.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\BigInt\BInt.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Qrcode\BitArray.cs">
       <Link>Src\Qrcode\BitArray.cs</Link>
     </Compile>
@@ -663,6 +669,8 @@
   <ItemGroup>
     <Content Include="logo-heart.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Src\NoVeriFactu\Signature\Ms\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

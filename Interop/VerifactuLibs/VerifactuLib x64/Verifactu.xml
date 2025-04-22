@@ -3228,6 +3228,11 @@
             Configuración actual.
             </summary>
         </member>
+        <member name="F:VeriFactu.Config.Settings._Path">
+            <summary>
+            Ruta al directorio de configuración.
+            </summary>
+        </member>
         <member name="F:VeriFactu.Config.Settings.DefaultNumberFormatInfo">
             <summary>
             Formato de importes para los xml del sii.
@@ -3236,11 +3241,6 @@
         <member name="F:VeriFactu.Config.Settings.DefaultNumberDecimalSeparator">
             <summary>
             Seprador decimal.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Config.Settings.Path">
-            <summary>
-            Ruta al directorio de configuración.
             </summary>
         </member>
         <member name="F:VeriFactu.Config.Settings.FileName">
@@ -3281,6 +3281,11 @@
         <member name="P:VeriFactu.Config.Settings.Current">
             <summary>
             Configuración en curso.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.Path">
+            <summary>
+            Ruta al directorio de configuración.
             </summary>
         </member>
         <member name="P:VeriFactu.Config.Settings.IDVersion">
@@ -4803,6 +4808,916 @@
             </summary>
             <returns>Devuelve el certificado de la 
             configuración para las comunicaciones.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Signer">
+            <summary>
+            Clase responsable de la firma de ficheros de 
+            registros en arreglo a las especificaciones
+            de VERI*FACTU.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Signer.PROV_RSA_AES">
+            <summary>
+            Tipo de proveedor para RSA.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Signer.SigningKey">
+            <summary>
+            Información de la clave del certificado para la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Signer.KeyInfo">
+            <summary>
+            Objeto KeyInfo de la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="certificate">Certificado para realizar las firmas.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetVerifactuSignedXml(System.Xml.XmlDocument)">
+            <summary>
+            Devuelve una nueva instancia de VerifactuSignedXml
+            basada en el documento xml de entrada.
+            </summary>
+            <param name="xmlDocument">Documento a firmar.</param>
+            <returns>Nueva instancia de VerifactuSignedXml
+            basada en el documento xml de entrada.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetSignatureId">
+            <summary>
+            Obtiene un nuevo identificador para una firma.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetCertificateKey(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Devuelve una clave válida para la firma con SA256.
+            </summary>
+            <param name="certificate">Certificado del que obtener la clave.</param>
+            <returns>Clave válida para firma SA256.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetKeyInfo(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.RSACryptoServiceProvider)">
+            <summary>
+            Devuelve el objeto KeyInfo de la firma adecuado
+            para el certificado de entrada.
+            </summary>
+            <param name="certificate">Certificado.</param>
+            <param name="key">Clave del certificado.</param>
+            <returns>KeyInfo de la firma.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetInXmlReference(System.String)">
+            <summary>
+            Devuelve la referencia correspondiente al documento
+            xml sin firmar de entrada.
+            </summary>
+            <param name="signatureId">Identificador de la firma.</param>
+            <returns>Referencia a incluir en la firma.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetSignedPropertiesReference(System.String)">
+            <summary>
+            Devuelve la referencia correspondiente a las 
+            propiedades adicionales de la firma.
+            </summary>
+            <param name="signatureId">Identificador de la firma.</param>
+            <returns>Referencia a incluir en la firma con la propiedades
+            adicionales al documento de entrada a firmar.</returns>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Signer.Certificate">
+            <summary>
+            Certificado para la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(System.Xml.XmlDocument,System.String)">
+            <summary>
+            Devuelve los datos binarios de una cadena con el documentos xml de
+            entrada firmado.
+            </summary>
+            <param name="xmlDocument">Documento xml a firmar.</param>
+            <param name="name">Nombre elemento.</param>
+            <returns>Datos binarios xml firmado.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte">
+            <summary>
+            Representa un byte de un número entero grande.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte.Position">
+            <summary>
+            Valor del byte.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte.ByteValue">
+            <summary>
+            Posición en la cadena de bytes.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte.MultiplyValue">
+            <summary>
+            Base 256 elevada a la posición. Cálcula
+            el número por el que hay que multiplicar el byte
+            para calcular el valor que adiciona al número entero grande.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte.Value">
+            <summary>
+            Valor que adiciona al número entero grande.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte.#ctor(System.Byte,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="byteValue">Valor del byte.</param>
+            <param name="position">Posición en la cadena de bytes.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns>Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt">
+            <summary>
+            Clase utilizada para representar textualmente en notación
+            decimal un número entero grande que no se puede almacenar
+            en los 8 bytes de un ulong.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt._Value">
+            <summary>
+            Valor inicial.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt._Bytes">
+            <summary>
+            Conjunto de bytes que componen
+            el número entero grande.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt._BBytes">
+            <summary>
+            Lista de instancias de BByte que componen
+            el entero.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt.#ctor(System.Byte[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="bytes">Lista de bytes que componen
+            el número entero.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt.Multiply(System.String,System.String)">
+            <summary>
+            Realiza la multipliplicación aplicando el método
+            tradicional a dos cadenas de números enteros de entrada.
+            </summary>
+            <param name="a">Cadena con el primer factor.</param>
+            <param name="b">Cadena con el segundo factor.</param>
+            <returns>Cadena con el número resultante.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt.Sum(System.String,System.String)">
+            <summary>
+            Realiza la suma aplicando el método
+            tradicional a dos cadenas de números enteros de entrada.
+            </summary>
+            <param name="a">Cadena con el primer sumando.</param>
+            <param name="b">Cadena con el segundo sumando.</param>
+            <returns>Cadena con el número resultante.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt.Load">
+            <summary>
+            Carga una lista de instancias de Bbyte que representan
+            los bytes que componen el número entero.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BInt.ToString">
+            <summary>
+            Represéntación textual de la entrada.
+            </summary>
+            <returns>Represéntación textual de la entrada.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.Cert">
+            <summary>
+            Certificado digital.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.Props.Cert._Certificate">
+            <summary>
+            Certificado representado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.Cert.CertDigest">
+            <summary>
+            Huella del certificado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.Cert.IssuerSerial">
+            <summary>
+            Emisor y número de serie del certificado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.Cert.Certificate">
+            <summary>
+            Certificado representado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.Cert.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.CertDigest">
+            <summary>
+            Representa la huella del certificado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.CertDigest.DigestMethod">
+            <summary>
+            Método de cálculo de la huella SHA1, SHA256...
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.CertDigest.DigestValue">
+            <summary>
+            Valor del hash calculado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.CertDigest.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.DataObjectFormat">
+            <summary>
+            Formato del objeto firmado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.DataObjectFormat.ObjectIdentifier">
+            <summary>
+            Identificador del objeto.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.DataObjectFormat.MimeType">
+            <summary>
+            Tipo mime.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.DataObjectFormat.Encoding">
+            <summary>
+            Codificación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.DataObjectFormat.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.DataObjectFormat.SetSignatureId(System.String)">
+            <summary>
+            Establece el valor del id de firma.
+            </summary>
+            <param name="signatureId">Id. de firma.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.Description">
+            <summary>
+            Representa una descripción.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.Description.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.DigestMethod">
+            <summary>
+            Representa un método o función de hash.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.DigestMethod.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.DigestValue">
+            <summary>
+            Representa un valor fruto del cálculo de una función de hash.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.DigestValue.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.Encoding">
+            <summary>
+            Representa una codificación de texto (ASCII, UTF8...).
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.Encoding.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.Identifier">
+            <summary>
+            Identificador.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.Identifier.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.IssuerSerial">
+            <summary>
+            Emisor y número de serie de un certificado digital.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.IssuerSerial.X509IssuerName">
+            <summary>
+            Nombre emisor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.IssuerSerial.X509SerialNumber">
+            <summary>
+            Número de serie.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.IssuerSerial.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.MimeType">
+            <summary>
+            Tipo mime de archivo firmado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.MimeType.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.Object">
+            <summary>
+            Objedto firmado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.Object.QualifyingProperties">
+            <summary>
+            Propiedades.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.Object.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.ObjectIdentifier">
+            <summary>
+            Identificador de objeto.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.ObjectIdentifier.Identifier">
+            <summary>
+            Identificador.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.ObjectIdentifier.Description">
+            <summary>
+            Descripción.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.ObjectIdentifier.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropertyElementWithSigId">
+            <summary>
+            Representa un elemento xml que contiene
+            información del id de firma.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropertyElementWithSigId._SignatureId">
+            <summary>
+            Id de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropertyElementWithSigId.SignatureId">
+            <summary>
+            Id de la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropertyElementWithSigId.#ctor(System.Xml.XmlNode,System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropertyElementWithSigId.SetSignatureId(System.String)">
+            <summary>
+            Añade información del id de firmna.
+            </summary>
+            <param name="signatureId">Id de firma.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElement">
+            <summary>
+            Elemento xml de la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElement.XmlDocument">
+            <summary>
+            Documento xml al que pertenece el elemento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElement.Parent">
+            <summary>
+            XNode al que pertenece el elemento, o del cual
+            es hijo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElement.XmlElement">
+            <summary>
+            Elemento xml.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElement.#ctor(System.Xml.XmlNode,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo al que pertenece el elemento a crear.</param>
+            <param name="name">LocalName del elemento.</param>
+            <param name="prefix">Prefijo.</param>
+            <param name="nms">Espacio de nombres.</param>
+            <param name="notAppendChild">Con true no se añade el elemento hijo al padre.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElement.GetXmlDocument(System.Xml.XmlNode)">
+            <summary>
+            Devuelve el documento xml a partir de un
+            nodo xml padre.
+            </summary>
+            <param name="node">No xml que contiene el elemento.</param>
+            <returns>Documento xml del elemento.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElementWithValue">
+            <summary>
+            Elemento xml con un valor incluido
+            en la propiedad InnerText del mismo.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElementWithValue._Value">
+            <summary>
+            Valor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElementWithValue.Value">
+            <summary>
+            Valor.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropXmlElementWithValue.#ctor(System.Xml.XmlNode,System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo al que pertenece el elemento a crear.</param>
+            <param name="name">LocalName del elemento.</param>
+            <param name="prefix">Prefijo.</param>
+            <param name="nms">Espacio de nombres.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.QualifyingProperties">
+            <summary>
+            Propiedades que califican el contexto de la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.QualifyingProperties.SignedProperties">
+            <summary>
+            Propiedades firmadas.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.QualifyingProperties.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp">
+            <summary>
+            Objeto dummy que representa el xml a firmar. Lo utilizamos
+            para simplificar inclusión de los espacios de nombres en
+            el proceso de canonicalización.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.SignatureTmp">
+            <summary>
+            Objeto dummy que representa nodo de firma. Lo utilizamos
+            para simplificar inclusión de los espacios de nombres en
+            el proceso de canonicalización.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.XmlElementObject">
+            <summary>
+            Representa el bloque Object a incluir en la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.#ctor(System.Xml.XmlDocument,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+            <param name="name">Nombre elemento.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.GetDataObject">
+            <summary>
+            Devuelve una instancia de DataObject a partir del 
+            elemento xml 'Object'. El resultado se utiliza para
+            incluir el objeto en la lógica de firma xml
+            del .net.
+            </summary>
+            <returns>Instancia de DataObject a partir del 
+            elemento xml 'Object'.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyId">
+            <summary>
+            Identificación de política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyId.SigPolicyId">
+            <summary>
+            Id de política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyId.SigPolicyHash">
+            <summary>
+            Hash de política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyId.SigPolicyQualifiers">
+            <summary>
+            Calificadores de política de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyId.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyIdentifier">
+            <summary>
+            Identificacor de política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyIdentifier.SignaturePolicyId">
+            <summary>
+            Identificador de política de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignaturePolicyIdentifier.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignatureTmp">
+            <summary>
+            Objeto dummy que representa nodo de firma. Lo utilizamos
+            para simplificar inclusión de los espacios de nombres en
+            el proceso de canonicalización.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignatureTmp.Object">
+            <summary>
+            Bloque 'Object' de la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignatureTmp.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedDataObjectProperties">
+            <summary>
+            Propiedades del objeto incluidas en la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedDataObjectProperties.DataObjectFormat">
+            <summary>
+            Formato.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedDataObjectProperties.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedProperties">
+            <summary>
+            Propiedades incluidas en la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedProperties.SignedSignatureProperties">
+            <summary>
+            Propiedades de la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedProperties.SignedDataObjectProperties">
+            <summary>
+            Propiedades del objeto firmado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedProperties.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedProperties.SetSignatureId(System.String)">
+            <summary>
+            Incluye el valor del id de firma en el lugar que
+            corresponde del elemento xml.
+            </summary>
+            <param name="signatureId">Id de firma.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedSignatureProperties">
+            <summary>
+            Propiedades firmadas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedSignatureProperties.SigningTime">
+            <summary>
+            Hora firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedSignatureProperties.SigningCertificate">
+            <summary>
+            Certificado firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedSignatureProperties.SignaturePolicyIdentifier">
+            <summary>
+            Política de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SignedSignatureProperties.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigningCertificate">
+            <summary>
+            Certificado utilizado para la firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigningCertificate.Cert">
+            <summary>
+            Certificado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigningCertificate.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigningTime">
+            <summary>
+            Hora de la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigningTime.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyHash">
+            <summary>
+            Huella de la política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyHash.DigestMethod">
+            <summary>
+            Función hash utilizada para obtener la huella.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyHash.DigestValue">
+            <summary>
+            Valor de la huella.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyHash.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyId">
+            <summary>
+            Identificador de política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyId.Identifier">
+            <summary>
+            Identificador.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyId.Description">
+            <summary>
+            Descripción.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyId.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyQualifier">
+            <summary>
+            Calificador de política de firma.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyQualifier.SPURI">
+            <summary>
+            Enlace url a la política de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyQualifier.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyQualifiers">
+            <summary>
+            Calificadores de política de firma..
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyQualifiers.SigPolicyQualifier">
+            <summary>
+            Calificador de política de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SigPolicyQualifiers.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.SPURI">
+            <summary>
+            Enlace a política de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.SPURI.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.X509IssuerName">
+            <summary>
+            Nombre emisor certificado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.X509IssuerName.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.X509SerialNumber">
+            <summary>
+            Número de serie de certificado digital.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.X509SerialNumber.#ctor(System.Xml.XmlNode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="parent">Nodo padre.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml" -->
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.XmlDsigSHA256Url">
+            <summary>
+            Url para función hash SHA256
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.XmlDsigRSASHA256Url">
+            <summary>
+            Url para algoritmo de encriptado RSA con función hash SHA256
+            </summary>
+        </member>
+        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.XadesNamespaceUrl">
+            <summary>
+            Espacio nombres Xades.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.SignatureId">
+            <summary>
+            Id de firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.#ctor(System.Xml.XmlDocument,System.String)">
+            <summary>
+            Representa un documento xml firmado derivado de la clase
+            SignedXml para añadir la lógica de firma según las especificaciones
+            de VERI*FACTU.
+            </summary>
+            <param name="document"></param>
+            <param name="idSignature"></param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.GetElementById(System.Xml.XmlNodeList,System.String)">
+            <summary>
+            Recupera el elemento xml con el atributo Id igual
+            al valor pasado como argumento en 'idValue' dentro
+            de la lista de nodos xml 'nodeList'.
+            </summary>
+            <param name="nodeList">Lista de nodos xml en la que buscar el elemento.</param>
+            <param name="idValue">Valor del atributo Id.</param>
+            <returns>Elemento encontrado con atributo Id igual
+            a 'idValue' o null si no se encuentra.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.GetContext">
+            <summary>
+            Obtiene el valor de la propiedad privada 'm_context' de la 
+            clase madre 'SignedXml' utilizando reflection.
+            </summary>
+            <returns>Valor de la propiedad privada 'm_context' de la 
+            clase madre 'SignedXml'.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.BuildDigestedReferences">
+            <summary>
+            Contruye los elemento xml de las referencias de la firma
+            calculando las huellas correspondientes a cada una.
+            Invocamos al método no público de la clase madre 'SignedXml'
+            con reflection.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.GetC14NDigest(System.Security.Cryptography.HashAlgorithm,System.String)">
+            <summary>
+            Obtiene la huella tras la canonicalización xml.
+            </summary>
+            <param name="hash">Huella.</param>
+            <param name="prefix">Prefijo a incluir en el bloque 'Signature'.</param>
+            <returns>Huella calculada.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.SetPrefix(System.String,System.Xml.XmlNode)">
+            <summary>
+            Establece la propiedad 'Prefix' entre los
+            nodos hijos de un nodo y sobre sus nodos
+            hijos de forma recursiva.
+            Se realiza el proceso hasta alcanzar el
+            nodo 'xades:QualifyingProperties'.
+            </summary>
+            <param name="prefix">Prefijo a establecer.</param>
+            <param name="node">Nodo a tratar.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.ComputeSignature(System.String)">
+            <summary>
+            Calcula la firma.
+            </summary>
+            <param name="prefix">Prefijo a fijar antes
+            del computo de la firma.</param>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.GetXml(System.String)">
+            <summary>
+            Recupera un elemento xml a partir de la
+            instancia actual.
+            </summary>
+            <param name="prefix">Prefijo a establecer.</param>
+            <returns>Elemento xml a partir de la
+            instancia actual.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.GetIdElement(System.Xml.XmlDocument,System.String)">
+            <summary>
+            Recupera el elemento xml con el atributo Id igual
+            al valor pasado como argumento en 'idValue' dentro
+            del documento xml 'document'.
+            </summary>
+            <param name="document">Documento xml en el que buscar el elemento.</param>
+            <param name="idValue">Valor del atributo Id.</param>
+            <returns>Elemento encontrado con atributo Id igual
+            a 'idValue' o null si no se encuentra.</returns>
         </member>
         <member name="T:VeriFactu.Qrcode.BitArray">
             <summary>A simple, fast array of bits, represented compactly by an array of ints internally.</summary>

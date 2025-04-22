@@ -66,20 +66,6 @@ namespace VeriFactu.Blockchain
 
 }
 
-namespace VeriFactu.Common
-{
-
-    /// <summary>
-    /// <para>Este espacio contine la funcionalidades
-    /// generales.</para> 
-    /// </summary>
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc
-    {
-    }
-
-}
-
 namespace VeriFactu.Business
 {
 
@@ -93,6 +79,7 @@ namespace VeriFactu.Business
     }
 
 }
+
 
 namespace VeriFactu.Business.FlowControl
 {
@@ -178,7 +165,6 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
 
 }
 
-
 namespace VeriFactu.Business.Validation.Validators
 {
 
@@ -254,6 +240,20 @@ namespace VeriFactu.Business.Validation.VIES
     /// <para>Este espacio contine la funcionalidad
     /// de negocio referente la identificación
     /// de número de IVA intracomunitarios.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.Common
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidades
+    /// generales.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
     class NamespaceDoc
@@ -392,6 +392,94 @@ namespace VeriFactu.Net.Rest.Json.Serializer
 
 }
 
+namespace VeriFactu.NoVeriFactu
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para uso NO VERI*FACTU.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.NoVeriFactu.Signature
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la firma Xades de registros de alta
+    /// y anulación.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.NoVeriFactu.Signature.Ms
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// de Microsoft modificada para su adaptación a la
+    /// firma Xades.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.NoVeriFactu.Signature.Xades
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para la firma Xades.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.NoVeriFactu.Signature.Xades.Props
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// añadir las propiedades firmadas necesarias en
+    /// la especificación Xades.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
+namespace VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt
+{
+
+    /// <summary>
+    /// <para>Este espacio contine la funcionalidad
+    /// para el trabajo con número enteros de más
+    /// de 8 bytes.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
 namespace VeriFactu.Qrcode
 {
 
@@ -480,6 +568,21 @@ namespace VeriFactu.Xml.Factu.Anulacion
 
 }
 
+namespace VeriFactu.Xml.Factu.Consulta
+{
+
+    /// <summary>
+    /// <para>Este espacio contine todos los plain data objects
+    /// empleados para la serialización xml del documentos de
+    /// consulta de facturas.</para> 
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+    }
+
+}
+
 namespace VeriFactu.Xml.Factu.Fault
 {
 
@@ -509,7 +612,6 @@ namespace VeriFactu.Xml.Factu.Respuesta
     }
 
 }
-
 
 namespace VeriFactu.Xml.Nif
 {

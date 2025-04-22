@@ -399,6 +399,147 @@
     <Compile Include="..\..\NetCore\Src\Net\Wsd.cs">
       <Link>Src\Net\Wsd.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\CanonicalXmlNodeList.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\CanonicalXmlNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\CertUsageType.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\CertUsageType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\CryptoHelpers.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\CryptoHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\DSASignatureDescription.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\DSASignatureDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\MyXmlDocument.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\MyXmlDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA1SignatureDescription.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA1SignatureDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA256SignatureDescription.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA256SignatureDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA384SignatureDescription.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA384SignatureDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA512SignatureDescription.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\RSAPKCS1SHA512SignatureDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\RSAPKCS1SignatureDescription.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\RSAPKCS1SignatureDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Ms\Utils.cs">
+      <Link>Src\NoVeriFactu\Signature\Ms\Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Signer.cs">
+      <Link>Src\NoVeriFactu\Signature\Signer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\BigInt\BByte.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\BigInt\BByte.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\BigInt\BInt.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\BigInt\BInt.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\Cert.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\Cert.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\CertDigest.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\CertDigest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\DataObjectFormat .cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\DataObjectFormat .cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\Description.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\Description.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\DigestMethod.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\DigestMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\DigestValue.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\DigestValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\Encoding.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\Encoding.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\Identifier.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\Identifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\IssuerSerial.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\IssuerSerial.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\MimeType.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\MimeType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\Object.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\Object.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\ObjectIdentifier.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\ObjectIdentifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\PropertyElementWithSigId.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\PropertyElementWithSigId.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\PropXmlElement.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\PropXmlElement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\PropXmlElementWithValue.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\PropXmlElementWithValue.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\QualifyingProperties.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\QualifyingProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\RootTmp.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\RootTmp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SignaturePolicyId.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SignaturePolicyId.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SignaturePolicyIdentifier.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SignaturePolicyIdentifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SignatureTmp.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SignatureTmp.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SignedDataObjectProperties.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SignedDataObjectProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SignedProperties.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SignedProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SignedSignatureProperties.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SignedSignatureProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SigningCertificate.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SigningCertificate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SigningTime.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SigningTime.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SigPolicyHash.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SigPolicyHash.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SigPolicyId.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SigPolicyId.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SigPolicyQualifier.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SigPolicyQualifier.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SigPolicyQualifiers.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SigPolicyQualifiers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\SPURI.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\SPURI.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\X509IssuerName.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\X509IssuerName.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\Props\X509SerialNumber.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\Props\X509SerialNumber.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\NoVeriFactu\Signature\Xades\VerifactuSignedXml.cs">
+      <Link>Src\NoVeriFactu\Signature\Xades\VerifactuSignedXml.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Qrcode\BitArray.cs">
       <Link>Src\Qrcode\BitArray.cs</Link>
     </Compile>
