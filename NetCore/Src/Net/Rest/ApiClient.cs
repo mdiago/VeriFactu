@@ -187,6 +187,31 @@ namespace VeriFactu.Net.Rest
         }
 
         /// <summary>
+        /// Crea un código QR mediante el API.
+        /// </summary>
+        /// <param name="invoice">Factura para el QR.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject ValidateNIF(Invoice invoice)
+        {
+
+            return Post(invoice, Api.EndPointValidateNIF);
+
+        }
+
+        /// <summary>
+        /// Crea un código QR mediante el API.
+        /// </summary>
+        /// <param name="invoice">Factura para el QR.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject GetAeatInvoices(Invoice invoice)
+        {
+
+            return Post(invoice, Api.EndPointGetAeatInvoices);
+
+        }
+
+
+        /// <summary>
         /// Crea Ct.
         /// </summary>
         /// <returns>Resultado llamada API.</returns>

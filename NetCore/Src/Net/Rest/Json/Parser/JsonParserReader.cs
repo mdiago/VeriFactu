@@ -177,6 +177,14 @@ namespace VeriFactu.Net.Rest.Json.Parser
 
             var result = new List<dynamic>();
 
+            if (_Tokens[_CurrentIndex + 1].Value == "]")
+            {
+
+                _CurrentIndex++;
+                return result; // Array vacía
+
+            }
+
             while (_CurrentIndex < _Tokens.Count)
             {
 
