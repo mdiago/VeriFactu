@@ -229,11 +229,11 @@ namespace VeriFactu.Business
                 var taxScheme = Enum.IsDefined(typeof(ClaveRegimen), taxitem.TaxScheme) ? taxitem.TaxScheme : ClaveRegimen.RegimenGeneral;
 
                 // Máximo dos decimales
-                var taxRate = Math.Round(taxitem.TaxRate, 2);
-                var taxBase = Math.Round(taxitem.TaxBase, 2);
-                var taxAmount = Math.Round(taxitem.TaxAmount, 2);
-                var taxRateSurcharge = Math.Round(taxitem.TaxRateSurcharge, 2);
-                var taxAmountSurcharge = Math.Round(taxitem.TaxAmountSurcharge, 2);
+                var taxRate = Math.Round(taxitem.TaxRate, 2, MidpointRounding.AwayFromZero);
+                var taxBase = Math.Round(taxitem.TaxBase, 2, MidpointRounding.AwayFromZero);
+                var taxAmount = Math.Round(taxitem.TaxAmount, 2, MidpointRounding.AwayFromZero);
+                var taxRateSurcharge = Math.Round(taxitem.TaxRateSurcharge, 2, MidpointRounding.AwayFromZero);
+                var taxAmountSurcharge = Math.Round(taxitem.TaxAmountSurcharge, 2, MidpointRounding.AwayFromZero);
 
                 var detalleDesglose = new DetalleDesglose()
                 {
