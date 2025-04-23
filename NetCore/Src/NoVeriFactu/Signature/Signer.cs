@@ -290,6 +290,7 @@ namespace VeriFactu.NoVeriFactu.Signature
         /// <summary>
         /// Devuelve los datos binarios de una cadena con el documentos xml de
         /// entrada firmado.
+        /// </summary>
         /// <param name="registro">Registro a firmar.</param>
         /// <returns>XML firmado.</returns>
         public byte[] Sign(Registro registro)

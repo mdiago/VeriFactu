@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net7.0;net8.0;netcoreapp3.1</TargetFrameworks>
     <ApplicationIcon>VeriFactu.ico</ApplicationIcon>
-    <Version>1.0.34</Version>
+    <Version>1.0.35</Version>
     <Title>VeriFactu</Title>
     <Authors>Manuel Diago</Authors>
     <Company>Irene Solutions SL</Company>
@@ -17,8 +17,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <AssemblyVersion>1.0.3.4</AssemblyVersion>
-    <FileVersion>1.0.3.4</FileVersion>
+    <AssemblyVersion>1.0.3.5</AssemblyVersion>
+    <FileVersion>1.0.3.5</FileVersion>
     <AssemblyName>VeriFactu</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>

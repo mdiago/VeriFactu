@@ -1322,6 +1322,99 @@
             Contabiliza y envía a la AEAT el registro.
             </summary>
         </member>
+        <member name="T:VeriFactu.Business.Operations.InvoiceQuery">
+            <summary>
+            Consulta de facturas.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Operations.InvoiceQuery._Action">
+            <summary>
+            Acción para el webservice.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="partyID">NIF sobre el cual ejecutar la consulta.</param>
+            <param name="partyName">Nombre correpondiente al NIF.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetInvoice(VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion,System.String)">
+            <summary>
+            Obtiene un objeto invoice a partir de un registro
+            de consulta de la AEAT.
+            </summary>
+            <param name="registro"> Registro de consulta correspondiente a 
+            una factura.</param>
+            <param name="sellerName"> Nombre vendedor.</param>        
+            <returns> Objeto Invoice creado a partir de un registro
+            de factura de una respuesta de consulta a la AEAT.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSalesEnvelope(System.String,System.String)">
+            <summary>
+            Devuelve un objeto Envelope con el filtro
+            para la consulta de facturas emitidas.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <returns> Objeto Envelope con el filtro
+            para la consulta de facturas emitidas.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchasesEnvelope(System.String,System.String)">
+            <summary>
+            Devuelve un objeto Envelope con el filtro
+            para la consulta de facturas recibidas.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <returns> Objeto Envelope con el filtro
+            para la consulta de facturas recibidas.</returns>
+        </member>
+        <member name="P:VeriFactu.Business.Operations.InvoiceQuery.PartyID">
+            <summary>
+            NIF sobre el que opera la consulta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Operations.InvoiceQuery.PartyName">
+            <summary>
+            NIF sobre el que opera la consulta.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetInvoices(VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion)">
+            <summary>
+            Obtiene una lista de objetos Invoice
+            a partir de una respuesta de la AEAT a 
+            una consulta de documentos.
+            </summary>
+            <param name="queryAeatResponse"> Respuesta consulta AEAT.</param>
+            <returns> Lista de objetos Invoice
+            a partir de una respuesta de la AEAT a 
+            una consulta de documentos.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSales(System.String,System.String)">
+            <summary>
+            Devuelve las facturas emitidas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchases(System.String,System.String)">
+            <summary>
+            Devuelve las facturas emitidas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Business.RectificationItem">
             <summary>
             Representa una factura rectificada.
@@ -3233,6 +3326,11 @@
             Ruta al directorio de configuración.
             </summary>
         </member>
+        <member name="F:VeriFactu.Config.Settings._BlockchainPath">
+            <summary>
+            Ruta al directorio de la cadena de bloques.
+            </summary>
+        </member>
         <member name="F:VeriFactu.Config.Settings.DefaultNumberFormatInfo">
             <summary>
             Formato de importes para los xml del sii.
@@ -4885,11 +4983,6 @@
             <returns>Referencia a incluir en la firma con la propiedades
             adicionales al documento de entrada a firmar.</returns>
         </member>
-        <member name="P:VeriFactu.NoVeriFactu.Signature.Signer.Certificate">
-            <summary>
-            Certificado para la firma.
-            </summary>
-        </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(System.Xml.XmlDocument,System.String)">
             <summary>
             Devuelve los datos binarios de una cadena con el documentos xml de
@@ -4898,6 +4991,19 @@
             <param name="xmlDocument">Documento xml a firmar.</param>
             <param name="name">Nombre elemento.</param>
             <returns>Datos binarios xml firmado.</returns>
+        </member>
+        <member name="P:VeriFactu.NoVeriFactu.Signature.Signer.Certificate">
+            <summary>
+            Certificado para la firma.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Devuelve los datos binarios de una cadena con el documentos xml de
+            entrada firmado.
+            </summary>
+            <param name="registro">Registro a firmar.</param>
+            <returns>XML firmado.</returns>
         </member>
         <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt.BByte">
             <summary>
@@ -5229,6 +5335,9 @@
             Constructor.
             </summary>
             <param name="parent">Nodo padre.</param>
+            <param name="name">Nombre elemento.</param>
+            <param name="prefix">Prefijo espacio de nombres.</param>
+            <param name="nms">Espacio de nombres.</param>
         </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.PropertyElementWithSigId.SetSignatureId(System.String)">
             <summary>
@@ -5616,7 +5725,14 @@
             </summary>
             <param name="parent">Nodo padre.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml" -->
+        <member name="T:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml">
+            <summary>
+            Proporciona un contenedor en un objeto de firma XML base
+            para facilitar la creación de firmas XML ampliando la
+            funcionalidad de 'SignedXml' según las especificaciones
+            de VERI*FACTU.
+            </summary>
+        </member>
         <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.XmlDsigSHA256Url">
             <summary>
             Url para función hash SHA256
