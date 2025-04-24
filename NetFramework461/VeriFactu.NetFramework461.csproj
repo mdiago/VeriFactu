@@ -55,6 +55,9 @@
     <Compile Include="..\NetCore\Src\Business\FlowControl\IntervalWorker.cs">
       <Link>Src\Business\FlowControl\IntervalWorker.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\FlowControl\InvoiceBatch.cs">
+      <Link>Src\Business\FlowControl\InvoiceBatch.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\FlowControl\InvoiceQueue.cs">
       <Link>Src\Business\FlowControl\InvoiceQueue.cs</Link>
     </Compile>

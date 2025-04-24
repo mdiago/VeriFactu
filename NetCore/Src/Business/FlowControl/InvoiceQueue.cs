@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Net;
@@ -150,6 +151,7 @@ namespace VeriFactu.Business.FlowControl
             ActiveInvoiceQueue.End();
 
             Utils.Log($"Finalizado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
+            Debug.Print($"Finalizado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
 
             ActiveInvoiceQueue = null;
 
@@ -206,6 +208,7 @@ namespace VeriFactu.Business.FlowControl
             _IsClosing = true;
 
             Utils.Log($"Iniciado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
+            Debug.Print($"Iniciado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
 
         }
 
@@ -238,8 +241,13 @@ namespace VeriFactu.Business.FlowControl
 
             queue.Add(invoiceAction);
 
-            if (!_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
-                _SellerPendingQueue.Add(invoiceAction.SellerID, queue);
+            lock (_Locker) 
+            {
+
+                if (!_SellerPendingQueue.ContainsKey(invoiceAction.SellerID))
+                    _SellerPendingQueue.Add(invoiceAction.SellerID, queue);
+
+            }
 
         }
 
@@ -260,6 +268,7 @@ namespace VeriFactu.Business.FlowControl
             {
 
                 Utils.Log($"InvoiceQueue error {ex}.");
+                Debug.Print($"InvoiceQueue error {ex}.");
 
             }
 
@@ -285,14 +294,13 @@ namespace VeriFactu.Business.FlowControl
 
             Exception processException = null;
 
-            lock (_Locker)
+            lock (_Locker) 
+            {
+
                 _IsWorking = true;
 
-            foreach (KeyValuePair<string, SellerQueue> kvpInvoiceAction in _SellerPendingQueue)
-            {                
-
-                lock (_Locker)
-                {
+                foreach (KeyValuePair<string, SellerQueue> kvpInvoiceAction in _SellerPendingQueue)
+                {                  
 
                     try
                     {
@@ -305,22 +313,24 @@ namespace VeriFactu.Business.FlowControl
 
                         processException = ex;
 
-                    }
+                    }                   
+
+                    if (processException != null)
+                        Utils.Log($"Error procesando InvoiceQueue: {processException}");
 
                 }
 
-                if (processException != null)
-                    Utils.Log($"Error procesando InvoiceQueue: {processException}");
-                
-                break;
-
-            }            
-
-            lock (_Locker)
+               
                 _IsWorking = false;
 
-            if (_IsClosing && ActiveInvoiceQueue.Count == 0)
-                DoExit();
+                if (_IsClosing && ActiveInvoiceQueue.Count == 0)
+                    DoExit();
+
+            }
+
+
+
+
 
         }
 

@@ -72,7 +72,7 @@ namespace VeriFactu.Common
         /// <summary>
         /// Número máximo de registros a almacenar.
         /// </summary>
-        int _MaxCount = 5000;
+        int _MaxCount = 15000;
 
         #endregion
 

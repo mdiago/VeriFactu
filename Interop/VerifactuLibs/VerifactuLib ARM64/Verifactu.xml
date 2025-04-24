@@ -244,6 +244,71 @@
             Finaliza el trabajo.
             </summary>
         </member>
+        <member name="T:VeriFactu.Business.FlowControl.InvoiceBatch">
+            <summary>
+            Representa un lote de facturas a enviar a la AEAT.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.FlowControl.InvoiceBatch._InvoiceActions">
+            <summary>
+            Colección de registros a enviar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID"></param>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Send(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
+            <summary>
+            Envío el lote de facturas a la AEAT.
+            </summary>
+            <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+            <returns>Devuelve La respuesta de la AEAT al envío.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
+            <summary>
+            Contabiliza los elementos a envíar eliminándolos de la cola
+            de envío y devolviendolos en una lista.
+            </summary>
+            <param name="invoiceActions">Lista de elementos a contabilizar.</param>
+            <returns>Lista de los elementos a contabilizar.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.ProcessReponse(VeriFactu.Xml.Factu.Respuesta.RespuestaRegFactuSistemaFacturacion,System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
+            <summary>
+            Procesa la respuesta de la AEAT.
+            </summary>
+            <param name="aeatResponse">Respuesta a procesar.</param>
+            <param name="invoiceActions">Elementos a los que corresponde la respuesta.</param>
+            <returns>Diccionario por número de factura con los resultados.</returns>
+        </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceBatch.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Add(VeriFactu.Business.InvoiceEntry)">
+            <summary>
+            Añade una entrada de factura al lote.
+            </summary>
+            <param name="invoiceEntry">Entrada de factura a añadir.</param>
+        </member>
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Save">
+            <summary>
+            Contabiliza en la cadena de bloques, envía a la AEAT
+            y devuelve los resultados del lote.
+            </summary>
+            <returns>Resultado del guardado del lote.</returns>
+        </member>
         <member name="T:VeriFactu.Business.FlowControl.InvoiceQueue">
             <summary>
             Gestiona el envío de registros a la AEAT con los intervalos de
@@ -343,6 +408,11 @@
         <member name="F:VeriFactu.Business.FlowControl.SellerQueue.MaxRecordNumber">
             <summary>
             Máximo número de registros a incluir en un envío.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.FlowControl.SellerQueue._Locker">
+            <summary>
+            Bloqueo para thread safe.
             </summary>
         </member>
         <member name="F:VeriFactu.Business.FlowControl.SellerQueue._InvoiceActions">
@@ -3808,6 +3878,16 @@
             Endpoint consulta registros envíados.
             </summary>
         </member>
+        <member name="P:VeriFactu.Net.Rest.Api.EndPointValidateNIF">
+            <summary>
+            Endpoint validación NIF.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Api.EndPointGetAeatInvoices">
+            <summary>
+            Endpoint consulta registros en AEAT.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Net.Rest.Api.ServiceKey">
             <summary>
             Clave de acceso al API REST para Verifactu de
@@ -3871,6 +3951,20 @@
             <summary>
             Crea un código QR mediante el API.
             </summary>
+            <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.ValidateNIF(VeriFactu.Business.Invoice)">
+            <summary>
+            Crea un código QR mediante el API.
+            </summary>
+            <param name="invoice">Factura para el QR.</param>
+            <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.GetAeatInvoices(VeriFactu.Business.Invoice)">
+            <summary>
+            Crea un código QR mediante el API.
+            </summary>
+            <param name="invoice">Factura para el QR.</param>
             <returns>Resultado llamada API.</returns>
         </member>
         <member name="M:VeriFactu.Net.Rest.ApiClient.Ct">

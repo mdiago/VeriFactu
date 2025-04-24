@@ -39,7 +39,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Xml;
@@ -62,7 +64,12 @@ namespace VeriFactu.Business.FlowControl
         /// <summary>
         /// Máximo número de registros a incluir en un envío.
         /// </summary>
-        static readonly int MaxRecordNumber = 1000;
+        internal static readonly int MaxRecordNumber = 1000;
+
+        /// <summary>
+        /// Bloqueo para thread safe.
+        /// </summary>
+        private readonly object _Locker = new object();
 
         #endregion
 
@@ -156,17 +163,36 @@ namespace VeriFactu.Business.FlowControl
             Utils.Log($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
                 $" {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
 
-            invoiceRetrySends = new List<InvoiceAction>();
+            Debug.Print($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
+                $" {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
 
             var recordCount = 0;
+            var processInvoiceActions = new List<InvoiceAction>();
+
+            // Preparo lote a procesar extrayendolo de la cola
+            while (_InvoiceActions.Count > 0 && MaxRecordNumber > recordCount++) 
+            {
+
+                InvoiceAction processInvoiceAction = null;
+
+                lock (_Locker)
+                    processInvoiceAction = _InvoiceActions.Dequeue();
+
+                processInvoiceActions.Add(processInvoiceAction);
+
+            }
+
+            invoiceRetrySends = new List<InvoiceAction>();
+            
             var registros = new List<Registro>();
             var invoiceActions = new List<InvoiceAction>();
+
 
             // Flags para controlar si existen reenvíos y envíos normales
             bool hasRetrySends = false;
             bool hasInvoiceActions = false;
-            
-            foreach ( var action in _InvoiceActions )
+
+            foreach (var action in processInvoiceActions)
             {
 
                 if (action.IsRetrySend)
@@ -176,13 +202,13 @@ namespace VeriFactu.Business.FlowControl
 
             }
 
+
+
             // Si sólo existen reenvíos, estos se procesarán
             var isOnlyRetrySends = hasRetrySends && !hasInvoiceActions;
 
-            while (_InvoiceActions.Count > 0 && MaxRecordNumber > recordCount++)
+            foreach (var invoiceAction in processInvoiceActions)
             {
-
-                var invoiceAction = _InvoiceActions.Dequeue();
 
                 if (!invoiceAction.Posted)
                 {
@@ -200,6 +226,7 @@ namespace VeriFactu.Business.FlowControl
                 {
 
                     Utils.Log($"Error en el proceso por lotes ({SellerID}) se ha intentado agregar al envío un registro ya contabilizado: {invoiceAction}");
+                    Debug.Print($"Error en el proceso por lotes ({SellerID}) se ha intentado agregar al envío un registro ya contabilizado: {invoiceAction}");
 
                 }
 
@@ -212,12 +239,14 @@ namespace VeriFactu.Business.FlowControl
                 blockchainManager.Add(registros);
 
             Utils.Log($"Actualizando datos de la cadena de bloques ({SellerID}) en {registros.Count} elementos {DateTime.Now}");
+            Debug.Print($"Actualizando datos de la cadena de bloques ({SellerID}) en {registros.Count} elementos {DateTime.Now}");
 
             // Actualizo los cambios
             for (int i = 0; i < invoiceActions.Count; i++)
                 invoiceActions[i].SaveBlockchainChanges();
 
             Utils.Log($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
+            Debug.Print($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
 
             return invoiceActions;
 
@@ -232,42 +261,15 @@ namespace VeriFactu.Business.FlowControl
         {
 
             Utils.Log($"Enviando datos a la AEAT {SellerID} de {invoiceActions.Count} elementos {DateTime.Now}");
+            Debug.Print($"Enviando datos a la AEAT {SellerID} de {invoiceActions.Count} elementos {DateTime.Now}");
 
-            if (invoiceActions == null || invoiceActions.Count == 0)
-                throw new ArgumentException("El argumento invoiceActions debe contener elementos.");
-  
-
-            Envelope envelope = null;
-            InvoiceAction first = invoiceActions[0];
-            InvoiceAction last = null;
-
-            for (int i = 0; i < invoiceActions.Count; i++)
-            {
-
-                if (i == 0)
-                    envelope = invoiceActions[i].GetEnvelope();
-                else
-                    ((envelope.Body.Registro as RegFactuSistemaFacturacion).RegistroFactura as List<RegistroFactura>).Add(new RegistroFactura() { Registro = invoiceActions[i].Registro });
-
-                last = invoiceActions[i];
-
-            }
-
-            var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
-
-            var response = last.Send(xml);
-
-            var envelopeRespuesta = last.GetResponseEnvelope(response);
-
-            File.WriteAllBytes($"{first.InvoiceEntryPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", xml);
-            File.WriteAllText($"{first.ResponsesPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", response);
+            var sender = new InvoiceBatch();
+            var respuesta = sender.Send(invoiceActions);
 
             _LastProcessMoment = DateTime.Now;
 
-            var respuesta = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion);
-
             if (respuesta != null)
-                _CurrentWaitSecods = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion).TiempoEsperaEnvio;
+                _CurrentWaitSecods = respuesta.TiempoEsperaEnvio;
 
             Utils.Log($"Finalizado envío de datos {SellerID} a la AEAT de {invoiceActions.Count} elementos (quedan {_InvoiceActions.Count} registros) {DateTime.Now}");
             Utils.Log($"Establecido momento próxima ejecución {SellerID} (LastProcessMoment: {_LastProcessMoment} + " +
@@ -285,55 +287,8 @@ namespace VeriFactu.Business.FlowControl
         private void ProcessReponse(RespuestaRegFactuSistemaFacturacion aeatResponse, List<InvoiceAction> invoiceActions) 
         {
 
-            var invoices = new Dictionary<string, InvoiceAction>();
-
-            foreach (var invoiceAction in invoiceActions) 
-                if (!invoices.ContainsKey(invoiceAction.Registro.ExternKey))
-                    invoices.Add(invoiceAction.Registro.ExternKey, invoiceAction);
-
-            foreach (var line in aeatResponse.RespuestaLinea) 
-            {
-
-                var externKey = line.RefExterna;
-                var invoice = invoices[externKey];
-
-                var invoiceEnvelope = new Envelope()
-                {
-                    Body = new Body()
-                    {
-                        Registro = new RespuestaRegFactuSistemaFacturacion()
-                        {
-                            Cabecera = aeatResponse.Cabecera,
-                            CSV = aeatResponse.CSV,
-                            EstadoEnvio = aeatResponse.EstadoEnvio,
-                            DatosPresentacion = aeatResponse.DatosPresentacion,
-                            RespuestaLinea = new List<RespuestaLinea>() { line }
-                        }
-                    }
-                };
-
-                var respuesta = invoiceEnvelope.Body.Registro as RespuestaRegFactuSistemaFacturacion;
-
-                Utils.Log($"El resultado del envío del documento {invoice} ha sido '{line.EstadoRegistro}'.");
-
-                if (line.EstadoRegistro == "Incorrecto")
-                {
-
-                    respuesta.CSV = null;
-                    respuesta.EstadoEnvio = line.EstadoRegistro;
-
-                }
-                else if (line.EstadoRegistro == "Correcto")
-                {
-                    
-                    respuesta.EstadoEnvio = line.EstadoRegistro;
-
-                }
-
-                invoice.ResponseEnvelope = invoiceEnvelope;
-                invoice.ProcessResponse(invoiceEnvelope);
-
-            }
+            var invoiceBatch = new InvoiceBatch();
+            invoiceBatch.ProcessReponse(aeatResponse, invoiceActions);           
         
         }
 
@@ -405,6 +360,9 @@ namespace VeriFactu.Business.FlowControl
             if (_InvoiceActions.Count == 0)
                 return;
 
+            Utils.Log($"Ejecutando cola {this} con {_InvoiceActions.Count} pendientes (IsAllowedFrom={IsAllowedFrom} / IsAllowedMaxRecordNumber={IsAllowedMaxRecordNumber}).");
+            Debug.Print($"Ejecutando cola {this} con {_InvoiceActions.Count} pendientes (IsAllowedFrom={IsAllowedFrom} / IsAllowedMaxRecordNumber={IsAllowedMaxRecordNumber}).");
+
             // Reenvíos a devolver a la cola
             List<InvoiceAction> invoiceRetrySends;
 
@@ -417,6 +375,7 @@ namespace VeriFactu.Business.FlowControl
                     _InvoiceActions.Enqueue(invoiceRetrySend);
 
                 Utils.Log($"Devueltos a la cola {this} {invoiceRetrySends.Count} pendientes.");
+                Debug.Print($"Devueltos a la cola {this} {invoiceRetrySends.Count} pendientes.");
 
             }
 
