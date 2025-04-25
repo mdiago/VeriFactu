@@ -44,8 +44,10 @@ using System.Text;
 using VeriFactu.Business;
 using VeriFactu.Common;
 using VeriFactu.Config;
+using VeriFactu.Net.Rest.Batch;
 using VeriFactu.Net.Rest.Json;
 using VeriFactu.Net.Rest.Json.Parser;
+using VeriFactu.Net.Rest.List;
 
 namespace VeriFactu.Net.Rest
 {
@@ -199,9 +201,11 @@ namespace VeriFactu.Net.Rest
         }
 
         /// <summary>
-        /// Crea un código QR mediante el API.
+        /// Recupera los registros en la AEAT realcionados
+        /// con un obligado tributario determinado.
         /// </summary>
-        /// <param name="invoice">Factura para el QR.</param>
+        /// <param name="invoice">Factura con datos del obligado tributario
+        /// y una fecha del periodo mes/año que se desea recuperar.</param>
         /// <returns>Resultado llamada API.</returns>
         public static ExpandoObject GetAeatInvoices(Invoice invoice)
         {
@@ -210,6 +214,30 @@ namespace VeriFactu.Net.Rest
 
         }
 
+        /// <summary>
+        /// Recupera los registros envíados según el
+        /// filtro pasado como parametro.
+        /// </summary>
+        /// <param name="filterSet">Filtro.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject GetFilteredList(FilterSet filterSet)
+        {
+
+            return Post(filterSet, Api.EndPointGetFilteredList);
+
+        }
+
+        /// <summary>
+        /// Envía un lote de facturas.
+        /// </summary>
+        /// <param name="invoicesBatch">Lote de facturas.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject CreateBatch(InvoicesBatch invoicesBatch)
+        {
+
+            return Post(invoicesBatch, Api.EndPointCreateBatch);
+
+        }
 
         /// <summary>
         /// Crea Ct.

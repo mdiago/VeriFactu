@@ -37,89 +37,37 @@
     address: info@irenesolutions.com
  */
 
-namespace VeriFactu.Net.Rest
-{
+using System.Collections.Generic;
+using VeriFactu.Business;
+using VeriFactu.Net.Rest.Json;
 
+namespace VeriFactu.Net.Rest.Batch
+{
     /// <summary>
-    /// Representa el API REST de Irene Solutions para Verifactu.
+    /// Representa un lote de facturas de Verifactu.
     /// </summary>
-    public class Api
+    public class InvoicesBatch : JsonSerializable
     {
 
-        #region Propiedades Privadas Estáticas
-
+        #region Public Properties
 
         /// <summary>
-        /// Endpoint ct.
+        /// Facturas del lote.
         /// </summary>
-        internal static readonly string EndPointCt = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Ct/Create/Test/v17";
+        public List<Invoice> Invoices { get; set; }
 
         #endregion
 
-        #region Construtores de Instancia
+        #region Public Methods
 
         /// <summary>
-        /// Constructor.
+        /// Representacion textual de la instancia.
         /// </summary>
-        public Api()
+        /// <returns>Representacion textual de la instancia.</returns>
+        public override string ToString()
         {
+            return $"{Invoices.Count}";
         }
-
-        #endregion
-
-        #region Propiedades Públicas de Instancia
-
-        /// <summary>
-        /// Endpoint creación de factruas.
-        /// </summary>
-        public string EndPointCreate { get; set; }
-
-        /// <summary>
-        /// Endpoint anulación de factruas.
-        /// </summary>
-        public string EndPointCancel { get; set; }
-
-        /// <summary>
-        /// Endpoint generación código QR.
-        /// </summary>
-        public string EndPointGetQrCode { get; set; }
-
-        /// <summary>
-        /// Endpoint consulta emisores.
-        /// </summary>
-        public string EndPointGetSellers { get; set; }
-
-        /// <summary>
-        /// Endpoint consulta registros envíados.
-        /// </summary>
-        public string EndPointGetRecords { get; set; }
-
-        /// <summary>
-        /// Endpoint validación NIF.
-        /// </summary>
-        public string EndPointValidateNIF { get; set; }
-
-        /// <summary>
-        /// Endpoint consulta registros en AEAT.
-        /// </summary>
-        public string EndPointGetAeatInvoices { get; set; }
-
-        /// <summary>
-        /// Endpoint consulta envíos realizados.
-        /// </summary>
-        public string EndPointGetFilteredList { get; set; }
-
-        /// <summary>
-        /// Endpoint envío de lotes.
-        /// </summary>
-        public string EndPointCreateBatch { get; set; }
-
-        /// <summary>
-        /// Clave de acceso al API REST para Verifactu de
-        /// Irene Solutions. Puede conseguir su clave en
-        /// https://facturae.irenesolutions.com/verifactu/go
-        /// </summary>
-        public string ServiceKey { get; set; }
 
         #endregion
 
