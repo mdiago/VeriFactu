@@ -825,12 +825,22 @@
     <Compile Include="..\..\NetCore\Src\Xml\XmlParser.cs">
       <Link>Src\Xml\XmlParser.cs</Link>
     </Compile>
+    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfInvoice.cs">
+      <Link>Src\Com\Interop\VfInvoice.cs</Link>
+    </Compile>
+    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfInvoiceResult.cs">
+      <Link>Src\Com\Interop\VfInvoiceResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfRectificationItem.cs">
+      <Link>Src\Com\Interop\VfRectificationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfSettings.cs">
+      <Link>Src\Com\Interop\VfSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfTaxItem.cs">
+      <Link>Src\Com\Interop\VfTaxItem.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Com\Interop\VfInvoice.cs" />
-    <Compile Include="Src\Com\Interop\VfInvoiceResult.cs" />
-    <Compile Include="Src\Com\Interop\VfSettings.cs" />
-    <Compile Include="Src\Com\Interop\VfRectificationItem.cs" />
-    <Compile Include="Src\Com\Interop\VfTaxItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo-heart.ico" />

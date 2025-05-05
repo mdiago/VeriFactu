@@ -178,6 +178,15 @@ namespace VeriFactu.Business.Validation.NIF
 
         }
 
+        /// <summary>
+        /// Representación textual de la instancia.
+        /// </summary>
+        /// <returns>Representación textual de la instancia.</returns>
+        public override string ToString()
+        {
+            return $"{_Nif}, {_Name}";
+        }
+
         #endregion
 
     }
