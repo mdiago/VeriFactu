@@ -1720,6 +1720,12 @@
             <returns>Lista con las descripciones de los errores
             encontrados.</returns>
         </member>
+        <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns>Representación textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Validation.NIF.TaxId.TaxIdEs">
             <summary>
             Clase para almacenar, verificar y obtener información de números de identificación fiscal españoles
@@ -11715,6 +11721,16 @@
             </summary>
             <returns>Resultado de la operación.</returns>
         </member>
+        <member name="M:Verifactu.IVfInvoice.GetNifErrors(System.String,System.String)">
+            <summary>
+            Válida los datos de un NIF mediante el servicio
+            de validación de la AEAT.
+            </summary>
+            <param name="nif">NIF a validar.</param>
+            <param name="name">Nombre asociado al NIF a validar.</param>
+            <returns>Cadena con la descripción de los errores o null
+            si todo es correcto.</returns>
+        </member>
         <member name="T:Verifactu.VfInvoice">
             <summary>
             Representa una factura.
@@ -11908,6 +11924,16 @@
             Envía la anulación de la factura a Verifactu de la AEAT.
             </summary>
             <returns>Resultado de la operación.</returns>
+        </member>
+        <member name="M:Verifactu.VfInvoice.GetNifErrors(System.String,System.String)">
+            <summary>
+            Válida los datos de un NIF mediante el servicio
+            de validación de la AEAT.
+            </summary>
+            <param name="nif">NIF a validar.</param>
+            <param name="name">Nombre asociado al NIF a validar.</param>
+            <returns>Cadena con la descripción de los errores o null
+            si todo es correcto.</returns>
         </member>
         <member name="T:Verifactu.IVfInvoiceResult">
             <summary>

@@ -40,8 +40,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using VeriFactu.Business.Validation.NIF;
 
 namespace Verifactu
 {
@@ -220,6 +222,16 @@ namespace Verifactu
         /// </summary>
         /// <returns>Resultado de la operación.</returns>
         IVfInvoiceResult Delete();
+
+        /// <summary>
+        /// Válida los datos de un NIF mediante el servicio
+        /// de validación de la AEAT.
+        /// </summary>
+        /// <param name="nif">NIF a validar.</param>
+        /// <param name="name">Nombre asociado al NIF a validar.</param>
+        /// <returns>Cadena con la descripción de los errores o null
+        /// si todo es correcto.</returns>
+        string GetNifErrors(string nif, string name);
 
         #endregion
 
@@ -750,6 +762,24 @@ namespace Verifactu
             }
 
             return result;
+
+        }
+
+        /// <summary>
+        /// Válida los datos de un NIF mediante el servicio
+        /// de validación de la AEAT.
+        /// </summary>
+        /// <param name="nif">NIF a validar.</param>
+        /// <param name="name">Nombre asociado al NIF a validar.</param>
+        /// <returns>Cadena con la descripción de los errores o null
+        /// si todo es correcto.</returns>
+        public string GetNifErrors(string nif, string name) 
+        {
+
+            var nifVal = new NifValidation(nif, name);
+            var errors = nifVal.GetErrors();
+
+            return errors.Count == 0 ? null : string.Join("\n", errors);
 
         }
 
