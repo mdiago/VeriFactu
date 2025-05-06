@@ -124,6 +124,16 @@ namespace VeriFactu.Business.Validation.Validators
                 result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                     $" Es obligatorio que se cumplimente NIF o IDOtro.");
 
+            // Falta informar campo obligatorio.: IdSistemaInformatico
+            if (sistemaInformatico != null && string.IsNullOrEmpty(sistemaInformatico.IdSistemaInformatico))
+                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                    $" Falta informar campo obligatorio IdSistemaInformatico.");
+
+            // IdSistemaInformatico tiene una longitud máxima de 2 caracteres.
+            if (sistemaInformatico != null && !string.IsNullOrEmpty(sistemaInformatico.IdSistemaInformatico) && 
+                sistemaInformatico.IdSistemaInformatico.Length > 2)
+                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                    $" El campo obligatorio IdSistemaInformatico tiene una longitud máxima de 2 caracteres.");
 
             if (sistemaInformatico != null && sistemaInformatico.IDOtro != null)
             {

@@ -352,24 +352,39 @@ namespace VeriFactu.Blockchain
         /// <param name="blockchainDataPreviousFileName">Copia anterior utilizada para restaurar.</param>
         private void RestorePreviousData(string blockchainDataFileName, 
             string blockchainDataPreviousFileName)
-        {
+        {            
 
-            if (CurrentID == 0) 
+            var isFirstLink = CurrentID == 0; // Se trataba del primer eslabón de la cadena
+            var isFirstBlockPeriodLink = false; // Se trata del primer eslabón del periodo
+
+            if (!File.Exists(blockchainDataPreviousFileName)) 
             {
 
-                File.Delete(blockchainDataFileName);
+                if (File.ReadAllLines(blockchainDataFileName).Length == 1)
+                {
 
-            } 
-            else 
-            {
+                    // Se trata del borrado del primer eslabón incluido en el periodo
+                    // y por lo tanto no existe archivo previo que restaurar aún,
+                    // por lo que únicamente borramos el archivo del periodo incializado
+                    // con el registro a borrar
+                    isFirstBlockPeriodLink = true;
 
-                if (!File.Exists(BlockchainDataPreviousFileName))
+                }
+                else
+                {
+
                     throw new InvalidOperationException("No se puede restaurar el archivo previo por que no existe.");
 
-                File.Delete(blockchainDataFileName);
-                File.Copy(blockchainDataPreviousFileName, blockchainDataFileName);
+                }
 
             }
+
+            var hasBlockchainDataPreviousFile = !(isFirstLink || isFirstBlockPeriodLink);
+
+            File.Delete(blockchainDataFileName);
+
+            if (hasBlockchainDataPreviousFile)
+                File.Copy(blockchainDataPreviousFileName, blockchainDataFileName);
 
         }
 
