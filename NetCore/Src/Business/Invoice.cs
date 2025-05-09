@@ -317,13 +317,13 @@ namespace VeriFactu.Business
 
 
             if(string.IsNullOrEmpty(BuyerCountryID))
-                throw new Exception("Si BuyerCountryID no es un identificador español válido" +
+                throw new Exception($"Error en factura ({this}): Si BuyerID no es un identificador español válido" +
                     " (NIF, DNI, NIE...) es obligatorio que BuyerCountryID tenga un valor.");
 
             bool countryIdValid = Enum.TryParse(BuyerCountryID, out CodigoPais buyerCountryId);
 
             if (!countryIdValid)
-                throw new Exception($"El código de pais consignado en BuyerCountryID='{BuyerCountryID}' no es válido.");
+                throw new Exception($"Error en factura ({this}): El código de pais consignado en BuyerCountryID='{BuyerCountryID}' no es válido.");
 
 
             return new List<Interlocutor>()
