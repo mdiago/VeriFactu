@@ -108,7 +108,7 @@ namespace VeriFactu.Blockchain
         /// <summary>
         /// Carga todas las cadenas de bloques.
         /// </summary>
-        private static void LoadBlockchainsFromDisk()
+        public static void LoadBlockchainsFromDisk()
         {
 
             if (string.IsNullOrEmpty(Settings.Current.BlockchainPath) || !Directory.Exists(Settings.Current.BlockchainPath))
