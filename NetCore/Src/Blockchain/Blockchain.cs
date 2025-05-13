@@ -103,60 +103,6 @@ namespace VeriFactu.Blockchain
 
         #endregion
 
-        #region Métodos Privados Estáticos
-
-        /// <summary>
-        /// Carga todas las cadenas de bloques.
-        /// </summary>
-        public static void LoadBlockchainsFromDisk()
-        {
-
-            if (string.IsNullOrEmpty(Settings.Current.BlockchainPath) || !Directory.Exists(Settings.Current.BlockchainPath))
-                throw new InvalidOperationException($"Revise el archivo de configuración {Settings.FileName}," +
-                    $" el valor de BlockchainPath debe ser el de un directorio válido.");
-
-            var dirs = Directory.GetDirectories(Settings.Current.BlockchainPath);
-
-            foreach (var dir in dirs)
-            {
-
-                var sellerID = Path.GetFileName(dir);
-                var blockchain = new Blockchain(sellerID);
-
-                if (File.Exists(blockchain.BlockchainVarFileName))
-                {
-
-                    var lineVarData = File.ReadAllText(blockchain.BlockchainVarFileName);
-                    var valuesVarData = lineVarData.Split(_CsvSeparator);
-
-                    var currentID = valuesVarData[0];
-                    var currentTimeStamp = valuesVarData[1];
-                    var huella = valuesVarData[2];
-                    var fechaExpedicionFactura = valuesVarData[3];
-                    var idEmisorFactura = valuesVarData[4];
-                    var numSerieFactura = valuesVarData[5];
-
-                    blockchain.CurrentID = Convert.ToUInt64(currentID);
-                    blockchain.CurrentTimeStamp = Convert.ToDateTime(currentTimeStamp);
-                    blockchain.Current = new Registro()
-                    {
-                        Huella = huella,
-                        IDFactura = new IDFactura()
-                        {
-                            FechaExpedicion = fechaExpedicionFactura,
-                            IDEmisor = idEmisorFactura,
-                            NumSerie = numSerieFactura
-                        }
-                    };
-
-                }
-
-            }
-
-        }
-
-        #endregion
-
         #region Métodos Privados de Instancia
 
         /// <summary>
@@ -479,6 +425,56 @@ namespace VeriFactu.Blockchain
         {
 
             return GetInstance(sellerID) as Blockchain;
+
+        }
+
+        /// <summary>
+        /// Carga todas las cadenas de bloques.
+        /// </summary>
+        public static void LoadBlockchainsFromDisk()
+        {
+
+            if (string.IsNullOrEmpty(Settings.Current.BlockchainPath) || !Directory.Exists(Settings.Current.BlockchainPath))
+                throw new InvalidOperationException($"Revise el archivo de configuración {Settings.FileName}," +
+                    $" el valor de BlockchainPath debe ser el de un directorio válido.");
+
+            var dirs = Directory.GetDirectories(Settings.Current.BlockchainPath);
+
+            foreach (var dir in dirs)
+            {
+
+                var sellerID = Path.GetFileName(dir);
+                var blockchain = new Blockchain(sellerID);
+
+                if (File.Exists(blockchain.BlockchainVarFileName))
+                {
+
+                    var lineVarData = File.ReadAllText(blockchain.BlockchainVarFileName);
+                    var valuesVarData = lineVarData.Split(_CsvSeparator);
+
+                    var currentID = valuesVarData[0];
+                    var currentTimeStamp = valuesVarData[1];
+                    var huella = valuesVarData[2];
+                    var fechaExpedicionFactura = valuesVarData[3];
+                    var idEmisorFactura = valuesVarData[4];
+                    var numSerieFactura = valuesVarData[5];
+
+                    blockchain.CurrentID = Convert.ToUInt64(currentID);
+                    blockchain.CurrentTimeStamp = Convert.ToDateTime(currentTimeStamp);
+                    blockchain.Current = new Registro()
+                    {
+                        Huella = huella,
+                        IDFactura = new IDFactura()
+                        {
+                            FechaExpedicion = fechaExpedicionFactura,
+                            IDEmisor = idEmisorFactura,
+                            NumSerie = numSerieFactura
+                        }
+                    };
+
+                }
+
+            }
 
         }
 
