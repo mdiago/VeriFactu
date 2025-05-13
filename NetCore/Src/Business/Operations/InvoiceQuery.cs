@@ -44,6 +44,7 @@ using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Consulta;
 using VeriFactu.Xml.Factu.Consulta.Respuesta;
+using VeriFactu.Xml.Factu.Fault;
 using VeriFactu.Xml.Soap;
 
 namespace VeriFactu.Business.Operations
@@ -275,6 +276,11 @@ namespace VeriFactu.Business.Operations
             var response = InvoiceActionMessage.SendXmlBytes(xml, _Action);
             var envelopeResponse = Envelope.FromXml(response);
 
+            var fault = envelopeResponse.Body.Registro as Fault;
+
+            if (fault != null)
+                throw new Exception($"{fault.faultstring}");
+
             return envelopeResponse.Body.Registro as RespuestaConsultaFactuSistemaFacturacion;
 
         }
@@ -293,6 +299,11 @@ namespace VeriFactu.Business.Operations
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
             var response = InvoiceActionMessage.SendXmlBytes(xml, _Action);
             var envelopeResponse = Envelope.FromXml(response);
+
+            var fault = envelopeResponse.Body.Registro as Fault;
+
+            if (fault != null)
+                throw new Exception($"{fault.faultstring}");
 
             return envelopeResponse.Body.Registro as RespuestaConsultaFactuSistemaFacturacion;
 
