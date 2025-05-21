@@ -122,7 +122,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                         if (destinatario.IDOtro != null) 
                         {
                             
-                            if(!(destinatario.IDOtro.IDType == IDType.NO_CENSADO || destinatario.IDOtro.IDType == IDType.NIF_IVA))
+                            if(destinatario.IDOtro.IDType != IDType.NO_CENSADO && destinatario.IDOtro.IDType != IDType.NIF_IVA)
                                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                                     $" 1192 = Si TipoFactura es R2 sólo se admitirá NIF o IDType = No Censado (07) o NIF-IVA (02).");
 
