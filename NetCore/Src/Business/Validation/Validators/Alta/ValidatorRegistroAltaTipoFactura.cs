@@ -78,19 +78,69 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).
             if (_RegistroAlta.TipoFactura == TipoFactura.R3)
+            {
+
                 if (_RegistroAlta.Destinatarios != null)
+                {
+
                     foreach (var destinatario in _RegistroAlta.Destinatarios)
-                        if (!(destinatario.IDOtro != null && destinatario.IDOtro.IDType == IDType.NO_CENSADO)||(!string.IsNullOrEmpty(destinatario.NIF)))
-                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    {
+
+                        if (destinatario.IDOtro != null) 
+                        { 
+
+                            if(destinatario.IDOtro.IDType != IDType.NO_CENSADO)
+                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                                 $" 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).");
+
+                        } 
+                        else 
+                        { 
+
+                            if(string.IsNullOrEmpty(destinatario.NIF))
+                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                               $" 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).");
+
+                        }
+
+                    }
+
+                }
+
+            }
 
             // 1192 = Si TipoFactura es R2 sólo se admitirá NIF o IDType = No Censado (07) o NIF-IVA (02).
             if (_RegistroAlta.TipoFactura == TipoFactura.R2)
+            {
+                
                 if (_RegistroAlta.Destinatarios != null)
+                {
+
                     foreach (var destinatario in _RegistroAlta.Destinatarios)
-                        if (!(destinatario.IDOtro != null && (destinatario.IDOtro.IDType == IDType.NO_CENSADO || destinatario.IDOtro.IDType == IDType.NIF_IVA)) || (!string.IsNullOrEmpty(destinatario.NIF)))
-                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                                $" 1191 = Si TipoFactura es R3 sólo se admitirá NIF o IDType = No Censado (07).");
+                    {
+
+                        if (destinatario.IDOtro != null) 
+                        {
+                            
+                            if(!(destinatario.IDOtro.IDType == IDType.NO_CENSADO || destinatario.IDOtro.IDType == IDType.NIF_IVA))
+                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                                    $" 1192 = Si TipoFactura es R2 sólo se admitirá NIF o IDType = No Censado (07) o NIF-IVA (02).");
+
+                        } 
+                        else 
+                        { 
+
+                            if(string.IsNullOrEmpty(destinatario.NIF))
+                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                                    $" 1192 = Si TipoFactura es R2 sólo se admitirá NIF o IDType = No Censado (07) o NIF-IVA (02).");
+
+                        }
+
+                    }
+
+                }
+
+            }
 
             return result;
 

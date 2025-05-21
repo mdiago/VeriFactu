@@ -30,11 +30,6 @@
             </summary>
             <param name="sellerID">Vendedor al que pertenece la cadena de bloques.</param>
         </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.LoadBlockchainsFromDisk">
-            <summary>
-            Carga todas las cadenas de bloques.
-            </summary>
-        </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.GetBlockchainPath(System.String)">
             <summary>
             Devuelve la ruta de almacenamiento de la cadena
@@ -176,6 +171,11 @@
             <param name="sellerID">Id. del emisor de factura.</param>
             <returns>Instancia correspondiente a la cadena de bloques
             de un emisor de facturas.</returns>
+        </member>
+        <member name="M:VeriFactu.Blockchain.Blockchain.LoadBlockchainsFromDisk">
+            <summary>
+            Carga todas las cadenas de bloques.
+            </summary>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Add(VeriFactu.Xml.Factu.Registro)">
             <summary>

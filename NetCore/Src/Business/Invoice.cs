@@ -305,7 +305,7 @@ namespace VeriFactu.Business
 
             }
 
-            if (isTaxIdEs && (BuyerCountryID == "ES" || string.IsNullOrEmpty(BuyerCountryID)))
+            if (isTaxIdEs && BuyerIDType != IDType.NO_CENSADO && (BuyerCountryID == "ES" || string.IsNullOrEmpty(BuyerCountryID)))
                 return new List<Interlocutor>()
                 {
                     new Interlocutor
