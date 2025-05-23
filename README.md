@@ -2,7 +2,7 @@
 
 # VeriFactu - Facturación sistema VERI*FACTU de la AEAT
 
-![workflow](https://github.com/mdiago/VeriFactu/actions/workflows/Verifactu.yml/badge.svg)
+
 
 ## :receipt: ¡Automatiza el envío de facturas con la AEAT de forma fácil y eficiente utilizando VeriFactu!
 <br>
