@@ -88,7 +88,9 @@ namespace VeriFactu.Business
 
             InvoiceID = invoiceID.Trim(); // La AEAT calcula el Hash sin espacios
             InvoiceDate = invoiceDate;
-            SellerID = sellerID.Trim(); 
+
+            var tSellerID = sellerID.Trim(); // La AEAT calcula el Hash sin espacios
+            SellerID = tSellerID.ToUpper(); // https://github.com/mdiago/VeriFactu/issues/65
 
         }
 
