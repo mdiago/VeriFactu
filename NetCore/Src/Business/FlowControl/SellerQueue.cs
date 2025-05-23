@@ -135,7 +135,7 @@ namespace VeriFactu.Business.FlowControl
         public SellerQueue(string sellerID) : base(sellerID)
         {
 
-            SellerID = sellerID;
+            SellerID = Key;
             _LastProcessMoment = new DateTime(1, 1, 1);
 
         }

@@ -494,8 +494,8 @@ namespace VeriFactu.Business
                 IDVersion = Settings.Current.IDVersion,
                 IDFacturaAlta = new IDFactura()
                 {
-                    IDEmisorFactura = SellerID,
-                    NumSerieFactura = InvoiceID,
+                    IDEmisorFactura = SellerID.Trim(),
+                    NumSerieFactura = InvoiceID.Trim(),
                     FechaExpedicionFactura = XmlParser.GetXmlDate(InvoiceDate)                    
                 }, 
                 NombreRazonEmisor = SellerName,
