@@ -235,7 +235,7 @@ namespace VeriFactu.Blockchain
 
                 // Escribo el valor de la variables actuales
                 File.WriteAllText(BlockchainVarFileName, $"{CurrentID}{_CsvSeparator}" +    // 0
-                    $"{CurrentTimeStamp}{_CsvSeparator}" +                                  // 1
+                    $"{(DateTime)CurrentTimeStamp:dd/MM/yyyy HH:mm:ss}{_CsvSeparator}" +                                  // 1
                     $"{Current.Huella}{_CsvSeparator}" +                                    // 2
                     $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +                 // 3
                     $"{Current.IDFactura.IDEmisor}{_CsvSeparator}" +                        // 4
@@ -256,7 +256,7 @@ namespace VeriFactu.Blockchain
         {
 
             return $"{CurrentID}{_CsvSeparator}" +                              // 0 Id de entrada en la cadena de bloques
-                    $"{CurrentTimeStamp}{_CsvSeparator}" +                      // 1 Marca de tiempo
+                    $"{(DateTime)CurrentTimeStamp:dd/MM/yyyy HH:mm:ss}{_CsvSeparator}" +                      // 1 Marca de tiempo
                     $"{Current.Huella}{_CsvSeparator}" +                        // 2 Huella
                     $"{Current.IDFactura.FechaExpedicion}{_CsvSeparator}" +     // 3 Fecha expedición factura
                     $"{Current.IDFactura.IDEmisor}{_CsvSeparator}" +            // 4 Id emisor
