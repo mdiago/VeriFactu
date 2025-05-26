@@ -96,8 +96,8 @@ namespace VeriFactu.Blockchain
         public Blockchain(string sellerID) : base(sellerID)
         {
 
-            BlockchainPath = GetBlockchainPath(sellerID);
-            SellerID = sellerID;
+            BlockchainPath = GetBlockchainPath(Key);
+            SellerID = Key;
 
         }
 

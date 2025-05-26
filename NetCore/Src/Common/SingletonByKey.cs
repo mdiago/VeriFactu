@@ -73,9 +73,12 @@ namespace VeriFactu.Common
         protected SingletonByKey(string key)
         {
 
-            Check(key);
-            Register(key);
-            Key = key;
+            var tKey = key.Trim();
+
+            Check(tKey);
+            Register(tKey);
+
+            Key = tKey;
 
         }
 
