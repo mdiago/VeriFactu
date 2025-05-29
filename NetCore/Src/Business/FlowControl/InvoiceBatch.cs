@@ -130,6 +130,18 @@ namespace VeriFactu.Business.FlowControl
 
             var respuesta = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion);
 
+            if (respuesta == null) 
+            { 
+            
+                var fault = (envelopeRespuesta.Body.Registro as VeriFactu.Xml.Factu.Fault.Fault);
+
+                if (fault == null)
+                    throw new Exception("No se ha podido recuperar la respuesta de la AEAT correctamente.");
+                else
+                    throw new Exception($"{fault.detail}");
+
+            }
+
             return respuesta;
 
         }
