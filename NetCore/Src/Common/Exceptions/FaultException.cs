@@ -59,6 +59,9 @@ namespace VeriFactu.Common.Exceptions
         /// la excepción.</param>
         public FaultException(Fault fault) : base($"{fault.detail}")
         {
+
+            Fault = fault ?? throw new ArgumentNullException(nameof(fault), "El objeto Fault no puede ser nulo.");
+
         }
 
         #endregion
