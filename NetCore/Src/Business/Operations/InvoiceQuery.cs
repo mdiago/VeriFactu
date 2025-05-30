@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using VeriFactu.Common.Exceptions;
 using VeriFactu.Config;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
@@ -279,7 +280,7 @@ namespace VeriFactu.Business.Operations
             var fault = envelopeResponse.Body.Registro as Fault;
 
             if (fault != null)
-                throw new Exception($"{fault.faultstring}");
+                throw new FaultException(fault);
 
             return envelopeResponse.Body.Registro as RespuestaConsultaFactuSistemaFacturacion;
 
@@ -303,7 +304,7 @@ namespace VeriFactu.Business.Operations
             var fault = envelopeResponse.Body.Registro as Fault;
 
             if (fault != null)
-                throw new Exception($"{fault.faultstring}");
+                throw new FaultException(fault);
 
             return envelopeResponse.Body.Registro as RespuestaConsultaFactuSistemaFacturacion;
 

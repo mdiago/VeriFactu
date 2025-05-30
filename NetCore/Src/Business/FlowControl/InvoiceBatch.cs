@@ -43,6 +43,7 @@ using System.Diagnostics;
 using System.IO;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
+using VeriFactu.Common.Exceptions;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Fault;
@@ -139,7 +140,7 @@ namespace VeriFactu.Business.FlowControl
                 if (fault == null)
                     throw new Exception("No se ha podido recuperar la respuesta de la AEAT correctamente.");
                 else
-                    throw new Exception($"{fault.detail}");
+                    throw new FaultException(fault);
 
             }
 

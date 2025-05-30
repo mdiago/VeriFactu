@@ -3204,6 +3204,35 @@
             incluyendo el código de país.</param>
             <returns>True si es válido y false en caso contario.</returns>
         </member>
+        <member name="T:VeriFactu.Common.Exceptions.FaultException">
+            <summary>
+            Representa el error devuelto por la AEAT cuando es su repuesta se incluye
+            el bloque Fault.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.FaultException.#ctor(VeriFactu.Xml.Factu.Fault.Fault)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="fault">Objeto  VeriFactu.Xml.Factu.Fault.Fault que origina
+            la excepción.</param>
+        </member>
+        <member name="P:VeriFactu.Common.Exceptions.FaultException.Fault">
+            <summary>
+            Objeto  VeriFactu.Xml.Factu.Fault.Fault que origina
+            la excepción.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Exceptions.FaultException.FaultCode">
+            <summary>
+            Código de error devuelto por la AEAT.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Exceptions.FaultException.FaultString">
+            <summary>
+            Texto de error devuelto por la AEAT.
+            </summary>
+        </member>
         <member name="T:VeriFactu.Common.Logger">
             <summary>
             Se encarga del log.

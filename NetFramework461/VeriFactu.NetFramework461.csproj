@@ -274,6 +274,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\VIES\ViesVatNumber.cs">
       <Link>Src\Business\Validation\VIES\ViesVatNumber.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Common\Exceptions\FaultException.cs">
+      <Link>Src\Common\Exceptions\FaultException.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Common\Logger.cs">
       <Link>Src\Common\Logger.cs</Link>
     </Compile>
