@@ -42,6 +42,7 @@ using System.Globalization;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using VeriFactu.Common;
 using VeriFactu.DataStore;
@@ -51,31 +52,32 @@ using VeriFactu.Xml.Factu;
 namespace VeriFactu.Config
 {
 
-    /// <summary>
-    /// Configuración.
-    /// </summary>
-    [Serializable]
-    [XmlRoot("Settings")]
-    public class Settings
-    {
+	/// <summary>
+	/// Configuración.
+	/// </summary>
+	[Serializable]
+	[XmlRoot("Settings")]
+	public class Settings
+	{
 
-        #region Variables Privadas Estáticas
+		#region Variables Privadas Estáticas
 
-        /// <summary>
-        /// Path separator win="\" and linux ="/".
-        /// </summary>
-        static readonly char _PathSep = System.IO.Path.DirectorySeparatorChar;
+		/// <summary>
+		/// Path separator win="\" and linux ="/".
+		/// </summary>
+		static readonly char _PathSep = System.IO.Path.DirectorySeparatorChar;
 
-        /// <summary>
-        /// Configuración actual.
-        /// </summary>
-        static Settings _Current;
+		/// <summary>
+		/// Configuración actual.
+		/// </summary>
+		static Settings _Current;
 
-        /// <summary>
-        /// Ruta al directorio de configuración.
-        /// </summary>
-        static readonly string _Path = Environment.GetFolderPath(
-            Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
+		/// <summary>
+		/// Ruta al directorio de configuración.
+		/// </summary>
+		static readonly string _Path = RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")) ?
+									   Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"{_PathSep}VeriFactu{_PathSep}" :
+									   Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
 
         /// <summary>
         /// Ruta al directorio de la cadena de bloques.
