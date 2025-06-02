@@ -42,7 +42,9 @@ using System.Globalization;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Reflection;
+#if !LE_461
 using System.Runtime.InteropServices;
+#endif
 using System.Xml.Serialization;
 using VeriFactu.Common;
 using VeriFactu.DataStore;
@@ -75,9 +77,12 @@ namespace VeriFactu.Config
 		/// <summary>
 		/// Ruta al directorio de configuración.
 		/// </summary>
-		static readonly string _Path = RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")) ?
-									   Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"{_PathSep}VeriFactu{_PathSep}" :
-									   Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
+		static readonly string _Path =
+#if !LE_461
+            RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")) ?
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"{_PathSep}VeriFactu{_PathSep}" :
+#endif
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
 
         /// <summary>
         /// Ruta al directorio de la cadena de bloques.
