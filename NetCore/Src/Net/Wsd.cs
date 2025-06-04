@@ -151,6 +151,17 @@ namespace VeriFactu.Net
 
         #endregion
 
+        #region Propiedades Públicas Estáticas
+
+        /// <summary>
+        /// Certificado a utilizar en la comunicaciones con la AEAT.
+        /// Si su valor no está establecido, se intentará cargar el certificado
+        /// con los valores establecidos en la configuración de VeriFactu.
+        /// </summary>
+        public static X509Certificate2 Certificate { get; set; }
+
+        #endregion
+
         #region Métodos Públicos Estáticos
 
         /// <summary>
@@ -163,17 +174,21 @@ namespace VeriFactu.Net
         /// configuración para las comunicaciones.</returns>
         public static X509Certificate2 GetCertificate()
         {
-            var cert = GetCertificateByFile();
+
+            if(Certificate != null) // 1. Valor establecido.
+                return Certificate;
+
+            var cert = GetCertificateByFile(); // 2. Valor en Settings por fichero.
 
             if (cert != null)
                 return cert;
 
-            cert = GetCertificateByThumbprint();
+            cert = GetCertificateByThumbprint(); // 3. Valor en Settings por huella digital (Almacén Certificados Windows).
 
             if (cert != null)
                 return cert;
 
-            return GetCertificateBySerial();
+            return GetCertificateBySerial(); // 4. Valor en Settings por número de serie (Almacén Certificados Windows).
 
         }
 
