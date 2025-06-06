@@ -187,6 +187,7 @@ namespace VeriFactu.Blockchain
         /// <summary>
         /// Elimina el útlimo elemento añadido a la cadena.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Se lanza si no se encuentra el último eslabón.</exception>
         private void Remove() 
         {
 
@@ -296,6 +297,7 @@ namespace VeriFactu.Blockchain
         /// </summary>
         /// <param name="blockchainDataFileName">Archivo de datos a restaurar.</param>
         /// <param name="blockchainDataPreviousFileName">Copia anterior utilizada para restaurar.</param>
+        /// <exception cref="InvalidOperationException">Se lanza si no se encuentra archivo previo a restaurar.</exception>
         private void RestorePreviousData(string blockchainDataFileName, 
             string blockchainDataPreviousFileName)
         {            
@@ -431,6 +433,7 @@ namespace VeriFactu.Blockchain
         /// <summary>
         /// Carga todas las cadenas de bloques.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
         public static void LoadBlockchainsFromDisk()
         {
 
@@ -486,6 +489,7 @@ namespace VeriFactu.Blockchain
         /// Añade un elemento a la cadena de bloques.
         /// </summary>
         /// <param name="registro">Registro a añadir.</param>
+        /// <exception cref="Exception">Si no se puede añadir el eslabón en la cadena.</exception>
         public void Add(Registro registro)
         {
 
@@ -519,6 +523,7 @@ namespace VeriFactu.Blockchain
         /// Añade una lista de elementos a la cadena de bloques.
         /// </summary>
         /// <param name="registros">Registros a añadir.</param>
+        /// <exception cref="Exception">Si no se puede añadir el eslabón en la cadena.</exception>
         public void Add(List<Registro> registros)
         {
 
@@ -557,6 +562,9 @@ namespace VeriFactu.Blockchain
         /// </summary>
         /// <param name="registro">Registro a eliminar.
         /// Sólo puede eliminarse el último elemento añadido.</param> 
+        /// <exception cref="InvalidOperationException">
+        /// Si se itenta eliminar un registro que no es el último.
+        /// </exception>
         public void Delete(Registro registro) 
         {
 

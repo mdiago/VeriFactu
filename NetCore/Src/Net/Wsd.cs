@@ -59,6 +59,8 @@ namespace VeriFactu.Net
         /// Obtiene el certificado configurado y verifica la validez.
         /// </summary>
         /// <returns>Certificado validado.</returns>
+        /// <exception cref="ArgumentNullException">Se lanza si no se encuentra el certificado configurado.</exception>
+        /// <exception cref="InvalidOperationException">Se lanza si el certificado ha expirado (fecha NotAfter en el pasado).</exception>
         internal static X509Certificate2 GetCheckedCertificate()
         {
 
@@ -79,11 +81,12 @@ namespace VeriFactu.Net
         /// Verifica la validez del certificado.
         /// </summary>
         /// <param name="certificate">Verifica la validez del certificado.</param>
+        /// <exception cref="InvalidOperationException">Se lanza si el certificado ha expirado (fecha NotAfter en el pasado).</exception>
         internal static void CheckCertificate(X509Certificate2 certificate) 
         {
 
             if (certificate.NotAfter < DateTime.Now)
-                throw new ArgumentNullException(
+                throw new InvalidOperationException(
                   $"Certificate is out of date. NotAfter: {certificate.NotAfter}.");
 
         }
