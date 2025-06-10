@@ -101,18 +101,18 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
             var tipoImpositivoRE = XmlParser.ToDecimal(_DetalleDesglose.TipoRecargoEquivalencia);
             var cuotaRepercutidaRE = XmlParser.ToDecimal(_DetalleDesglose.CuotaRecargoEquivalencia);
 
-            // Cuando CalificacionOperacion sea “S2”:
+            // Cuando CalificacionOperacion sea “S2” (https://github.com/mdiago/VeriFactu/issues/76):
 
             if (_DetalleDesglose.CalificacionOperacion == CalificacionOperacion.S2) 
             {
 
-                // TipoImpositivo = 0. (No se admite que vaya vacío o que el campo no exista).
-                if (tipoImpositivo == 0)
+                // TipoImpositivo = 0 obligatoriamente. (No se admite que vaya vacío o que el campo no exista).
+                if (string.IsNullOrEmpty(_DetalleDesglose.TipoImpositivo) || tipoImpositivo != 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $"Cuando CalificacionOperacion sea “S2” TipoImpositivo = 0. (No se admite que vaya vacío o que el campo no exista).");
 
-                // CuotaRepercutida = 0. (No se admite que vaya vacío o que el campo no exista).
-                if (cuotaRepercutida == 0)
+                // CuotaRepercutida = 0 obligatoriamente. (No se admite que vaya vacío o que el campo no exista).
+                if (string.IsNullOrEmpty(_DetalleDesglose.CuotaRepercutida) || cuotaRepercutida != 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $"Cuando CalificacionOperacion sea “S2” CuotaRepercutida = 0. (No se admite que vaya vacío o que el campo no exista).");
 
