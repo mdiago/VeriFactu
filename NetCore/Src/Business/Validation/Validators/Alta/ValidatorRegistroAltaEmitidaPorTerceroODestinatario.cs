@@ -79,8 +79,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Si es igual a “T”, el bloque Tercero será de cumplimentación obligatoria.
 
-            if (_RegistroAlta.Tercero == null && _RegistroAlta.EmitidaPorTercerosODestinatarioSpecified &&
-                _RegistroAlta.EmitidaPorTercerosODestinatario == EmitidaPorTercerosODestinatario.T)
+            if (_RegistroAlta.Tercero == null && _RegistroAlta.EmitidaPorTerceroODestinatarioSpecified &&
+                _RegistroAlta.EmitidaPorTerceroODestinatario == EmitidaPorTerceroODestinatario.T)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Si EmitidaPorTerceroODestinatario es igual a “T”," +
                     $" el bloque Tercero será de cumplimentación obligatoria.");
@@ -88,8 +88,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // Si es igual a “D”, el bloque Destinatarios será de cumplimentación obligatoria.
 
             if ((_RegistroAlta.Destinatarios == null || _RegistroAlta.Destinatarios.Count == 0) &&
-                _RegistroAlta.EmitidaPorTercerosODestinatarioSpecified &&
-                _RegistroAlta.EmitidaPorTercerosODestinatario == EmitidaPorTercerosODestinatario.D)
+                _RegistroAlta.EmitidaPorTerceroODestinatarioSpecified &&
+                _RegistroAlta.EmitidaPorTerceroODestinatario == EmitidaPorTerceroODestinatario.D)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Si EmitidaPorTerceroODestinatario es igual a “D”, el bloque" +
                     $" Destinatarios será de cumplimentación obligatoria,");

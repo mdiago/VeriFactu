@@ -292,14 +292,14 @@ namespace VeriFactu.Xml.Factu.Alta
         /// sido emitida por un tercero o por el destinatario. </para>
         /// <para>Alfanumérico(1). L6.</para>
         /// </summary>
-        [XmlElement("EmitidaPorTercerosODestinatario", Namespace = Namespaces.NamespaceSF, Order = 17)]
-        public EmitidaPorTercerosODestinatario EmitidaPorTercerosODestinatario { get; set; }
+        [XmlElement("EmitidaPorTerceroODestinatario", Namespace = Namespaces.NamespaceSF, Order = 17)]
+        public EmitidaPorTerceroODestinatario EmitidaPorTerceroODestinatario { get; set; }
 
         /// <summary>
         ///  Con true se serializa el dato, con false no.
         /// </summary>
         [XmlIgnore]
-        public bool EmitidaPorTercerosODestinatarioSpecified { get; set; }
+        public bool EmitidaPorTerceroODestinatarioSpecified { get; set; }
 
         /// <summary>
         /// Tercero que expide la factura.

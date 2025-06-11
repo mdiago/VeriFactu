@@ -651,8 +651,8 @@
     <Compile Include="..\..\NetCore\Src\Xml\Factu\Alta\DetalleDesglose.cs">
       <Link>Src\Xml\Factu\Alta\DetalleDesglose.cs</Link>
     </Compile>
-    <Compile Include="..\..\NetCore\Src\Xml\Factu\Alta\EmitidaPorTercerosODestinatario.cs">
-      <Link>Src\Xml\Factu\Alta\EmitidaPorTercerosODestinatario.cs</Link>
+    <Compile Include="..\..\NetCore\Src\Xml\Factu\Alta\EmitidaPorTerceroODestinatario.cs">
+      <Link>Src\Xml\Factu\Alta\EmitidaPorTerceroODestinatario.cs</Link>
     </Compile>
     <Compile Include="..\..\NetCore\Src\Xml\Factu\Alta\ImporteRectificacion.cs">
       <Link>Src\Xml\Factu\Alta\ImporteRectificacion.cs</Link>

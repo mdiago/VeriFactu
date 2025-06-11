@@ -44,7 +44,7 @@ namespace VeriFactu.Xml.Factu.Alta
     /// Identificador que especifica si la factura ha sido
     /// emitida por un tercero o por el destinatario. L6.
     /// </summary>
-    public enum EmitidaPorTercerosODestinatario
+    public enum EmitidaPorTerceroODestinatario
     {
 
         /// <summary>

@@ -58,6 +58,7 @@
             <summary>
             Elimina el útlimo elemento añadido a la cadena.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Se lanza si no se encuentra el último eslabón.</exception>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Write(System.Collections.Generic.List{System.String})">
             <summary>
@@ -94,6 +95,7 @@
             </summary>
             <param name="blockchainDataFileName">Archivo de datos a restaurar.</param>
             <param name="blockchainDataPreviousFileName">Copia anterior utilizada para restaurar.</param>
+            <exception cref="T:System.InvalidOperationException">Se lanza si no se encuentra archivo previo a restaurar.</exception>
         </member>
         <member name="P:VeriFactu.Blockchain.Blockchain.Initialized">
             <summary>
@@ -176,18 +178,21 @@
             <summary>
             Carga todas las cadenas de bloques.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Add(VeriFactu.Xml.Factu.Registro)">
             <summary>
             Añade un elemento a la cadena de bloques.
             </summary>
             <param name="registro">Registro a añadir.</param>
+            <exception cref="T:System.Exception">Si no se puede añadir el eslabón en la cadena.</exception>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Add(System.Collections.Generic.List{VeriFactu.Xml.Factu.Registro})">
             <summary>
             Añade una lista de elementos a la cadena de bloques.
             </summary>
             <param name="registros">Registros a añadir.</param>
+            <exception cref="T:System.Exception">Si no se puede añadir el eslabón en la cadena.</exception>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Delete(VeriFactu.Xml.Factu.Registro)">
             <summary>
@@ -195,6 +200,9 @@
             </summary>
             <param name="registro">Registro a eliminar.
             Sólo puede eliminarse el último elemento añadido.</param> 
+            <exception cref="T:System.InvalidOperationException">
+            Si se itenta eliminar un registro que no es el último.
+            </exception>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.ToString">
             <summary>
@@ -5080,12 +5088,15 @@
             Obtiene el certificado configurado y verifica la validez.
             </summary>
             <returns>Certificado validado.</returns>
+            <exception cref="T:System.ArgumentNullException">Se lanza si no se encuentra el certificado configurado.</exception>
+            <exception cref="T:System.InvalidOperationException">Se lanza si el certificado ha expirado (fecha NotAfter en el pasado).</exception>
         </member>
         <member name="M:VeriFactu.Net.Wsd.CheckCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Verifica la validez del certificado.
             </summary>
             <param name="certificate">Verifica la validez del certificado.</param>
+            <exception cref="T:System.InvalidOperationException">Se lanza si el certificado ha expirado (fecha NotAfter en el pasado).</exception>
         </member>
         <member name="M:VeriFactu.Net.Wsd.Call(System.String,System.String,System.Xml.XmlDocument)">
             <summary>
@@ -5104,6 +5115,13 @@
             <param name="url">Url del web service.</param>
             <param name="action">Acción del web service.</param>
             <returns></returns>
+        </member>
+        <member name="P:VeriFactu.Net.Wsd.Certificate">
+            <summary>
+            Certificado a utilizar en la comunicaciones con la AEAT.
+            Si su valor no está establecido, se intentará cargar el certificado
+            con los valores establecidos en la configuración de VeriFactu.
+            </summary>
         </member>
         <member name="M:VeriFactu.Net.Wsd.GetCertificate">
             <summary>
@@ -7667,18 +7685,18 @@
             </summary>
             <returns>Representacioón textual de la instancia.</returns>
         </member>
-        <member name="T:VeriFactu.Xml.Factu.Alta.EmitidaPorTercerosODestinatario">
+        <member name="T:VeriFactu.Xml.Factu.Alta.EmitidaPorTerceroODestinatario">
             <summary>
             Identificador que especifica si la factura ha sido
             emitida por un tercero o por el destinatario. L6.
             </summary>
         </member>
-        <member name="F:VeriFactu.Xml.Factu.Alta.EmitidaPorTercerosODestinatario.D">
+        <member name="F:VeriFactu.Xml.Factu.Alta.EmitidaPorTerceroODestinatario.D">
             <summary>
             Destinatario.
             </summary>
         </member>
-        <member name="F:VeriFactu.Xml.Factu.Alta.EmitidaPorTercerosODestinatario.T">
+        <member name="F:VeriFactu.Xml.Factu.Alta.EmitidaPorTerceroODestinatario.T">
             <summary>
             Tercero.
             </summary>
@@ -7900,14 +7918,14 @@
             <para>N: No</para>
             </summary>
         </member>
-        <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.EmitidaPorTercerosODestinatario">
+        <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.EmitidaPorTerceroODestinatario">
             <summary>
             <para>Identificador que especifica si la factura ha
             sido emitida por un tercero o por el destinatario. </para>
             <para>Alfanumérico(1). L6.</para>
             </summary>
         </member>
-        <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.EmitidaPorTercerosODestinatarioSpecified">
+        <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.EmitidaPorTerceroODestinatarioSpecified">
             <summary>
              Con true se serializa el dato, con false no.
             </summary>

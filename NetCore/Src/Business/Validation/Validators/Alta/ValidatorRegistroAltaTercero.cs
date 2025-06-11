@@ -79,8 +79,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Solo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.
 
-            if (_RegistroAlta.Tercero != null && _RegistroAlta.EmitidaPorTercerosODestinatarioSpecified &&
-                _RegistroAlta.EmitidaPorTercerosODestinatario != EmitidaPorTercerosODestinatario.T)
+            if (_RegistroAlta.Tercero != null && _RegistroAlta.EmitidaPorTerceroODestinatarioSpecified &&
+                _RegistroAlta.EmitidaPorTerceroODestinatario != EmitidaPorTerceroODestinatario.T)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Tercero sólo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.");
 
