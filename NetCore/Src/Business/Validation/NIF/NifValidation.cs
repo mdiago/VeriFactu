@@ -155,6 +155,56 @@ namespace VeriFactu.Business.Validation.NIF
 
         #endregion
 
+        #region Métodos Públicos Estáticos
+
+        /// <summary>
+        /// Valida un conjunto de NIFs en una única llamada
+        /// al servicio de validación.
+        /// </summary>
+        /// <param name="items">Lista de contribuyentas a validar.</param>
+        /// <returns>Diccionario con los NIFs erróneos</returns>
+        public static Dictionary<string, string> GetBatchErrors(List<Contribuyente> items) 
+        {
+
+            Envelope envelope = new Envelope();
+
+            envelope.Body.Registro = new VNifVEnt()
+            {
+                Contribuyente = items
+            };
+
+            envelope.Header = null;
+
+            var xml = new XmlParser().GetBytes(envelope, Namespaces.NifItems);
+
+            XmlDocument xmlDocument = new XmlDocument();
+
+            using (var msXml = new MemoryStream(xml))
+                xmlDocument.Load(msXml);
+
+            var response = Wsd.Call(Url, Action, xmlDocument);
+
+            var responseEnvelope = Envelope.FromXml(response);
+
+            var result = new Dictionary<string, string>();
+
+            foreach (var item in responseEnvelope.Body.Contribuyentes) 
+            {
+
+                if (item.Resultado != "IDENTIFICADO")
+                    result.Add(item.Nif, $"Error en la validación del NIF {item.Nif} de {item.Nombre}. Si el NIF es" +
+                        $" de una persona física es necesario que conste también el nombre" +
+                        $" correcto para poderlo validar.");
+
+
+            }
+
+            return result;
+
+        }
+
+        #endregion
+
         #region Métodos Públicos de Instancia
 
         /// <summary>
