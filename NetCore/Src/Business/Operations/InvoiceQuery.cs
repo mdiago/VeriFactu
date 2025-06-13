@@ -143,9 +143,10 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
+        /// <param name="offset">Id. de la factura de corte para la paginación.</param>
         /// <returns> Objeto Envelope con el filtro
         /// para la consulta de facturas emitidas.</returns>
-        private Envelope GetSalesEnvelope(string year, string month)
+        private Envelope GetSalesEnvelope(string year, string month, ClavePaginacion offset = null)
         {
 
             return new Envelope()
@@ -154,7 +155,7 @@ namespace VeriFactu.Business.Operations
                 {
                     Registro = new ConsultaFactuSistemaFacturacion()
                     {
-                        Cabecera = new VeriFactu.Xml.Factu.Consulta.Cabecera()
+                        Cabecera = new Xml.Factu.Consulta.Cabecera()
                         {
                             IDVersion = Settings.Current.IDVersion,
                             ObligadoEmision = new Interlocutor()
@@ -169,7 +170,8 @@ namespace VeriFactu.Business.Operations
                             {
                                 Ejercicio = year,
                                 Periodo = month.PadLeft(2, '0')
-                            }
+                            },
+                            ClavePaginacion = offset
                         }
                     }
                 }
@@ -183,9 +185,10 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
+        /// <param name="offset">Id. de la factura de corte para la paginación.</param>
         /// <returns> Objeto Envelope con el filtro
         /// para la consulta de facturas recibidas.</returns>
-        private Envelope GetPurchasesEnvelope(string year, string month)
+        private Envelope GetPurchasesEnvelope(string year, string month, ClavePaginacion offset = null)
         {
 
             return new Envelope()
@@ -209,7 +212,8 @@ namespace VeriFactu.Business.Operations
                             {
                                 Ejercicio = year,
                                 Periodo = month.PadLeft(2, '0')
-                            }
+                            },
+                            ClavePaginacion = offset
                         }
                     }
                 }
@@ -268,11 +272,15 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
+        /// <param name="offset">Id. de la factura de corte para la paginación.</param>
         /// <returns>Facturas emitidas registradas en la AEAT.</returns>
-        public RespuestaConsultaFactuSistemaFacturacion GetSales(string year, string month) 
+        public RespuestaConsultaFactuSistemaFacturacion GetSales(string year, string month, ClavePaginacion offset = null) 
         {
 
-            var envelope = GetSalesEnvelope(year, month);
+            if (offset != null && offset?.IDEmisorFactura == null)
+                offset.IDEmisorFactura = PartyID;
+
+            var envelope = GetSalesEnvelope(year, month, offset);
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
             var response = InvoiceActionMessage.SendXmlBytes(xml, _Action);
             var envelopeResponse = Envelope.FromXml(response);
@@ -292,11 +300,15 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
+        /// <param name="offset">Id. de la factura de corte para la paginación.</param>
         /// <returns>Facturas emitidas registradas en la AEAT.</returns>
-        public RespuestaConsultaFactuSistemaFacturacion GetPurchases(string year, string month)
+        public RespuestaConsultaFactuSistemaFacturacion GetPurchases(string year, string month, ClavePaginacion offset = null)
         {
 
-            var envelope = GetPurchasesEnvelope(year, month);
+            if (offset != null && offset?.IDEmisorFactura == null)
+                offset.IDEmisorFactura = PartyID;
+
+            var envelope = GetPurchasesEnvelope(year, month, offset);
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
             var response = InvoiceActionMessage.SendXmlBytes(xml, _Action);
             var envelopeResponse = Envelope.FromXml(response);

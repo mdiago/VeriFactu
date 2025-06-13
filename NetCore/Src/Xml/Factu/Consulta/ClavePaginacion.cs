@@ -37,71 +37,39 @@
     address: info@irenesolutions.com
  */
 
+using System.Collections.Generic;
+using System.Web;
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// Filtro consulta.
+    /// Id. de la factura de corte para la paginación.
     /// </summary>
-    public  class FiltroConsulta
+    public class ClavePaginacion
     {
 
-        #region Propiedades Públicas de Instancia
-
         /// <summary>
-        /// Periodo a filtrar.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public PeriodoImputacion PeriodoImputacion { get; set; }
-
-        /// <summary>
-        /// Datos contraparte factura.
+        /// <para>Número de identificación fiscal (NIF) del obligado a expedir la factura.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Contraparte { get; set; }
+        public string IDEmisorFactura { get; set; }
 
         /// <summary>
-        /// Rango fechas de expedición.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public FechaExpedicionFactura FechaExpedicionFactura { get; set; }
-
-        /// <summary>
-        /// Sistema informático.
+        /// <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
+        /// <para>Alfanumérico(60).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public SistemaInformatico SistemaInformatico { get; set; }
+        public string NumSerieFactura { get; set; }
 
         /// <summary>
-        /// Id. de la factura de corte para la paginación.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public ClavePaginacion ClavePaginacion { get; set; }
-
-        /// <summary>
-        /// Datos adicionales respuesta.
+        /// <para>Fecha de expedición de la factura.</para>
+        /// <para>Fecha(dd-mm-yyyy).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public DatosAdicionalesRespuesta DatosAdicionalesRespuesta { get; set; }
-
-        #endregion
-
-        #region Métodos Públicos de Instancia
-
-        /// <summary>
-        /// Representacioón textual de la instancia.
-        /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
-        public override string ToString()
-        {
-
-            return $"{PeriodoImputacion}, {Contraparte}, {FechaExpedicionFactura}";
-
-        }
-
-        #endregion
+        public string FechaExpedicionFactura { get; set; }
 
     }
 

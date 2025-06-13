@@ -679,11 +679,17 @@
     <Compile Include="..\..\NetCore\Src\Xml\Factu\Consulta\Cabecera.cs">
       <Link>Src\Xml\Factu\Consulta\Cabecera.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\Xml\Factu\Consulta\ClavePaginacion.cs">
+      <Link>Src\Xml\Factu\Consulta\ClavePaginacion.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Xml\Factu\Consulta\ConsultaFactuSistemaFacturacion.cs">
       <Link>Src\Xml\Factu\Consulta\ConsultaFactuSistemaFacturacion.cs</Link>
     </Compile>
     <Compile Include="..\..\NetCore\Src\Xml\Factu\Consulta\DatosAdicionalesRespuesta.cs">
       <Link>Src\Xml\Factu\Consulta\DatosAdicionalesRespuesta.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NetCore\Src\Xml\Factu\Consulta\FechaExpedicionFactura.cs">
+      <Link>Src\Xml\Factu\Consulta\FechaExpedicionFactura.cs</Link>
     </Compile>
     <Compile Include="..\..\NetCore\Src\Xml\Factu\Consulta\FiltroConsulta.cs">
       <Link>Src\Xml\Factu\Consulta\FiltroConsulta.cs</Link>

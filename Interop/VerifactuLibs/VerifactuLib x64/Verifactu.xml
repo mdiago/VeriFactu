@@ -1428,23 +1428,25 @@
             <returns> Objeto Invoice creado a partir de un registro
             de factura de una respuesta de consulta a la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSalesEnvelope(System.String,System.String)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSalesEnvelope(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve un objeto Envelope con el filtro
             para la consulta de facturas emitidas.
             </summary>
             <param name="year">Año a consultar.</param>
             <param name="month">Mes a consultar.</param>
+            <param name="offset">Id. de la factura de corte para la paginación.</param>
             <returns> Objeto Envelope con el filtro
             para la consulta de facturas emitidas.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchasesEnvelope(System.String,System.String)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchasesEnvelope(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve un objeto Envelope con el filtro
             para la consulta de facturas recibidas.
             </summary>
             <param name="year">Año a consultar.</param>
             <param name="month">Mes a consultar.</param>
+            <param name="offset">Id. de la factura de corte para la paginación.</param>
             <returns> Objeto Envelope con el filtro
             para la consulta de facturas recibidas.</returns>
         </member>
@@ -1469,22 +1471,24 @@
             a partir de una respuesta de la AEAT a 
             una consulta de documentos.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSales(System.String,System.String)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSales(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve las facturas emitidas por el NIF
             facilitado en la propiedad PartyID.
             </summary>
             <param name="year">Año a consultar.</param>
             <param name="month">Mes a consultar.</param>
+            <param name="offset">Id. de la factura de corte para la paginación.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchases(System.String,System.String)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchases(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve las facturas emitidas por el NIF
             facilitado en la propiedad PartyID.
             </summary>
             <param name="year">Año a consultar.</param>
             <param name="month">Mes a consultar.</param>
+            <param name="offset">Id. de la factura de corte para la paginación.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.ToString">
@@ -1720,6 +1724,14 @@
             Obtiene sobre SOAP de la respuesta.
             </summary>
             <returns>Sobre SOAP de la respuesta.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetBatchErrors(System.Collections.Generic.List{VeriFactu.Xml.Nif.Contribuyente})">
+            <summary>
+            Valida un conjunto de NIFs en una única llamada
+            al servicio de validación.
+            </summary>
+            <param name="items">Lista de contribuyentas a validar.</param>
+            <returns>Diccionario con los NIFs erróneos</returns>
         </member>
         <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetErrors">
             <summary>
@@ -9764,6 +9776,29 @@
             </summary>
             <returns>Representacioón textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.ClavePaginacion">
+            <summary>
+            Id. de la factura de corte para la paginación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.ClavePaginacion.IDEmisorFactura">
+            <summary>
+            <para>Número de identificación fiscal (NIF) del obligado a expedir la factura.</para>
+            <para>FormatoNIF(9).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.ClavePaginacion.NumSerieFactura">
+            <summary>
+            <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
+            <para>Alfanumérico(60).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.ClavePaginacion.FechaExpedicionFactura">
+            <summary>
+            <para>Fecha de expedición de la factura.</para>
+            <para>Fecha(dd-mm-yyyy).</para>
+            </summary>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion">
             <summary>
             Consulta de la información presentada por el emisor de la factura.
@@ -9812,6 +9847,28 @@
             </summary>
             <returns>Representacioón textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.FechaExpedicionFactura">
+            <summary>
+            Datos para counsulta por fecha expedición factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FechaExpedicionFactura.FechaExpedicion">
+            <summary>
+            <para> Fecha de emisión del registro de facturacion</para>
+            <para>Fecha (dd-mm-yyyy)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FechaExpedicionFactura.RangoFechaExpedicion">
+            <summary>
+            <para>Intervalo de fechas para consulta.</para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.FechaExpedicionFactura.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Consulta.FiltroConsulta">
             <summary>
             Filtro consulta.
@@ -9828,12 +9885,6 @@
             </summary>
         </member>
         <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.FechaExpedicionFactura">
-            <summary>
-            <para> Fecha de emisión del registro de facturacion.</para>
-            <para> Fecha (dd-mm-yyyy)</para>
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.RangoFechaExpedicion">
             <summary>
             Rango fechas de expedición.
             </summary>

@@ -43,48 +43,25 @@ namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// Filtro consulta.
+    /// Datos para counsulta por fecha expedición factura.
     /// </summary>
-    public  class FiltroConsulta
+    public class FechaExpedicionFactura
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Periodo a filtrar.
+        /// <para> Fecha de emisión del registro de facturacion</para>
+        /// <para>Fecha (dd-mm-yyyy)</para>
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public PeriodoImputacion PeriodoImputacion { get; set; }
+        [XmlElement(ElementName= "FechaExpedicionFactura", Namespace = Namespaces.NamespaceSF)]
+        public string FechaExpedicion { get; set; }
 
         /// <summary>
-        /// Datos contraparte factura.
+        /// <para>Intervalo de fechas para consulta.</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public Interlocutor Contraparte { get; set; }
-
-        /// <summary>
-        /// Rango fechas de expedición.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public FechaExpedicionFactura FechaExpedicionFactura { get; set; }
-
-        /// <summary>
-        /// Sistema informático.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public SistemaInformatico SistemaInformatico { get; set; }
-
-        /// <summary>
-        /// Id. de la factura de corte para la paginación.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public ClavePaginacion ClavePaginacion { get; set; }
-
-        /// <summary>
-        /// Datos adicionales respuesta.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public DatosAdicionalesRespuesta DatosAdicionalesRespuesta { get; set; }
+        public RangoFechaExpedicion RangoFechaExpedicion { get; set; }
 
         #endregion
 
@@ -97,7 +74,9 @@ namespace VeriFactu.Xml.Factu.Consulta
         public override string ToString()
         {
 
-            return $"{PeriodoImputacion}, {Contraparte}, {FechaExpedicionFactura}";
+            return $"{FechaExpedicion}," +
+                $"[{RangoFechaExpedicion.Desde}" +
+                $" - {RangoFechaExpedicion.Hasta}]";
 
         }
 
