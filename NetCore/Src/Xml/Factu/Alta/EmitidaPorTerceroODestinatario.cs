@@ -46,6 +46,10 @@ namespace VeriFactu.Xml.Factu.Alta
     /// </summary>
     public enum EmitidaPorTerceroODestinatario
     {
+        /// <summary>
+        /// No asignado
+        /// </summary>
+        NA,
 
         /// <summary>
         /// Destinatario.

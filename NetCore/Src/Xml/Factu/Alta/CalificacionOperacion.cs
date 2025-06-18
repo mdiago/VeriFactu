@@ -46,6 +46,10 @@ namespace VeriFactu.Xml.Factu.Alta
     /// </summary>
     public enum CalificacionOperacion
     {
+        /// <summary>
+        ///  No asignada
+        /// </summary>
+        NA,
 
         /// <summary>
         ///  Operación Sujeta y No exenta - Sin inversión del sujeto pasivo.

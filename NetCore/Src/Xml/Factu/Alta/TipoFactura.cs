@@ -45,6 +45,10 @@ namespace VeriFactu.Xml.Factu.Alta
     /// </summary>
     public enum TipoFactura
     {
+        /// <summary>
+        /// No asignada
+        /// </summary>
+        NA,
 
         /// <summary>
         /// Factura (art. 6, 7.2 y 7.3 del RD 1619/2012).
