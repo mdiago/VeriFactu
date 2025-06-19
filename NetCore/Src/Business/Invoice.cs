@@ -409,13 +409,14 @@ namespace VeriFactu.Business
         /// es decir, el cliente) de la operación de la factura expedida.
         /// <para>Alfanumérico (2) (ISO 3166-1 alpha-2 codes) </para>
         /// </summary>        
+        [Json(Name = "CountryID")]
         public string BuyerCountryID { get; set; }
 
         /// <summary>
         /// Clave para establecer el tipo de identificación
         /// en el pais de residencia. L7.
         /// </summary>        
-        [Json(ExcludeOnDefault = true)]
+        [Json(ExcludeOnDefault = true, Name = "RelatedPartyIDType")]
         public IDType BuyerIDType { get; set; }
 
         /// <summary>
