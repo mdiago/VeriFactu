@@ -82,7 +82,17 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <summary>
         /// Exenta por otros.
         /// </summary>
-        E6
+        E6,
+
+        /// <summary>
+        /// Reservado 1 Impuesto = “03” (IGIC)
+        /// </summary>
+        E7,
+
+        /// <summary>
+        /// Reservado  Impuesto = “03” (IGIC)
+        /// </summary>
+        E8
 
     }
 

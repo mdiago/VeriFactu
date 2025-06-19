@@ -108,19 +108,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var result = new List<string>();
 
-            // Si se identifica mediante NIF, el NIF debe estar identificado y ser distinto del NIF del campo IDEmisorFactura de la agrupación IDFactura.
-            if (!string.IsNullOrEmpty(_Interlocutor.NIF))
-            {
-
-                if (!Settings.Current.SkipNifAeatValidation)
-                    result.AddRange(new NifValidation(_Interlocutor.NIF, _Interlocutor.NombreRazon).GetErrors());
-
-                if(_Interlocutor.NIF == _RegistroAlta.IDFacturaAlta.IDEmisorFactura)
-                    result.Add($"Error en el bloque RegistroAlta: El NIF del {_Rol} {_Interlocutor.NIF}" +
-                        $" con el nombre {_Interlocutor.NombreRazon} debe ser distinto del NIF del campo" +
-                        $" IDEmisorFactura de la agrupación IDFactura.");
-
-            }
+            // Si se identifica mediante NIF, el NIF debe estar identificado.
+            if (!string.IsNullOrEmpty(_Interlocutor.NIF) && !Settings.Current.SkipNifAeatValidation)
+                result.AddRange(new NifValidation(_Interlocutor.NIF, _Interlocutor.NombreRazon).GetErrors());
 
             // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
             if (_Interlocutor != null && !string.IsNullOrEmpty(_Interlocutor.NIF) && _Interlocutor.IDOtro != null)

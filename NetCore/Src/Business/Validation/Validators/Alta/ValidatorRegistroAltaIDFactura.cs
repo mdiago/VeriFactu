@@ -106,8 +106,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                         $" La propiedad IDFactura.FechaExpedicion {_FechaExpedicion:yyyy-MM-dd}" +
                         $" no puede ser mayor que la fecha actual {now:yyyy-MM-dd}.");
 
-                // La FechaExpedicionFactura no debe ser inferior a 01/07/2024
-                if (_FechaExpedicion.CompareTo(new DateTime(2024, 7, 1)) < 0)
+                // La FechaExpedicionFactura no debe ser inferior a 28/10/2024
+                // (fecha de entrada en vigor de la Orden Ministerial de VERI* FACTU).
+
+                if (_FechaExpedicion.CompareTo(new DateTime(2024, 10, 28)) < 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad IDFactura.FechaExpedicion {_FechaExpedicion:yyyy-MM-dd}" +
                         $" no puede ser inferior del 2024-07-01.");

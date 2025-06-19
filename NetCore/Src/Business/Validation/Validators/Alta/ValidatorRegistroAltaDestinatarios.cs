@@ -80,7 +80,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var destinatarios = _RegistroAlta.Destinatarios;
 
-            // Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación Destinatarios tiene que estar cumplimentada, con al menos un destinatario.
+            // Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación Destinatarios tiene que estar cumplimentada,
+            // con al menos un destinatario.
 
             if ((destinatarios == null || destinatarios.Count == 0) && !_IsSimplificada)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +

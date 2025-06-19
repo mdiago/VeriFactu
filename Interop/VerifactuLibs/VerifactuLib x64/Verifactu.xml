@@ -7459,6 +7459,16 @@
             Exenta por otros.
             </summary>
         </member>
+        <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E7">
+            <summary>
+            Reservado 1 Impuesto = “03” (IGIC)
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Alta.CausaExencion.E8">
+            <summary>
+            Reservado  Impuesto = “03” (IGIC)
+            </summary>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.ClaveRegimen">
             <summary>
             Clave que identifica el tipo de régimen del IVA o IGIC
@@ -7567,7 +7577,8 @@
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.RegimenSimplificado">
             <summary>
-            Régimen simplificado sólo para IVA ('20').
+            L8A: Régimen simplificado sólo para IVA ('20').
+            L8B: Operaciones sujetas al IPSI
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.DetalleDesglose">

@@ -120,28 +120,23 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
 
             // Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA),
             // no se puede informar ninguno de estos campos:
-            // TipoImpositivo, CuotaRepercutida, excepto si ClaveRegimen = “17”.
+            // TipoImpositivo, CuotaRepercutida.
             // TipoRecargoEquivalencia, CuotaRecargoEquivalencia.
 
             if ((_DetalleDesglose.CalificacionOperacion == CalificacionOperacion.N1 ||
                 _DetalleDesglose.CalificacionOperacion == CalificacionOperacion.N2)&& 
                 _DetalleDesglose.Impuesto == Impuesto.IVA) 
-            {
+            {               
 
-                if (_DetalleDesglose.ClaveRegimen != ClaveRegimen.IossRegEspMin) 
-                {
+                if (tipoImpositivo != 0)
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                            $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
+                            $" no se puede informar TipoImpositivo excepto si ClaveRegimen = “17”.");
 
-                    if (tipoImpositivo != 0)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                             $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
-                             $" no se puede informar TipoImpositivo excepto si ClaveRegimen = “17”.");
-
-                    if (cuotaRepercutida != 0)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                             $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
-                             $" no se puede informar CuotaRepercutida excepto si ClaveRegimen = “17”.");
-
-                }
+                if (cuotaRepercutida != 0)
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                            $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
+                            $" no se puede informar CuotaRepercutida excepto si ClaveRegimen = “17”.");                
 
                 if (tipoImpositivoRE != 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +

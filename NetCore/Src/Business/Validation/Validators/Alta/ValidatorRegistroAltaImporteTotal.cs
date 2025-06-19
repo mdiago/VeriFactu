@@ -97,8 +97,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
                     total += cuotaRepercutida + cuotaRecargoEquivalencia + baseImponibleOimporteNoSujeto;
 
-                    // Esta validación no se aplicará cuando ClaveRegimen sea “03”, “05”, “06” o “09”.
-                    var clavesExcluidas = new ClaveRegimen[]{ ClaveRegimen.Rebu, ClaveRegimen.AgenciasViajes, ClaveRegimen.GrupoEntidades, ClaveRegimen.MediadoresAgenciasViaje};
+                    // Esta validación no se aplicará cuando ClaveRegimen sea “03”, “05”, “06”, “08” o “09”.
+                    var clavesExcluidas = new ClaveRegimen[]{ ClaveRegimen.Rebu, ClaveRegimen.AgenciasViajes,
+                        ClaveRegimen.GrupoEntidades, ClaveRegimen.IpsiIgic, ClaveRegimen.MediadoresAgenciasViaje};
                     
                     if (Array.IndexOf(clavesExcluidas, desglose.ClaveRegimen) != -1)
                         return result;

@@ -90,6 +90,22 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
 
             var result = new List<string>();
 
+            // Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA), el valor 
+            // de OperacionExenta deberá estar contenido en lista L10 (No inlcuye 'E7' ni 'E8').
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA && _DetalleDesglose.OperacionExentaSpecified && 
+                (_DetalleDesglose.OperacionExenta == CausaExencion.E7 || _DetalleDesglose.OperacionExenta == CausaExencion.E8))
+            {
+
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                     $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA), el valor" +
+                     $" de OperacionExenta deberá estar contenido en lista L10 (No inlcuye 'E7' ni 'E8').");
+
+            }
+
+            //Si Impuesto = “03” (IGIC), el valor de OperacionExenta deberá estar contenido en 
+            //lista L10 y adicionalmente podrá contener los valores “E7” y “E8”.
+
+
             // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA),
             // y ClaveRegimen es igual a “01”, no pueden marcarse los valores de OperacionExenta “E2” y “E3”.
 
@@ -112,7 +128,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
             var tipoImpositivoRE = XmlParser.ToDecimal(_DetalleDesglose.TipoRecargoEquivalencia);
             var cuotaRepercutidaRE = XmlParser.ToDecimal(_DetalleDesglose.CuotaRecargoEquivalencia);
 
-            // Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se pueden
+            // Si el campo OperacionExenta está cumplimentado no se pueden
             // informar ninguno de estos campos:
             // TipoImpositivo, CuotaRepercutida,
             // TipoRecargoEquivalencia y CuotaRecargoEquivalencia.

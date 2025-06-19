@@ -166,7 +166,8 @@ namespace VeriFactu.Xml.Factu.Alta
         RegimenEspecialAgriculturaArt25Ley19_1994 = 19,
 
         /// <summary>
-        /// Régimen simplificado sólo para IVA ('20').
+        /// L8A: Régimen simplificado sólo para IVA ('20').
+        /// L8B: Operaciones sujetas al IPSI
         /// </summary>
         [XmlEnum("20")]
         RegimenSimplificado = 20

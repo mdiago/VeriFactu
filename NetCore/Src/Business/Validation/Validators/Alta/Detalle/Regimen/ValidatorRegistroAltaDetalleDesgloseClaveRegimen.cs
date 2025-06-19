@@ -113,22 +113,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                     $" ClaveRegimen obligatorio si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta" +
                     $" (considerándose “01” - IVA).");
 
-            }
-
-            // Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA), el valor
-            // de ClaveRegimen deberá estar cumplimentado y contenido en lista L8A. (TODO ENUM ClaveRegimen)
-
-            // Si Impuesto = “03” (IGIC), el valor de ClaveRegimen deberá estar cumplimentado y contenido en lista L8B.
-            // (NO APLICA EL VALOR ENUM 'RegimenSimplificado' o '20' en L8B)
-
-            if (_DetalleDesglose.Impuesto == Impuesto.IGIC && _DetalleDesglose.ClaveRegimen == ClaveRegimen.RegimenSimplificado)
-            {
-
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                    $" Si Impuesto = “03” (IGIC), el valor de ClaveRegimen deberá estar cumplimentado y contenido en lista L8B." +
-                    $" El valor '20' RegimenSimplificado sólo aplica para IVA en la lista L8A.");
-
-            }
+            }            
 
             // 15.6.9 ClaveRegimen 18. Recargo de equivalencia  
 
