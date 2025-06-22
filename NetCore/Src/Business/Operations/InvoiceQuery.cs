@@ -255,8 +255,9 @@ namespace VeriFactu.Business.Operations
 
             var sellerName = queryAeatResponse.Cabecera?.ObligadoEmision?.NombreRazon;
 
-            foreach (var registro in queryAeatResponse.RegistroRespuestaConsultaFactuSistemaFacturacion)
-                invoices.Add(GetInvoice(registro, sellerName));
+            if (queryAeatResponse.RegistroRespuestaConsultaFactuSistemaFacturacion != null)
+                foreach (var registro in queryAeatResponse.RegistroRespuestaConsultaFactuSistemaFacturacion)
+                    invoices.Add(GetInvoice(registro, sellerName));
 
             return invoices;
 
