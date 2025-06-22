@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -137,7 +138,7 @@ namespace VeriFactu.Xml
         /// <returns>Importe convertido.</returns>
         public static DateTime ToDate(string date)
         {
-            return Convert.ToDateTime(date);
+            return Convert.ToDateTime(date, new CultureInfo("es-ES"));
         }
 
 
