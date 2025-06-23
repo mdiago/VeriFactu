@@ -248,6 +248,16 @@ namespace VeriFactu.Business
                     CuotaRepercutida = XmlParser.GetXmlDecimal(taxAmount),
                 };
 
+                // Evita error de la AEAT 1237: El valor del campo CalificacionOperacion está informado como N1 o N2 y el impuesto es IVA. 
+                // No se puede informar de los campos TipoImpositivo, CuotaRepercutida, TipoRecargoEquivalencia y CuotaRecargoEquivalencia.                
+                var isN = detalleDesglose?.CalificacionOperacion == CalificacionOperacion.N1 || 
+                    detalleDesglose?.CalificacionOperacion == CalificacionOperacion.N2; // No sujeta
+
+                if (isN &detalleDesglose?.Impuesto == Impuesto.IVA) 
+                    if (taxRate + taxAmount == 0)
+                        detalleDesglose.TipoImpositivo = detalleDesglose.CuotaRepercutida = null;
+
+                // Establece la serialización de la causa exención en su caso
                 if (taxitem.TaxException != CausaExencion.NA) 
                 {
                     detalleDesglose.OperacionExentaSpecified = true;
