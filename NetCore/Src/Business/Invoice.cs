@@ -337,6 +337,8 @@ namespace VeriFactu.Business
             if (!countryIdValid)
                 throw new Exception($"Error en factura ({this}): El código de pais consignado en BuyerCountryID='{BuyerCountryID}' no es válido.");
 
+            if (BuyerIDType == 0)
+                throw new Exception($"Error en factura ({this}): BuyerIDType debe tener un valor válido.");
 
             return new List<Interlocutor>()
                 {
