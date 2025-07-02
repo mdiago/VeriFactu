@@ -115,16 +115,51 @@ namespace VeriFactu.Qrcode
         {
 
             const int imageHeaderSize = 54;
-            byte[] bmpBytes = new byte[ImageBytes.Length + imageHeaderSize];
+
+            byte[] bmpBytes = new byte[imageHeaderSize + ImageBytes.Length];
+
+            // A. BITMAP FILE HEADER
+
+            // 1. BM
             bmpBytes[0] = (byte)'B';
             bmpBytes[1] = (byte)'M';
-            bmpBytes[14] = 40;
+            // 2. The size of the BMP file in bytes
             Array.Copy(BitConverter.GetBytes(bmpBytes.Length), 0, bmpBytes, 2, 4);
+            // 3. 6-8 Reserved
+            // 4. 8-10 Reserved
+            // 5. The offset, i.e. starting address, of the byte where the bitmap image data (pixel array) can be found.
             Array.Copy(BitConverter.GetBytes(imageHeaderSize), 0, bmpBytes, 10, 4);
+
+
+            // B. BITMAPINFOHEADER
+
+            // 1. the size of this header, in bytes (40)
+            bmpBytes[14] = 40;
+            // 2. the bitmap width in pixels (signed integer)
             Array.Copy(BitConverter.GetBytes(Width), 0, bmpBytes, 18, 4);
+            // 3. the bitmap height in pixels (signed integer)
             Array.Copy(BitConverter.GetBytes(Height), 0, bmpBytes, 22, 4);
+            // 4. the number of color planes (must be 1)
+            Array.Copy(BitConverter.GetBytes(1), 0, bmpBytes, 26, 2);
+            // 5. the number of bits per pixel, which is the color depth of the image. Typical values are 1, 4, 8, 16, 24 and 32.
             Array.Copy(BitConverter.GetBytes(32), 0, bmpBytes, 28, 2);
+            // 6.  the compression method being used. BI_RGB none = 0.
+            Array.Copy(BitConverter.GetBytes(0), 0, bmpBytes, 30, 4);
+            // 7. the image size. This is the size of the raw bitmap data; a dummy 0 can be given for BI_RGB bitmaps.
             Array.Copy(BitConverter.GetBytes(ImageBytes.Length), 0, bmpBytes, 34, 4);
+            // 8. the image size. This is the size of the raw bitmap data; a dummy 0 can be given for BI_RGB bitmaps.
+            Array.Copy(BitConverter.GetBytes(0), 0, bmpBytes, 34, 4);
+            // 9. the horizontal resolution of the image. (pixel per metre, signed integer)
+            Array.Copy(BitConverter.GetBytes(0), 0, bmpBytes, 38, 4);
+            // 10. the vertical resolution of the image. (pixel per metre, signed integer)
+            Array.Copy(BitConverter.GetBytes(0), 0, bmpBytes, 42, 4);
+            //11. the number of colors in the color palette, or 0 to default to 2n
+            Array.Copy(BitConverter.GetBytes(0), 0, bmpBytes, 46, 4);
+            // 12. the number of important colors used, or 0 when every color is important; generally ignored
+            Array.Copy(BitConverter.GetBytes(0), 0, bmpBytes, 50, 4);
+
+            // C. IMAGE BYTES
+
             Array.Copy(ImageBytes, 0, bmpBytes, imageHeaderSize, ImageBytes.Length);
             return bmpBytes;
 
