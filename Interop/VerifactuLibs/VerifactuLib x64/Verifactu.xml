@@ -3647,6 +3647,47 @@
             </summary>
             <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
         </member>
+        <member name="T:VeriFactu.DataStore.Document">
+            <summary>
+            Representa un documento de factura generado en el sistema. Incluye todos los registros
+            de alta y anulación envíados, así como todas las respuestas de la AEAT relacionadas con
+            una factura determinada.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.DataStore.Document._Sellers">
+            <summary>
+            Información de vendedores y periodos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.Document.PeriodOutbox">
+            <summary>
+            Bandeja salida periodo.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.Document.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.Document.GetPeriodOutbox(System.String,System.String)">
+            <summary>
+            Obtiene los documentos de la bandeja de salida
+            de un vendedor y periodo determinados.
+            </summary>
+            <param name="sellerID">Id. vendedor.</param>
+            <param name="periodID">Periodo.</param>
+            <returns>Bandeja de salida del vendedor para un periodo.</returns>
+        </member>
+        <member name="P:VeriFactu.DataStore.Document.PeriodID">
+            <summary>
+            Periodo del documento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.Document.Seller">
+            <summary>
+            Vendedor del documento.
+            </summary>
+        </member>
         <member name="T:VeriFactu.DataStore.DocumentBox">
             <summary>
             Representa un documento de facturación.
@@ -3706,6 +3747,94 @@
             <param name="record">Registro a añadir.</param>
         </member>
         <member name="M:VeriFactu.DataStore.DocumentBox.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns>Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.DataStore.DocumentSet">
+            <summary>
+            Representa un conjunto de documentos de factura generado en el sistema. Incluye todos los registros
+            de alta y anulación envíados, así como todas las respuestas de la AEAT relacionadas con
+            las facturas de un emisor y periodo determinados.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.DataStore.DocumentSet._Sellers">
+            <summary>
+            Información de vendedores y periodos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentSet.PeriodOutbox">
+            <summary>
+            Representa un periodo de facturación de un vendedor o emisor
+            de facturas en cuanto a los documentos de salida del sistema
+            en forma de registros de alta o anulación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentSet.PeriodInbox">
+            <summary>
+            Representa un periodo de facturación de un vendedor o emisor
+            de facturas en lo que se refiere a documentos de entrada o
+            respuesta por parte de la AEAT a los envíos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentSet.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentSet.GetPeriodOutbox(System.String,System.String)">
+            <summary>
+            Crea un gestor de los documentos de salida
+            de un periodo y emisor concretos.
+            </summary>
+            <param name="sellerID">Identificador fiscal del vencedor (NIF).</param>
+            <param name="periodID">Periodo de referencia en formato de año de 4 dígitos (Ejemplo '2025').</param>
+            <returns> Instancia de PeriodOutbox como gestor de los documentos de salida de un periodo.</returns>
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentSet.PeriodID">
+            <summary>
+            Periodo del documento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentSet.Seller">
+            <summary>
+            Vendedor del documento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentSet.DocumentsOut">
+            <summary>
+            Documentos de salida.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.DocumentSet.DocumentsIn">
+            <summary>
+            Documentos de entrada.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentSet.LoadDocuments">
+            <summary>
+            Carga todos los documentos de salida y entrada.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentSet.GetErrors">
+            <summary>
+            <para> Devuelve los documentos:</para>
+            <para> Que no tengan una respuesta con estado 'Correcto'</para>
+            </summary>
+            <returns>Documentos con registro de salida que no tengan una
+            respuesta con estado 'Correcto'.</returns>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentSet.GetDocumentInbox(System.String)">
+            <summary>
+            Devuelve las respuestas correspondientes al envío
+            de un documento.
+            </summary>
+            <param name="docKey">Clave del documento de factura.</param>
+            <returns> Respuestas correspondientes al envío
+            de un documento.</returns>
+        </member>
+        <member name="M:VeriFactu.DataStore.DocumentSet.ToString">
             <summary>
             Representación textual de la instancia.
             </summary>
