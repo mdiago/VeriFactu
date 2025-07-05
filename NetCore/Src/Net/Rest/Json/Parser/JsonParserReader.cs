@@ -118,6 +118,14 @@ namespace VeriFactu.Net.Rest.Json.Parser
 
             var result = new ExpandoObject();
 
+            if (_Tokens[_CurrentIndex + 1].Value == "}")
+            {
+
+                _CurrentIndex++;
+                return null; // Objeto vacío
+
+            }
+
             while (_CurrentIndex < _Tokens.Count)
             {
                 
