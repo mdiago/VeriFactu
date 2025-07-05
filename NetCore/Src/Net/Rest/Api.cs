@@ -115,6 +115,16 @@ namespace VeriFactu.Net.Rest
         public string EndPointCreateBatch { get; set; }
 
         /// <summary>
+        /// Endpoint validación NIF por lotes.
+        /// </summary>
+        public string EndPointValidateNIFs { get; set; }
+
+        /// <summary>
+        /// Endpoint validación número IVA intracomunitario.
+        /// </summary>
+        public string EndPointValidateViesVatNumber { get; set; }
+
+        /// <summary>
         /// Clave de acceso al API REST para Verifactu de
         /// Irene Solutions. Puede conseguir su clave en
         /// https://facturae.irenesolutions.com/verifactu/go

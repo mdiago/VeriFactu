@@ -151,7 +151,6 @@ namespace VeriFactu.Net.Rest
 
         }
 
-
         /// <summary>
         /// Crea un registro de anulación mediante el API.
         /// </summary>
@@ -189,9 +188,10 @@ namespace VeriFactu.Net.Rest
         }
 
         /// <summary>
-        /// Crea un código QR mediante el API.
+        /// Valida un NIF.
         /// </summary>
-        /// <param name="invoice">Factura para el QR.</param>
+        /// <param name="invoice">Factura con los datos
+        /// del obligado tributaria a validar.</param>
         /// <returns>Resultado llamada API.</returns>
         public static ExpandoObject ValidateNIF(Invoice invoice)
         {
@@ -236,6 +236,32 @@ namespace VeriFactu.Net.Rest
         {
 
             return Post(invoicesBatch, Api.EndPointCreateBatch);
+
+        }
+
+        /// <summary>
+        /// Valida un lote de NIFs.
+        /// </summary>
+        /// <param name="invoicesBatch">Lote de facturas 
+        /// con datos de los obligados tributarios.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject ValidateNIFs(InvoicesBatch invoicesBatch)
+        {
+
+            return Post(invoicesBatch, Api.EndPointValidateNIFs);
+
+        }
+
+        /// <summary>
+        /// Valida un número de IVA intracomunitario.
+        /// </summary>
+        /// <param name="invoice">Factura con datos del obligado tributario
+        /// a validar.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject ValidateViesVatNumber(Invoice invoice)
+        {
+
+            return Post(invoice, Api.EndPointValidateViesVatNumber);
 
         }
 
