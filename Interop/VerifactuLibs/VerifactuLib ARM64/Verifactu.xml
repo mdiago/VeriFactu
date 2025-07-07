@@ -4082,6 +4082,16 @@
             Endpoint envío de lotes.
             </summary>
         </member>
+        <member name="P:VeriFactu.Net.Rest.Api.EndPointValidateNIFs">
+            <summary>
+            Endpoint validación NIF por lotes.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Api.EndPointValidateViesVatNumber">
+            <summary>
+            Endpoint validación número IVA intracomunitario.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Net.Rest.Api.ServiceKey">
             <summary>
             Clave de acceso al API REST para Verifactu de
@@ -4149,9 +4159,10 @@
         </member>
         <member name="M:VeriFactu.Net.Rest.ApiClient.ValidateNIF(VeriFactu.Business.Invoice)">
             <summary>
-            Crea un código QR mediante el API.
+            Valida un NIF.
             </summary>
-            <param name="invoice">Factura para el QR.</param>
+            <param name="invoice">Factura con los datos
+            del obligado tributaria a validar.</param>
             <returns>Resultado llamada API.</returns>
         </member>
         <member name="M:VeriFactu.Net.Rest.ApiClient.GetAeatInvoices(VeriFactu.Business.Invoice)">
@@ -4176,6 +4187,22 @@
             Envía un lote de facturas.
             </summary>
             <param name="invoicesBatch">Lote de facturas.</param>
+            <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.ValidateNIFs(VeriFactu.Net.Rest.Batch.InvoicesBatch)">
+            <summary>
+            Valida un lote de NIFs.
+            </summary>
+            <param name="invoicesBatch">Lote de facturas 
+            con datos de los obligados tributarios.</param>
+            <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.ValidateViesVatNumber(VeriFactu.Business.Invoice)">
+            <summary>
+            Valida un número de IVA intracomunitario.
+            </summary>
+            <param name="invoice">Factura con datos del obligado tributario
+            a validar.</param>
             <returns>Resultado llamada API.</returns>
         </member>
         <member name="M:VeriFactu.Net.Rest.ApiClient.Ct">
