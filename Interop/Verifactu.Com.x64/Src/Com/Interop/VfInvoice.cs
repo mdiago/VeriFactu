@@ -171,9 +171,9 @@ namespace Verifactu
         /// Añade datos en rectificativa por sustitución de la
         /// factura sustituida.
         /// </summary>
-        /// <param name="rectificationSubstitution">Datos factura sustituida.</param>
+        /// <param name="taxItem">Datos factura sustituida.</param>
         [DispId(3)]
-        void SetSubstitution(IVfRectificationSubstitution rectificationSubstitution);
+        void SetSubstitution(IVfTaxItem taxItem);
 
         /// <summary>
         /// Obtiene el registro de alta para verifactu.
@@ -285,7 +285,7 @@ namespace Verifactu
         /// <summary>
         /// Información de rectificación sustitutiva.
         /// </summary>
-        IVfRectificationSubstitution _VfRectificationSubstitution;
+        VeriFactu.Business.TaxItem _TaxItemSubstitution;
 
         #endregion
 
@@ -356,18 +356,10 @@ namespace Verifactu
             result.TaxItems = _TaxItems;
             result.RectificationItems = _RectificationItems;
 
-            if (_VfRectificationSubstitution != null)
-            {
-
+            if (_TaxItemSubstitution != null)
                 if (string.IsNullOrEmpty(InvoiceType) || InvoiceType[0] != 'R')
                     throw new ArgumentException("Para poder establecer la sustitución de una factura, " +
                         "el tipo de factura debe ser rectificativa.");
-
-                if (RectificationType != "S")
-                    throw new ArgumentException("Para poder establecer la sustitución de una factura, " +
-                        "el tipo de rectificativa debe ser por sustitución (S).");
-
-            }
 
             return result;
 
@@ -669,19 +661,19 @@ namespace Verifactu
         /// Añade datos en rectificativa por sustitución de la
         /// factura sustituida.
         /// </summary>
-        /// <param name="rectificationSubstitution">Datos factura sustituida.</param>
-        public void SetSubstitution(IVfRectificationSubstitution rectificationSubstitution)
+        /// <param name="taxItem">Datos factura sustituida.</param>
+        public void SetSubstitution(IVfTaxItem taxItem)
         {
 
             if (string.IsNullOrEmpty(InvoiceType) || InvoiceType[0] != 'R')
                 throw new ArgumentException("Para poder establecer la sustitución de una factura, " +
                     "el tipo de factura debe ser rectificativa.");
 
-            if(RectificationType != "S")
-                throw new ArgumentException("Para poder establecer la sustitución de una factura, " +
-                    "el tipo de rectificativa debe ser por sustitución (S).");
-
-            _VfRectificationSubstitution = rectificationSubstitution;
+            _TaxItemSubstitution = new VeriFactu.Business.TaxItem() 
+            { 
+                TaxBase = Math.Round(Convert.ToDecimal(taxItem.TaxBase), 2),
+                TaxAmount = Math.Round(Convert.ToDecimal(taxItem.TaxAmount), 2)
+            };
 
         }
 
@@ -701,16 +693,18 @@ namespace Verifactu
             _Invoice = GetInvoice();
             var entry = new VeriFactu.Business.InvoiceEntry(_Invoice);
 
-            if (_VfRectificationSubstitution != null) 
+            if (_TaxItemSubstitution != null) 
             {
 
                 var registroAlta = entry.Registro as RegistroAlta;
 
                 registroAlta.ImporteRectificacion = new ImporteRectificacion()
                 {
-                    BaseRectificada = XmlParser.GetXmlDecimal(_VfRectificationSubstitution.Base),
-                    CuotaRectificada = XmlParser.GetXmlDecimal(_VfRectificationSubstitution.Amount)
+                    BaseRectificada = XmlParser.GetXmlDecimal(_TaxItemSubstitution.TaxBase),
+                    CuotaRectificada = XmlParser.GetXmlDecimal(_TaxItemSubstitution.TaxAmount)
                 };
+
+                registroAlta.TipoRectificativa = TipoRectificativa.S;
 
             }
 

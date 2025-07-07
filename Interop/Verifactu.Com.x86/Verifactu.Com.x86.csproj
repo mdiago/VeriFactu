@@ -850,9 +850,6 @@
     <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfRectificationItem.cs">
       <Link>Src\Com\Interop\VfRectificationItem.cs</Link>
     </Compile>
-    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfRectificationSubstitution.cs">
-      <Link>Src\Com\Interop\VfRectificationSubstitution.cs</Link>
-    </Compile>
     <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfSettings.cs">
       <Link>Src\Com\Interop\VfSettings.cs</Link>
     </Compile>

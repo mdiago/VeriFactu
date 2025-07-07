@@ -11929,12 +11929,12 @@
             </summary>
             <returns>Registro de alta para verifactu</returns>
         </member>
-        <member name="M:Verifactu.IVfInvoice.SetSubstitution(Verifactu.IVfRectificationSubstitution)">
+        <member name="M:Verifactu.IVfInvoice.SetSubstitution(Verifactu.IVfTaxItem)">
             <summary>
             Añade datos en rectificativa por sustitución de la
             factura sustituida.
             </summary>
-            <param name="rectificationSubstitution">Datos factura sustituida.</param>
+            <param name="taxItem">Datos factura sustituida.</param>
         </member>
         <member name="M:Verifactu.IVfInvoice.GetRegistroAnulacion">
             <summary>
@@ -12028,7 +12028,7 @@
             Facturas rectificadas.
             </summary>
         </member>
-        <member name="F:Verifactu.VfInvoice._VfRectificationSubstitution">
+        <member name="F:Verifactu.VfInvoice._TaxItemSubstitution">
             <summary>
             Información de rectificación sustitutiva.
             </summary>
@@ -12190,12 +12190,12 @@
             </summary>
             <param name="index">Número de la línea a eliminar.</param>
         </member>
-        <member name="M:Verifactu.VfInvoice.SetSubstitution(Verifactu.IVfRectificationSubstitution)">
+        <member name="M:Verifactu.VfInvoice.SetSubstitution(Verifactu.IVfTaxItem)">
             <summary>
             Añade datos en rectificativa por sustitución de la
             factura sustituida.
             </summary>
-            <param name="rectificationSubstitution">Datos factura sustituida.</param>
+            <param name="taxItem">Datos factura sustituida.</param>
         </member>
         <member name="M:Verifactu.VfInvoice.Send">
             <summary>
@@ -12270,43 +12270,6 @@
             Código seguro de verificación devuelto por la AEAT
             si todo ha ido bien.
             </summary>
-        </member>
-        <member name="T:Verifactu.IVfRectificationSubstitution">
-            <summary>
-            Interfaz COM para la clase RectificationSubstitution.
-            </summary>
-        </member>
-        <member name="P:Verifactu.IVfRectificationSubstitution.Base">
-            <summary>
-            Base rectificada.
-            </summary>
-        </member>
-        <member name="P:Verifactu.IVfRectificationSubstitution.Amount">
-            <summary>
-            Cuota rectificada.
-            </summary>        
-        </member>
-        <member name="T:Verifactu.VfRectificationSubstitution">
-            <summary>
-            Representa información necesaria para las rectificativas
-            por sustitución.
-            </summary>
-        </member>
-        <member name="M:Verifactu.VfRectificationSubstitution.#ctor">
-            <summary>
-            Constructor. Para COM necesitamos un constructor
-            sin parametros.
-            </summary>
-        </member>
-        <member name="P:Verifactu.VfRectificationSubstitution.Base">
-            <summary>
-            Base rectificada.
-            </summary>
-        </member>
-        <member name="P:Verifactu.VfRectificationSubstitution.Amount">
-            <summary>
-            Cuota rectificada.
-            </summary>        
         </member>
         <member name="T:Verifactu.IVfSettings">
             <summary>
