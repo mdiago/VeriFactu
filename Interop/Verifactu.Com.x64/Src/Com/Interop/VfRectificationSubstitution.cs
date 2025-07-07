@@ -46,25 +46,25 @@ namespace Verifactu
     #region Interfaz COM
 
     /// <summary>
-    /// Interfaz COM para la clase RectificationItem.
+    /// Interfaz COM para la clase RectificationSubstitution.
     /// </summary>
-    [Guid("B3476DFA-59DD-4713-AEB3-EA91E43626CB")]
+    [Guid("E01645A8-0027-4DB0-B944-C3485E32138A")]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     [ComVisible(true)]
-    public interface IVfRectificationItem
+    public interface IVfRectificationSubstitution
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Identificador de la factura.
+        /// Base rectificada.
         /// </summary>
-        string InvoiceID { get; set; }
+        decimal Base { get; set; }
 
         /// <summary>
-        /// Fecha emisión de documento.
+        /// Cuota rectificada.
         /// </summary>        
-        DateTime InvoiceDate { get; set; }
+        decimal Amount { get; set; }
 
         #endregion
 
@@ -75,14 +75,14 @@ namespace Verifactu
     #region Clase COM
 
     /// <summary>
-    /// Representa información sobre la factura
-    /// a la que se refiere una rectificación.
+    /// Representa información necesaria para las rectificativas
+    /// por sustitución.
     /// </summary>
-    [Guid("119A584F-681D-4DE0-BBC1-929057B7F992")]
+    [Guid("E65CECDE-C04E-453D-A46F-51B33B2B29C8")]
     [ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
-    [ProgId("Verifactu.VfRectificationItem")]
-    public class VfRectificationItem : IVfRectificationItem
+    [ProgId("Verifactu.VfRectificationSubstitution")]
+    public class VfRectificationSubstitution : IVfRectificationSubstitution
     {
 
         #region Construtores de Instancia
@@ -91,7 +91,7 @@ namespace Verifactu
         /// Constructor. Para COM necesitamos un constructor
         /// sin parametros.
         /// </summary>
-        public VfRectificationItem()
+        public VfRectificationSubstitution()
         {
         }
 
@@ -100,14 +100,14 @@ namespace Verifactu
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Identificador de la factura.
+        /// Base rectificada.
         /// </summary>
-        public string InvoiceID { get; set; }
+        public decimal Base { get; set; }
 
         /// <summary>
-        /// Fecha emisión de documento.
+        /// Cuota rectificada.
         /// </summary>        
-        public DateTime InvoiceDate { get; set; }
+        public decimal Amount { get; set; }
 
         #endregion
 
