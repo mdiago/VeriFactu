@@ -468,6 +468,21 @@ namespace VeriFactu.Business
         public List<RectificationItem> RectificationItems { get; set; }
 
         /// <summary>
+        /// BaseRectificada para rectificativas por sustitución 'S'.
+        /// </summary>        
+        public decimal RectificationTaxBase { get; set; }
+
+        /// <summary>
+        /// CuotaRectificada para rectificativas por sustitución 'S'.
+        /// </summary>        
+        public decimal RectificationTaxAmount { get; set; }
+
+        /// <summary>
+        /// CuotaRecargoRectificado para rectificativas por sustitución 'S'.
+        /// </summary>
+        public decimal RectificationTaxAmountSurcharge { get; set; }
+
+        /// <summary>
         /// RegistroAlta a partir del cual se ha creado la factura, en el
         /// caso de que la instancia se haya creado a partir de un registro
         /// de alta.
@@ -534,11 +549,24 @@ namespace VeriFactu.Business
             if (isRectification) 
             {
 
+                // Verificamos si es por sustitución
+                if (RectificationType == TipoRectificativa.S && RectificationTaxBase != 0) 
+                {
+
+                    registroAlta.ImporteRectificacion = new ImporteRectificacion()
+                    {
+                        BaseRectificada = XmlParser.GetXmlDecimal(RectificationTaxBase),
+                        CuotaRectificada = XmlParser.GetXmlDecimal(RectificationTaxAmount),
+                        CuotaRecargoRectificado = XmlParser.GetXmlDecimal(RectificationTaxAmountSurcharge)
+                    };
+
+                }
+
                 // Establecemos el tipo de rectificativa (Por diferencias es el valor por defecto)
                 if (RectificationType == TipoRectificativa.NA)
                     registroAlta.TipoRectificativa = TipoRectificativa.I; // Por defecto
 
-                registroAlta.TipoRectificativaSpecified = true;
+                registroAlta.TipoRectificativaSpecified = true;              
 
             }
 
