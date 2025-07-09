@@ -695,6 +695,21 @@
             Facturas rectificadas.
             </summary>
         </member>
+        <member name="P:VeriFactu.Business.Invoice.RectificationTaxBase">
+            <summary>
+            BaseRectificada para rectificativas por sustitución 'S'.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.Invoice.RectificationTaxAmount">
+            <summary>
+            CuotaRectificada para rectificativas por sustitución 'S'.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.Invoice.RectificationTaxAmountSurcharge">
+            <summary>
+            CuotaRecargoRectificado para rectificativas por sustitución 'S'.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Business.Invoice.RegistroAltaSource">
             <summary>
             RegistroAlta a partir del cual se ha creado la factura, en el

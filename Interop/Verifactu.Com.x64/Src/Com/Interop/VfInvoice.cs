@@ -672,7 +672,8 @@ namespace Verifactu
             _TaxItemSubstitution = new VeriFactu.Business.TaxItem() 
             { 
                 TaxBase = Math.Round(Convert.ToDecimal(taxItem.TaxBase), 2),
-                TaxAmount = Math.Round(Convert.ToDecimal(taxItem.TaxAmount), 2)
+                TaxAmount = Math.Round(Convert.ToDecimal(taxItem.TaxAmount), 2),
+                TaxAmountSurcharge = Math.Round(Convert.ToDecimal(taxItem.TaxAmountSurcharge), 2)
             };
 
         }
@@ -701,7 +702,8 @@ namespace Verifactu
                 registroAlta.ImporteRectificacion = new ImporteRectificacion()
                 {
                     BaseRectificada = XmlParser.GetXmlDecimal(_TaxItemSubstitution.TaxBase),
-                    CuotaRectificada = XmlParser.GetXmlDecimal(_TaxItemSubstitution.TaxAmount)
+                    CuotaRectificada = XmlParser.GetXmlDecimal(_TaxItemSubstitution.TaxAmount),
+                    CuotaRecargoRectificado = XmlParser.GetXmlDecimal(_TaxItemSubstitution.TaxAmountSurcharge)
                 };
 
                 registroAlta.TipoRectificativa = TipoRectificativa.S;
