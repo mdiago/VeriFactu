@@ -71,6 +71,21 @@ namespace Verifactu
         /// </summary>        
         string SellerName { get; set; }
 
+        /// <summary>
+        /// Año a consultar.
+        /// </summary>
+        string Year { get; set; }
+
+        /// <summary>
+        /// Mes a consultar.
+        /// </summary>
+        string Month { get; set; }
+
+        /// <summary>
+        /// Resultado última llamada.
+        /// </summary>
+        VfInvoice[] Invoices { get; set; }
+
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -79,10 +94,29 @@ namespace Verifactu
         /// Devuelve las facturas emitidas por el NIF
         /// facilitado en la propiedad PartyID.
         /// </summary>
-        /// <param name="year">Año a consultar.</param>
-        /// <param name="month">Mes a consultar.</param>
         /// <returns>Facturas emitidas registradas en la AEAT.</returns>
-        VeriFactu.Business.Invoice[] GetSales(string year, string month);
+        void GetSales();
+
+        /// <summary>
+        /// Devuelve las facturas recibidas por el NIF
+        /// facilitado en la propiedad PartyID.
+        /// </summary>
+        /// <returns>Facturas recibidas registradas en la AEAT.</returns>
+        void GetPurchases();
+
+        /// <summary>
+        /// Devuelve el número de facturas.
+        /// </summary>
+        /// <returns>Número de facturas.</returns>
+        int GetInvoicesCount();
+
+        /// <summary>
+        /// Devuelve una factura por su índice.
+        /// </summary>
+        /// <param name="index">Indice de la factura a devolver.</param>
+        /// <returns>Factura con el indice indicado.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Si el indice está fuera de rango.</exception>
+        VfInvoice GetInvoice(int index);
 
         #endregion
 
@@ -114,6 +148,62 @@ namespace Verifactu
 
         #endregion
 
+        #region Métodos Privados de Instancia
+
+        /// <summary>
+        /// Devuelve una lista de VfInvoices de una
+        /// lista de Invoices.
+        /// </summary>
+        /// <param name="invoices">Lista de Invoices a convertir.</param>
+        /// <returns> Lista de VfInvoices</returns>
+        private VfInvoice[] GetFromInvoiceList(List<VeriFactu.Business.Invoice> invoices) 
+        {
+
+            VfInvoice[] result = new VfInvoice[invoices.Count];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+
+                result[i] = new VfInvoice
+                {
+                    InvoiceID = invoices[i].InvoiceID,
+                    InvoiceType = $"{invoices[i].InvoiceType}",
+                    InvoiceDate = invoices[i].InvoiceDate,
+                    SellerID = invoices[i].SellerID,
+                    SellerName = invoices[i].SellerName,
+                    BuyerID = invoices[i].BuyerID,
+                    BuyerName = invoices[i].BuyerName,
+                    Text = invoices[i].Text
+                };
+
+                if (invoices[i].RectificationType != VeriFactu.Xml.Factu.Alta.TipoRectificativa.NA)
+                    result[i].InvoiceType = $"{invoices[i].InvoiceType}";
+
+                foreach (var taxItem in invoices[i].TaxItems)
+                {
+
+                    var txIt = new VfTaxItem()
+                    {
+                        TaxType = $"{taxItem.TaxType}",
+                        TaxRate = (float)taxItem.TaxRate,
+                        TaxBase = (float)taxItem.TaxBase,
+                        TaxAmount = (float)taxItem.TaxAmount,
+                        TaxRateSurcharge = (float)taxItem.TaxRateSurcharge,
+                        TaxAmountSurcharge = (float)taxItem.TaxAmountSurcharge
+                    };
+
+                    result[i].InsertTaxItem(txIt);
+
+                }
+
+            }
+
+            return result;
+
+        }
+
+        #endregion
+
         #region Propiedades Públicas de Instancia
 
         /// <summary>
@@ -129,6 +219,21 @@ namespace Verifactu
         /// </summary>        
         public string SellerName { get; set; }
 
+        /// <summary>
+        /// Año a consultar.
+        /// </summary>
+        public string Year { get; set; }
+
+        /// <summary>
+        /// Mes a consultar.
+        /// </summary>
+        public string Month { get; set; }
+
+        /// <summary>
+        /// Resultado última llamada.
+        /// </summary>
+        public VfInvoice[] Invoices { get; set; }
+
         #endregion
 
         #region Métodos Públicos de Instancia
@@ -137,21 +242,64 @@ namespace Verifactu
         /// Devuelve las facturas emitidas por el NIF
         /// facilitado en la propiedad PartyID.
         /// </summary>
-        /// <param name="year">Año a consultar.</param>
-        /// <param name="month">Mes a consultar.</param>
         /// <returns>Facturas emitidas registradas en la AEAT.</returns>
-        public VeriFactu.Business.Invoice[] GetSales(string year, string month)
+        public void GetSales()
         {
 
             var invoiceQuery = new InvoiceQuery(SellerID, SellerName);
 
             // Consulta facturas emitidas
-            var salesResponse = invoiceQuery.GetSales(year, month);
+            var salesResponse = invoiceQuery.GetSales(Year, Month);
 
             // Lista de objetos Invoice a partir de la respuesta AEAT facturas emitidas
             var salesInvoices = InvoiceQuery.GetInvoices(salesResponse);
 
-            return salesInvoices.ToArray();
+            Invoices = GetFromInvoiceList(salesInvoices);
+
+        }
+
+        /// <summary>
+        /// Devuelve las facturas recibidas por el NIF
+        /// facilitado en la propiedad PartyID.
+        /// </summary>
+        /// <returns>Facturas recibidas registradas en la AEAT.</returns>
+        public void GetPurchases()
+        {
+
+            var invoiceQuery = new InvoiceQuery(SellerID, SellerName);
+
+            // Consulta facturas emitidas
+            var salesResponse = invoiceQuery.GetPurchases(Year, Month);
+
+            // Lista de objetos Invoice a partir de la respuesta AEAT facturas recibidas
+            var salesInvoices = InvoiceQuery.GetInvoices(salesResponse);
+
+            Invoices = GetFromInvoiceList(salesInvoices);
+
+        }
+
+        /// <summary>
+        /// Devuelve el número de facturas.
+        /// </summary>
+        /// <returns>Número de facturas.</returns>
+        public int GetInvoicesCount()
+        {
+            return Invoices?.Length ?? 0;
+        }
+
+        /// <summary>
+        /// Devuelve una factura por su índice.
+        /// </summary>
+        /// <param name="index">Indice de la factura a devolver.</param>
+        /// <returns>Factura con el indice indicado.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Si el indice está fuera de rango.</exception>
+        public VfInvoice GetInvoice(int index)
+        {
+            
+            if (Invoices == null || index < 0 || index >= Invoices.Length)
+                throw new ArgumentOutOfRangeException(nameof(index), "Índice fuera de rango.");
+
+            return Invoices[index];
 
         }
 

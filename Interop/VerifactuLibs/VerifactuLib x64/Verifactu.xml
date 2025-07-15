@@ -12252,14 +12252,48 @@
             Nombre del vendedor.
             </summary>        
         </member>
-        <member name="M:Verifactu.IVfInvoiceQuery.GetSales(System.String,System.String)">
+        <member name="P:Verifactu.IVfInvoiceQuery.Year">
+            <summary>
+            Año a consultar.
+            </summary>
+        </member>
+        <member name="P:Verifactu.IVfInvoiceQuery.Month">
+            <summary>
+            Mes a consultar.
+            </summary>
+        </member>
+        <member name="P:Verifactu.IVfInvoiceQuery.Invoices">
+            <summary>
+            Resultado última llamada.
+            </summary>
+        </member>
+        <member name="M:Verifactu.IVfInvoiceQuery.GetSales">
             <summary>
             Devuelve las facturas emitidas por el NIF
             facilitado en la propiedad PartyID.
             </summary>
-            <param name="year">Año a consultar.</param>
-            <param name="month">Mes a consultar.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:Verifactu.IVfInvoiceQuery.GetPurchases">
+            <summary>
+            Devuelve las facturas recibidas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <returns>Facturas recibidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:Verifactu.IVfInvoiceQuery.GetInvoicesCount">
+            <summary>
+            Devuelve el número de facturas.
+            </summary>
+            <returns>Número de facturas.</returns>
+        </member>
+        <member name="M:Verifactu.IVfInvoiceQuery.GetInvoice(System.Int32)">
+            <summary>
+            Devuelve una factura por su índice.
+            </summary>
+            <param name="index">Indice de la factura a devolver.</param>
+            <returns>Factura con el indice indicado.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Si el indice está fuera de rango.</exception>
         </member>
         <member name="T:Verifactu.VfInvoiceQuery">
             <summary>
@@ -12271,6 +12305,14 @@
             Constructor. Para COM necesitamos un constructor
             sin parametros.
             </summary>
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.GetFromInvoiceList(System.Collections.Generic.List{VeriFactu.Business.Invoice})">
+            <summary>
+            Devuelve una lista de VfInvoices de una
+            lista de Invoices.
+            </summary>
+            <param name="invoices">Lista de Invoices a convertir.</param>
+            <returns> Lista de VfInvoices</returns>
         </member>
         <member name="P:Verifactu.VfInvoiceQuery.SellerID">
             <summary>
@@ -12285,14 +12327,48 @@
             Nombre del vendedor.
             </summary>        
         </member>
-        <member name="M:Verifactu.VfInvoiceQuery.GetSales(System.String,System.String)">
+        <member name="P:Verifactu.VfInvoiceQuery.Year">
+            <summary>
+            Año a consultar.
+            </summary>
+        </member>
+        <member name="P:Verifactu.VfInvoiceQuery.Month">
+            <summary>
+            Mes a consultar.
+            </summary>
+        </member>
+        <member name="P:Verifactu.VfInvoiceQuery.Invoices">
+            <summary>
+            Resultado última llamada.
+            </summary>
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.GetSales">
             <summary>
             Devuelve las facturas emitidas por el NIF
             facilitado en la propiedad PartyID.
             </summary>
-            <param name="year">Año a consultar.</param>
-            <param name="month">Mes a consultar.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.GetPurchases">
+            <summary>
+            Devuelve las facturas recibidas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <returns>Facturas recibidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.GetInvoicesCount">
+            <summary>
+            Devuelve el número de facturas.
+            </summary>
+            <returns>Número de facturas.</returns>
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.GetInvoice(System.Int32)">
+            <summary>
+            Devuelve una factura por su índice.
+            </summary>
+            <param name="index">Indice de la factura a devolver.</param>
+            <returns>Factura con el indice indicado.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Si el indice está fuera de rango.</exception>
         </member>
         <member name="T:Verifactu.IVfInvoiceResult">
             <summary>
