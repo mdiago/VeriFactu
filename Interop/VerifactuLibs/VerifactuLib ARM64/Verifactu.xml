@@ -12234,6 +12234,66 @@
             <returns>Cadena con la descripción de los errores o null
             si todo es correcto.</returns>
         </member>
+        <member name="T:Verifactu.IVfInvoiceQuery">
+            <summary>
+            Interfaz COM para la clase RectificationItem.
+            </summary>
+        </member>
+        <member name="P:Verifactu.IVfInvoiceQuery.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:Verifactu.IVfInvoiceQuery.SellerName">
+            <summary>
+            Nombre del vendedor.
+            </summary>        
+        </member>
+        <member name="M:Verifactu.IVfInvoiceQuery.GetSales(System.String,System.String)">
+            <summary>
+            Devuelve las facturas emitidas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
+        <member name="T:Verifactu.VfInvoiceQuery">
+            <summary>
+            Resultado de un envio de alta o anulación a la AEAT.
+            </summary>
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.#ctor">
+            <summary>
+            Constructor. Para COM necesitamos un constructor
+            sin parametros.
+            </summary>
+        </member>
+        <member name="P:Verifactu.VfInvoiceQuery.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:Verifactu.VfInvoiceQuery.SellerName">
+            <summary>
+            Nombre del vendedor.
+            </summary>        
+        </member>
+        <member name="M:Verifactu.VfInvoiceQuery.GetSales(System.String,System.String)">
+            <summary>
+            Devuelve las facturas emitidas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
         <member name="T:Verifactu.IVfInvoiceResult">
             <summary>
             Interfaz COM para la clase RectificationItem.

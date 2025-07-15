@@ -844,6 +844,9 @@
     <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfInvoice.cs">
       <Link>Src\Com\Interop\VfInvoice.cs</Link>
     </Compile>
+    <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfInvoiceQuery.cs">
+      <Link>Src\Com\Interop\VfInvoiceQuery.cs</Link>
+    </Compile>
     <Compile Include="..\Verifactu.Com.x64\Src\Com\Interop\VfInvoiceResult.cs">
       <Link>Src\Com\Interop\VfInvoiceResult.cs</Link>
     </Compile>
