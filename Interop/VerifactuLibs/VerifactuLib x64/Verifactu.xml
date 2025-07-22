@@ -4355,6 +4355,22 @@
             Indica si se trata de una subsanación de una factura.
             </summary>
         </member>
+        <member name="T:VeriFactu.Net.Rest.ApiInvoiceFixRejected">
+            <summary>
+            Extiende la clase Invoice para poder incluir la propiedad 
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiInvoiceFixRejected.#ctor(VeriFactu.Business.Invoice)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoice">Factura de subsanación con rechazo previo</param>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.ApiInvoiceFixRejected.IsRejected">
+            <summary>
+            Indica si se trata de una subsanación con rechazo previo de una factura.
+            </summary>
+        </member>
         <member name="T:VeriFactu.Net.Rest.Batch.InvoicesBatch">
             <summary>
             Representa un lote de facturas de Verifactu.

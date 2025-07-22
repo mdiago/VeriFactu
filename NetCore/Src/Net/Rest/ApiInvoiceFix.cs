@@ -58,7 +58,7 @@ namespace VeriFactu.Net.Rest
         /// <summary>
         /// Factura de subsanación.
         /// </summary>
-        Invoice _Invoice;
+        protected Invoice _Invoice;
 
         #endregion
 

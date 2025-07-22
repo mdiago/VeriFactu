@@ -328,6 +328,9 @@
     <Compile Include="..\..\NetCore\Src\Net\Rest\ApiInvoiceFix.cs">
       <Link>Src\Net\Rest\ApiInvoiceFix.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\Net\Rest\ApiInvoiceFixRejected.cs">
+      <Link>Src\Net\Rest\ApiInvoiceFixRejected.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Net\Rest\Batch\InvoicesBatch.cs">
       <Link>Src\Net\Rest\Batch\InvoicesBatch.cs</Link>
     </Compile>
