@@ -57,7 +57,7 @@ namespace VeriFactu.Common.Exceptions
         /// </summary>
         /// <param name="fault">Objeto  VeriFactu.Xml.Factu.Fault.Fault que origina
         /// la excepción.</param>
-        public FaultException(Fault fault) : base($"{fault.detail}")
+        public FaultException(Fault fault) : base($"{fault?.detail?.callstack}")
         {
 
             Fault = fault ?? throw new ArgumentNullException(nameof(fault), "El objeto Fault no puede ser nulo.");

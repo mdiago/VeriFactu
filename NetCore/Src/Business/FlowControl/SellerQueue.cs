@@ -375,13 +375,44 @@ namespace VeriFactu.Business.FlowControl
 
             }
 
-            var aeatResponse = Send(postedInvoiceActions);
-            
-            ProcessReponse(aeatResponse, postedInvoiceActions);
+            RespuestaRegFactuSistemaFacturacion aeatResponse = null;
+            Exception sendException = null;
 
-            // Ejecuto manejador del evento SentFinished en su caso
-            if (InvoiceQueue.SentFinished != null)
-                InvoiceQueue.SentFinished(postedInvoiceActions, aeatResponse);
+            try
+            {
+
+                aeatResponse = Send(postedInvoiceActions);
+
+            }
+            catch (Exception ex) 
+            {
+
+                sendException = ex;
+                Utils.Log($"Error al obtener respuesta de la AEAT {ex}.");
+                Debug.Print($"Error al obtener respuesta de la AEAT {ex}.");
+
+            }
+
+            if (sendException == null) 
+            {
+
+                ProcessReponse(aeatResponse, postedInvoiceActions);
+
+                // Ejecuto manejador del evento SentFinished en su caso
+                if (InvoiceQueue.SentFinished != null)
+                    InvoiceQueue.SentFinished(postedInvoiceActions, aeatResponse);
+
+            }
+            else 
+            {
+
+                // Ejecuto manejador del evento SentFinished en su caso
+                if (InvoiceQueue.SentError != null)
+                    InvoiceQueue.SentError(postedInvoiceActions, sendException);
+
+
+            }
+
 
         }
 

@@ -173,6 +173,11 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         public static Action<List<InvoiceAction>, RespuestaRegFactuSistemaFacturacion> SentFinished { get; set; }
 
+        /// <summary>
+        /// Acción a ejecutar cuando un envío a la AEAT da error.
+        /// </summary>
+        public static Action<List<InvoiceAction>, Exception> SentError { get; set; }
+
         #endregion
 
         #region Propiedades Públicas de Instancia
