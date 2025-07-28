@@ -406,7 +406,7 @@ namespace VeriFactu.Business.FlowControl
             else 
             {
 
-                // Ejecuto manejador del evento SentFinished en su caso
+                // Ejecuto manejador del evento SentError en su caso
                 if (InvoiceQueue.SentError != null)
                     InvoiceQueue.SentError(postedInvoiceActions, sendException);
 
