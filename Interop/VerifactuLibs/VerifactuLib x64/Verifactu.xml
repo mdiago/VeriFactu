@@ -379,6 +379,11 @@
             Acción a ejecutar en la finalización del envío.
             </summary>
         </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceQueue.SentError">
+            <summary>
+            Acción a ejecutar cuando un envío a la AEAT da error.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Business.FlowControl.InvoiceQueue.Count">
             <summary>
             Número total de elementos en cola.
@@ -4146,6 +4151,13 @@
             <returns>Resultado llamada API.</returns>
         </member>
         <member name="M:VeriFactu.Net.Rest.ApiClient.CreateFix(VeriFactu.Business.Invoice)">
+            <summary>
+            Crea un registro de alta de subsanación mediante el API.
+            </summary>
+            <param name="invoice">Factura a remitir de alta como subsanación.</param>
+            <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.CreateFixRejected(VeriFactu.Business.Invoice)">
             <summary>
             Crea un registro de alta de subsanación mediante el API.
             </summary>
