@@ -56,7 +56,7 @@ namespace VeriFactu.Blockchain
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la gestión de la cadena de bloques del sistema.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -70,7 +70,7 @@ namespace VeriFactu.Business
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -85,7 +85,7 @@ namespace VeriFactu.Business.FlowControl
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente al control de flujo
     /// incluido en las especificaciones. Se encarga
     /// de realizar los envíos según los tiempos
@@ -105,7 +105,7 @@ namespace VeriFactu.Business.Operations
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente a las operaciones a 
     /// realizar en los registros de alta y anulacion.
     /// Transformación de la factura, contabilización
@@ -123,7 +123,7 @@ namespace VeriFactu.Business.Validation
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente a la validación de datos.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -137,7 +137,7 @@ namespace VeriFactu.Business.Validation.NIF
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente a la validación de datos
     /// de NIF y su identificación en la AEAT.</para> 
     /// </summary>
@@ -152,7 +152,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente a la validación de datos
     /// de NIF. Contiene la lógica establecida en
     /// la normativa española para números de
@@ -169,7 +169,7 @@ namespace VeriFactu.Business.Validation.Validators
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente los validadores que implmentan
     /// las distintas validaciones.</para> 
     /// </summary>
@@ -237,7 +237,7 @@ namespace VeriFactu.Business.Validation.VIES
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de negocio referente la identificación
     /// de número de IVA intracomunitarios.</para> 
     /// </summary>
@@ -252,7 +252,7 @@ namespace VeriFactu.Common
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidades
+    /// <para>Este espacio contiene la funcionalidades
     /// generales.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -266,7 +266,7 @@ namespace VeriFactu.Config
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para los parámetros de configuración.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -280,7 +280,7 @@ namespace VeriFactu.DataStore
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la consulta de datos.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -294,7 +294,7 @@ namespace VeriFactu.Net
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para las comunicaciones.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -308,7 +308,7 @@ namespace VeriFactu.Net.Rest
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para las comunicaciones mediante el API
     /// REST para Verifactu de Irene Solutions.</para> 
     /// </summary>
@@ -323,7 +323,7 @@ namespace VeriFactu.Net.Rest.Json
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la serialización JSON.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -337,7 +337,7 @@ namespace VeriFactu.Net.Rest.Json.Parser
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la serialización JSON.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -351,7 +351,7 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la serialización JSON en cuanto a 
     /// analisis léxico.</para> 
     /// </summary>
@@ -366,7 +366,7 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la serialización JSON en cuanto a la 
     /// descomposición en fragmentos de texto procedentes
     /// de un analisis léxico.</para> 
@@ -382,7 +382,7 @@ namespace VeriFactu.Net.Rest.Json.Serializer
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la serialización JSON.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -396,7 +396,7 @@ namespace VeriFactu.NoVeriFactu
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para uso NO VERI*FACTU.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -410,7 +410,7 @@ namespace VeriFactu.NoVeriFactu.Signature
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la firma Xades de registros de alta
     /// y anulación.</para> 
     /// </summary>
@@ -425,7 +425,7 @@ namespace VeriFactu.NoVeriFactu.Signature.Ms
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// de Microsoft modificada para su adaptación a la
     /// firma Xades.</para> 
     /// </summary>
@@ -440,7 +440,7 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la firma Xades.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -454,7 +454,7 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades.Props
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// añadir las propiedades firmadas necesarias en
     /// la especificación Xades.</para> 
     /// </summary>
@@ -469,7 +469,7 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades.Props.BigInt
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para el trabajo con número enteros de más
     /// de 8 bytes.</para> 
     /// </summary>
@@ -484,7 +484,7 @@ namespace VeriFactu.Qrcode
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la generación de códigos QR.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -498,7 +498,7 @@ namespace VeriFactu.Qrcode.Exceptions
 {
 
     /// <summary>
-    /// <para>Este espacio contine la funcionalidad
+    /// <para>Este espacio contiene la funcionalidad
     /// para la gestión de excepciones en la generación
     /// de códigos QR.</para> 
     /// </summary>
@@ -513,7 +513,7 @@ namespace VeriFactu.Xml
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml; así como los
     /// componentes necesarios para ello.</para> 
     /// </summary>
@@ -528,7 +528,7 @@ namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml de Verifactu.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -542,7 +542,7 @@ namespace VeriFactu.Xml.Factu.Alta
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml del documentos de
     /// alta de factura.</para> 
     /// </summary>
@@ -557,7 +557,7 @@ namespace VeriFactu.Xml.Factu.Anulacion
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml del documentos de
     /// anulación de factura.</para> 
     /// </summary>
@@ -572,7 +572,7 @@ namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml del documentos de
     /// consulta de facturas.</para> 
     /// </summary>
@@ -587,7 +587,7 @@ namespace VeriFactu.Xml.Factu.Fault
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml del mensajes de
     /// respuesta de la AEAT por error de envío.</para> 
     /// </summary>
@@ -602,7 +602,7 @@ namespace VeriFactu.Xml.Factu.Respuesta
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml del mensajes de
     /// respuesta de la AEAT por envío.</para> 
     /// </summary>
@@ -632,7 +632,7 @@ namespace VeriFactu.Xml.Soap
 {
 
     /// <summary>
-    /// <para>Este espacio contine todos los plain data objects
+    /// <para>Este espacio contiene todos los plain data objects
     /// empleados para la serialización xml SOAP (Envelope, Body...).</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
