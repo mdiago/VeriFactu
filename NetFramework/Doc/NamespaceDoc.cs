@@ -543,7 +543,7 @@ namespace VeriFactu.Xml.Factu.Alta
 
     /// <summary>
     /// <para>Este espacio contiene todos los plain data objects
-    /// empleados para la serialización xml del documentos de
+    /// empleados para la serialización xml del documento de
     /// alta de factura.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -558,7 +558,7 @@ namespace VeriFactu.Xml.Factu.Anulacion
 
     /// <summary>
     /// <para>Este espacio contiene todos los plain data objects
-    /// empleados para la serialización xml del documentos de
+    /// empleados para la serialización xml del documento de
     /// anulación de factura.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -573,7 +573,7 @@ namespace VeriFactu.Xml.Factu.Consulta
 
     /// <summary>
     /// <para>Este espacio contiene todos los plain data objects
-    /// empleados para la serialización xml del documentos de
+    /// empleados para la serialización xml del documento de
     /// consulta de facturas.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -588,7 +588,7 @@ namespace VeriFactu.Xml.Factu.Fault
 
     /// <summary>
     /// <para>Este espacio contiene todos los plain data objects
-    /// empleados para la serialización xml del mensajes de
+    /// empleados para la serialización xml del mensaje de
     /// respuesta de la AEAT por error de envío.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
@@ -603,7 +603,7 @@ namespace VeriFactu.Xml.Factu.Respuesta
 
     /// <summary>
     /// <para>Este espacio contiene todos los plain data objects
-    /// empleados para la serialización xml del mensajes de
+    /// empleados para la serialización xml del mensaje de
     /// respuesta de la AEAT por envío.</para> 
     /// </summary>
     [System.Runtime.CompilerServices.CompilerGenerated]
