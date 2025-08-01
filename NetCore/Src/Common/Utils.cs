@@ -48,7 +48,7 @@ namespace VeriFactu.Common
 {
 
     /// <summary>
-    /// Alunas utilidades generales.
+    /// Algunas utilidades generales.
     /// </summary>
     public static class Utils
     {
@@ -56,7 +56,7 @@ namespace VeriFactu.Common
         #region Variables Privadas Estáticas
 
         /// <summary>
-        /// Algoritmos de dgiest disponibles.
+        /// Algoritmos de digest disponibles.
         /// </summary>
         static readonly Dictionary<TipoHuella, HashAlgorithm> _HashAlgorithms = new Dictionary<TipoHuella, HashAlgorithm>()
         {
