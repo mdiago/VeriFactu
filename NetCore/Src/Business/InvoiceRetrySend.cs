@@ -84,10 +84,31 @@ namespace VeriFactu.Business
             // Path del archivo xml del registro de alta correspondiente a la factura
             var path = OriginalInvoiceFilePath;
 
-            if(!File.Exists(OriginalInvoiceFilePath))
+            // Si no existe se busca entre los erróneos
+            if (!File.Exists(path)) 
+            {
+
+                var fileDir = Path.GetDirectoryName(path);
+                var searchPattern = $"{Path.GetFileNameWithoutExtension(path)}.ERR*.xml";
+                var files = Directory.GetFiles(fileDir, searchPattern);
+
+                if (files.Length > 0) 
+                {
+
+                    // Último archivo erróneo
+                    Array.Sort(files);
+                    var errPath = files[files.Length - 1];
+
+                    File.Copy(errPath, path);
+
+                }
+
+            }
+
+            if (!File.Exists(path))
                 throw new Exception($"No se ha encontrado el archivo del Registro correspondiente a {this}.");
 
-            var envelope = new Envelope(OriginalInvoiceFilePath);
+            var envelope = new Envelope(path);
 
             // Establecemos el valor de RegistroAlta / RegistroAnulacion
             var RegFactuSistemaFacturacion = envelope.Body?.Registro as RegFactuSistemaFacturacion;
@@ -117,7 +138,6 @@ namespace VeriFactu.Business
 
             if (string.IsNullOrEmpty(fechaHoraHusoGenRegistro))
                 throw new Exception($"No se ha encontrado el OrderedFechaHoraHusoGenRegistro correspondiente a la entrada {this}.");
-
 
             registro.FechaHoraHusoGenRegistro = fechaHoraHusoGenRegistro;
 
