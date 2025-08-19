@@ -345,8 +345,17 @@ namespace VeriFactu.Business.Operations
             if (!string.IsNullOrEmpty(Response))
                 File.WriteAllText(responseFilePath, Response);
 
-            // Si la respuesta no ha sido correcta renombro archivo de factura
-            if (Status != "Correcto" && File.Exists(InvoiceFilePath))
+            // Si la respuesta no ha sido correcta o aceptada con errores renombro archivo de factura
+            string estadoRegistro = null;
+
+            if(RespuestaRegFactuSistemaFacturacion.RespuestaLinea!= null && RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0)
+                estadoRegistro = RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].EstadoRegistro;
+
+            var correcto = Status == "Correcto";
+            var aceptadoConErrores = Status == "ParcialmenteCorrecto" && estadoRegistro == "AceptadoConErrores";
+            var notCorrectoOAceptado = !(correcto || aceptadoConErrores);
+
+            if (notCorrectoOAceptado && File.Exists(InvoiceFilePath))
                 File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());
 
         }
