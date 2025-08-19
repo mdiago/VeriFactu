@@ -63,6 +63,13 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
         public string RefExterna { get; set; }
 
         /// <summary>
+        /// Indica si se trata de un registro de subsanación
+        /// cuando su valor es 'S'.
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public string Subsanacion { get; set; }
+
+        /// <summary>
         /// <para>Clave del tipo de factura (L2).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
@@ -158,6 +165,13 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
         public string Huella { get; set; }
+
+        /// <summary>
+        /// Indica si se trata de un registro envíado tras
+        /// una incidencia técnica cuando su valor es 'S'.
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public string Incidencia { get; set; }
 
         #endregion
 
