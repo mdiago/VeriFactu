@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Factu.Anulacion;
@@ -97,9 +98,7 @@ namespace VeriFactu.Business
 
                     // Último archivo erróneo
                     Array.Sort(files);
-                    var errPath = files[files.Length - 1];
-
-                    File.Copy(errPath, path);
+                    path = files[files.Length - 1];
 
                 }
 
@@ -111,18 +110,34 @@ namespace VeriFactu.Business
             var envelope = new Envelope(path);
 
             // Establecemos el valor de RegistroAlta / RegistroAnulacion
-            var RegFactuSistemaFacturacion = envelope.Body?.Registro as RegFactuSistemaFacturacion;
+            var regFactuSistemaFacturacion = envelope.Body?.Registro as RegFactuSistemaFacturacion;
 
-            if (RegFactuSistemaFacturacion == null)
-                throw new Exception($"No se ha encontrado el RegFactuSistemaFacturacion correspondiente a la entrada {this}.");
+            // Acutalizamos nombre en factura
+            Invoice.SellerName = regFactuSistemaFacturacion.Cabecera.ObligadoEmision.NombreRazon;
 
-            if (RegFactuSistemaFacturacion?.RegistroFactura == null|| RegFactuSistemaFacturacion?.RegistroFactura?.Count == 0)
+            if (regFactuSistemaFacturacion?.RegistroFactura == null|| regFactuSistemaFacturacion?.RegistroFactura?.Count == 0)
                 throw new Exception($"No se ha encontrado el RegistroFactura ningún RegistroAlta correspondiente a la entrada {this}.");
 
-            Registro registro = RegFactuSistemaFacturacion.RegistroFactura[0]?.Registro as RegistroAlta;
+            Registro registro = regFactuSistemaFacturacion.RegistroFactura[0]?.Registro as RegistroAlta;
 
-            if(registro == null)
-                registro = RegFactuSistemaFacturacion.RegistroFactura[0]?.Registro as RegistroAnulacion;
+            if (registro == null)
+            {
+
+                registro = regFactuSistemaFacturacion.RegistroFactura[0]?.Registro as RegistroAnulacion;
+
+            }
+            else 
+            {
+
+                // Soluciona problema con bloque Destinatarios inicializado sin elementos
+                // https://github.com/mdiago/VeriFactu/issues/112
+                var registroAlta = registro as RegistroAlta;
+
+                if (registroAlta.Destinatarios != null && registroAlta.Destinatarios.Count == 0)
+                    registroAlta.Destinatarios = null;
+
+
+            }
 
             if (registro == null)
                 throw new Exception($"No se ha encontrado el RegistroAlta / RegistroAnulacion correspondiente a la entrada {this}.");
@@ -144,6 +159,9 @@ namespace VeriFactu.Business
             // Establecemos el valor de Registro
             Registro = registro;
 
+            // Guardamos el xml de la factura
+            File.WriteAllBytes(OriginalInvoiceFilePath, new XmlParser().GetBytes(GetEnvelope(), Namespaces.Items));
+
         }
 
         /// <summary>
@@ -153,10 +171,15 @@ namespace VeriFactu.Business
         internal override Envelope GetEnvelope()
         {
 
-            var envelope = new Envelope(OriginalInvoiceFilePath); 
+            var envelope = base.GetEnvelope();
+
+            var regFactuSistemaFacturacion = envelope.Body?.Registro as RegFactuSistemaFacturacion;
+
+            if (regFactuSistemaFacturacion == null)
+                throw new Exception($"No se ha encontrado el RegFactuSistemaFacturacion correspondiente a la entrada {this}.");
 
             // Establecemos Incidencia 
-            (envelope.Body.Registro as RegFactuSistemaFacturacion).Cabecera.RemisionVoluntaria = new RemisionVoluntaria() { Incidencia = "S" };
+            regFactuSistemaFacturacion.Cabecera.RemisionVoluntaria = new RemisionVoluntaria() { Incidencia = "S" };
 
             return envelope;
 
