@@ -348,7 +348,7 @@ namespace VeriFactu.Business.Operations
             // Si la respuesta no ha sido correcta o aceptada con errores renombro archivo de factura
             string estadoRegistro = null;
 
-            if(RespuestaRegFactuSistemaFacturacion.RespuestaLinea!= null && RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0)
+            if(ErrorFault == null && RespuestaRegFactuSistemaFacturacion?.RespuestaLinea!= null && RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0)
                 estadoRegistro = RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].EstadoRegistro;
 
             var correcto = Status == "Correcto";
