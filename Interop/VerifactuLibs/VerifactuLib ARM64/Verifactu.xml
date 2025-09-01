@@ -3394,12 +3394,12 @@
         </member>
         <member name="T:VeriFactu.Common.Utils">
             <summary>
-            Alunas utilidades generales.
+            Algunas utilidades generales.
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Utils._HashAlgorithms">
             <summary>
-            Algoritmos de dgiest disponibles.
+            Algoritmos de digest disponibles.
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Utils._Encodings">
@@ -10262,6 +10262,12 @@
             <para>Alfanumérico (60)</para>
             </summary>
         </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Subsanacion">
+            <summary>
+            Indica si se trata de un registro de subsanación
+            cuando su valor es 'S'.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.TipoFactura">
             <summary>
             <para>Clave del tipo de factura (L2).</para>
@@ -10343,6 +10349,12 @@
             <para> 7.º Huella del registro de facturación anterior.</para>
             <para> 8.º Fecha, hora y huso horario de generación del registro.</para>
             <para>Alfanumérico (64)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Incidencia">
+            <summary>
+            Indica si se trata de un registro envíado tras
+            una incidencia técnica cuando su valor es 'S'.
             </summary>
         </member>
         <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.ToString">

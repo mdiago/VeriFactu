@@ -47,7 +47,7 @@ namespace VeriFactu.Xml.Factu
     /// </summary>
     [Serializable]
     public class Interlocutor
-    {     
+    {
 
         #region Propiedades Públicas de Instancia
 

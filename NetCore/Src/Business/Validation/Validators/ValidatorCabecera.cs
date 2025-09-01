@@ -87,7 +87,13 @@ namespace VeriFactu.Business.Validation.Validators
             if (cabecera?.ObligadoEmision?.NIF == null)
                 result.Add("Error en el bloque Cabecera: El NIF del bloque ObligadoEmision debe contener un valor");
 
-            if(!Settings.Current.SkipNifAeatValidation) // 4107 = El NIF no está identificado en el censo de la AEAT.
+            // El interlocutor en ObligadoEmision sólo puede contener datos en NIF y NombreRazon
+            if (cabecera?.ObligadoEmision?.NombreRazonRepresentante != null ||
+                cabecera?.ObligadoEmision?.NIFRepresentante != null ||
+                cabecera?.ObligadoEmision?.IDOtro != null)
+                result.Add("El campo 'ObligadoEmision' no puede contener información en 'NombreRazonRepresentante' o 'NIFRepresentante'.");
+
+            if (!Settings.Current.SkipNifAeatValidation) // 4107 = El NIF no está identificado en el censo de la AEAT.
                 result.AddRange(new NifValidation(cabecera.ObligadoEmision.NIF, cabecera.ObligadoEmision.NombreRazon).GetErrors());
 
             // 2. Representante: El NIF del representante/asesor del obligado a expedir (emitir) facturas asociado
@@ -104,6 +110,15 @@ namespace VeriFactu.Business.Validation.Validators
                 // 4124 = Error en la cabecera: el valor del campo Nombre del bloque Representante no está identificado en el censo de la AEAT.
                 if (!Settings.Current.SkipNifAeatValidation) 
                     result.AddRange(new NifValidation(cabecera.Representante.NIF, cabecera.Representante.NombreRazon).GetErrors());
+
+                // El interlocutor en Representante sólo puede contener datos en NIF y NombreRazon
+                if (cabecera.Representante.NombreRazonRepresentante != null ||
+                    cabecera.Representante.NIFRepresentante != null ||
+                    cabecera?.Representante?.IDOtro != null)
+                    result.Add($"Error en el bloque Representante ({cabecera.Representante}): " +
+                        "Los datos de interlocutor 'NombreRazonRepresentante' y 'NIFRepresentante'" +
+                        " no pueden contener valor.");
+
 
             }
 

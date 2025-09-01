@@ -115,6 +115,13 @@ namespace VeriFactu.Business.Validation.Validators
 
             var interlocutor = sistemaInformatico;
 
+            // El interlocutor en ObligadoEmision sólo puede contener datos en NIF y NombreRazon
+            if (interlocutor.NombreRazonRepresentante != null ||
+                interlocutor.NIFRepresentante != null)
+                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}): " +
+                    "Los datos de interlocutor 'NombreRazonRepresentante' y 'NIFRepresentante'" +
+                    " no pueden contener valor.");
+
             // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
             if (sistemaInformatico != null && !string.IsNullOrEmpty(sistemaInformatico.NIF) && sistemaInformatico.IDOtro != null)
                 result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
