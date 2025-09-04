@@ -54,6 +54,11 @@ namespace VeriFactu.Net.Rest.Json
         #region Private Member Variables
 
         /// <summary>
+        /// Ignorar para la serialización JSON.
+        /// </summary>
+        private bool _JsonIgnore;
+
+        /// <summary>
         /// Excluir si el valor del tipo
         /// es el valor por defecto.
         /// </summary>
@@ -79,6 +84,22 @@ namespace VeriFactu.Net.Rest.Json
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Indica que la propiedad se debe 
+        /// ignorar para la serialización JSON.
+        /// </summary>
+        public virtual bool JsonIgnore
+        {
+            get
+            {
+                return _JsonIgnore;
+            }
+            set
+            {
+                _JsonIgnore = value;
+            }
+        }
 
         /// <summary>
         /// Indica que la serialización no se debe realizar si la propiedad

@@ -106,6 +106,7 @@ namespace VeriFactu.Business
 
             InvoiceType = registroAlta.TipoFactura;
             SellerName = registroAlta.NombreRazonEmisor;
+            Text = registroAlta.DescripcionOperacion;
 
             if (registroAlta.TipoRectificativaSpecified)
                 RectificationType = registroAlta.TipoRectificativa;
@@ -487,6 +488,7 @@ namespace VeriFactu.Business
         /// caso de que la instancia se haya creado a partir de un registro
         /// de alta.
         /// </summary>
+        [Json(JsonIgnore = true)]
         public RegistroAlta RegistroAltaSource 
         {
 

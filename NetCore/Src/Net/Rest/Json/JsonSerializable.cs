@@ -104,10 +104,11 @@ namespace VeriFactu.Net.Rest.Json
             else
             {
 
-                var keyValueJson = new JsonSerializer(pInf, value).ToJson();
+                var jsonSerializer = new JsonSerializer(pInf, value);
+                var keyValueJson = jsonSerializer.ToJson();
 
-                if (keyValueJson != null)
-                    AppendTokenJson(stringBuilder, new JsonSerializer(pInf, value).ToJson());
+                if (keyValueJson != null && !(jsonSerializer.Attribute != null && jsonSerializer.Attribute.JsonIgnore))
+                    AppendTokenJson(stringBuilder, keyValueJson);
 
             }
 
