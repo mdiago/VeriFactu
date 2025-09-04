@@ -4492,6 +4492,11 @@
             objetos definidos mediante clases en cadenas formato JSON.
             </summary>
         </member>
+        <member name="F:VeriFactu.Net.Rest.Json.JsonAttribute._JsonIgnore">
+            <summary>
+            Ignorar para la serialización JSON.
+            </summary>
+        </member>
         <member name="F:VeriFactu.Net.Rest.Json.JsonAttribute._ExcludeOnDefault">
             <summary>
             Excluir si el valor del tipo
@@ -4507,6 +4512,12 @@
         <member name="M:VeriFactu.Net.Rest.Json.JsonAttribute.#ctor">
             <summary>
             Construye una nueva instancia de la clase JsonAttribute.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.JsonAttribute.JsonIgnore">
+            <summary>
+            Indica que la propiedad se debe 
+            ignorar para la serialización JSON.
             </summary>
         </member>
         <member name="P:VeriFactu.Net.Rest.Json.JsonAttribute.ExcludeOnDefault">
