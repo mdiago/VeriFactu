@@ -168,7 +168,7 @@ namespace VeriFactu.NoVeriFactu.Signature
         {
 
             KeyInfo keyInfo = new KeyInfo();
-            keyInfo.AddClause(new KeyInfoX509Data(certificate)); // Añade elemento KeyInfo.X509Data.RSAKeyValue.X509Certificate
+            keyInfo.AddClause(new KeyInfoX509Data(certificate, X509IncludeOption.WholeChain)); // Añade elemento KeyInfo.X509Data.RSAKeyValue.X509Certificate
             keyInfo.AddClause(new RSAKeyValue(key));  // Añade elemento KeyInfo.KeyValue.RSAKeyValue
 
             return keyInfo;
@@ -310,7 +310,6 @@ namespace VeriFactu.NoVeriFactu.Signature
             xmlDocument.LoadXml(System.Text.Encoding.UTF8.GetString(xml));            
 
             return Sign(xmlDocument, name);
-
 
         }
 

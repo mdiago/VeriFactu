@@ -219,7 +219,8 @@ namespace VeriFactu.Business.Validation.NIF
 
             var responseEnvelope = GetResponse();
 
-            if (responseEnvelope.Body.Contribuyentes[0].Resultado != "IDENTIFICADO")
+            if (responseEnvelope.Body.Contribuyentes[0].Resultado != "IDENTIFICADO" &&
+                responseEnvelope.Body.Contribuyentes[0].Resultado != "IDENTIFICADO-REVOCADO")
                 result.Add($"Error en la validación del NIF {_Nif} de {_Name}. Si el NIF es" +
                     $" de una persona física es necesario que conste también el nombre" +
                     $" correcto para poderlo validar.");
