@@ -116,7 +116,13 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
             // 3. Huella (del registro anterior)
             result.AddRange(new ValidatorRegistroAnulacionHuella(_Envelope, _RegistroAnulacion).GetErrors());
 
-
+            // Validaciones de textos
+            result.AddRange(new ValidatorText("IDVersion", _RegistroAnulacion.IDVersion, 3).GetErrors());
+            result.AddRange(new ValidatorText("RefExterna", _RegistroAnulacion.RefExterna, 60).GetErrors());
+            result.AddRange(new ValidatorText("SinRegistroPrevio", _RegistroAnulacion.SinRegistroPrevio, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("RechazoPrevio", _RegistroAnulacion.RechazoPrevio, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("GeneradoPor", _RegistroAnulacion.GeneradoPor, 1, @"[EDT]").GetErrors());
+            result.AddRange(new ValidatorText("OrderedHuella", _RegistroAnulacion.OrderedHuella, 64).GetErrors());
 
             return result;
 

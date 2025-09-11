@@ -110,6 +110,14 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                             $" El destinatario {destinatario} tiene un error en el TipoFactura. " +
                             $"Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”," +
                             $" el TipoFactura debe ser “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.");
+
+                    // Validaciones de textos
+                    result.AddRange(new ValidatorText("NombreRazon", destinatario.NombreRazon, 120).GetErrors());
+                    result.AddRange(new ValidatorText("NombreRazonRepresentante", destinatario.NombreRazonRepresentante, 120).GetErrors());
+
+                    if (destinatario.IDOtro != null) 
+                        result.AddRange(new ValidatorText("ID", destinatario.IDOtro.ID, 20).GetErrors());
+
                 }
 
             }       

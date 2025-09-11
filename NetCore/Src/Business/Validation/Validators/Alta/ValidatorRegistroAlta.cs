@@ -200,6 +200,20 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // Validaciones adicionales del listado de errores AEAT
             result.AddRange(new ValidatorRegistroAltaTipoFactura(_Envelope, _RegistroAlta).GetErrors());
 
+            // Validaciones de textos
+            result.AddRange(new ValidatorText("IDVersion", _RegistroAlta.IDVersion, 3).GetErrors());
+            result.AddRange(new ValidatorText("RefExterna", _RegistroAlta.RefExterna, 60).GetErrors());
+            result.AddRange(new ValidatorText("NombreRazonEmisor", _RegistroAlta.NombreRazonEmisor, 120).GetErrors());
+            result.AddRange(new ValidatorText("DescripcionOperacion", _RegistroAlta.DescripcionOperacion, 500).GetErrors());            
+            result.AddRange(new ValidatorText("Subsanacion", _RegistroAlta.Subsanacion, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("FacturaSimplificadaArt7273", _RegistroAlta.FacturaSimplificadaArt7273, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("FacturaSinIdentifDestinatarioArt61d", _RegistroAlta.FacturaSinIdentifDestinatarioArt61d, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("Macrodato", _RegistroAlta.Macrodato, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("Cupon", _RegistroAlta.Cupon, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("NumRegistroAcuerdoFacturacion", _RegistroAlta.NumRegistroAcuerdoFacturacion, 15).GetErrors());
+            result.AddRange(new ValidatorText("IdAcuerdoSistemaInformatico", _RegistroAlta.IdAcuerdoSistemaInformatico, 16).GetErrors());
+            result.AddRange(new ValidatorText("OrderedHuella", _RegistroAlta.OrderedHuella, 64).GetErrors());
+
             return result;
 
         }

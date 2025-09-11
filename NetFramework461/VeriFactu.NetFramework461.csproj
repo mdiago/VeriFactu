@@ -271,6 +271,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\ValidatorSistemaInformatico.cs">
       <Link>Src\Business\Validation\Validators\ValidatorSistemaInformatico.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\ValidatorText.cs">
+      <Link>Src\Business\Validation\Validators\ValidatorText.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\Validation\VIES\ViesVatNumber.cs">
       <Link>Src\Business\Validation\VIES\ViesVatNumber.cs</Link>
     </Compile>

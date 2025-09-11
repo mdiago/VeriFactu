@@ -180,6 +180,13 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
 
             }
 
+            // Validaciones de textos
+            result.AddRange(new ValidatorText("NombreRazon", _Interlocutor.NombreRazon, 120).GetErrors());
+            result.AddRange(new ValidatorText("NombreRazonRepresentante", _Interlocutor.NombreRazonRepresentante, 120).GetErrors());
+
+            if (_Interlocutor.IDOtro != null)
+                result.AddRange(new ValidatorText("ID", _Interlocutor.IDOtro.ID, 20).GetErrors());
+
             return result;
 
         }

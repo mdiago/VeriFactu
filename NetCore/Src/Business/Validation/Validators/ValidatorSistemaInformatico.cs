@@ -169,6 +169,20 @@ namespace VeriFactu.Business.Validation.Validators
 
             }
 
+            // Validaciones de textos
+            result.AddRange(new ValidatorText("NombreSistemaInformatico", sistemaInformatico.NombreSistemaInformatico, 30).GetErrors());
+            result.AddRange(new ValidatorText("IdSistemaInformatico", sistemaInformatico.IdSistemaInformatico, 2).GetErrors());
+            result.AddRange(new ValidatorText("Version", sistemaInformatico.Version, 50).GetErrors());
+            result.AddRange(new ValidatorText("NumeroInstalacion", sistemaInformatico.NumeroInstalacion, 100).GetErrors());
+            result.AddRange(new ValidatorText("TipoUsoPosibleSoloVerifactu", sistemaInformatico.TipoUsoPosibleSoloVerifactu, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("TipoUsoPosibleMultiOT", sistemaInformatico.TipoUsoPosibleMultiOT, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("IndicadorMultiplesOT", sistemaInformatico.IndicadorMultiplesOT, 1, @"[SN]").GetErrors());
+            result.AddRange(new ValidatorText("NombreRazon", sistemaInformatico.NombreRazon, 120).GetErrors());
+            result.AddRange(new ValidatorText("NombreRazonRepresentante", sistemaInformatico.NombreRazonRepresentante, 120).GetErrors());
+
+            if (sistemaInformatico.IDOtro != null)
+                result.AddRange(new ValidatorText("ID", sistemaInformatico.IDOtro.ID, 20).GetErrors());
+
             return result;
 
         }
