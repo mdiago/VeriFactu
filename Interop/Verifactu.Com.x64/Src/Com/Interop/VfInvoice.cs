@@ -354,6 +354,7 @@ namespace Verifactu
             result.BuyerIDType = (VeriFactu.Xml.Factu.IDType)buyerIDType;
 
             result.TaxItems = _TaxItems;
+            result.CalculateTotals();
             result.RectificationItems = _RectificationItems;
 
             if (_TaxItemSubstitution != null)

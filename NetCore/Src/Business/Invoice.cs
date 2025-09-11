@@ -130,7 +130,8 @@ namespace VeriFactu.Business
 
             }
 
-            TaxItems = FromDesglose(registroAlta.Desglose);           
+            TaxItems = FromDesglose(registroAlta.Desglose);
+            CalculateTotals();
 
         }
 
@@ -183,7 +184,7 @@ namespace VeriFactu.Business
         /// <summary>
         /// Calcula los totales de la factura.
         /// </summary>
-        private void CalculateTotals() 
+        internal void CalculateTotals() 
         {
 
             TotalAmount = TotalTaxOutput = TotalTaxWithheld = TotalTaxOutputSurcharge = _NetAmount = 0;

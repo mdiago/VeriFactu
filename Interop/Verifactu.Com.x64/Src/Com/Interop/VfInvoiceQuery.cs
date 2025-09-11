@@ -178,6 +178,8 @@ namespace Verifactu
 
                 if (invoices[i].RectificationType != VeriFactu.Xml.Factu.Alta.TipoRectificativa.NA)
                     result[i].InvoiceType = $"{invoices[i].InvoiceType}";
+                else
+                    result[i].InvoiceType = "";
 
                 foreach (var taxItem in invoices[i].TaxItems)
                 {
@@ -193,7 +195,7 @@ namespace Verifactu
                     };
 
                     result[i].InsertTaxItem(txIt);
-
+                    
                 }
 
             }
@@ -298,7 +300,7 @@ namespace Verifactu
             
             if (Invoices == null || index < 0 || index >= Invoices.Length)
                 throw new ArgumentOutOfRangeException(nameof(index), "Índice fuera de rango.");
-
+            
             return Invoices[index];
 
         }

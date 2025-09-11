@@ -128,6 +128,7 @@ namespace VeriFactu.Business.Operations
             }
 
             invoice.TaxItems = Invoice.FromDesglose(registroAlta.Desglose);
+            invoice.CalculateTotals();
 
             return invoice;
 
