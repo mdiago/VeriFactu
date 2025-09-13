@@ -70,6 +70,21 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
         public string Subsanacion { get; set; }
 
         /// <summary>
+        /// Indica si existe un rechazo previo del registro
+        /// por parte de la AEAT.
+        /// <para>'N': No ha habido rechazo previo por la AEAT.</para>
+        /// <para>'S': Ha habido rechazo previo por la AEAT.</para>
+        /// <para>'X': Independientemente de si ha habido o no algún
+        /// rechazo previo por la AEAT, el registro de facturación no
+        /// existe en la AEAT (registro existente en ese sistema informático
+        /// o en algún sistema informático del obligado tributario y que no
+        /// se remitió a la AEAT, por ejemplo, al acogerse a la modalidad
+        /// «VERI*FACTU» desde la modalidad «NO VERI*FACTU»).</para>
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
+        public string RechazoPrevio { get; set; }
+
+        /// <summary>
         /// <para>Clave del tipo de factura (L2).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
