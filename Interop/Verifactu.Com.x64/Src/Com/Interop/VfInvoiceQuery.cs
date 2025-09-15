@@ -177,9 +177,9 @@ namespace Verifactu
                 };
 
                 if (invoices[i].RectificationType != VeriFactu.Xml.Factu.Alta.TipoRectificativa.NA)
-                    result[i].InvoiceType = $"{invoices[i].InvoiceType}";
+                    result[i].RectificationType = $"{invoices[i].RectificationType}";
                 else
-                    result[i].InvoiceType = "";
+                    result[i].RectificationType = "";
 
                 foreach (var taxItem in invoices[i].TaxItems)
                 {
