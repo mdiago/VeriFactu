@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -97,6 +98,10 @@ namespace VeriFactu.Business.Validation.NIF
         /// <param name="name">Nombre</param>
         public NifValidation(string nif, string name)
         {
+
+            if (nif == null || name == null)
+                throw new ArgumentException("Los argumentos 'nif' y 'name'" +
+                    " no pueden ser nulos.");
 
             _Nif = nif;
             _Name = name;
@@ -166,6 +171,10 @@ namespace VeriFactu.Business.Validation.NIF
         public static Dictionary<string, string> GetBatchErrors(List<Contribuyente> items) 
         {
 
+            if (items == null || items.Count == 0)
+                throw new ArgumentException("La lista de contribuyentes dada como" +
+                    " parámetro de entrada 'items' no puedes ser nula ni estar vacía.");
+
             Envelope envelope = new Envelope();
 
             envelope.Body.Registro = new VNifVEnt()
@@ -191,7 +200,7 @@ namespace VeriFactu.Business.Validation.NIF
             foreach (var item in responseEnvelope.Body.Contribuyentes) 
             {
 
-                if (item.Resultado != "IDENTIFICADO")
+                if (item.Resultado != "IDENTIFICADO" && responseEnvelope.Body.Contribuyentes[0].Resultado != "IDENTIFICADO-REVOCADO")
                     result.Add(item.Nif, $"Error en la validación del NIF {item.Nif} de {item.Nombre}. Si el NIF es" +
                         $" de una persona física es necesario que conste también el nombre" +
                         $" correcto para poderlo validar.");
