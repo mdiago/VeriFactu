@@ -38,7 +38,6 @@
  */
 
 using System;
-using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu
 {

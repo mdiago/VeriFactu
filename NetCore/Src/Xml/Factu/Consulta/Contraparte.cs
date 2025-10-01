@@ -37,54 +37,39 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Consulta
 {
 
     /// <summary>
-    /// Filtro consulta.
+    ///  Datos parte interviniente en algún modo en la facturación.
     /// </summary>
-    public  class FiltroConsulta
+    [Serializable]
+    public class Contraparte
     {
 
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Periodo a filtrar.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public PeriodoImputacion PeriodoImputacion { get; set; }
-
-        /// <summary>
-        /// Datos contraparte factura.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public Contraparte Contraparte { get; set; }
-
-        /// <summary>
-        /// Rango fechas de expedición.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public FechaExpedicionFactura FechaExpedicionFactura { get; set; }
-
-        /// <summary>
-        /// Sistema informático.
+        /// <para>Nombre-razón social.</para>
+        /// <para>Alfanumérico(120).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public SistemaInformatico SistemaInformatico { get; set; }
+        public string NombreRazon { get; set; }
 
         /// <summary>
-        /// Id. de la factura de corte para la paginación.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceCon)]
-        public ClavePaginacion ClavePaginacion { get; set; }
-
-        /// <summary>
-        /// Datos adicionales respuesta.
+        /// <para>NIF.</para>
+        /// <para>FormatoNIF(9).</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public DatosAdicionalesRespuesta DatosAdicionalesRespuesta { get; set; }
+        public string NIF { get; set; }
+
+        /// <summary>
+        /// Id. fiscal no español.
+        /// </summary>
+        public IDOtro IDOtro { get; set; }
 
         #endregion
 
@@ -97,7 +82,7 @@ namespace VeriFactu.Xml.Factu.Consulta
         public override string ToString()
         {
 
-            return $"{PeriodoImputacion}, {Contraparte}, {FechaExpedicionFactura}";
+            return $"{NIF}{IDOtro?.ID}";
 
         }
 

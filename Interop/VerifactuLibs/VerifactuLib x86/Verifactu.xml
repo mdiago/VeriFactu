@@ -1448,6 +1448,15 @@
             <returns> Objeto Invoice creado a partir de un registro
             de factura de una respuesta de consulta a la AEAT.</returns>
         </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetInterlocutor">
+            <summary>
+            Devuelve un interlocutor a partir del obligado
+            tributario al que pertenece la instancia.
+            </summary>
+            <returns> Interlocutor a partir del obligado
+            tributario al que pertenece la instancia.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VeriFactu.Business.Operations.InvoiceQuery.GetEnvelope(System.String,System.String,System.Boolean,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)" -->
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSalesEnvelope(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve un objeto Envelope con el filtro
@@ -1491,6 +1500,14 @@
             a partir de una respuesta de la AEAT a 
             una consulta de documentos.</returns>
         </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetRegistro(System.Boolean)">
+            <summary>
+            Devuelve un registro para la consulta de facturas.
+            </summary>
+            <param name="isSales">Indica que se trata de la consulta
+            de factura emitidas. Si su valor es false es para recibidas.</param>
+            <returns> Registro para la consulta de facturas.</returns>
+        </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSales(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve las facturas emitidas por el NIF
@@ -1510,6 +1527,14 @@
             <param name="month">Mes a consultar.</param>
             <param name="offset">Id. de la factura de corte para la paginación.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetDocuments(VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion)">
+            <summary>
+            Devuelve las facturas por el NIF
+            facilitado en la propiedad PartyID.
+            </summary>
+            <param name="registro"> Instancia de la clase ConsultaFactuSistemaFacturacion.</param>
+            <returns>Facturas registradas en la AEAT.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.ToString">
             <summary>
@@ -10079,6 +10104,34 @@
             <summary>
             Filtro consulta.
             </summary>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Consulta.Contraparte">
+            <summary>
+             Datos parte interviniente en algún modo en la facturación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Contraparte.NombreRazon">
+            <summary>
+            <para>Nombre-razón social.</para>
+            <para>Alfanumérico(120).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Contraparte.NIF">
+            <summary>
+            <para>NIF.</para>
+            <para>FormatoNIF(9).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Contraparte.IDOtro">
+            <summary>
+            Id. fiscal no español.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Contraparte.ToString">
+            <summary>
+            Representacioón textual de la instancia.
+            </summary>
+            <returns>Representacioón textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Consulta.DatosAdicionalesRespuesta">
             <summary>

@@ -553,6 +553,9 @@
     <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\ConsultaFactuSistemaFacturacion.cs">
       <Link>Src\Xml\Factu\Consulta\ConsultaFactuSistemaFacturacion.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Contraparte.cs">
+      <Link>Src\Xml\Factu\Consulta\Contraparte.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\DatosAdicionalesRespuesta.cs">
       <Link>Src\Xml\Factu\Consulta\DatosAdicionalesRespuesta.cs</Link>
     </Compile>
