@@ -38,6 +38,7 @@
  */
 
 using System;
+using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu
 {
@@ -55,12 +56,14 @@ namespace VeriFactu.Xml.Factu
         /// <para>Nombre-razón social.</para>
         /// <para>Alfanumérico(120).</para>
         /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
         public string NombreRazon { get; set; }
 
         /// <summary>
         /// <para>NIF.</para>
         /// <para>FormatoNIF(9).</para>
         /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceSF)]
         public string NIF { get; set; }
 
         /// <summary>
