@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Common.Exceptions;
 using VeriFactu.Config;
 using VeriFactu.Xml;
@@ -302,8 +303,10 @@ namespace VeriFactu.Business.Operations
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
         /// <param name="offset">Id. de la factura de corte para la paginación.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Facturas emitidas registradas en la AEAT.</returns>
-        public RespuestaConsultaFactuSistemaFacturacion GetSales(string year, string month, ClavePaginacion offset = null) 
+        public RespuestaConsultaFactuSistemaFacturacion GetSales(string year, string month,
+            ClavePaginacion offset = null, X509Certificate2 certificate = null) 
         {
 
             if (offset != null && offset?.IDEmisorFactura == null)
@@ -311,7 +314,7 @@ namespace VeriFactu.Business.Operations
 
             var envelope = GetSalesEnvelope(year, month, offset);
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
-            var response = InvoiceActionMessage.SendXmlBytes(xml, _Action);
+            var response = InvoiceActionMessage.SendXmlBytes(xml, _Action, certificate);
             var envelopeResponse = Envelope.FromXml(response);
 
             var fault = envelopeResponse.Body.Registro as Fault;
@@ -330,8 +333,10 @@ namespace VeriFactu.Business.Operations
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
         /// <param name="offset">Id. de la factura de corte para la paginación.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Facturas emitidas registradas en la AEAT.</returns>
-        public RespuestaConsultaFactuSistemaFacturacion GetPurchases(string year, string month, ClavePaginacion offset = null)
+        public RespuestaConsultaFactuSistemaFacturacion GetPurchases(string year, string month,
+            ClavePaginacion offset = null, X509Certificate2 certificate = null)
         {
 
             if (offset != null && offset?.IDEmisorFactura == null)
@@ -339,7 +344,7 @@ namespace VeriFactu.Business.Operations
 
             var envelope = GetPurchasesEnvelope(year, month, offset);
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
-            var response = InvoiceActionMessage.SendXmlBytes(xml, _Action);
+            var response = InvoiceActionMessage.SendXmlBytes(xml, _Action, certificate);
             var envelopeResponse = Envelope.FromXml(response);
 
             var fault = envelopeResponse.Body.Registro as Fault;
@@ -356,8 +361,10 @@ namespace VeriFactu.Business.Operations
         /// facilitado en la propiedad PartyID.
         /// </summary>
         /// <param name="registro"> Instancia de la clase ConsultaFactuSistemaFacturacion.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Facturas registradas en la AEAT.</returns>
-        public RespuestaConsultaFactuSistemaFacturacion GetDocuments(ConsultaFactuSistemaFacturacion registro)
+        public RespuestaConsultaFactuSistemaFacturacion GetDocuments(ConsultaFactuSistemaFacturacion registro,
+            X509Certificate2 certificate = null)
         {
 
             var envelope = new Envelope()

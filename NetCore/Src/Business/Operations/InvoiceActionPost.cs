@@ -39,6 +39,7 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Net;
 using VeriFactu.Xml.Factu;
 
@@ -217,7 +218,7 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Gestor de cadena de bloques para el registro.
         /// </summary>
-        public Blockchain.Blockchain BlockchainManager { get; private set; }   
+        public Blockchain.Blockchain BlockchainManager { get; private set; }
 
         #endregion
 
@@ -226,7 +227,10 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Contabiliza y envía a la AEAT el registro.
         /// </summary>
-        public void Save()
+        /// <param name="certificate">Certificado para la petición.</param>
+        /// <exception cref="InvalidOperationException">Si ya se ha guardado con anterioridad.</exception>
+        /// <exception cref="Exception">Si surge error en el envío.</exception>
+        public void Save(X509Certificate2 certificate = null)
         {
 
             if (IsSaved)
@@ -239,7 +243,7 @@ namespace VeriFactu.Business.Operations
 
             try
             {
-                ExecuteSend();
+                ExecuteSend(certificate);
                 ProcessResponse();
             }
             catch (Exception ex)

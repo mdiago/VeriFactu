@@ -41,6 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Common.Exceptions;
@@ -97,8 +98,9 @@ namespace VeriFactu.Business.FlowControl
         /// Envío el lote de facturas a la AEAT.
         /// </summary>
         /// <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Devuelve La respuesta de la AEAT al envío.</returns>
-        internal RespuestaRegFactuSistemaFacturacion Send(List<InvoiceAction> invoiceActions)
+        internal RespuestaRegFactuSistemaFacturacion Send(List<InvoiceAction> invoiceActions, X509Certificate2 certificate = null)
         {
 
             if (invoiceActions == null || invoiceActions.Count == 0)
@@ -122,7 +124,7 @@ namespace VeriFactu.Business.FlowControl
 
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
 
-            var response = last.Send(xml);
+            var response = last.Send(xml, certificate);
 
             var envelopeRespuesta = last.GetResponseEnvelope(response);
 

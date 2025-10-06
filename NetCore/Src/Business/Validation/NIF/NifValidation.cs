@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml;
 using VeriFactu.Net;
 using VeriFactu.Xml;
@@ -142,8 +143,9 @@ namespace VeriFactu.Business.Validation.NIF
         /// <summary>
         /// Obtiene sobre SOAP de la respuesta.
         /// </summary>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Sobre SOAP de la respuesta.</returns>
-        private Envelope GetResponse()
+        private Envelope GetResponse(X509Certificate2 certificate = null)
         {
 
             XmlDocument xmlDocument = new XmlDocument();
@@ -152,7 +154,7 @@ namespace VeriFactu.Business.Validation.NIF
                 xmlDocument.Load(msXml);
 
 
-            var response = Wsd.Call(Url, Action, xmlDocument);
+            var response = Wsd.Call(Url, Action, xmlDocument, certificate);
 
             return Envelope.FromXml(response);
 
@@ -167,8 +169,9 @@ namespace VeriFactu.Business.Validation.NIF
         /// al servicio de validación.
         /// </summary>
         /// <param name="items">Lista de contribuyentas a validar.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Diccionario con los NIFs erróneos</returns>
-        public static Dictionary<string, string> GetBatchErrors(List<Contribuyente> items) 
+        public static Dictionary<string, string> GetBatchErrors(List<Contribuyente> items, X509Certificate2 certificate = null) 
         {
 
             if (items == null || items.Count == 0)
@@ -191,7 +194,7 @@ namespace VeriFactu.Business.Validation.NIF
             using (var msXml = new MemoryStream(xml))
                 xmlDocument.Load(msXml);
 
-            var response = Wsd.Call(Url, Action, xmlDocument);
+            var response = Wsd.Call(Url, Action, xmlDocument, certificate);
 
             var responseEnvelope = Envelope.FromXml(response);
 

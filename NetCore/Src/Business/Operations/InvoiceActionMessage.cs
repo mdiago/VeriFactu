@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml;
 using VeriFactu.Config;
 using VeriFactu.Net;
@@ -281,37 +282,40 @@ namespace VeriFactu.Business.Operations
         /// Envía un xml en formato binario a la AEAT.
         /// </summary>
         /// <param name="xml">Archivo xml en formato binario a la AEAT.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Devuelve las respuesta de la AEAT.</returns>
-        internal string Send(byte[] xml)
+        internal string Send(byte[] xml, X509Certificate2 certificate = null)
         {
 
-            return SendXmlBytes(xml, Action);
+            return SendXmlBytes(xml, Action, certificate);
 
         }
 
         /// <summary>
         /// Envía el registro a la AEAT.
         /// </summary>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Devuelve las respuesta de la AEAT.</returns>
-        protected string Send()
+        protected string Send(X509Certificate2 certificate = null)
         {
 
-            return Send(Xml);
+            return Send(Xml, certificate);
 
         }
 
         /// <summary>
         /// Ejecuta la contabilización del registro.
         /// </summary>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Si todo funciona correctamente devuelve null.
         /// En caso contrario devuelve una excepción con el error.</returns>
-        protected void ExecuteSend()
+        protected void ExecuteSend(X509Certificate2 certificate = null)
         {
 
             if (!Posted)
                 throw new InvalidOperationException("No se puede enviar un registro no contabilizado (Posted = false).");
 
-            Response = Send();
+            Response = Send(certificate);
             IsSent = true;
 
         }
@@ -533,9 +537,10 @@ namespace VeriFactu.Business.Operations
         /// Envía un xml en formato binario a la AEAT.
         /// </summary>
         /// <param name="xml">Archivo xml en formato binario a la AEAT.</param>
-        /// /// <param name="op"> Acción para el webservice.</param>
+        /// <param name="op"> Acción para el webservice.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Devuelve las respuesta de la AEAT.</returns>
-        public static string SendXmlBytes(byte[] xml, string op = null)
+        public static string SendXmlBytes(byte[] xml, string op = null, X509Certificate2 certificate = null)
         {
 
             if (op == null)
@@ -549,7 +554,7 @@ namespace VeriFactu.Business.Operations
             var url = Settings.Current.VeriFactuEndPointPrefix;
             var action = $"{url}{op}";
 
-            return Wsd.Call(url, action, xmlDocument);
+            return Wsd.Call(url, action, xmlDocument, certificate);
 
         }
 
@@ -558,14 +563,15 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <param name="envelope">Sobre a enviar.</param>
         /// <param name="op">Acción del webservice.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Respuesta del servidor.</returns>
-        public static string SendEnvelope(Envelope envelope, string op) 
+        public static string SendEnvelope(Envelope envelope, string op, X509Certificate2 certificate = null) 
         {
 
             // Generamos el xml
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
 
-            return SendXmlBytes(xml, op);
+            return SendXmlBytes(xml, op, certificate);
 
         }
 
@@ -573,13 +579,14 @@ namespace VeriFactu.Business.Operations
         /// Envía un sobre SOAP.
         /// </summary>
         /// <param name="envelope">Sobre a enviar.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Respuesta del servidor.</returns>
-        public static Envelope SendEnvelope(Envelope envelope)
+        public static Envelope SendEnvelope(Envelope envelope, X509Certificate2 certificate = null)
         {
 
             // Generamos el xml
             var xml = new XmlParser().GetBytes(envelope, Namespaces.Items);
-            var response =  SendXmlBytes(xml, _Action);
+            var response =  SendXmlBytes(xml, _Action, certificate);
 
             return Envelope.FromXml(response);
 

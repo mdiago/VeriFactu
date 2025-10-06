@@ -92,20 +92,21 @@ namespace VeriFactu.Net
         }
 
         /// <summary>
-        /// Llama a al web service de la AEAT para el VeriFactu seleccionado.
+        /// Llama al web service de la AEAT para el VeriFactu seleccionado.
         /// </summary>
         /// <param name="url">Url destino.</param>
         /// <param name="action">Acción a ejecutar.</param>
         /// <param name="xmlDocument">Documento soap xml.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Devuelve la respuesta.</returns>
-        internal static string Call(string url, string action, XmlDocument xmlDocument)
+        internal static string Call(string url, string action, XmlDocument xmlDocument, X509Certificate2 certificate = null)
         {
 
             HttpWebRequest webRequest = CreateWebRequest(url, action);
 
-            X509Certificate2 certificate = GetCheckedCertificate();
+            X509Certificate2 cert = certificate??GetCheckedCertificate();
 
-            webRequest.ClientCertificates.Add(certificate);
+            webRequest.ClientCertificates.Add(cert);
 
             using (Stream stream = webRequest.GetRequestStream())
             {
