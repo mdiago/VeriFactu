@@ -2252,6 +2252,30 @@
             </summary>
             <returns>Lista con los errores de un bloque en concreto.</returns>
         </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion">
+            <summary>
+            Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 02. Exportacion.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion._DetalleDesglose">
+            <summary>
+            Interlocutor a validar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta,VeriFactu.Xml.Factu.Alta.DetalleDesglose)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Sobre SOAP envío.</param>
+            <param name="registroAlta"> Registro alta factura.</param>
+            <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades">
             <summary>
             Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 06. Grupo de entidades nivel avanzado.
@@ -3302,6 +3326,89 @@
             <summary>
             Url del endpoint de validación.
             </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt8Num">
+            <summary>
+            8 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt9Num">
+            <summary>
+            9 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt10Num">
+            <summary>
+            10 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt11Num">
+            <summary>
+            11 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt12Num">
+            <summary>
+            12 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt8To10Num">
+            <summary>
+            8, 9 ó 10 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt2To10Num">
+            <summary>
+            de 2 a 10 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt9o12Num">
+            <summary>
+            9 ó 12 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt9o10Num">
+            <summary>
+             9 ó 10 caracteres numéricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt8To9Alfanum">
+            <summary>
+            8 ó 9 caracteres alfanuméricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt9Alfanum">
+            <summary>
+            9 caracteres alfanuméricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt11Alfanum">
+            <summary>
+            11 caracteres alfanumérico
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt12Alfanum">
+            <summary>
+            12 caracteres alfanumérico
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber.Ptt5o9o12Alfanum">
+            <summary>
+            5, 9 ó 12 caracteres alfanuméricos
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.VIES.ViesVatNumber._PatternsByCountry">
+            <summary>
+            Patrones de expresiones regulares por pais.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.VIES.ViesVatNumber.ValidateStructure(System.String)">
+            <summary>
+            Valida la estructura de un número de IVA intracomunitario.
+            </summary>
+            <param name="vatNumber">Número de IVA intracomunitario
+            incluyendo el código de país.</param>
+            <returns>True si es válido y false en caso contario.</returns>
         </member>
         <member name="M:VeriFactu.Business.Validation.VIES.ViesVatNumber.Validate(System.String)">
             <summary>

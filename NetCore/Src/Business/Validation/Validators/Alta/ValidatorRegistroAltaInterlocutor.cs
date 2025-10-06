@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
 using VeriFactu.Business.Validation.NIF;
 using VeriFactu.Business.Validation.VIES;
@@ -129,6 +130,15 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
 
+                // Si el campo IDType = “02” (NIF-IVA), en caso de valor en CodigoPais.
+                // El campo CodigoPais indicado no coincide con los dos primeros dígitos del identificador.
+                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && _Interlocutor.IDOtro.CodigoPaisSpecified && 
+                    !_Interlocutor.IDOtro.ID.StartsWith($"{_Interlocutor.IDOtro.CodigoPais}"))
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                        $" {_Rol} El campo CodigoPais indicado en el interlocutor {_Interlocutor} es '{_Interlocutor.IDOtro.CodigoPais}'" +
+                        $" y no coincide con los dos primeros dígitos del identificador '{_Interlocutor.IDOtro.ID.Substring(0,2)}'.");
+
+                // Validación contra censo VIES
                 var isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(_Interlocutor.IDOtro.ID);
 
                 // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
@@ -137,6 +147,13 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} es obligatorio que IDOtro.ID = “{_Interlocutor.IDOtro.ID}” esté identificado.");
+
+                // Validación estructura nota (1).
+                isValidViesVatNumber = ViesVatNumber.ValidateStructure(_Interlocutor.IDOtro.ID);
+
+                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                        $" {_Rol} El valor del campo ID es incorrecto. IDOtro.ID = “{_Interlocutor.IDOtro.ID}”.");
 
                 if (_AllowNoCensado) 
                 {
@@ -148,6 +165,11 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                             $" {_Rol} es obligatorio que para IDOtro.CodigoPais = “{_Interlocutor.IDOtro.CodigoPais}”" +
                             $" IDOtro.IDType = “03” (PASAPORTE) o IDOtro.IDType = “07” (NO_CENSADO).");
 
+                    // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07). Si IDType es No Censado (07) el CodigoPais debe ser ES (España).
+                    if ((_Interlocutor.IDOtro.IDType == IDType.PASAPORTE|| _Interlocutor.IDOtro.IDType == IDType.NO_CENSADO) && _Interlocutor.IDOtro.CodigoPais != CodigoPais.ES)
+                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                           $" {_Rol} es obligatorio que para IDOtro.IDType = “{_Interlocutor.IDOtro.IDType}” el valor del CodigoPais sea ES.");
+
                 }
                 else 
                 {
@@ -157,14 +179,16 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                             $" {_Rol} es obligatorio que para IDOtro.CodigoPais = “{_Interlocutor.IDOtro.CodigoPais}” IDOtro.IDType = “03” (PASAPORTE).");
 
+                    // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07). Si IDType es No Censado (07) el CodigoPais debe ser ES (España).
+                    if (_Interlocutor.IDOtro.IDType == IDType.PASAPORTE && _Interlocutor.IDOtro.CodigoPais != CodigoPais.ES)
+                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                           $" {_Rol} es obligatorio que para IDOtro.IDType = “{_Interlocutor.IDOtro.IDType}” el valor del CodigoPais sea ES.");
 
                     if (_Interlocutor.IDOtro.IDType == IDType.NO_CENSADO)
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                             $" {_Rol} no se admite IDOtro.IDType = “07” (NO CENSADO).");
 
                 }
-
-
 
             }
 

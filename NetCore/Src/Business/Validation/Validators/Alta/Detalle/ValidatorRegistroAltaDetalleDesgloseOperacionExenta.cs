@@ -159,6 +159,14 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
 
             }
 
+            // Si se trata de una operación exenta no puede marcarse como no sujeta
+            if (_DetalleDesglose.OperacionExentaSpecified && 
+                (_DetalleDesglose.CalificacionOperacion == CalificacionOperacion.N1 || 
+                _DetalleDesglose.CalificacionOperacion == CalificacionOperacion.N2))
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                         $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
+                         $" establecer CalificacionOperacion como no sujeta ('N1' o 'N2').");
+
             return result;
 
         }

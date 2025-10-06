@@ -39,28 +39,42 @@
 
 using System;
 using System.Collections.Generic;
+using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators.Alta
+namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 {
 
     /// <summary>
-    /// Valida los datos de RegistroAlta FechaOperacion.
+    /// Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 02. Exportacion.
     /// </summary>
-    public class ValidatorRegistroAltaFechaOperacion : ValidatorRegistroAlta
+    public class ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion : ValidatorRegistroAlta
     {
+
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// Interlocutor a validar.
+        /// </summary>
+        readonly DetalleDesglose _DetalleDesglose;
+
+        #endregion
 
         #region Construtores de Instancia
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="envelope"> Envelope de envío al
-        /// servicio Verifactu de la AEAT.</param>
-        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
-        public ValidatorRegistroAltaFechaOperacion(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        /// <param name="envelope"> Sobre SOAP envío.</param>
+        /// <param name="registroAlta"> Registro alta factura.</param>
+        /// <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        public ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion(Envelope envelope, RegistroAlta registroAlta,
+            DetalleDesglose detalleDesglose) : base(envelope, registroAlta)
         {
+
+            _DetalleDesglose = detalleDesglose;
+
         }
 
         #endregion
@@ -76,50 +90,17 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var result = new List<string>();
 
-            // 7. FechaOperacion
-
-            if (_FechaOperacion != null)
+            //Si el impuesto es IVA(01), IGIC(03) o vacio, si ClaveRegimen es 02 solo se podrá informar OperacionExenta.
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
-                // La FechaOperacion no debe ser inferior a la fecha actual menos veinte años y no debe ser superior al año siguiente de la fecha actual.
-                if (DateTime.Now.AddYears(-20).CompareTo(_FechaOperacion) > 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" La FechaOperacion ({_FechaOperacion:yyyy-MM-dd}) no debe ser inferior a la fecha actual menos veinte años.");
-
-                if ((_FechaOperacion ?? DateTime.Now).Year > DateTime.Now.Year)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" La FechaOperacion ({_FechaOperacion:yyyy-MM-dd}) no debe ser superior al año siguiente de la fecha actual.");
-
-                // Error 1146
-                // Sólo se permite que la fecha de expedicion de la factura sea anterior a la fecha operación si los detalles del desglose son ClaveRegimen 14 o 15 e Impuesto 01, 03 o vacío.
-
-                if (_FechaExpedicion.CompareTo(_FechaOperacion) < 0) 
-                {
-
-                    var detalles = _RegistroAlta.Desglose;
-
-                    if (detalles != null)
-                    {
-
-                        foreach (var detalle in detalles)
-                        {
-
-                            var allowedPrev = (detalle.Impuesto == Xml.Factu.Impuesto.IVA || detalle.Impuesto == Xml.Factu.Impuesto.IGIC) 
-                                && (detalle.ClaveRegimenSpecified&&(detalle.ClaveRegimen == ClaveRegimen.ObraPteDevengoAdmonPublica || 
-                                detalle.ClaveRegimen == ClaveRegimen.TractoSucesivoPteDevengo));
-
-                            if (!allowedPrev)
-                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                                    $" Sólo se permite que la fecha de expedicion de la factura sea anterior a la fecha operación si los" +
-                                    $" detalles del desglose son ClaveRegimen 14 o 15 e Impuesto 01, 03 o vacío.");
-
-                        }
-
-                    }
-
-                }
-
+                if (!_DetalleDesglose.OperacionExentaSpecified)
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                        $" Cuando ClaveRegimen sea igual a “02”" +
+                        $" solo se podrá informar OperacionExenta.");
             }
+
 
             return result;
 
