@@ -273,11 +273,12 @@
             </summary>
             <param name="sellerID"></param>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Send(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Send(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction},System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envío el lote de facturas a la AEAT.
             </summary>
             <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve La respuesta de la AEAT al envío.</returns>
         </member>
         <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
@@ -1201,23 +1202,26 @@
             <returns>Path de la factura en el directorio de archivado de los datos de la
             cadena si el documento a resultado erróneo.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.Send(System.Byte[])">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.Send(System.Byte[],System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envía un xml en formato binario a la AEAT.
             </summary>
             <param name="xml">Archivo xml en formato binario a la AEAT.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve las respuesta de la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.Send">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.Send(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envía el registro a la AEAT.
             </summary>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve las respuesta de la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.ExecuteSend">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.ExecuteSend(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Ejecuta la contabilización del registro.
             </summary>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Si todo funciona correctamente devuelve null.
             En caso contrario devuelve una excepción con el error.</returns>
         </member>
@@ -1321,27 +1325,30 @@
             sido procesada de la AEAT.
             </summary>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendXmlBytes(System.Byte[],System.String)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendXmlBytes(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envía un xml en formato binario a la AEAT.
             </summary>
             <param name="xml">Archivo xml en formato binario a la AEAT.</param>
-            /// <param name="op"> Acción para el webservice.</param>
+            <param name="op"> Acción para el webservice.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve las respuesta de la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendEnvelope(VeriFactu.Xml.Soap.Envelope,System.String)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendEnvelope(VeriFactu.Xml.Soap.Envelope,System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envía un sobre SOAP.
             </summary>
             <param name="envelope">Sobre a enviar.</param>
             <param name="op">Acción del webservice.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Respuesta del servidor.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendEnvelope(VeriFactu.Xml.Soap.Envelope)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendEnvelope(VeriFactu.Xml.Soap.Envelope,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envía un sobre SOAP.
             </summary>
             <param name="envelope">Sobre a enviar.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Respuesta del servidor.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetResponseEnvelope(System.String)">
@@ -1415,10 +1422,13 @@
             Gestor de cadena de bloques para el registro.
             </summary>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.Save">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.Save(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Contabiliza y envía a la AEAT el registro.
             </summary>
+            <param name="certificate">Certificado para la petición.</param>
+            <exception cref="T:System.InvalidOperationException">Si ya se ha guardado con anterioridad.</exception>
+            <exception cref="T:System.Exception">Si surge error en el envío.</exception>
         </member>
         <member name="T:VeriFactu.Business.Operations.InvoiceQuery">
             <summary>
@@ -1508,7 +1518,7 @@
             de factura emitidas. Si su valor es false es para recibidas.</param>
             <returns> Registro para la consulta de facturas.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSales(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSales(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Devuelve las facturas emitidas por el NIF
             facilitado en la propiedad PartyID.
@@ -1516,9 +1526,10 @@
             <param name="year">Año a consultar.</param>
             <param name="month">Mes a consultar.</param>
             <param name="offset">Id. de la factura de corte para la paginación.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchases(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetPurchases(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Devuelve las facturas emitidas por el NIF
             facilitado en la propiedad PartyID.
@@ -1526,14 +1537,16 @@
             <param name="year">Año a consultar.</param>
             <param name="month">Mes a consultar.</param>
             <param name="offset">Id. de la factura de corte para la paginación.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Facturas emitidas registradas en la AEAT.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetDocuments(VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetDocuments(VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Devuelve las facturas por el NIF
             facilitado en la propiedad PartyID.
             </summary>
             <param name="registro"> Instancia de la clase ConsultaFactuSistemaFacturacion.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Facturas registradas en la AEAT.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.ToString">
@@ -1764,18 +1777,20 @@
             <param name="name">Nombre</param>
             <returns>Sobre SOAP de la petición.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetResponse">
+        <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetResponse(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Obtiene sobre SOAP de la respuesta.
             </summary>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Sobre SOAP de la respuesta.</returns>
         </member>
-        <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetBatchErrors(System.Collections.Generic.List{VeriFactu.Xml.Nif.Contribuyente})">
+        <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetBatchErrors(System.Collections.Generic.List{VeriFactu.Xml.Nif.Contribuyente},System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Valida un conjunto de NIFs en una única llamada
             al servicio de validación.
             </summary>
             <param name="items">Lista de contribuyentas a validar.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Diccionario con los NIFs erróneos</returns>
         </member>
         <member name="M:VeriFactu.Business.Validation.NIF.NifValidation.GetErrors">
@@ -5494,13 +5509,14 @@
             <param name="certificate">Verifica la validez del certificado.</param>
             <exception cref="T:System.InvalidOperationException">Se lanza si el certificado ha expirado (fecha NotAfter en el pasado).</exception>
         </member>
-        <member name="M:VeriFactu.Net.Wsd.Call(System.String,System.String,System.Xml.XmlDocument)">
+        <member name="M:VeriFactu.Net.Wsd.Call(System.String,System.String,System.Xml.XmlDocument,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
-            Llama a al web service de la AEAT para el VeriFactu seleccionado.
+            Llama al web service de la AEAT para el VeriFactu seleccionado.
             </summary>
             <param name="url">Url destino.</param>
             <param name="action">Acción a ejecutar.</param>
             <param name="xmlDocument">Documento soap xml.</param>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve la respuesta.</returns>
         </member>
         <member name="M:VeriFactu.Net.Wsd.CreateWebRequest(System.String,System.String)">
