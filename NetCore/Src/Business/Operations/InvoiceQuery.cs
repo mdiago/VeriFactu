@@ -105,6 +105,7 @@ namespace VeriFactu.Business.Operations
 
             invoice.InvoiceType = registroAlta.TipoFactura;
             invoice.SellerName = sellerName;
+            invoice.Text = registro?.DatosRegistroFacturacion?.DescripcionOperacion; 
 
             if (registroAlta.TipoRectificativaSpecified)
                 invoice.RectificationType = registroAlta.TipoRectificativa;
