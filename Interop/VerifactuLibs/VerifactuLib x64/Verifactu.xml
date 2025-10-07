@@ -874,6 +874,12 @@
             <para> 3. Establece Posted = true.</para>
             </summary>
         </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.ProcessResponse(VeriFactu.Xml.Soap.Envelope)">
+            <summary>
+            Procesa y guarda respuesta de la AEAT al envío.
+            </summary>
+            <param name="envelope">Sobre con la respuesta de la AEAT.</param>
+        </member>
         <member name="P:VeriFactu.Business.InvoiceRetrySend.OriginalInvoiceFilePath">
             <summary>
             Path de la factura original en el directorio de facturas.
@@ -1012,7 +1018,7 @@
             a contabilizar y enviar.
             </summary>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionData.GeErrorInvoiceFilePath">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionData.GetErrorInvoiceFilePath">
             <summary>
             Path de la factura en el directorio de archivado de facturas
             si el documento a resultado erróneo.
@@ -1236,6 +1242,13 @@
             Procesa y guarda respuesta de la AEAT al envío.
             </summary>
             <param name="envelope">Sobre con la respuesta de la AEAT.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetIsNotCorrectoOAceptado">
+            <summary>
+            Devuelve true si el fichero no está en la AEAT
+            (es decir si no es 'Correcto' o 'AceptadoConErrores')
+            </summary>
+            <returns>Devuelve true si el fichero no está en la AEAT.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.ProcessResponse">
             <summary>
