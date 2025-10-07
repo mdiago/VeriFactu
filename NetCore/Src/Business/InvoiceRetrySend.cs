@@ -214,6 +214,21 @@ namespace VeriFactu.Business
 
         }
 
+        /// <summary>
+        /// Procesa y guarda respuesta de la AEAT al envío.
+        /// </summary>
+        /// <param name="envelope">Sobre con la respuesta de la AEAT.</param>
+        internal override void ProcessResponse(Envelope envelope) 
+        {
+
+            base.ProcessResponse(envelope);
+
+            var notCorrectoOAceptado = GetIsNotCorrectoOAceptado();
+
+            if (notCorrectoOAceptado && File.Exists(OriginalInvoiceFilePath))
+                File.Move(OriginalInvoiceFilePath, GetErrorInvoiceFilePath());
+
+        }
 
         #endregion
 

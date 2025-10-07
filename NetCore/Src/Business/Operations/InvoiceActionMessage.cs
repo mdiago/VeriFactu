@@ -336,7 +336,7 @@ namespace VeriFactu.Business.Operations
         /// Procesa y guarda respuesta de la AEAT al envío.
         /// </summary>
         /// <param name="envelope">Sobre con la respuesta de la AEAT.</param>
-        internal void ProcessResponse(Envelope envelope)
+        internal virtual void ProcessResponse(Envelope envelope)
         {
 
             var invoiceEntryFilePath = string.IsNullOrEmpty(CSV) ? GetErrorInvoiceEntryFilePath() : InvoiceEntryFilePath;
@@ -350,18 +350,32 @@ namespace VeriFactu.Business.Operations
                 File.WriteAllText(responseFilePath, Response);
 
             // Si la respuesta no ha sido correcta o aceptada con errores renombro archivo de factura
+            var notCorrectoOAceptado = GetIsNotCorrectoOAceptado();
+
+            if (notCorrectoOAceptado && File.Exists(InvoiceFilePath))
+                File.Move(InvoiceFilePath, GetErrorInvoiceFilePath());
+
+        }
+
+        /// <summary>
+        /// Devuelve true si el fichero no está en la AEAT
+        /// (es decir si no es 'Correcto' o 'AceptadoConErrores')
+        /// </summary>
+        /// <returns>Devuelve true si el fichero no está en la AEAT.</returns>
+        internal bool GetIsNotCorrectoOAceptado() 
+        {
+
+            // Si la respuesta no ha sido correcta o aceptada con errores devuelve true
             string estadoRegistro = null;
 
-            if(ErrorFault == null && RespuestaRegFactuSistemaFacturacion?.RespuestaLinea!= null && RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0)
+            if (ErrorFault == null && RespuestaRegFactuSistemaFacturacion?.RespuestaLinea != null && RespuestaRegFactuSistemaFacturacion.RespuestaLinea.Count > 0)
                 estadoRegistro = RespuestaRegFactuSistemaFacturacion.RespuestaLinea[0].EstadoRegistro;
 
             var correcto = Status == "Correcto";
             var aceptadoConErrores = Status == "ParcialmenteCorrecto" && estadoRegistro == "AceptadoConErrores";
             var notCorrectoOAceptado = !(correcto || aceptadoConErrores);
 
-            if (notCorrectoOAceptado && File.Exists(InvoiceFilePath))
-                File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());
-
+            return notCorrectoOAceptado;
         }
 
         /// <summary>

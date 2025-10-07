@@ -194,7 +194,7 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <returns>Path de la factura en el directorio de archivado de los datos de la
         /// cadena si el documento a resultado erróneo.</returns>
-        internal string GeErrorInvoiceFilePath()
+        internal string GetErrorInvoiceFilePath()
         {
 
             return $"{InvoicePostedPath}{EncodedInvoiceID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";

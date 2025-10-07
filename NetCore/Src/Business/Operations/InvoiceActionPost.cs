@@ -151,7 +151,7 @@ namespace VeriFactu.Business.Operations
                         File.Move(InvoiceEntryFilePath, GetErrorInvoiceEntryFilePath());
 
                     if (File.Exists(InvoiceFilePath))
-                        File.Move(InvoiceFilePath, GeErrorInvoiceFilePath());
+                        File.Move(InvoiceFilePath, GetErrorInvoiceFilePath());
 
                     Posted = false;
 

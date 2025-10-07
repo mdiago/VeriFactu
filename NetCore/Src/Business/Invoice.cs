@@ -111,11 +111,11 @@ namespace VeriFactu.Business
             if (registroAlta.TipoRectificativaSpecified)
                 RectificationType = registroAlta.TipoRectificativa;
 
-            if (registroAlta.Destinatarios.Count > 1)
+            if (registroAlta.Destinatarios != null && registroAlta.Destinatarios.Count > 1)
                 throw new NotImplementedException("El método estático Invoice.FromRegistroAlta" +
                     " no implementa la conversión de RegistrosAlta con más de un destinatario.");
 
-            if (registroAlta.Destinatarios.Count == 1)
+            if (registroAlta.Destinatarios != null && registroAlta.Destinatarios.Count == 1)
             {
 
                 var destinatario = registroAlta.Destinatarios[0];
