@@ -90,12 +90,14 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
+            // 1203 = Si ClaveRegimen es 07 OperacionExenta no puede ser E2, E3, E4 y E5 o CalificacionOperacion no puede ser S2, N1, N2.
+
             // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA):
             // Si ClaveRegimen = “07”:
             // CalificacionOperacion no puede ser “S2”, “N1”, “N2”.
             // OperacionExenta no puede ser “E2”, “E3”, “E4” y “E5”.
-            if (_DetalleDesglose.Impuesto != Impuesto.IVA &&
-                _DetalleDesglose.Impuesto != Impuesto.IGIC)
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
                 if (Array.IndexOf(new CalificacionOperacion[] { CalificacionOperacion.S1, CalificacionOperacion.S2, CalificacionOperacion.N1, CalificacionOperacion.N2 }, _DetalleDesglose.CalificacionOperacion) != -1)

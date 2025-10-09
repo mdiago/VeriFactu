@@ -89,14 +89,16 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
+            // 1200 = Si ClaveRegimen es 03 CalificacionOperacion sólo puede ser Operación Sujeta y No exenta - Sin inversión del sujeto pasivo (S1).
+
             // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA),
             // cuando ClaveRegimen sea igual a “03”, si se cumplimenta CalificacionOperacion,
             // este campo solo puede contener el valor “S1”.
-            if (_DetalleDesglose.Impuesto != Impuesto.IVA &&
-                _DetalleDesglose.Impuesto != Impuesto.IGIC)
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
-                if(_DetalleDesglose.Impuesto != Impuesto.IGIC && _DetalleDesglose.CalificacionOperacion != CalificacionOperacion.S1)
+                if(_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.S1)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “03”, si se cumplimenta CalificacionOperacion, " +
                         $" este campo solo puede contener el valor “S1”.");
@@ -107,6 +109,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             // Ley 37 / 1992, de 28 de diciembre, del Impuesto sobre el Valor Añadido contempla expresamente la
             // posibilidad de aplicar exenciones en REBU(Régimen especial de bienes usados, objetos de arte,
             // antigüedades y objetos de colección).
+
+            
 
 
             return result;

@@ -164,6 +164,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRecc.cs">
       <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRecc.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral.cs">
+      <Link>Src\Business\Validation\Validators\Alta\Detalle\Regimen\ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesglose.cs">
       <Link>Src\Business\Validation\Validators\Alta\Detalle\ValidatorRegistroAltaDetalleDesglose.cs</Link>
     </Compile>

@@ -89,13 +89,15 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
+            // 1205 = Si ClaveRegimen es 10 CalificacionOperacion tiene que ser N1, TipoFactura F1 y Destinatarios estar identificada mediante NIF.
+
             // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA):
             // Si ClaveRegimen = “10”:
             // CalificacionOperacion tiene que ser “N1” y siempre debe ir relleno.
             // TipoFactura tiene que ser “F1”.
             // Todos los destinatarios tienen que estar identificado mediante NIF.
-            if (_DetalleDesglose.Impuesto != Impuesto.IVA &&
-                _DetalleDesglose.Impuesto != Impuesto.IGIC)
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
                 if (_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.N1)
@@ -115,7 +117,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                             $" El destinatario {destinatario} tiene que estar identificado mediante NIF.");
 
             }
-
 
             return result;
 

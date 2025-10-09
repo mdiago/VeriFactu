@@ -90,10 +90,12 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
+            // 1206 = Si ClaveRegimen es 11 TipoImpositivo ha de ser 21%.
+
             // Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA):
             // Si ClaveRegimen = “11”:
             // Únicamente se admitirá el TipoImpositivo = 21.
-            if (_DetalleDesglose.Impuesto != Impuesto.IVA)
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA)
             {
 
                 if (XmlParser.ToDecimal(_DetalleDesglose.TipoImpositivo) != 21)
@@ -102,7 +104,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                         $" Únicamente se admitirá el TipoImpositivo = 21.");
 
             }
-
 
             return result;
 

@@ -37,9 +37,7 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
-using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -48,9 +46,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 {
 
     /// <summary>
-    /// Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 06. Grupo de entidades nivel avanzado.
+    /// Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 01. RegimenGeneral.
     /// </summary>
-    public class ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades : ValidatorRegistroAlta
+    public class ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral : ValidatorRegistroAlta
     {
 
         #region Variables Privadas de Instancia
@@ -70,7 +68,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         /// <param name="envelope"> Sobre SOAP envío.</param>
         /// <param name="registroAlta"> Registro alta factura.</param>
         /// <param name="detalleDesglose"> DetalleDesglose a validar. </param>
-        public ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades(Envelope envelope, RegistroAlta registroAlta,
+        public ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral(Envelope envelope, RegistroAlta registroAlta,
             DetalleDesglose detalleDesglose) : base(envelope, registroAlta)
         {
 
@@ -91,28 +89,17 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
-            // 1202 = Si ClaveRegimen es 06 TipoFactura no puede ser F2, F3, R5 y BaseImponibleACoste debe estar cumplimentado.
+            // 1199 =  Si Impuesto es '01' (IVA), '03' (IGIC) o no se cumplimenta y ClaveRegimen es 01 no pueden marcarse la OperacionExenta E2, E3.
 
-            // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA):
-            // Si ClaveRegimen es igual a “06”:
-            // Se validará que TipoFactura sea distinto de “F2”, “F3”, “R5”.
-            // Campo BaseImponibleACoste deberá estar cumplimentado.
             if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
                 _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
-                if (Array.IndexOf(new TipoFactura[] { TipoFactura.F2, TipoFactura.F3, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1)
+                if(_DetalleDesglose.OperacionExentaSpecified && (_DetalleDesglose.OperacionExenta == CausaExencion.E2 || _DetalleDesglose.OperacionExenta == CausaExencion.E3))
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                        $" Cuando ClaveRegimen sea igual a “06”" +
-                        $" el TipoFactura debe ser distinto de “F2”, “F3”, “R5”.");
+                        $" Cuando ClaveRegimen sea igual a “01”, no pueden marcarse la OperacionExenta E2, E3.");
 
-                var baseImponibleACoste = XmlParser.ToDecimal(_DetalleDesglose.BaseImponibleACoste);
-
-                if(baseImponibleACoste == 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                        $" Cuando ClaveRegimen sea igual a “06”" +
-                        $" campo BaseImponibleACoste deberá estar cumplimentado.");
-            }
+            } 
 
             return result;
 

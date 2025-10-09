@@ -174,6 +174,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var _ValidatorByClaveRegimen = new Dictionary<ClaveRegimen, IValidator>() 
             {
+                // 1199 =  Si Impuesto es '01' (IVA), '03' (IGIC) o no se cumplimenta y ClaveRegimen es 01 no pueden marcarse la OperacionExenta E2, E3.
+                {ClaveRegimen.RegimenGeneral,               new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral(_Envelope, _RegistroAlta, _DetalleDesglose) },
                 // 15.6.1 ClaveRegimen 03. REBU.
                 {ClaveRegimen.Rebu,                         new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRebu(_Envelope, _RegistroAlta, _DetalleDesglose) },
                 // 15.6.2 ClaveRegimen 04. Operaciones con oro de inversión.
