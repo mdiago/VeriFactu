@@ -730,6 +730,7 @@ namespace Verifactu
             {
 
                 result.CSV = entry.CSV;
+                result.Response = entry.Response;
                 result.ResultMessage = "OK";
 
             }
@@ -737,6 +738,7 @@ namespace Verifactu
             {
 
                 result.ResultCode = entry.ErrorCode;
+                result.Response = entry.Response;
                 result.ResultMessage = entry.ErrorDescription;
 
             }
@@ -793,6 +795,7 @@ namespace Verifactu
             {
 
                 result.CSV = cancellation.CSV;
+                result.Response = cancellation.Response;
                 result.ResultMessage = "OK";
 
             }
@@ -800,6 +803,7 @@ namespace Verifactu
             {
 
                 result.ResultCode = cancellation.ErrorCode;
+                result.Response = cancellation.Response;
                 result.ResultMessage = cancellation.ErrorDescription;
 
             }

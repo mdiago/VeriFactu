@@ -2448,6 +2448,30 @@
             </summary>
             <returns>Lista con los errores de un bloque en concreto.</returns>
         </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral">
+            <summary>
+            Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 01. RegimenGeneral.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral._DetalleDesglose">
+            <summary>
+            Interlocutor a validar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta,VeriFactu.Xml.Factu.Alta.DetalleDesglose)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Sobre SOAP envío.</param>
+            <param name="registroAlta"> Registro alta factura.</param>
+            <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.ValidatorRegistroAltaDetalleDesglose">
             <summary>
             Valida los datos de RegistroAlta Tercero.
@@ -12689,6 +12713,11 @@
             si todo ha ido bien.
             </summary>
         </member>
+        <member name="P:Verifactu.IVfInvoiceResult.Response">
+            <summary>
+            Respuesta del envío a la AEAT.
+            </summary>
+        </member>
         <member name="T:Verifactu.VfInvoiceResult">
             <summary>
             Resultado de un envio de alta o anulación a la AEAT.
@@ -12716,6 +12745,11 @@
             <summary>
             Código seguro de verificación devuelto por la AEAT
             si todo ha ido bien.
+            </summary>
+        </member>
+        <member name="P:Verifactu.VfInvoiceResult.Response">
+            <summary>
+            Respuesta del envío a la AEAT.
             </summary>
         </member>
         <member name="T:Verifactu.IVfSettings">

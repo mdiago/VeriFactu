@@ -74,6 +74,11 @@ namespace Verifactu
         /// </summary>
         string CSV { get; set; }
 
+        /// <summary>
+        /// Respuesta del envío a la AEAT.
+        /// </summary>
+        string Response { get; set; }
+
         #endregion
 
     }
@@ -123,6 +128,11 @@ namespace Verifactu
         /// si todo ha ido bien.
         /// </summary>
         public string CSV { get; set; }
+
+        /// <summary>
+        /// Respuesta del envío a la AEAT.
+        /// </summary>
+        public string Response { get; set; }
 
         #endregion
 
