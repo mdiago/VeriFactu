@@ -329,7 +329,6 @@ namespace VeriFactu.Business
                     }
                 };
 
-
             if(string.IsNullOrEmpty(BuyerCountryID))
                 throw new Exception($"Error en factura ({this}): Si BuyerID no es un identificador español válido" +
                     " (NIF, DNI, NIE...) es obligatorio que BuyerCountryID tenga un valor.");

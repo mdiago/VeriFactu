@@ -353,6 +353,9 @@ namespace Verifactu
 
             result.BuyerIDType = (VeriFactu.Xml.Factu.IDType)buyerIDType;
 
+            if(!string.IsNullOrEmpty(BuyerCountryID))
+                result.BuyerCountryID = BuyerCountryID;
+
             result.TaxItems = _TaxItems;
             result.CalculateTotals();
             result.RectificationItems = _RectificationItems;
