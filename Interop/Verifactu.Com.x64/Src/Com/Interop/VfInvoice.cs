@@ -191,6 +191,14 @@ namespace Verifactu
         void GetValidateQr(string path);
 
         /// <summary>
+        /// Obtiene un bitmap con la url de validación
+        /// codificada en un código QR.
+        /// </summary>
+        /// <returns>Bitmap con la url de validación
+        /// codificada en un código QR.</returns>
+        byte[] GetValidateQrBytes();
+
+        /// <summary>
         /// Devuelve la url para la validación del documento.
         /// </summary>
         /// <returns>Url para la validación del documento.</returns>
@@ -553,6 +561,20 @@ namespace Verifactu
         public void GetValidateQr(string path)
         {
 
+            var bmQr = GetValidateQrBytes();
+            File.WriteAllBytes(path, bmQr);
+
+        }
+
+        /// <summary>
+        /// Obtiene un bitmap con la url de validación
+        /// codificada en un código QR.
+        /// </summary>
+        /// <returns>Bitmap con la url de validación
+        /// codificada en un código QR.</returns>
+        public byte[] GetValidateQrBytes()
+        {
+
             _Invoice = GetInvoice();
 
             // Obtenemos una instancia de la clase RegistroAlta a partir de
@@ -562,9 +584,10 @@ namespace Verifactu
             // Obtenemos la imágen del QR
             var bmQr = registro.GetValidateQr();
 
-            File.WriteAllBytes(path, bmQr);
+            return bmQr;
 
         }
+
 
         /// <summary>
         /// Devuelve la url para la validación del documento.

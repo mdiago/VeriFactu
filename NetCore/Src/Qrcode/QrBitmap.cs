@@ -43,6 +43,8 @@ namespace VeriFactu.Qrcode
     /// <summary>
     /// Representa un mapa de bits obtenido a partir de una
     /// matriz de bytes de código QR.
+    /// Formato es 32 bpp BGRA con alfa forzado a 255 por
+    /// compatibilidad con Ms Access.
     /// </summary>
     public class QrBitmap
     {

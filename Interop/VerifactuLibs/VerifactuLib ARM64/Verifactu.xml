@@ -7482,6 +7482,8 @@
             <summary>
             Representa un mapa de bits obtenido a partir de una
             matriz de bytes de código QR.
+            Formato es 32 bpp BGRA con alfa forzado a 255 por
+            compatibilidad con Ms Access.
             </summary>
         </member>
         <member name="M:VeriFactu.Qrcode.QrBitmap.#ctor(VeriFactu.Qrcode.ByteMatrix)">
@@ -12286,6 +12288,14 @@
             <returns>Bitmap con la url de validación
             codificada en un código QR.</returns>
         </member>
+        <member name="M:Verifactu.IVfInvoice.GetValidateQrBytes">
+            <summary>
+            Obtiene un bitmap con la url de validación
+            codificada en un código QR.
+            </summary>
+            <returns>Bitmap con la url de validación
+            codificada en un código QR.</returns>
+        </member>
         <member name="M:Verifactu.IVfInvoice.GetUrlValidate">
             <summary>
             Devuelve la url para la validación del documento.
@@ -12492,6 +12502,14 @@
             codificada en un código QR.
             </summary>
             <param name="path">Ruta donde se guardará el archivo de mapa de bits.</param>
+            <returns>Bitmap con la url de validación
+            codificada en un código QR.</returns>
+        </member>
+        <member name="M:Verifactu.VfInvoice.GetValidateQrBytes">
+            <summary>
+            Obtiene un bitmap con la url de validación
+            codificada en un código QR.
+            </summary>
             <returns>Bitmap con la url de validación
             codificada en un código QR.</returns>
         </member>
