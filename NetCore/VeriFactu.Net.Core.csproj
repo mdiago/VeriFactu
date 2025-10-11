@@ -26,9 +26,16 @@
   <PropertyGroup>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);CustomContentTarget</TargetsForTfmSpecificContentInPackage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
   
+    <!-- Suprime las advertencia NU5118, NU5128 -->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);NU5118</NoWarn>
+	<NoWarn>$(NoWarn);NU5128</NoWarn>
+	<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+  </PropertyGroup>
+
    <Target Name="CustomContentTarget">
     <ItemGroup>
       <TfmSpecificPackageFile Include="..\NetFramework\bin\Debug\VeriFactu.dll">

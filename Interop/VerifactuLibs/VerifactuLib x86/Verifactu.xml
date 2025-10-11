@@ -6434,11 +6434,6 @@
             de VERI*FACTU.
             </summary>
         </member>
-        <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.XmlDsigSHA256Url">
-            <summary>
-            Url para función hash SHA256
-            </summary>
-        </member>
         <member name="F:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.XmlDsigRSASHA256Url">
             <summary>
             Url para algoritmo de encriptado RSA con función hash SHA256

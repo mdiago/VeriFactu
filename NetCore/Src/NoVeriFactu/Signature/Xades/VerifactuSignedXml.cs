@@ -58,10 +58,15 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades
 
         #region Variables Privadas de Instancia
 
+        #if LE_461
+
         /// <summary>
-        /// Url para función hash SHA256
+        /// Url para función hash SHA256. SignedXml no tiene este valor
+        /// en NetFramework 4.6.1 y anteriores.
         /// </summary>
         internal const string XmlDsigSHA256Url = "http://www.w3.org/2001/04/xmlenc#sha256";
+
+        #endif
 
         /// <summary>
         /// Url para algoritmo de encriptado RSA con función hash SHA256

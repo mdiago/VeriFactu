@@ -429,7 +429,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    throw new Exception(ex.Message, ex);
                 }
             }
         }
@@ -496,7 +496,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message, ex);
             }
 
         }
@@ -518,7 +518,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message, ex);
             }
         }
 
@@ -543,7 +543,7 @@ namespace VeriFactu.Business.Validation.NIF.TaxId
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(ex.Message, ex);
             }
             return ret;
         }

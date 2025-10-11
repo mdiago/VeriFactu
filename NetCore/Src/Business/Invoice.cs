@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using VeriFactu.Business.Validation.NIF.TaxId;
+using VeriFactu.Common;
 using VeriFactu.Config;
 using VeriFactu.Net.Rest.Json;
 using VeriFactu.Xml;
@@ -314,7 +315,7 @@ namespace VeriFactu.Business
             } 
             catch (Exception ex) 
             {
-
+                Utils.Log($"{ex}");
                 throw;
 
             }
