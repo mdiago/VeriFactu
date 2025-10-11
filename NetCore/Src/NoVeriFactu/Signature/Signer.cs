@@ -149,13 +149,20 @@ namespace VeriFactu.NoVeriFactu.Signature
         private AsymmetricAlgorithm GetCertificateKey(X509Certificate2 certificate)
         {
 
-            // Proveedor para SA256
-            var exportedKeyMaterial = certificate.PrivateKey.ToXmlString(true); //Include Private Parameters
-            var key = new RSACryptoServiceProvider(new CspParameters(PROV_RSA_AES));
-            key.PersistKeyInCsp = false;
-            key.FromXmlString(exportedKeyMaterial);
-            return key;
+#if LE_461
 
+            RSA src = RSACertificateExtensions.GetRSAPrivateKey(certificate);
+            if (src is null) throw new CryptographicException("El certificado no contiene una clave RSA privada.");
+            var p = src.ExportParameters(includePrivateParameters: true);
+            var clone = new RSACng();
+            clone.ImportParameters(p);
+
+            return clone;
+
+#else
+            return certificate.GetRSAPrivateKey();
+#endif
+            
         }
 
         /// <summary>
@@ -274,7 +281,7 @@ namespace VeriFactu.NoVeriFactu.Signature
 
         }
 
-        #endregion
+#endregion
 
         #region Propiedades Públicas de Instancia
 
