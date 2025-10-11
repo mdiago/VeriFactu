@@ -261,13 +261,20 @@ namespace VeriFactu.Net
                     return new X509Certificate2(Settings.Current.CertificatePath);
                 else
                     return new X509Certificate2(Settings.Current.CertificatePath,
-                        Settings.Current.CertificatePassword, X509KeyStorageFlags.Exportable);
+                        Settings.Current.CertificatePassword,
+#if LE_461
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet |
+#else
+                        X509KeyStorageFlags.EphemeralKeySet |
+#endif
+                        X509KeyStorageFlags.Exportable);
 
             return null;
 
         }
 
-        #endregion
+#endregion
 
     }
 
