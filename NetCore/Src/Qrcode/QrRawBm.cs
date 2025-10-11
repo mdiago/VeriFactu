@@ -101,10 +101,13 @@ namespace VeriFactu.Qrcode
         /// <param name="b">Valor del azul.</param>
         public void SetPixel(int x, int y, byte r, byte g, byte b)
         {
+            // Opaco
+            const byte a = 255;
             int offset = ((Height - y - 1) * Width + x) * 4;
             ImageBytes[offset + 0] = b;
             ImageBytes[offset + 1] = g;
             ImageBytes[offset + 2] = r;
+            ImageBytes[offset + 3] = a;
         }
 
         /// <summary>
