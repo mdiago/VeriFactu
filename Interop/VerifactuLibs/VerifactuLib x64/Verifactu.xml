@@ -5658,13 +5658,12 @@
             <param name="certificate">Certificado del que obtener la clave.</param>
             <returns>Clave válida para firma SA256.</returns>
         </member>
-        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetKeyInfo(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.RSACryptoServiceProvider)">
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetKeyInfo(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Devuelve el objeto KeyInfo de la firma adecuado
             para el certificado de entrada.
             </summary>
             <param name="certificate">Certificado.</param>
-            <param name="key">Clave del certificado.</param>
             <returns>KeyInfo de la firma.</returns>
         </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.GetInXmlReference(System.String)">
