@@ -315,8 +315,13 @@ namespace VeriFactu.Business
             } 
             catch (Exception ex) 
             {
+                
                 Utils.Log($"{ex}");
-                throw;
+
+                if(ex.InnerException as TaxIdEsException != null)
+                    isTaxIdEs = false;
+                else
+                    throw;
 
             }
 
