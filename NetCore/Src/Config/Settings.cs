@@ -79,7 +79,8 @@ namespace VeriFactu.Config
 		/// </summary>
 		static readonly string _Path =
 #if !LE_461
-            RuntimeInformation.IsOSPlatform(OSPlatform.Create("OSX")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")) ?
+            RuntimeInformation.IsOSPlatform(OSPlatform.Create("OSX")) || RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")) || 
+            RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")) ?
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + $"{_PathSep}VeriFactu{_PathSep}" :
 #endif
             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + $"{_PathSep}VeriFactu{_PathSep}";
