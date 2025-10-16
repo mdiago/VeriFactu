@@ -40,7 +40,7 @@ Para cualquier duda o consulta, puedes escribirnos a **info@irenesolutions.com**
 
 ### Instalar el paquete con dotnet CLI
 
-`dotnet add package Verifactu`
+`dotnet add package VeriFactu`
 
 <br>
 <br>
