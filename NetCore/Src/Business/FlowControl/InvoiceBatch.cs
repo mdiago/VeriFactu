@@ -292,12 +292,13 @@ namespace VeriFactu.Business.FlowControl
         /// Contabiliza en la cadena de bloques, envía a la AEAT
         /// y devuelve los resultados del lote.
         /// </summary>
+        /// <param name="certificate">Certificado para la petición.</param>
         /// <returns>Resultado del guardado del lote.</returns>
-        public Dictionary<string, InvoiceAction> Save()
+        public Dictionary<string, InvoiceAction> Save(X509Certificate2 certificate = null)
         {
 
             var postedInvoiceActions = Post(_InvoiceActions);
-            var aeatResponse = Send(postedInvoiceActions);
+            var aeatResponse = Send(postedInvoiceActions, certificate);
             return ProcessReponse(aeatResponse, postedInvoiceActions);
 
         }
