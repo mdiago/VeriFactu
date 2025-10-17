@@ -69,6 +69,51 @@ namespace VeriFactu.Business.FlowControl
 
         #endregion
 
+        #region Propiedades Privadas de Instacia
+
+        /// <summary>
+        /// Sobre SOAP de respuesta de la AEAT.
+        /// </summary>
+        internal Envelope ResponseEnvelope { get; set; }
+
+        /// <summary>
+        /// Error Fault.
+        /// </summary>
+        internal Fault ErrorFault
+        {
+
+            get
+            {
+
+                if (ResponseEnvelope == null)
+                    return null;
+
+                return ResponseEnvelope.Body.Registro as Fault;
+
+            }
+
+        }
+
+        /// <summary>
+        /// Respueta AEAT.
+        /// </summary>
+        internal RespuestaRegFactuSistemaFacturacion RespuestaRegFactuSistemaFacturacion
+        {
+
+            get
+            {
+
+                if (ResponseEnvelope == null)
+                    return null;
+
+                return ResponseEnvelope.Body.Registro as RespuestaRegFactuSistemaFacturacion;
+
+            }
+
+        }
+
+        #endregion
+
         #region Construtores de Instancia
 
         /// <summary>
@@ -106,6 +151,9 @@ namespace VeriFactu.Business.FlowControl
             if (invoiceActions == null || invoiceActions.Count == 0)
                 throw new ArgumentException("El argumento invoiceActions debe contener elementos.");
 
+            if (ResponseEnvelope != null)
+                throw new InvalidOperationException("Esta instancia de lote ya ha sido enviada a la AEAT.");
+
             Envelope envelope = null;
             InvoiceAction first = invoiceActions[0];
             InvoiceAction last = null;
@@ -128,9 +176,10 @@ namespace VeriFactu.Business.FlowControl
 
             var envelopeRespuesta = last.GetResponseEnvelope(response);
 
+            ResponseEnvelope = envelopeRespuesta;
+
             File.WriteAllBytes($"{first.InvoiceEntryPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", xml);
             File.WriteAllText($"{first.ResponsesPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", response);
-
 
             var respuesta = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion);
 
@@ -139,7 +188,7 @@ namespace VeriFactu.Business.FlowControl
             
                 var fault = (envelopeRespuesta.Body.Registro as Fault);
 
-                if (fault == null)
+                if (ErrorFault == null)
                     throw new Exception("No se ha podido recuperar la respuesta de la AEAT correctamente.");
                 else
                     throw new FaultException(fault);
@@ -254,6 +303,11 @@ namespace VeriFactu.Business.FlowControl
         /// o cualquier otro identificador acordado.
         /// </summary>        
         public string SellerID { get; private set; }
+
+        /// <summary>
+        /// Registro respuesta de la AEAT al envío del lote.
+        /// </summary>
+        public RespuestaRegFactuSistemaFacturacion Response => RespuestaRegFactuSistemaFacturacion;
 
         #endregion
 
