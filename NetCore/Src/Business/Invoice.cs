@@ -470,7 +470,14 @@ namespace VeriFactu.Business
         public List<TaxItem> TaxItems { get; set; }
 
         /// <summary>
-        /// Facturas rectificadas.
+        /// Esta colección almacena la información de las facturas modificados
+        /// por la presenta factura. Estas modificaciones pueden provenir de
+        /// dos situaciónes distintas:
+        /// <para>1. La factura es del tipo F3 y se trata de la conversión de una
+        /// factura simplificada a factura normal.</para>
+        /// <para>2. Se trata de una factura rectificativa: R1, R2, R3, R4, R5.</para>
+        /// Según la situación la información irá en el RegistroAlta en el
+        /// bloque de FacturasRectificadas o en el de FacturasSustituidas.
         /// </summary>
         public List<RectificationItem> RectificationItems { get; set; }
 
@@ -581,20 +588,38 @@ namespace VeriFactu.Business
             if (RectificationItems?.Count > 0) 
             {
 
-                if (!isRectification)
-                    throw new InvalidOperationException("No se pueden incluir elementos en la lista 'RectificationItems'" +
-                        " si InvoiceType no es rectificativa (R1, R2, R3, R4, R5).");
+                IDFactura[] idsFactura = new IDFactura[RectificationItems.Count];
 
-                // Añadimos las factura rectificadas
-                registroAlta.FacturasRectificadas = new IDFactura[RectificationItems.Count];
-
-                for(int rectificationIndex = 0; rectificationIndex< RectificationItems.Count; rectificationIndex++)
-                    registroAlta.FacturasRectificadas[rectificationIndex] =new IDFactura()
+                for (int rectificationIndex = 0; rectificationIndex < RectificationItems.Count; rectificationIndex++)
+                    idsFactura[rectificationIndex] = new IDFactura()
                     {
                         IDEmisorFactura = SellerID,
                         NumSerieFactura = RectificationItems[rectificationIndex].InvoiceID,
                         FechaExpedicionFactura = XmlParser.GetXmlDate(RectificationItems[rectificationIndex].InvoiceDate)
                     };
+
+                // Podemos tener dos situaciones: 
+                //  1. Se trata de una conversión a factura normal de una simplificada (F3)
+                //  2. Se trata de una rectificativa
+
+                if (InvoiceType == TipoFactura.F3) //  1. Se trata de una conversión a factura normal de una simplificada (F3)
+                {
+
+                    // Añadimos las factura sustituidas
+                    registroAlta.FacturasSustituidas = idsFactura;
+
+                }
+                else                                //  2. Se trata de una rectificativa
+                {
+
+                    if (!isRectification)
+                        throw new InvalidOperationException("No se pueden incluir elementos en la lista 'RectificationItems'" +
+                            " si InvoiceType no es rectificativa (R1, R2, R3, R4, R5).");
+
+                    // Añadimos las factura rectificadas
+                    registroAlta.FacturasRectificadas = idsFactura;
+
+                }
 
             }
 

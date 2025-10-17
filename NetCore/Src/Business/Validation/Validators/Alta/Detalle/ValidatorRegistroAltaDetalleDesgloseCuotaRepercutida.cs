@@ -108,20 +108,32 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                         var taxBase = (baseImponibleACoste == 0) ? baseImponibleOimporteNoSujeto : baseImponibleACoste;
                         var texBase = (baseImponibleACoste == 0) ? "BaseImponibleOimporteNoSujeto" : "BaseImponibleACoste";
 
-                        // CuotaRepercutida y BaseImponibleOimporteNoSujeto deben tener el mismo signo.
-                        if ((cuotaRepercutida/Math.Abs(cuotaRepercutida)) != (taxBase / Math.Abs(taxBase)))
+                        if (taxBase == 0)
+                        {
+
                             result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                                    $" CuotaRepercutida y {texBase} deben tener el mismo signo.");
+                                $" El valor de la base imponible no puede ser 0.");
 
-                        // Si [BaseImponibleOimporteNoSujeto] ≤ 1.000,00:
-                        // [CuotaRepercutida]=([BaseImponibleOimporteNoSujeto] * TipoImpositivo) +/- 1% de[BaseImponibleOimporteNoSujeto]
-                        // (y en todo caso se admite una diferencia de +/- 10,00 euros). (CREO QUE ESTO ESTÁ MAL REDACTADO !!!)
+                        }
+                        else 
+                        {
 
-                        var maxDiff = 10m;
+                            // CuotaRepercutida y BaseImponibleOimporteNoSujeto deben tener el mismo signo.
+                            if ((cuotaRepercutida / Math.Abs(cuotaRepercutida)) != (taxBase / Math.Abs(taxBase)))
+                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                                        $" CuotaRepercutida y {texBase} deben tener el mismo signo.");
 
-                        if (Math.Abs(taxBase * tipoImpositivo / 100 - cuotaRepercutida) > maxDiff)
-                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                                $" [CuotaRepercutida]=([{texBase}] * TipoImpositivo) +/- {maxDiff:#,##0.00}%.");
+                            // Si [BaseImponibleOimporteNoSujeto] ≤ 1.000,00:
+                            // [CuotaRepercutida]=([BaseImponibleOimporteNoSujeto] * TipoImpositivo) +/- 1% de[BaseImponibleOimporteNoSujeto]
+                            // (y en todo caso se admite una diferencia de +/- 10,00 euros). (CREO QUE ESTO ESTÁ MAL REDACTADO !!!)
+
+                            var maxDiff = 10m;
+
+                            if (Math.Abs(taxBase * tipoImpositivo / 100 - cuotaRepercutida) > maxDiff)
+                                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                                    $" [CuotaRepercutida]=([{texBase}] * TipoImpositivo) +/- {maxDiff:#,##0.00}%.");
+
+                        }
 
                     }
 
