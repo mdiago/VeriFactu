@@ -193,7 +193,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 // 15.6.8 ClaveRegimen 14. IVA pendiente AAPP.
                 {ClaveRegimen.ObraPteDevengoAdmonPublica,   new ValidatorRegistroAltaDetalleDesgloseClaveRegimenObraPteDevengoAdmonPublica(_Envelope, _RegistroAlta, _DetalleDesglose) },
                 // Añadido por error 1286: Si el impuesto es IVA(01), IGIC(03) o vacio, si ClaveRegimen es 02 solo se podrá informar OperacionExenta.
-                 {ClaveRegimen.Exportacion,                 new ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                {ClaveRegimen.Exportacion,                  new ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion(_Envelope, _RegistroAlta, _DetalleDesglose) },
             };
 
             if(_DetalleDesglose.ClaveRegimenSpecified)

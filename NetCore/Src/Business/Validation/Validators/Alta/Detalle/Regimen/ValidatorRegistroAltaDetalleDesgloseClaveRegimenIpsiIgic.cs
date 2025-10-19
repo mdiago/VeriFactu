@@ -92,8 +92,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA):
             // Si ClaveRegimen = “08”:
             // CalificacionOperacion tiene que ser “N2” y siempre debe ir relleno.
-            if (_DetalleDesglose.Impuesto != Impuesto.IVA &&
-                _DetalleDesglose.Impuesto != Impuesto.IGIC)
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
                 if (_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.N2)
