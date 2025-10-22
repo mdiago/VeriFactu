@@ -597,8 +597,12 @@ namespace Verifactu
         {
 
             _Invoice = GetInvoice();
-            var entry = new VeriFactu.Business.InvoiceEntry(_Invoice);
-            return entry.Registro.GetUrlValidate();
+
+            // Obtenemos una instancia de la clase RegistroAlta a partir de
+            // la instancia del objeto de negocio Invoice
+            var registro = _Invoice.GetRegistroAlta();
+
+            return registro.GetUrlValidate();
 
         }
 

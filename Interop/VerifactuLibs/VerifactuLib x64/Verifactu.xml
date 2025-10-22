@@ -262,6 +262,21 @@
             Colección de registros a enviar.
             </summary>
         </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceBatch.ResponseEnvelope">
+            <summary>
+            Sobre SOAP de respuesta de la AEAT.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceBatch.ErrorFault">
+            <summary>
+            Error Fault.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceBatch.RespuestaRegFactuSistemaFacturacion">
+            <summary>
+            Respueta AEAT.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.#ctor">
             <summary>
             Constructor.
@@ -305,17 +320,23 @@
             o cualquier otro identificador acordado.
             </summary>        
         </member>
+        <member name="P:VeriFactu.Business.FlowControl.InvoiceBatch.Response">
+            <summary>
+            Registro respuesta de la AEAT al envío del lote.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Add(VeriFactu.Business.InvoiceEntry)">
             <summary>
             Añade una entrada de factura al lote.
             </summary>
             <param name="invoiceEntry">Entrada de factura a añadir.</param>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Save">
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Save(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Contabiliza en la cadena de bloques, envía a la AEAT
             y devuelve los resultados del lote.
             </summary>
+            <param name="certificate">Certificado para la petición.</param>
             <returns>Resultado del guardado del lote.</returns>
         </member>
         <member name="T:VeriFactu.Business.FlowControl.InvoiceQueue">
@@ -698,7 +719,14 @@
         </member>
         <member name="P:VeriFactu.Business.Invoice.RectificationItems">
             <summary>
-            Facturas rectificadas.
+            Esta colección almacena la información de las facturas modificados
+            por la presenta factura. Estas modificaciones pueden provenir de
+            dos situaciónes distintas:
+            <para>1. La factura es del tipo F3 y se trata de la conversión de una
+            factura simplificada a factura normal.</para>
+            <para>2. Se trata de una factura rectificativa: R1, R2, R3, R4, R5.</para>
+            Según la situación la información irá en el RegistroAlta en el
+            bloque de FacturasRectificadas o en el de FacturasSustituidas.
             </summary>
         </member>
         <member name="P:VeriFactu.Business.Invoice.RectificationTaxBase">
