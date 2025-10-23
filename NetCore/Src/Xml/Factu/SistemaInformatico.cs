@@ -123,7 +123,7 @@ namespace VeriFactu.Xml.Factu
         /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-            return $"{IdSistemaInformatico} ({Version})";
+            return $"{base.ToString()},{NombreSistemaInformatico} {Version}, {IdSistemaInformatico}, {NumeroInstalacion}";
         }
 
         #endregion
