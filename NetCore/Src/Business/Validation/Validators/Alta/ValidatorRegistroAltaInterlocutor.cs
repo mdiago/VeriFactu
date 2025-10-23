@@ -170,7 +170,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07).
                     // https://github.com/mdiago/VeriFactu/discussions/186#discussioncomment-14760481
                     // Parece que la redacción en el documento de validaciones no es correcta y quiere decir que cuando 'ES' sólo vale pasaporte o no censado
-                    if(_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&(_Interlocutor.IDOtro.IDType != IDType.PASAPORTE || _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
+                    if(_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&(_Interlocutor.IDOtro.IDType != IDType.PASAPORTE && _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                           $" {_Rol} es obligatorio que para CodigoPais 'ES' IDOtro.IDType sea Pasaporte (03) o No Censado (07).");
 
@@ -191,7 +191,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07).
                     // https://github.com/mdiago/VeriFactu/discussions/186#discussioncomment-14760481
                     // Parece que la redacción en el documento de validaciones no es correcta y quiere decir que cuando 'ES' sólo vale pasaporte o no censado
-                    if(_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&(_Interlocutor.IDOtro.IDType != IDType.PASAPORTE || _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
+                    if(_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&(_Interlocutor.IDOtro.IDType != IDType.PASAPORTE && _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                           $" {_Rol} es obligatorio que para CodigoPais 'ES' IDOtro.IDType sea Pasaporte (03) o No Censado (07).");
 
