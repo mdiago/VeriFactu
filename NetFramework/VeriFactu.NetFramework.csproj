@@ -850,6 +850,7 @@
     </Compile>
     <Compile Include="Doc\NamespaceDoc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Xml\Factu\Consulta\SistemaInformatico.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo-heart.ico" />

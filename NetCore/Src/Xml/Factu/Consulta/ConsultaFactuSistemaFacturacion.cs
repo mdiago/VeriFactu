@@ -65,6 +65,12 @@ namespace VeriFactu.Xml.Factu.Consulta
         [XmlElement("FiltroConsulta", Namespace = Namespaces.NamespaceCon)]
         public FiltroConsulta FiltroConsulta { get; set; }
 
+        /// <summary>
+        /// Datos adicionales respuesta.
+        /// </summary>
+        [XmlElement("DatosAdicionalesRespuesta", Namespace = Namespaces.NamespaceCon)]
+        public DatosAdicionalesRespuesta DatosAdicionalesRespuesta { get; set; }
+
         #endregion
 
     }

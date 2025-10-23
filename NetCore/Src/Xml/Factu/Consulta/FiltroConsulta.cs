@@ -71,7 +71,7 @@ namespace VeriFactu.Xml.Factu.Consulta
         /// <summary>
         /// Sistema informático.
         /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
+        [XmlElement(Namespace = Namespaces.NamespaceCon)]
         public SistemaInformatico SistemaInformatico { get; set; }
 
         /// <summary>
@@ -79,12 +79,6 @@ namespace VeriFactu.Xml.Factu.Consulta
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceCon)]
         public ClavePaginacion ClavePaginacion { get; set; }
-
-        /// <summary>
-        /// Datos adicionales respuesta.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceSF)]
-        public DatosAdicionalesRespuesta DatosAdicionalesRespuesta { get; set; }
 
         #endregion
 

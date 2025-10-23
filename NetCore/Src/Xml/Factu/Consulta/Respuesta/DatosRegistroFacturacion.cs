@@ -140,10 +140,16 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
         public string ImporteTotal { get; set; }
 
         /// <summary>
-        /// Encadenamiento con la factura anterior..
+        /// Encadenamiento con la factura anterior.
         /// </summary>
         [XmlElement("Encadenamiento", Namespace = Namespaces.NamespaceTikLRRC)]
         public Encadenamiento Encadenamiento { get; set; }
+
+        /// <summary>
+        /// Datos sistema informático.
+        /// </summary>
+        [XmlElement("SistemaInformatico", Namespace = Namespaces.NamespaceTikLRRC)]
+        public SistemaInformatico SistemaInformatico { get; set; }
 
         /// <summary>
         /// <para>Fecha, hora y huso horario de generación del registro de facturación.
