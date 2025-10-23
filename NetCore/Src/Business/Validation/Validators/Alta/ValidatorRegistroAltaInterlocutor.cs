@@ -166,7 +166,16 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                             $" IDOtro.IDType = “03” (PASAPORTE) o IDOtro.IDType = “07” (NO_CENSADO).");
 
                     // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07). Si IDType es No Censado (07) el CodigoPais debe ser ES (España).
-                    if ((_Interlocutor.IDOtro.IDType == IDType.PASAPORTE|| _Interlocutor.IDOtro.IDType == IDType.NO_CENSADO) && _Interlocutor.IDOtro.CodigoPais != CodigoPais.ES)
+
+                    // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07).
+                    // https://github.com/mdiago/VeriFactu/discussions/186#discussioncomment-14760481
+                    // Parece que la redacción en el documento de validaciones no es correcta y quiere decir que cuando 'ES' sólo vale pasaporte o no censado
+                    if(_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&(_Interlocutor.IDOtro.IDType != IDType.PASAPORTE || _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
+                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                          $" {_Rol} es obligatorio que para CodigoPais 'ES' IDOtro.IDType sea Pasaporte (03) o No Censado (07).");
+
+                    // 1126 Si IDType es No Censado (07) el CodigoPais debe ser ES (España).
+                    if (_Interlocutor.IDOtro.IDType == IDType.NO_CENSADO && _Interlocutor.IDOtro.CodigoPais != CodigoPais.ES)
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                            $" {_Rol} es obligatorio que para IDOtro.IDType = “{_Interlocutor.IDOtro.IDType}” el valor del CodigoPais sea ES.");
 
@@ -179,10 +188,12 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                             $" {_Rol} es obligatorio que para IDOtro.CodigoPais = “{_Interlocutor.IDOtro.CodigoPais}” IDOtro.IDType = “03” (PASAPORTE).");
 
-                    // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07). Si IDType es No Censado (07) el CodigoPais debe ser ES (España).
-                    if (_Interlocutor.IDOtro.IDType == IDType.PASAPORTE && _Interlocutor.IDOtro.CodigoPais != CodigoPais.ES)
+                    // 1126 El valor del CodigoPais solo puede ser ES cuando el IDType sea Pasaporte (03) o No Censado (07).
+                    // https://github.com/mdiago/VeriFactu/discussions/186#discussioncomment-14760481
+                    // Parece que la redacción en el documento de validaciones no es correcta y quiere decir que cuando 'ES' sólo vale pasaporte o no censado
+                    if(_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&(_Interlocutor.IDOtro.IDType != IDType.PASAPORTE || _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                           $" {_Rol} es obligatorio que para IDOtro.IDType = “{_Interlocutor.IDOtro.IDType}” el valor del CodigoPais sea ES.");
+                          $" {_Rol} es obligatorio que para CodigoPais 'ES' IDOtro.IDType sea Pasaporte (03) o No Censado (07).");
 
                     if (_Interlocutor.IDOtro.IDType == IDType.NO_CENSADO)
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
