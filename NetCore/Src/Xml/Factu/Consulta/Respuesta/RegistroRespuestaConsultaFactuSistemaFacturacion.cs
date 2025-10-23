@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Consulta.Respuesta
@@ -45,7 +46,7 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
     /// <summary>
     /// Bloque que contiene todos los campos de una factura.
     /// </summary>
-    public class RegistroRespuestaConsultaFactuSistemaFacturacion
+    public class RegistroRespuestaConsultaFactuSistemaFacturacion : IComparable
     {
 
         #region Propiedades Públicas de Instancia
@@ -92,7 +93,39 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
         public override string ToString()
         {
 
-            return $"{IDFactura}, {EstadoRegistro}";
+            return $"{DatosRegistroFacturacion?.RefExterna}, {IDFactura}, {EstadoRegistro}, {DatosRegistroFacturacion?.FechaHoraHusoGenRegistro}";
+
+        }
+
+        /// <summary>
+        /// Compara la instancia actual con otro objeto del mismo tipo y devuelve un entero
+        /// que indica si la posición de la instancia actual es anterior, posterior o igual
+        /// que la del otro objeto en el criterio de ordenación.
+        /// </summary>
+        /// <param name="obj">Objeto que se va a comparar con esta instancia.</param>
+        /// <returns>
+        /// Un valor que indica el orden relativo de los objetos que se están comparando.
+        /// El valor devuelto tiene los siguientes significados: Valor Significado Menor
+        /// que cero Esta instancia es anterior a obj en el criterio de ordenación. Cero
+        /// Esta instancia se produce en la misma posición del criterio de ordenación que
+        /// obj. Mayor que cero Esta instancia sigue a obj en el criterio de ordenación.
+        /// </returns>
+        /// <exception cref="ArgumentException">obj no es del mismo tipo que esta instancia.</exception>
+        public int CompareTo(object obj)
+        {
+
+            var other = obj as RegistroRespuestaConsultaFactuSistemaFacturacion;
+
+            if (other == null)
+                throw new ArgumentException($"El objeto {obj} no es del tipo RegistroRespuestaConsultaFactuSistemaFacturacion.");
+
+            if(ulong.TryParse(DatosRegistroFacturacion.RefExterna, out ulong id) && ulong.TryParse(other.DatosRegistroFacturacion.RefExterna, out ulong idOther))
+                return id.CompareTo(idOther);
+
+            var date = Convert.ToDateTime(DatosRegistroFacturacion.FechaHoraHusoGenRegistro);
+            var dateOther = Convert.ToDateTime(other.DatosRegistroFacturacion.FechaHoraHusoGenRegistro);
+
+            return date.CompareTo(dateOther);
 
         }
 
