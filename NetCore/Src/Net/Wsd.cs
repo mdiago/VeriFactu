@@ -262,7 +262,7 @@ namespace VeriFactu.Net
                 else
                     return new X509Certificate2(Settings.Current.CertificatePath,
                         Settings.Current.CertificatePassword,
-#if LE_461  || LE_472
+#if LE_461  || LE_472 || LE_480
                         X509KeyStorageFlags.MachineKeySet |
                         X509KeyStorageFlags.PersistKeySet |
 #else

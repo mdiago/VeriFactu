@@ -481,23 +481,13 @@ namespace VeriFactu.Config
         /// </summary>
         private static void CheckDirectories()
         {
-            if (!Directory.Exists(Path))
-                Directory.CreateDirectory(Path);
 
-            if (!Directory.Exists(_Current.InboxPath))
-                Directory.CreateDirectory(_Current.InboxPath);
+            var dirs = new string[] { Path, _Current.InboxPath, _Current.OutboxPath,
+                _Current.BlockchainPath, _Current.InvoicePath, _Current.LogPath };
 
-            if (!Directory.Exists(_Current.OutboxPath))
-                Directory.CreateDirectory(_Current.OutboxPath);
-
-            if (!Directory.Exists(_Current.BlockchainPath))
-                Directory.CreateDirectory(_Current.BlockchainPath);
-
-            if (!Directory.Exists(_Current.InvoicePath))
-                Directory.CreateDirectory(_Current.InvoicePath);
-
-            if (!Directory.Exists(_Current.LogPath))
-                Directory.CreateDirectory(_Current.LogPath);
+            foreach (var dir in dirs) 
+                if (dir != null && !Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
 
         }
 

@@ -188,22 +188,21 @@ namespace VeriFactu.Xml.Factu
         public virtual string FechaHoraHusoGenRegistro { get; set; }
 
         /// <summary>
-        /// <para>Primeros 64 caracteres de la huella o «hash» del registro
-        /// de facturación anterior (sea de alta o de anulación) generado
-        /// en este sistema informático.</para>
+        /// <para>Huella o «hash» de cierto 
+        /// contenido de este registro de facturación.</para>
         /// <para>Alfanumérico(64).</para>
         /// </summary>
         [XmlIgnore]
         public virtual string Huella { get; set; }
 
         /// <summary>
-        /// Encadenamiento con la factura anterior..
+        /// Encadenamiento con la factura anterior.
         /// </summary>
         [XmlIgnore]
         public virtual Encadenamiento Encadenamiento { get; set; }
 
         /// <summary>
-        /// Encadenamiento con la factura anterior.
+        /// Id. del eslabón en la cadena.
         /// </summary>
         [XmlIgnore]
         public virtual ulong BlockchainLinkID { get; set; }
