@@ -46,7 +46,7 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
     /// Datos del a incluir en una consulta paginada
     /// en caso de más de 10.000 registros.
     /// </summary>
-    public class ClavePaginacion
+    public class ClavePaginacionR
     {
 
         #region Propiedades Públicas de Instancia  

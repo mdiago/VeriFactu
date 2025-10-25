@@ -716,9 +716,6 @@
     <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\Cabecera.cs">
       <Link>Src\Xml\Factu\Consulta\Respuesta\Cabecera.cs</Link>
     </Compile>
-    <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\ClavePaginacion.cs">
-      <Link>Src\Xml\Factu\Consulta\Respuesta\ClavePaginacion.cs</Link>
-    </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Consulta\Respuesta\DatosPresentacion.cs">
       <Link>Src\Xml\Factu\Consulta\Respuesta\DatosPresentacion.cs</Link>
     </Compile>
