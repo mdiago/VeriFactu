@@ -43,73 +43,52 @@ namespace VeriFactu.Xml.Factu.Consulta.Respuesta
 {
 
     /// <summary>
-    /// Respuesta de la AEAT a una consulta de datos del sistema
-    /// VERI*FACTU.
+    /// Datos del a incluir en una consulta paginada
+    /// en caso de más de 10.000 registros.
     /// </summary>
-    [XmlType(AnonymousType = true, Namespace = Namespaces.NamespaceTikLRRC)]
-    public class RespuestaConsultaFactuSistemaFacturacion
+    public class ClavePaginacion
     {
 
-        #region Propiedades Públicas de Instancia
+        #region Propiedades Públicas de Instancia  
 
         /// <summary>
-        /// Cabecera de la consulta.
-        /// </summary>
-        [XmlElement("Cabecera", Namespace = Namespaces.NamespaceTikLRRC)]
-        public Cabecera Cabecera { get; set; }
-
-        /// <summary>
-        /// Periodo a filtrar.
+        /// <para>Número de identificación fiscal (NIF) del obligado
+        /// a expedir la factura. (la ultima consultada)
+        /// Solo se informa si IndicadorPaginacion=S.</para>
+        /// <para>FormatoNIF (9)</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
-        public PeriodoImputacion PeriodoImputacion { get; set; }
+        public string IDEmisorFactura { get; set; }
 
         /// <summary>
-        /// <para> Indica si hay más registros de facturación en la consulta realizada 
-        /// (Ver 6.4.3 Consulta paginada). Si hay más datos pendientes, este campo 
-        /// tendrá valor “S” y se podrán realizar nuevas consultas indicando la
-        /// identificación del último registro a partir de la cual se devolverán
-        /// los siguientes registros ordenados por fecha de presentación.</para>
-        /// <para>Alfanumérico(1) Valores posibles: “S” o “N”</para>
+        /// Nº Serie+Nº Factura que identifica al registro de
+        /// facturación. (el ultimo consultado)
+        /// Solo se informa si IndicadorPaginacion=S.
+        /// <para>Alfanumérico (60)</para>
         /// </summary>
-
         [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
-        public string IndicadorPaginacion { get; set; }
+        public string NumSerieFactura { get; set; }
 
         /// <summary>
-        /// <para> Indica si hay registros de facturación para la consulta realizada.</para>
-        /// <para> Alfanumérico(8) Valores posibles: “ConDatos” o “SinDatos”</para>
+        /// Fecha de emisión del registro de facturación
+        /// (el ultimo consultada) Solo se informa si
+        /// IndicadorPaginacion=S.
+        /// <para>Fecha (dd-mm-yyyy)</para>
         /// </summary>
         [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
-        public string ResultadoConsulta { get; set; }
-
-        /// <summary>
-        /// Bloque con los datos de la factura recuperados. Se obtendrán como
-        /// máximo 10.000 veces.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
-        public RegistroRespuestaConsultaFactuSistemaFacturacion[] RegistroRespuestaConsultaFactuSistemaFacturacion { get; set; }
-
-        /// <summary>
-        /// Datos del a incluir en una consulta paginada
-        /// en caso de más de 10.000 registros.
-        /// </summary>
-        [XmlElement(Namespace = Namespaces.NamespaceTikLRRC)]
-        public ClavePaginacion ClavePaginacion { get; set; }
+        public string FechaExpedicionFactura { get; set; }
 
         #endregion
 
         #region Métodos Públicos de Instancia
 
         /// <summary>
-        /// Representacioón textual de la instancia.
+        /// Representación textual de la instancia.
         /// </summary>
-        /// <returns>Representacioón textual de la instancia.</returns>
+        /// <returns> Representación textual de la instancia.</returns>
         public override string ToString()
         {
-
-            return $"{Cabecera}, {ResultadoConsulta}";
-
+            return $"{IDEmisorFactura}, {NumSerieFactura}, {FechaExpedicionFactura}";
         }
 
         #endregion
