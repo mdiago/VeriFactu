@@ -10289,6 +10289,11 @@
             Filtro consulta.
             </summary>
         </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.ConsultaFactuSistemaFacturacion.DatosAdicionalesRespuesta">
+            <summary>
+            Datos adicionales respuesta.
+            </summary>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Consulta.Contraparte">
             <summary>
              Datos parte interviniente en algún modo en la facturación.
@@ -10397,11 +10402,6 @@
         <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.ClavePaginacion">
             <summary>
             Id. de la factura de corte para la paginación.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.DatosAdicionalesRespuesta">
-            <summary>
-            Datos adicionales respuesta.
             </summary>
         </member>
         <member name="M:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.ToString">
@@ -10619,7 +10619,12 @@
         </member>
         <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.Encadenamiento">
             <summary>
-            Encadenamiento con la factura anterior..
+            Encadenamiento con la factura anterior.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.SistemaInformatico">
+            <summary>
+            Datos sistema informático.
             </summary>
         </member>
         <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.DatosRegistroFacturacion.FechaHoraHusoGenRegistro">
@@ -10893,6 +10898,22 @@
             </summary>
             <returns>Representacioón textual de la instancia.</returns>
         </member>
+        <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.RegistroRespuestaConsultaFactuSistemaFacturacion.CompareTo(System.Object)">
+            <summary>
+            Compara la instancia actual con otro objeto del mismo tipo y devuelve un entero
+            que indica si la posición de la instancia actual es anterior, posterior o igual
+            que la del otro objeto en el criterio de ordenación.
+            </summary>
+            <param name="obj">Objeto que se va a comparar con esta instancia.</param>
+            <returns>
+            Un valor que indica el orden relativo de los objetos que se están comparando.
+            El valor devuelto tiene los siguientes significados: Valor Significado Menor
+            que cero Esta instancia es anterior a obj en el criterio de ordenación. Cero
+            Esta instancia se produce en la misma posición del criterio de ordenación que
+            obj. Mayor que cero Esta instancia sigue a obj en el criterio de ordenación.
+            </returns>
+            <exception cref="T:System.ArgumentException">obj no es del mismo tipo que esta instancia.</exception>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion">
             <summary>
             Respuesta de la AEAT a una consulta de datos del sistema
@@ -10929,6 +10950,12 @@
             <summary>
             Bloque con los datos de la factura recuperados. Se obtendrán como
             máximo 10.000 veces.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.ClavePaginacion">
+            <summary>
+            Datos del a incluir en una consulta paginada
+            en caso de más de 10.000 registros.
             </summary>
         </member>
         <member name="M:VeriFactu.Xml.Factu.Consulta.Respuesta.RespuestaConsultaFactuSistemaFacturacion.ToString">
