@@ -124,7 +124,7 @@ namespace VeriFactu.Net.Rest.Json
         /// </summary>
         /// <returns>Representación de la clase en formato
         /// JSON.</returns>
-        public string ToJson()
+        public virtual string ToJson()
         {
 
             var stringBuilder = new StringBuilder();

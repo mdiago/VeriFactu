@@ -78,6 +78,9 @@
     <Compile Include="..\..\NetCore\Src\Business\InvoiceCancellation.cs">
       <Link>Src\Business\InvoiceCancellation.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\Business\InvoiceData.cs">
+      <Link>Src\Business\InvoiceData.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Business\InvoiceEntry.cs">
       <Link>Src\Business\InvoiceEntry.cs</Link>
     </Compile>

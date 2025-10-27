@@ -265,8 +265,6 @@ namespace VeriFactu.Net
 #if LE_461  || LE_472 || LE_480
                         X509KeyStorageFlags.MachineKeySet |
                         X509KeyStorageFlags.PersistKeySet |
-#else
-                        X509KeyStorageFlags.EphemeralKeySet |
 #endif
                         X509KeyStorageFlags.Exportable);
 
