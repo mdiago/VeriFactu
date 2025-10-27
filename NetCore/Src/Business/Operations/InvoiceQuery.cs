@@ -163,7 +163,8 @@ namespace VeriFactu.Business.Operations
         /// </summary>
         /// <param name="year">Año a consultar.</param>
         /// <param name="month">Mes a consultar.</param>
-        /// <param name="isSales">Indica que se trata de la consulta
+        /// <param name="isSales">Indica que se trata
+        /// de la consulta de ventas.</param>
         /// <param name="offset">Id. de la factura de corte para la paginación.</param>
         /// <returns> Objeto Envelope con el filtro
         /// para la consulta de facturas emitidas.</returns>

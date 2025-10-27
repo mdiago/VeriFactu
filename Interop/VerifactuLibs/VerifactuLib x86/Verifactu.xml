@@ -581,6 +581,11 @@
             generado la factura
             </summary>
         </member>
+        <member name="F:VeriFactu.Business.Invoice._InvoiceData">
+            <summary>
+            Plain data object con los datos de una factura.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Business.Invoice.#ctor(System.String,System.DateTime,System.String)">
             <summary>
             Constructor.
@@ -595,6 +600,12 @@
             Constructor.
             </summary>
             <param name="registroAlta">Registro de alta a partir del que se crea la factura.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Invoice.#ctor(VeriFactu.Business.InvoiceData)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoiceData">Plain Data Object de factura.</param>
         </member>
         <member name="M:VeriFactu.Business.Invoice.FromDesglose(System.Collections.Generic.List{VeriFactu.Xml.Factu.Alta.DetalleDesglose})">
             <summary>
@@ -751,6 +762,14 @@
             de alta.
             </summary>
         </member>
+        <member name="M:VeriFactu.Business.Invoice.ToJson">
+            <summary>
+            Representación de la clase en formato
+            JSON.
+            </summary>
+            <returns>Representación de la clase en formato
+            JSON.</returns>
+        </member>
         <member name="M:VeriFactu.Business.Invoice.GetRegistroAlta">
             <summary>
             Obtiene el registro de alta para verifactu.
@@ -808,6 +827,145 @@
             Path del directorio de archivado de los datos de la
             cadena.
             </summary>
+        </member>
+        <member name="T:VeriFactu.Business.InvoiceData">
+            <summary>
+            Plain data object con los datos de una factura.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceData.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.InvoiceType">
+            <summary>
+            <para>Clave del tipo de factura (L2).</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.RectificationType">
+            <summary>
+             Identifica si el tipo de factura rectificativa
+             es por sustitución o por diferencia (L3).
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.InvoiceID">
+            <summary>
+            Identificador de la factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.InvoiceDate">
+            <summary>
+            Fecha emisión de documento.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.OperationDate">
+            <summary>
+            Fecha operación.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.SellerName">
+            <summary>
+            Nombre del vendedor.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.BuyerID">
+            <summary>
+            Identidicador del comprador.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.BuyerName">
+            <summary>
+            Nombre del comprador.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.BuyerCountryID">
+            <summary>
+            Código del país del destinatario (a veces también denominado contraparte,
+            es decir, el cliente) de la operación de la factura expedida.
+            <para>Alfanumérico (2) (ISO 3166-1 alpha-2 codes) </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.BuyerIDType">
+            <summary>
+            Clave para establecer el tipo de identificación
+            en el pais de residencia. L7.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.TotalAmount">
+            <summary>
+            Importe total: Total neto + impuestos soportado
+            - impuestos retenidos.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.TotalTaxOutput">
+            <summary>
+            Total impuestos soportados.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.TotalTaxOutputSurcharge">
+            <summary>
+            Total impuestos soportados.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.TotalTaxWithheld">
+            <summary>
+            Importe total impuestos retenidos.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.Text">
+            <summary>
+            Texto del documento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.TaxItems">
+            <summary>
+            Líneas de impuestos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.RectificationItems">
+            <summary>
+            Esta colección almacena la información de las facturas modificados
+            por la presenta factura. Estas modificaciones pueden provenir de
+            dos situaciónes distintas:
+            <para>1. La factura es del tipo F3 y se trata de la conversión de una
+            factura simplificada a factura normal.</para>
+            <para>2. Se trata de una factura rectificativa: R1, R2, R3, R4, R5.</para>
+            Según la situación la información irá en el RegistroAlta en el
+            bloque de FacturasRectificadas o en el de FacturasSustituidas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.RectificationTaxBase">
+            <summary>
+            BaseRectificada para rectificativas por sustitución 'S'.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.RectificationTaxAmount">
+            <summary>
+            CuotaRectificada para rectificativas por sustitución 'S'.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Business.InvoiceData.RectificationTaxAmountSurcharge">
+            <summary>
+            CuotaRecargoRectificado para rectificativas por sustitución 'S'.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceData.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
         </member>
         <member name="T:VeriFactu.Business.InvoiceEntry">
             <summary>
@@ -1507,7 +1665,19 @@
             <returns> Interlocutor a partir del obligado
             tributario al que pertenece la instancia.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:VeriFactu.Business.Operations.InvoiceQuery.GetEnvelope(System.String,System.String,System.Boolean,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)" -->
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetEnvelope(System.String,System.String,System.Boolean,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
+            <summary>
+            Devuelve un objeto Envelope con el filtro
+            para la consulta de facturas emitidas.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <param name="isSales">Indica que se trata
+            de la consulta de ventas.</param>
+            <param name="offset">Id. de la factura de corte para la paginación.</param>
+            <returns> Objeto Envelope con el filtro
+            para la consulta de facturas emitidas.</returns>
+        </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSalesEnvelope(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve un objeto Envelope con el filtro
@@ -4858,7 +5028,41 @@
             </summary>
             <param name="jsonText">Texto JSON.</param>
         </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParser.GetFromExpando``1(System.Object)">
+            <summary>
+            Devuelve una nueva instancia del tipo
+            genérico facilitado a partir de un expando.
+            </summary>
+            <typeparam name="T">Tipo de la instancia
+            a crear.</typeparam>
+            <param name="dynObj">Objeto expando a partir
+            del cual devolver la instancia.</param>
+            <returns>Nueva instancia del tipo T creada
+            a partir del objeto expando facilitado como parámetrol</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParser.GetByJsonAttName(System.Type,System.String)">
+            <summary>
+            Devuelve PropertyInfo de la propiedad del
+            tipo facilitado como parámetro type
+            que tiene la propiedad Name de su JsonAttribute
+            equivalente al valor del parámetro name.
+            </summary>
+            <param name="type">Tipo en el que buscar.</param>
+            <param name="name">Nombre a buscar.</param>
+            <returns>PropertyInfo de la propiedad del
+            tipo facilitado como parámetro type
+            que tiene la propiedad Name de su JsonAttribute
+            equivalente al valor del parámetro name</returns>
+        </member>
         <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParser.GetResult">
+            <summary>
+            Devuelve el resultado de la deserialización
+            de la cadena JSON.
+            </summary>
+            <returns>resultado de la deserialización
+            de la cadena JSON.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParser.GetResult``1">
             <summary>
             Devuelve el resultado de la deserialización
             de la cadena JSON.
@@ -10382,6 +10586,12 @@
         <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.PeriodoImputacion">
             <summary>
             Periodo a filtrar.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.NumSerieFactura">
+            <summary>
+            <para>Nº Serie+Nº Factura  que identifica a la factura emitida.</para>
+            <para>Alfanumérico(60).</para>
             </summary>
         </member>
         <member name="P:VeriFactu.Xml.Factu.Consulta.FiltroConsulta.Contraparte">
