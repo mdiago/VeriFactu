@@ -109,9 +109,7 @@ namespace VeriFactu.Business
         public Invoice(RegistroAlta registroAlta) : this(registroAlta.IDFacturaAlta.NumSerieFactura,
                 XmlParser.ToDate(registroAlta.IDFacturaAlta.FechaExpedicionFactura), $"{registroAlta.IDFacturaAlta.IDEmisorFactura}")
         {
-
-            _InvoiceData = new InvoiceData();
-
+           
             _RegistroAltaSource = registroAlta;
 
             InvoiceType = registroAlta.TipoFactura;
