@@ -286,6 +286,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\VIES\ViesVatNumber.cs">
       <Link>Src\Business\Validation\VIES\ViesVatNumber.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Common\Exceptions\ClearPostException.cs">
+      <Link>Src\Common\Exceptions\ClearPostException.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Common\Exceptions\FaultException.cs">
       <Link>Src\Common\Exceptions\FaultException.cs</Link>
     </Compile>

@@ -167,8 +167,7 @@ namespace VeriFactu.Business.Operations
             }
 
             if (undoException != null)
-                throw new Exception($"Se ha producido un error al intentar descontabilizar" +
-                    $" el envío en la cadena de bloques.", undoException);
+                throw new ClearPostException(undoException);
 
         }
 

@@ -3668,6 +3668,18 @@
             incluyendo el código de país.</param>
             <returns>True si es válido y false en caso contario.</returns>
         </member>
+        <member name="T:VeriFactu.Common.Exceptions.ClearPostException">
+            <summary>
+            Representa una excepción en la descontabilización
+            de la cadena de bloques.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.ClearPostException.#ctor(System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="innerException">Excepción interna.</param>
+        </member>
         <member name="T:VeriFactu.Common.Exceptions.FaultException">
             <summary>
             Representa el error devuelto por la AEAT cuando es su repuesta se incluye
