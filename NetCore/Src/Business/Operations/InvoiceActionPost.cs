@@ -40,6 +40,7 @@
 using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using VeriFactu.Common.Exceptions;
 using VeriFactu.Net;
 using VeriFactu.Xml.Factu;
 
@@ -206,8 +207,7 @@ namespace VeriFactu.Business.Operations
             }
 
             if (postException != null)
-                throw new Exception($"Se ha producido un error al intentar contabilizar" +
-                    $" el envío en la cadena de bloques.", postException);
+                throw new PostException(postException);
 
         }
 

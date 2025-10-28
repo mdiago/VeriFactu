@@ -1665,7 +1665,19 @@
             <returns> Interlocutor a partir del obligado
             tributario al que pertenece la instancia.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:VeriFactu.Business.Operations.InvoiceQuery.GetEnvelope(System.String,System.String,System.Boolean,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)" -->
+        <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetEnvelope(System.String,System.String,System.Boolean,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
+            <summary>
+            Devuelve un objeto Envelope con el filtro
+            para la consulta de facturas emitidas.
+            </summary>
+            <param name="year">Año a consultar.</param>
+            <param name="month">Mes a consultar.</param>
+            <param name="isSales">Indica que se trata
+            de la consulta de ventas.</param>
+            <param name="offset">Id. de la factura de corte para la paginación.</param>
+            <returns> Objeto Envelope con el filtro
+            para la consulta de facturas emitidas.</returns>
+        </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceQuery.GetSalesEnvelope(System.String,System.String,VeriFactu.Xml.Factu.Consulta.ClavePaginacion)">
             <summary>
             Devuelve un objeto Envelope con el filtro
@@ -3684,6 +3696,18 @@
             <summary>
             Texto de error devuelto por la AEAT.
             </summary>
+        </member>
+        <member name="T:VeriFactu.Common.Exceptions.PostException">
+            <summary>
+            Representa una excepción en la contabilización
+            de la cadena de bloques.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.PostException.#ctor(System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="innerException">Excepción interna.</param>
         </member>
         <member name="T:VeriFactu.Common.Logger">
             <summary>

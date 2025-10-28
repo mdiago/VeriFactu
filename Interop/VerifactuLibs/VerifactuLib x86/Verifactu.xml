@@ -3697,6 +3697,18 @@
             Texto de error devuelto por la AEAT.
             </summary>
         </member>
+        <member name="T:VeriFactu.Common.Exceptions.PostException">
+            <summary>
+            Representa una excepción en la contabilización
+            de la cadena de bloques.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.PostException.#ctor(System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="innerException">Excepción interna.</param>
+        </member>
         <member name="T:VeriFactu.Common.Logger">
             <summary>
             Se encarga del log.
