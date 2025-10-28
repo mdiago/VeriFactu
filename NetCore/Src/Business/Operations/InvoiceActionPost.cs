@@ -236,7 +236,7 @@ namespace VeriFactu.Business.Operations
                 throw new InvalidOperationException("El objeto InvoiceEntry sólo" +
                     " puede llamar al método Save() una vez.");
 
-            Exception sentException = null;
+            Exception sendException = null;
 
             ExecutePost();
 
@@ -248,18 +248,17 @@ namespace VeriFactu.Business.Operations
             catch (Exception ex)
             {
 
-                sentException = ex;
+                sendException = ex;
                 ClearPost();
 
             }
 
-            if (string.IsNullOrEmpty(CSV) || sentException != null)
-                if(sentException == null)
+            if (string.IsNullOrEmpty(CSV) || sendException != null)
+                if(sendException == null)
                     ClearPost();
 
-            if (sentException != null)
-                throw new Exception($"Se ha producido un error al intentar realizar el envío" +
-                    $" o procesar la respuesta.", sentException);
+            if (sendException != null)
+                throw new SendException(sendException);
 
             IsSaved = true;
 
