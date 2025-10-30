@@ -876,6 +876,7 @@ namespace VeriFactu.Business
         public override string ToJson() 
         {
 
+            _InvoiceData.ServiceKey = ServiceKey;
             return _InvoiceData.ToJson();
 
         }
