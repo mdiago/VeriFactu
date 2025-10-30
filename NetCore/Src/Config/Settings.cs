@@ -461,7 +461,6 @@ namespace VeriFactu.Config
         [XmlElement("DisableBlockchainDelete")]
         public bool DisableBlockchainDelete { get; set; }
 
-
         #endregion
 
         #region Métodos Públicos Estáticos
