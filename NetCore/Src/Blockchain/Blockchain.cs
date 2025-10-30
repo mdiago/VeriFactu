@@ -515,7 +515,7 @@ namespace VeriFactu.Blockchain
             }
 
             if (addException != null)
-                throw new Exception($"Error añadiendo eslabón de la cadena.", addException);
+                throw new Exception($"Error añadiendo eslabón de la cadena: {addException.Message}.", addException);
 
         }
 
@@ -553,7 +553,7 @@ namespace VeriFactu.Blockchain
             }
 
             if (addException != null)
-                throw new Exception($"Error añadiendo eslabón de la cadena.", addException);
+                throw new Exception($"Error añadiendo eslabones de la cadena: {addException.Message}.", addException);
 
         }
 
@@ -599,7 +599,8 @@ namespace VeriFactu.Blockchain
             }
 
             if (restoreException != null)
-                throw new Exception($"Error al restaurar datos borrando último eslabón de la cadena.", restoreException);
+                throw new Exception($"Error al restaurar datos borrando" +
+                    $" último eslabón de la cadena: {restoreException.Message}.", restoreException);
 
         }
 
