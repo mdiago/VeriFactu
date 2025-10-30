@@ -1605,8 +1605,8 @@
         <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.ClearPost">
             <summary>
             Deshace cambios de guardado de documente eliminando
-            el elemento de la cadena de bloques y marcando los
-            archivos relacionados como erróneos.
+            el elemento de la cadena de bloques (si DisableBlockchainDelete = false)
+            y marcando los archivos relacionados como erróneos.
             </summary>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.ExecutePost">
@@ -3721,6 +3721,18 @@
             </summary>
             <param name="innerException">Excepción interna.</param>
         </member>
+        <member name="T:VeriFactu.Common.Exceptions.SendException">
+            <summary>
+            Representa una excepción en el envío
+            del mensaje a la AEAT.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.SendException.#ctor(System.Exception)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="innerException">Excepción interna.</param>
+        </member>
         <member name="T:VeriFactu.Common.Logger">
             <summary>
             Se encarga del log.
@@ -4097,6 +4109,13 @@
             <summary>
             Indica si está activado el log de mensajes
             del sistema.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.DisableBlockchainDelete">
+            <summary>
+            En entornos de elevada concurrencia la funcionalidad
+            de deshacer la inserción en la cadena de bloques
+            provoca problemas.
             </summary>
         </member>
         <member name="M:VeriFactu.Config.Settings.Save">

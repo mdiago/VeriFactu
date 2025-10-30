@@ -278,11 +278,8 @@ namespace VeriFactu.Blockchain
 
             string line = GetControFilelLine();
 
-            if (File.Exists(BlockchainDataPreviousFileName))
-                File.Delete(BlockchainDataPreviousFileName);
-
-            if (File.Exists(BlockchainDataFileName))
-                File.Copy(BlockchainDataFileName, BlockchainDataPreviousFileName);
+            if (!Settings.Current.DisableBlockchainDelete && File.Exists(BlockchainDataFileName))
+                File.Copy(BlockchainDataFileName, BlockchainDataPreviousFileName, overwrite: true);
 
             if (csvLines == null)
                 File.AppendAllText(BlockchainDataFileName, $"{line}\n");
@@ -329,10 +326,8 @@ namespace VeriFactu.Blockchain
 
             var hasBlockchainDataPreviousFile = !(isFirstLink || isFirstBlockPeriodLink);
 
-            File.Delete(blockchainDataFileName);
-
             if (hasBlockchainDataPreviousFile)
-                File.Copy(blockchainDataPreviousFileName, blockchainDataFileName);
+                File.Copy(blockchainDataPreviousFileName, blockchainDataFileName, overwrite: true);
 
         }
 
@@ -567,6 +562,10 @@ namespace VeriFactu.Blockchain
         /// </exception>
         public void Delete(Registro registro) 
         {
+
+            if (Settings.Current.DisableBlockchainDelete)
+                throw new InvalidOperationException($"Se ha intentado borrar el registro" +
+                   $" {registro.Huella} y en la configuración está establecido DisableClearPost = true.");
 
             if (registro.Huella != Current.Huella)
                 throw new InvalidOperationException($"Se ha intentado borrar el registro" +

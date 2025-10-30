@@ -453,6 +453,15 @@ namespace VeriFactu.Config
         [XmlElement("LoggingEnabled")]
         public bool LoggingEnabled { get; set; }
 
+        /// <summary>
+        /// En entornos de elevada concurrencia la funcionalidad
+        /// de deshacer la inserción en la cadena de bloques
+        /// provoca problemas.
+        /// </summary>
+        [XmlElement("DisableBlockchainDelete")]
+        public bool DisableBlockchainDelete { get; set; }
+
+
         #endregion
 
         #region Métodos Públicos Estáticos

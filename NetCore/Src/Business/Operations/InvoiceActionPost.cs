@@ -41,6 +41,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Common.Exceptions;
+using VeriFactu.Config;
 using VeriFactu.Net;
 using VeriFactu.Xml.Factu;
 
@@ -131,8 +132,8 @@ namespace VeriFactu.Business.Operations
 
         /// <summary>
         /// Deshace cambios de guardado de documente eliminando
-        /// el elemento de la cadena de bloques y marcando los
-        /// archivos relacionados como erróneos.
+        /// el elemento de la cadena de bloques (si DisableBlockchainDelete = false)
+        /// y marcando los archivos relacionados como erróneos.
         /// </summary>
         protected void ClearPost()
         {
@@ -145,8 +146,9 @@ namespace VeriFactu.Business.Operations
                 try
                 {
 
-                    //Reevierto cambios
-                    BlockchainManager.Delete(Registro);
+                    // Elimino eslabón de la cadena de bloques
+                    if(!Settings.Current.DisableBlockchainDelete)
+                        BlockchainManager.Delete(Registro);
 
                     if (File.Exists(InvoiceEntryFilePath))
                         File.Move(InvoiceEntryFilePath, GetErrorInvoiceEntryFilePath());
