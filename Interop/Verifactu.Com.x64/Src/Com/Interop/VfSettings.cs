@@ -39,6 +39,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using VeriFactu.Blockchain;
 
 namespace Verifactu
 {
@@ -263,6 +264,12 @@ namespace Verifactu
         /// <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
         void SetConfigFileName(string fileName);
 
+        /// <summary>
+        /// Carga todas las cadenas de bloques.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
+        void LoadBlockchainsFromDisk();
+
         #endregion
 
     }
@@ -408,6 +415,17 @@ namespace Verifactu
         {
 
             VeriFactu.Config.Settings.SetConfigFileName(fileName);
+
+        }
+
+        /// <summary>
+        /// Carga todas las cadenas de bloques.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
+        public void LoadBlockchainsFromDisk() 
+        {
+
+            Blockchain.LoadBlockchainsFromDisk();
 
         }
 
