@@ -13279,6 +13279,12 @@
             </summary>
             <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
         </member>
+        <member name="M:Verifactu.IVfSettings.LoadBlockchainsFromDisk">
+            <summary>
+            Carga todas las cadenas de bloques.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
+        </member>
         <member name="T:Verifactu.VfSettings">
             <summary>
             Representa una línea de impuestos.
@@ -13312,6 +13318,12 @@
             Esteblece el archivo de configuración con el cual trabajar.
             </summary>
             <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
+        </member>
+        <member name="M:Verifactu.VfSettings.LoadBlockchainsFromDisk">
+            <summary>
+            Carga todas las cadenas de bloques.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Se lanza si BlockchainPath no es un directorio válido.</exception>
         </member>
         <member name="P:Verifactu.VfSettings.IDVersion">
             <summary>
