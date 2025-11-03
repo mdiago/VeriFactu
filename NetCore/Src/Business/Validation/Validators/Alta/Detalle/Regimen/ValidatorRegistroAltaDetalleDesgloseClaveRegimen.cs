@@ -119,24 +119,24 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             {
                 // 1199 =  Si Impuesto es '01' (IVA), '03' (IGIC) o no se cumplimenta y ClaveRegimen es 01 no pueden marcarse la OperacionExenta E2, E3.
                 {ClaveRegimen.RegimenGeneral,               new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenGeneral(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.1 ClaveRegimen 03. REBU.
-                {ClaveRegimen.Rebu,                         new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRebu(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.2 ClaveRegimen 04. Operaciones con oro de inversión.
-                {ClaveRegimen.OroInversion,                 new ValidatorRegistroAltaDetalleDesgloseClaveRegimenOroInversion(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.3 ClaveRegimen 06. Grupo de entidades nivel avanzado.
-                {ClaveRegimen.GrupoEntidades,               new ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.4 ClaveRegimen 07. Criterio de caja.
-                {ClaveRegimen.Recc,                         new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRecc(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.5 ClaveRegimen 08.
-                {ClaveRegimen.IpsiIgic,                     new ValidatorRegistroAltaDetalleDesgloseClaveRegimenIpsiIgic(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.6 ClaveRegimen 10. Cobro por cuenta de terceros.
-                {ClaveRegimen.CobroTerceros,                new ValidatorRegistroAltaDetalleDesgloseClaveRegimenCobroTerceros(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.7 ClaveRegimen 11. Arrendamiento de local de negocio
-                {ClaveRegimen.ArrendamientoLocalNecocio,    new ValidatorRegistroAltaDetalleDesgloseClaveRegimenArrendamientoLocalNecocio(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // 15.6.8 ClaveRegimen 14. IVA pendiente AAPP.
-                {ClaveRegimen.ObraPteDevengoAdmonPublica,   new ValidatorRegistroAltaDetalleDesgloseClaveRegimenObraPteDevengoAdmonPublica(_Envelope, _RegistroAlta, _DetalleDesglose) },
-                // Añadido por error 1286: Si el impuesto es IVA(01), IGIC(03) o vacio, si ClaveRegimen es 02 solo se podrá informar OperacionExenta.
+                // 15.6.1 ClaveRegimen 02. Exportación.
                 {ClaveRegimen.Exportacion,                  new ValidatorRegistroAltaDetalleDesgloseClaveRegimenExportacion(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.2 ClaveRegimen 03. REBU.
+                {ClaveRegimen.Rebu,                         new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRebu(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.3 ClaveRegimen 04. Operaciones con oro de inversión.
+                {ClaveRegimen.OroInversion,                 new ValidatorRegistroAltaDetalleDesgloseClaveRegimenOroInversion(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.4 ClaveRegimen 06. Grupo de entidades nivel avanzado.
+                {ClaveRegimen.GrupoEntidades,               new ValidatorRegistroAltaDetalleDesgloseClaveRegimenGrupoEntidades(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.5 ClaveRegimen 07. Criterio de caja.
+                {ClaveRegimen.Recc,                         new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRecc(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.6 ClaveRegimen 08.
+                {ClaveRegimen.IpsiIgic,                     new ValidatorRegistroAltaDetalleDesgloseClaveRegimenIpsiIgic(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.7 ClaveRegimen 10. Cobro por cuenta de terceros.
+                {ClaveRegimen.CobroTerceros,                new ValidatorRegistroAltaDetalleDesgloseClaveRegimenCobroTerceros(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.8 ClaveRegimen 11. Arrendamiento de local de negocio
+                {ClaveRegimen.ArrendamientoLocalNecocio,    new ValidatorRegistroAltaDetalleDesgloseClaveRegimenArrendamientoLocalNecocio(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.9 ClaveRegimen 14. IVA pendiente AAPP.
+                {ClaveRegimen.ObraPteDevengoAdmonPublica,   new ValidatorRegistroAltaDetalleDesgloseClaveRegimenObraPteDevengoAdmonPublica(_Envelope, _RegistroAlta, _DetalleDesglose) },
             };
 
             if(_DetalleDesglose.ClaveRegimenSpecified)

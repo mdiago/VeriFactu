@@ -90,6 +90,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
+            // Añadido por error 1286: Si el impuesto es IVA(01), IGIC(03) o vacio, si ClaveRegimen es 02 solo se podrá informar OperacionExenta.
+
             //Si el impuesto es IVA(01), IGIC(03) o vacio, si ClaveRegimen es 02 solo se podrá informar OperacionExenta.
             if (_DetalleDesglose.Impuesto == Impuesto.IVA ||
                 _DetalleDesglose.Impuesto == Impuesto.IGIC)
@@ -99,8 +101,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “02”" +
                         $" solo se podrá informar OperacionExenta.");
-            }
 
+            }
 
             return result;
 

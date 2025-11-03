@@ -125,10 +125,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
                 }
 
-
-
             }
-
 
             return result;
 
