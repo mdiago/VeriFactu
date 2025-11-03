@@ -167,6 +167,26 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                          $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
                          $" establecer CalificacionOperacion como no sujeta ('N1' o 'N2').");
 
+            // 15.5.1 OperacionExenta E5
+            // Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA) y, si OperacionExenta es igual a “E5”,
+            // sólo deberá existir la agrupación IDOtro en el bloque “Destinatario”.
+
+            if (_DetalleDesglose.Impuesto == Impuesto.IVA && _DetalleDesglose.OperacionExentaSpecified &&
+               _DetalleDesglose.OperacionExenta == CausaExencion.E5)
+            {
+
+                if (_RegistroAlta.Destinatarios != null && _RegistroAlta.Destinatarios.Count > 0)
+                {
+
+                    if(_RegistroAlta.Destinatarios[0].IDOtro == null || _RegistroAlta.Destinatarios[0].NIF != null)
+                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                             $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA) y, si OperacionExenta es igual a “E5”" +
+                             $" sólo deberá existir la agrupación IDOtro en el bloque “Destinatario”.");
+
+                }
+
+            }
+
             return result;
 
         }
