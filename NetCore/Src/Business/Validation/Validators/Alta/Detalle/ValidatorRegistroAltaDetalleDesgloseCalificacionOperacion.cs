@@ -131,12 +131,12 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                 if (tipoImpositivo != 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
-                            $" no se puede informar TipoImpositivo excepto si ClaveRegimen = “17”.");
+                            $" no se puede informar TipoImpositivo.");
 
                 if (cuotaRepercutida != 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
-                            $" no se puede informar CuotaRepercutida excepto si ClaveRegimen = “17”.");                
+                            $" no se puede informar CuotaRepercutida.");                
 
                 if (tipoImpositivoRE != 0)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
