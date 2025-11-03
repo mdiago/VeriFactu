@@ -113,64 +113,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                     $" ClaveRegimen obligatorio si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta" +
                     $" (considerándose “01” - IVA).");
 
-            }            
-
-            // 15.6.9 ClaveRegimen 18. Recargo de equivalencia  
-
-            // Sólo se puede cumplimentar TipoRecargoEquivalencia y CuotaRecargoEquivalencia
-            // cuando CalificacionOperacion es “S1”. 
-            if (_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.S1)
-            {
-
-                if (_DetalleDesglose.TipoRecargoEquivalencia != null && XmlParser.ToDecimal(_DetalleDesglose.TipoRecargoEquivalencia) != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                        $" Sólo se puede cumplimentar TipoRecargoEquivalencia" +
-                        $" cuando CalificacionOperacion es “S1”.");
-
-                if (_DetalleDesglose.CuotaRecargoEquivalencia != null && XmlParser.ToDecimal(_DetalleDesglose.CuotaRecargoEquivalencia) != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                        $" Sólo se puede cumplimentar CuotaRecargoEquivalencia" +
-                        $" cuando CalificacionOperacion es “S1”.");
-
             }
-
-            // Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” – IVA),
-            if (_DetalleDesglose.Impuesto == Impuesto.IVA) 
-            {
-
-                // sólo se podrá cumplimentar TipoRecargoEquivalencia y CuotaRecargoEquivalencia si ClaveRegimen igual a “18”.  
-                if (_DetalleDesglose.ClaveRegimen != ClaveRegimen.RecEquivPeqEmp)
-                {
-
-                    if (_DetalleDesglose.TipoRecargoEquivalencia != null && XmlParser.ToDecimal(_DetalleDesglose.TipoRecargoEquivalencia) != 0)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                            $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” – IVA)," +
-                            $" sólo se podrá cumplimentar TipoRecargoEquivalencia si ClaveRegimen igual a “18”.");
-
-                    if (_DetalleDesglose.CuotaRecargoEquivalencia != null && XmlParser.ToDecimal(_DetalleDesglose.CuotaRecargoEquivalencia) != 0)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                            $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” – IVA)," +
-                            $" sólo se podrá cumplimentar CuotaRecargoEquivalencia si ClaveRegimen igual a “18”.");
-
-                }
-
-                // y ClaveRegimen igual a “18”, es obligatorio cumplimentar TipoRecargoEquivalencia y CuotaRecargoEquivalencia.  
-                if (_DetalleDesglose.ClaveRegimen == ClaveRegimen.RecEquivPeqEmp)
-                {
-
-                    if (_DetalleDesglose.TipoRecargoEquivalencia == null || XmlParser.ToDecimal(_DetalleDesglose.TipoRecargoEquivalencia) == 0)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                            $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” – IVA) y" +
-                            $" ClaveRegimen igual a “18”, es obligatorio cumplimentar TipoRecargoEquivalencia.");
-
-                    if (_DetalleDesglose.CuotaRecargoEquivalencia == null && XmlParser.ToDecimal(_DetalleDesglose.CuotaRecargoEquivalencia) == 0)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                            $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” – IVA) y" +
-                            $" ClaveRegimen igual a “18”, es obligatorio cumplimentar CuotaRecargoEquivalencia.");
-
-                }
-
-            }  
 
             var _ValidatorByClaveRegimen = new Dictionary<ClaveRegimen, IValidator>() 
             {
