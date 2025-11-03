@@ -40,9 +40,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VeriFactu.Business.Validation.Validators.Alta
 {
@@ -146,7 +148,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 {
 
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" La propiedad IDFactura.IDEmisorFactura tiene que tener un valor.");
+                    $" La propiedad IDFactura.NumSerie tiene que tener un valor.");
 
                 }
                 else
@@ -156,9 +158,15 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
                     if (numSerie != okNumSerie)
                         result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                            $" La propiedad IDFactura.IDEmisorFactura tiene que tener un valor.");
+                            $" La propiedad IDFactura.NumSerie solo puede contener caracteres ASCII" +
+                            $" del 32 a 126 (caracteres imprimibles).");
 
                 }
+
+                // no permitiéndose la existencia de los siguientes caracteres: “ (ASCII 34), ‘ (ASCII 39),  < (ASCII 60), > (ASCII 62), = (ASCII 61)
+                if (Regex.IsMatch(numSerie, @"[<>""'=]+"))
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                        $" La propiedad IDFactura.NumSerie contiene carácteres no permitidos (<>\"'=).\n('{numSerie}').");
 
             }
 

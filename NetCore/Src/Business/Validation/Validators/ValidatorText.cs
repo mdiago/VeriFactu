@@ -100,11 +100,7 @@ namespace VeriFactu.Business.Validation.Validators
             if (string.IsNullOrEmpty(Text))
                 return result;
 
-            if (Regex.IsMatch(Text, @"[<>""'=]+"))
-                result.Add($"Error en el bloque {Name}: Existen caráctares" +
-                    $" no permitidos (<>\"'=).\n('{Text}').");
-
-            if(Text.Length > MaxLength)
+            if (Text.Length > MaxLength)
                 result.Add($"Error en el bloque {Name}: La longitud del texto es" +
                 $" {Text.Length} cuando la longitud máxima es {MaxLength}.\n('{Text}')");
 
