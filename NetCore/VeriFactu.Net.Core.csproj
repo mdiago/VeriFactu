@@ -34,6 +34,7 @@
     <NoWarn>$(NoWarn);NU5118</NoWarn>
 	<NoWarn>$(NoWarn);NU5128</NoWarn>
 	<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
    <Target Name="CustomContentTarget">
