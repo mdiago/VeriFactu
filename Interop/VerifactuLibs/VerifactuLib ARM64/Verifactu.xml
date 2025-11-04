@@ -1550,6 +1550,14 @@
             <param name="certificate">Certificado para la petición.</param>
             <returns>Respuesta del servidor.</returns>
         </member>
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetAction">
+            <summary>
+            Devuelve la acción para el webservice de envío
+            de registros.
+            </summary>
+            <returns>Acción para el webservice de envío
+            de registros.</returns>
+        </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.GetResponseEnvelope(System.String)">
             <summary>
             Serializa como sobre soap un string de respuesta
@@ -5831,6 +5839,19 @@
             <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve la respuesta.</returns>
         </member>
+        <member name="M:VeriFactu.Net.Wsd.GetResponse(System.Net.Http.HttpClient,System.String,System.String,System.Xml.XmlDocument)">
+            <summary>
+            Devuelve la respuesta de una petición POST de envío de un
+            documento xml a una url determinada realizada con la
+            instancia de HttpClient facilitada como parámetro.
+            </summary>
+            <param name="httpClient">Instancia de HttpClient para
+            realizar la petición.</param>
+            <param name="url">Url a la que enviar la petición.</param>
+            <param name="action">Acción de servicio web.</param>
+            <param name="xmlDocument">Documento xml.</param>
+            <returns>Texto de la respuesta.</returns>
+        </member>
         <member name="M:VeriFactu.Net.Wsd.CreateWebRequest(System.String,System.String)">
             <summary>
             Crea la instancia WebRequest para enviar la petición
@@ -5846,6 +5867,20 @@
             Si su valor no está establecido, se intentará cargar el certificado
             con los valores establecidos en la configuración de VeriFactu.
             </summary>
+        </member>
+        <member name="F:VeriFactu.Net.Wsd.HttpClients">
+            <summary>
+            Cliente preinstanciados para las peticiones a distintas urls.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Wsd.GetHttpClient(System.String,System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Cliente para llamar al web service de la AEAT para el VeriFactu seleccionado.
+            </summary>
+            <param name="url">Url destino.</param>
+            <param name="action">Acción a ejecutar.</param>
+            <param name="certificate">Certificado para la petición.</param>
+            <returns></returns>
         </member>
         <member name="M:VeriFactu.Net.Wsd.GetCertificate">
             <summary>

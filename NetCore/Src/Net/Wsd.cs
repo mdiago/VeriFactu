@@ -38,9 +38,14 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Policy;
+using System.Text;
 using System.Xml;
 using VeriFactu.Config;
 
@@ -102,6 +107,9 @@ namespace VeriFactu.Net
         internal static string Call(string url, string action, XmlDocument xmlDocument, X509Certificate2 certificate = null)
         {
 
+            if (HttpClients.ContainsKey(url))
+                return GetResponse(HttpClients[url], url, action, xmlDocument);
+
             HttpWebRequest webRequest = CreateWebRequest(url, action);
 
             X509Certificate2 cert = certificate??GetCheckedCertificate();
@@ -127,8 +135,28 @@ namespace VeriFactu.Net
                 response.Close();
             }
 
-
             return responseFromServer;
+
+        }
+
+        /// <summary>
+        /// Devuelve la respuesta de una petición POST de envío de un
+        /// documento xml a una url determinada realizada con la
+        /// instancia de HttpClient facilitada como parámetro.
+        /// </summary>
+        /// <param name="httpClient">Instancia de HttpClient para
+        /// realizar la petición.</param>
+        /// <param name="url">Url a la que enviar la petición.</param>
+        /// <param name="action">Acción de servicio web.</param>
+        /// <param name="xmlDocument">Documento xml.</param>
+        /// <returns>Texto de la respuesta.</returns>
+        private static string GetResponse(HttpClient httpClient, string url, string action, XmlDocument xmlDocument) 
+        {
+
+            var content = new StringContent(xmlDocument.OuterXml, Encoding.UTF8, "text/xml");
+            var resp = httpClient.PostAsync(url, content).GetAwaiter().GetResult();
+            resp.EnsureSuccessStatusCode();
+            return resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
         }
 
@@ -164,9 +192,70 @@ namespace VeriFactu.Net
         /// </summary>
         public static X509Certificate2 Certificate { get; set; }
 
+        /// <summary>
+        /// Cliente preinstanciados para las peticiones a distintas urls.
+        /// </summary>
+        public static Dictionary<string, HttpClient> HttpClients = new Dictionary<string, HttpClient>();
+
         #endregion
 
         #region Métodos Públicos Estáticos
+
+        /// <summary>
+        /// Cliente para llamar al web service de la AEAT para el VeriFactu seleccionado.
+        /// </summary>
+        /// <param name="url">Url destino.</param>
+        /// <param name="action">Acción a ejecutar.</param>
+        /// <param name="certificate">Certificado para la petición.</param>
+        /// <returns></returns>
+        public static HttpClient GetHttpClient(string url, string action, X509Certificate2 certificate = null) 
+        {
+
+            X509Certificate2 cert = certificate ?? GetCheckedCertificate();
+            HttpClient httpClient = null;
+
+#if !LE_461 && !LE_472 && !LE_480
+
+            var socketsHttpHandler = new SocketsHttpHandler
+            {
+                PooledConnectionLifetime = TimeSpan.FromMinutes(10),
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+                PreAuthenticate = true,
+                AllowAutoRedirect = false,
+                UseProxy = false, // si no usas proxy
+                Expect100ContinueTimeout = TimeSpan.Zero
+            };
+
+            socketsHttpHandler.SslOptions = new System.Net.Security.SslClientAuthenticationOptions
+            {
+                ClientCertificates = new X509CertificateCollection { cert }
+            };
+
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
+            System.Net.ServicePointManager.Expect100Continue = false;
+
+            httpClient = new HttpClient(socketsHttpHandler);
+
+#elif !LE_461
+
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ClientCertificates.Add(cert);
+            httpClient = new HttpClient(httpClientHandler);
+
+#else
+
+            httpClient = new HttpClient();
+
+#endif
+
+            httpClient.BaseAddress = new Uri(url);
+            httpClient.DefaultRequestHeaders.Add("SOAPAction", action);
+            httpClient.DefaultRequestHeaders.Connection.Add("Keep-Alive");
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+
+            return httpClient;
+
+        }
 
         /// <summary>
         /// Devuelve el certificado configurado siguiendo la siguiente
@@ -262,7 +351,7 @@ namespace VeriFactu.Net
                 else
                     return new X509Certificate2(Settings.Current.CertificatePath,
                         Settings.Current.CertificatePassword,
-#if LE_461  || LE_472 || LE_480
+#if LE_461 || LE_472 || LE_480
                         X509KeyStorageFlags.MachineKeySet |
                         X509KeyStorageFlags.PersistKeySet |
 #endif

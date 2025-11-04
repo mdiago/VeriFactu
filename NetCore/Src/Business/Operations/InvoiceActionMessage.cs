@@ -606,6 +606,16 @@ namespace VeriFactu.Business.Operations
 
         }
 
+        /// <summary>
+        /// Devuelve la acción para el webservice de envío
+        /// de registros.
+        /// </summary>
+        /// <returns>Acción para el webservice de envío
+        /// de registros.</returns>
+        public static string GetAction() 
+        { 
+             return _Action;
+        }
 
         #endregion
 
