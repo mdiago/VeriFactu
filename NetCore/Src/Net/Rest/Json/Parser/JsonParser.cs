@@ -39,11 +39,8 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Net.NetworkInformation;
 using System.Reflection;
 using VeriFactu.Net.Rest.Json.Parser.Lexer;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VeriFactu.Net.Rest.Json.Parser
 {

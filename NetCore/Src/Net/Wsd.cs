@@ -44,9 +44,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using VeriFactu.Config;
 
 namespace VeriFactu.Net
@@ -153,8 +153,15 @@ namespace VeriFactu.Net
         private static string GetResponse(HttpClient httpClient, string url, string action, XmlDocument xmlDocument) 
         {
 
-            var content = new StringContent(xmlDocument.OuterXml, Encoding.UTF8, "text/xml");
-            var resp = httpClient.PostAsync(url, content).GetAwaiter().GetResult();
+            var req = new HttpRequestMessage(HttpMethod.Post, url)
+            {
+                Version = new Version(1, 1)
+            };
+
+            req.Headers.ExpectContinue = false; // evita 100-continue
+            req.Content = new StringContent(xmlDocument.OuterXml, Encoding.UTF8, "text/xml");
+
+            var resp = httpClient.SendAsync(req, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false).GetAwaiter().GetResult();
             resp.EnsureSuccessStatusCode();
             return resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
@@ -219,11 +226,13 @@ namespace VeriFactu.Net
             var socketsHttpHandler = new SocketsHttpHandler
             {
                 PooledConnectionLifetime = TimeSpan.FromMinutes(10),
+                PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
                 PreAuthenticate = true,
                 AllowAutoRedirect = false,
                 UseProxy = false, // si no usas proxy
-                Expect100ContinueTimeout = TimeSpan.Zero
+                Expect100ContinueTimeout = TimeSpan.Zero,
+                MaxConnectionsPerServer = 10,
             };
 
             socketsHttpHandler.SslOptions = new System.Net.Security.SslClientAuthenticationOptions
@@ -231,10 +240,15 @@ namespace VeriFactu.Net
                 ClientCertificates = new X509CertificateCollection { cert }
             };
 
+            AppContext.SetSwitch("System.Net.Http.CheckCertificateRevocationList", false);
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
-            System.Net.ServicePointManager.Expect100Continue = false;
+            ServicePointManager.Expect100Continue = false;
 
-            httpClient = new HttpClient(socketsHttpHandler);
+            httpClient = new HttpClient(socketsHttpHandler) 
+            {
+                Timeout = TimeSpan.FromSeconds(100),
+                DefaultRequestVersion = new Version(1, 1)
+            };
 
 #elif !LE_461
 
@@ -250,7 +264,6 @@ namespace VeriFactu.Net
 
             httpClient.BaseAddress = new Uri(url);
             httpClient.DefaultRequestHeaders.Add("SOAPAction", action);
-            httpClient.DefaultRequestHeaders.Connection.Add("Keep-Alive");
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
 
             return httpClient;
@@ -361,8 +374,8 @@ namespace VeriFactu.Net
 
         }
 
-#endregion
-
+        #endregion
+    
     }
 
 }

@@ -40,11 +40,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VeriFactu.Business.Validation.Validators.Alta
 {

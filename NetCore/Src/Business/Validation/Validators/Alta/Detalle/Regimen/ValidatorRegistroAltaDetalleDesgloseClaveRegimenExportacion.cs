@@ -37,7 +37,6 @@
     address: info@irenesolutions.com
  */
 
-using System;
 using System.Collections.Generic;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;

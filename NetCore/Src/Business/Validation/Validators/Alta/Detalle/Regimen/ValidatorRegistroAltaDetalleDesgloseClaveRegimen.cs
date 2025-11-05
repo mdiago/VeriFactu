@@ -38,7 +38,6 @@
  */
 
 using System.Collections.Generic;
-using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;

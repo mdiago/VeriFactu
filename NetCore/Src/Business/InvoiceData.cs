@@ -39,14 +39,10 @@
 
 using System;
 using System.Collections.Generic;
-using VeriFactu.Business.Validation.NIF.TaxId;
-using VeriFactu.Common;
-using VeriFactu.Config;
 using VeriFactu.Net.Rest.Json;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
-using VeriFactu.Xml.Factu.Anulacion;
 
 namespace VeriFactu.Business
 {

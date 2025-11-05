@@ -40,7 +40,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace VeriFactu.Business.Validation.VIES
 {
