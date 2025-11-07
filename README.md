@@ -32,13 +32,6 @@ Para cualquier duda o consulta, puedes escribirnos a **info@irenesolutions.com**
 
 [Irene Solutions](http://www.irenesolutions.com)
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify -->
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-## ⭐ Contributors
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
 
 ## Quickstart
 
