@@ -215,7 +215,7 @@ namespace VeriFactu.Business.FlowControl
             Utils.Log($"Iniciado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
             Debug.Print($"Iniciado cierre de cola {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
 
-            if (ActiveInvoiceQueue.Count == 0)
+            if (ActiveInvoiceQueue != null && ActiveInvoiceQueue.Count == 0)
                 DoExit();
 
         }

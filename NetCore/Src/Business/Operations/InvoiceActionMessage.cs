@@ -41,6 +41,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using System.Xml;
 using VeriFactu.Config;
 using VeriFactu.Net;
@@ -316,6 +317,12 @@ namespace VeriFactu.Business.Operations
                 throw new InvalidOperationException("No se puede enviar un registro no contabilizado (Posted = false).");
 
             Response = Send(certificate);
+
+            // https://github.com/mdiago/VeriFactu/issues/219
+            if (Regex.IsMatch(Response, @"^<!DOCTYPE html>"))
+                throw new InvalidDataException($"La respuesta recibidad de la AEAT no es un XML. Es un documento html.\n" +
+                    $"Esto suele ocurrir cuando se utiliza un certificado no válido.");
+
             IsSent = true;
 
         }
