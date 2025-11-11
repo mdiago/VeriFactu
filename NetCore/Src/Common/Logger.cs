@@ -60,7 +60,7 @@ namespace VeriFactu.Common
         Dictionary<int, string> _Log;
 
         /// <summary>
-        /// Almacena los mensajes.
+        /// Almacena marca de tiempo de los mensajes.
         /// </summary>
         Dictionary<int, DateTime> _LogTime;
 
