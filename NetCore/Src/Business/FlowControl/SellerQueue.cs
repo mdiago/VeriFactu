@@ -413,7 +413,6 @@ namespace VeriFactu.Business.FlowControl
 
             }
 
-
         }
 
         /// <summary>
@@ -422,7 +421,9 @@ namespace VeriFactu.Business.FlowControl
         /// <returns>Representación textual de la instancia.</returns>
         public override string ToString()
         {
+
             return $"{SellerID} ({_InvoiceActions.Count})";
+
         }
 
         #endregion
