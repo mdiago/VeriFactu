@@ -79,7 +79,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Sólo se podrá rellenar con “S” si TipoFactura=“F1” o “F3” o “R1” o “R2” o “R3” o “R4”.
 
-            if (_RegistroAlta.FacturaSimplificadaArt7273 == "S" && !_IsSimplificada)
+            if (_RegistroAlta.FacturaSimplificadaArt7273 == "S" && _IsSimplificada)
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad FacturaSimplificadaArt7273 sólo se puede rellenar" +
                         $" con “S” si TipoFactura=“F1” o “F3” o “R1” o “R2” o “R3” o “R4”.");

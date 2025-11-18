@@ -85,7 +85,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Esta validación no se aplicará cuando exista acuerdo de facturación, es decir, cuando el
             // campo NumRegistroAcuerdoFacturacion esté cumplimentado. Esta validación tampoco se
-            //aplicará cuando el campo FacturaSinIdentifDestinatarioArticulo61d = “S”
+            // aplicará cuando el campo FacturaSinIdentifDestinatarioArticulo61d = “S”
 
             if (string.IsNullOrEmpty(_RegistroAlta.NumRegistroAcuerdoFacturacion) && 
                 _RegistroAlta.FacturaSinIdentifDestinatarioArt61d != "S") 
