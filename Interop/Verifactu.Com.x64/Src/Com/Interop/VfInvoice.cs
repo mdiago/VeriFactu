@@ -562,6 +562,10 @@ namespace Verifactu
                 throw new ArgumentException($"El parámetro thirdPartyType sólo admite los valores" +
                     $" 'D' para destinatario o 'T' para resto de terceros.");
 
+            if (thirdPartyType == "T")
+                throw new NotImplementedException($"Únicamente está soportada la modalidad de autofactura 'D'." +
+                    $" Pendiente de implementar la opción 'T'.");
+
             _ThirdPartyIssuer = thirdPartyType;
 
         }

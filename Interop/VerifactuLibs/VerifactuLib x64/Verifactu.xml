@@ -12705,7 +12705,7 @@
             Fecha operación.
             </summary>        
         </member>
-        <member name="F:Verifactu.VfInvoice._EmitidaPorTerceroODestinatario">
+        <member name="F:Verifactu.VfInvoice._ThirdPartyIssuer">
             <summary>
             Identificador que especifica si la factura ha sido
             emitida por un tercero o por el destinatario. L6.
