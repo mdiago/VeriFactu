@@ -84,7 +84,6 @@ namespace VeriFactu.Business
 
             registroAlta.Subsanacion = "S";
 
-
         }
 
         #endregion

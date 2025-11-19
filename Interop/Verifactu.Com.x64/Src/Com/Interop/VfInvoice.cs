@@ -158,7 +158,7 @@ namespace Verifactu
         /// </summary>
         /// <param name="operationDate">Fecha operación.</param>
         [DispId(1)]
-        void SeOperationDate(DateTime operationDate);
+        void SetOperationDate(DateTime operationDate);
 
         /// <summary>
         /// Obtiene el registro de alta para verifactu.
@@ -520,7 +520,7 @@ namespace Verifactu
         /// de que se necesaria.
         /// </summary>
         /// <param name="operationDate">Fecha operación.</param>
-        public void SeOperationDate(DateTime operationDate)
+        public void SetOperationDate(DateTime operationDate)
         {
 
             _OperationDate = operationDate;
