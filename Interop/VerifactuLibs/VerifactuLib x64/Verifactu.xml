@@ -3753,7 +3753,7 @@
         </member>
         <member name="F:VeriFactu.Common.Logger._LogTime">
             <summary>
-            Almacena los mensajes.
+            Almacena marca de tiempo de los mensajes.
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Logger._Count">
@@ -12589,7 +12589,7 @@
             Texto del documento.
             </summary>
         </member>
-        <member name="M:Verifactu.IVfInvoice.SeOperationDate(System.DateTime)">
+        <member name="M:Verifactu.IVfInvoice.SetOperationDate(System.DateTime)">
             <summary>
             Establece la fecha operación en caso
             de que se necesaria.
@@ -12608,6 +12608,17 @@
             factura sustituida.
             </summary>
             <param name="taxItem">Datos factura sustituida.</param>
+        </member>
+        <member name="M:Verifactu.IVfInvoice.SetThirdPartyIssuer(System.String)">
+            <summary>
+            Establece la fecha operación en caso
+            de que se necesaria.
+            </summary>
+            <param name="thirdPartyType">
+            <para> Tipo de tercero emisor:</para>
+            <para> 'D': Destinatario.</para>
+            <para> 'T': Tercero.</para>
+            </param>
         </member>
         <member name="M:Verifactu.IVfInvoice.GetRegistroAnulacion">
             <summary>
@@ -12693,6 +12704,12 @@
             <summary>
             Fecha operación.
             </summary>        
+        </member>
+        <member name="F:Verifactu.VfInvoice._EmitidaPorTerceroODestinatario">
+            <summary>
+            Identificador que especifica si la factura ha sido
+            emitida por un tercero o por el destinatario. L6.
+            </summary>
         </member>
         <member name="F:Verifactu.VfInvoice._Invoice">
             <summary>
@@ -12813,12 +12830,23 @@
             Texto del documento.
             </summary>
         </member>
-        <member name="M:Verifactu.VfInvoice.SeOperationDate(System.DateTime)">
+        <member name="M:Verifactu.VfInvoice.SetOperationDate(System.DateTime)">
             <summary>
             Establece la fecha operación en caso
             de que se necesaria.
             </summary>
             <param name="operationDate">Fecha operación.</param>
+        </member>
+        <member name="M:Verifactu.VfInvoice.SetThirdPartyIssuer(System.String)">
+            <summary>
+            Establece la fecha operación en caso
+            de que se necesaria.
+            </summary>
+            <param name="thirdPartyType">
+            <para> Tipo de tercero emisor:</para>
+            <para> 'D': Destinatario.</para>
+            <para> 'T': Tercero.</para>
+            </param>
         </member>
         <member name="M:Verifactu.VfInvoice.GetRegistroAlta">
             <summary>
