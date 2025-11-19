@@ -177,8 +177,8 @@ namespace Verifactu
         void SetSubstitution(IVfTaxItem taxItem);
 
         /// <summary>
-        /// Establece la fecha operación en caso
-        /// de que se necesaria.
+        /// Establece el identificador que especifica si la factura ha sido
+        /// emitida por un tercero o por el destinatario. L6.
         /// </summary>
         /// <param name="thirdPartyType">
         /// <para> Tipo de tercero emisor:</para>
@@ -547,8 +547,8 @@ namespace Verifactu
         }
 
         /// <summary>
-        /// Establece la fecha operación en caso
-        /// de que se necesaria.
+        /// Establece el identificador que especifica si la factura ha sido
+        /// emitida por un tercero o por el destinatario. L6.
         /// </summary>
         /// <param name="thirdPartyType">
         /// <para> Tipo de tercero emisor:</para>
