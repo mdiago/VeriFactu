@@ -302,6 +302,13 @@ namespace VeriFactu.NoVeriFactu.Signature
         public byte[] Sign(Registro registro)
         {
 
+#if !LE_461 && !LE_472 && !LE_480
+
+            throw new NotImplementedException("La funcionalidad de firma sólo" +
+                " está disponible para proyectos .NET Framework 4.6.1 o 4.7.2 o 4.8");
+
+#endif
+
             var name = registro.GetType().Name;
 
             var nms = new Dictionary<string, string>()
