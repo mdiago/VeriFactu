@@ -43,6 +43,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Xml;
+using VeriFactu.Common.Exceptions;
 using VeriFactu.Config;
 using VeriFactu.Net;
 using VeriFactu.Xml;
@@ -320,8 +321,16 @@ namespace VeriFactu.Business.Operations
 
             // https://github.com/mdiago/VeriFactu/issues/219
             if (Regex.IsMatch(Response, @"^<!DOCTYPE html>"))
+            {
+
+                // https://github.com/mdiago/VeriFactu/discussions/236
+
+                File.WriteAllText($"{Settings.Current.LogPath}ERR.{DateTime.Now:yyyyMMddHHmmss}.html", Response);
+
                 throw new InvalidDataException($"La respuesta recibidad de la AEAT no es un XML. Es un documento html.\n" +
-                    $"Esto suele ocurrir cuando se utiliza un certificado no válido.");
+                    $"Esto suele ocurrir cuando se utiliza un certificado no válido.", new UnexpectedHtmlException(Response));                
+
+            }
 
             IsSent = true;
 

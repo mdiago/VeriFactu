@@ -306,6 +306,9 @@
     <Compile Include="..\..\NetCore\Src\Common\Exceptions\SendException.cs">
       <Link>Src\Common\Exceptions\SendException.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\Common\Exceptions\UnexpectedHtmlException.cs">
+      <Link>Src\Common\Exceptions\UnexpectedHtmlException.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Common\Logger.cs">
       <Link>Src\Common\Logger.cs</Link>
     </Compile>

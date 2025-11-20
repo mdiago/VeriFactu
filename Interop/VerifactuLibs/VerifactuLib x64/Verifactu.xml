@@ -3741,6 +3741,19 @@
             </summary>
             <param name="innerException">Excepción interna.</param>
         </member>
+        <member name="T:VeriFactu.Common.Exceptions.UnexpectedHtmlException">
+            <summary>
+            Representa una excepción cuando en una petición
+            a un web service se espera un xml y en su lugar
+            se obtiene un html en la respuesta.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Exceptions.UnexpectedHtmlException.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="html">Texto html obtenido cuando se esperaba xml.</param>
+        </member>
         <member name="T:VeriFactu.Common.Logger">
             <summary>
             Se encarga del log.
@@ -12611,8 +12624,8 @@
         </member>
         <member name="M:Verifactu.IVfInvoice.SetThirdPartyIssuer(System.String)">
             <summary>
-            Establece la fecha operación en caso
-            de que se necesaria.
+            Establece el identificador que especifica si la factura ha sido
+            emitida por un tercero o por el destinatario. L6.
             </summary>
             <param name="thirdPartyType">
             <para> Tipo de tercero emisor:</para>
@@ -12839,8 +12852,8 @@
         </member>
         <member name="M:Verifactu.VfInvoice.SetThirdPartyIssuer(System.String)">
             <summary>
-            Establece la fecha operación en caso
-            de que se necesaria.
+            Establece el identificador que especifica si la factura ha sido
+            emitida por un tercero o por el destinatario. L6.
             </summary>
             <param name="thirdPartyType">
             <para> Tipo de tercero emisor:</para>
