@@ -131,8 +131,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
                 // Si el campo IDType = “02” (NIF-IVA), en caso de valor en CodigoPais.
                 // El campo CodigoPais indicado no coincide con los dos primeros dígitos del identificador.
+                // Excluímos Grecia: https://github.com/mdiago/VeriFactu/issues/240
                 if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && _Interlocutor.IDOtro.CodigoPaisSpecified && 
-                    !_Interlocutor.IDOtro.ID.StartsWith($"{_Interlocutor.IDOtro.CodigoPais}"))
+                    !_Interlocutor.IDOtro.ID.StartsWith($"{_Interlocutor.IDOtro.CodigoPais}")&& _Interlocutor.IDOtro.CodigoPais != CodigoPais.GR)
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} El campo CodigoPais indicado en el interlocutor {_Interlocutor} es '{_Interlocutor.IDOtro.CodigoPais}'" +
                         $" y no coincide con los dos primeros dígitos del identificador '{_Interlocutor.IDOtro.ID.Substring(0,2)}'.");
