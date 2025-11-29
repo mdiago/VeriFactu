@@ -37,7 +37,10 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using VeriFactu.NoVeriFactu.Signature.Xades.Props;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
@@ -89,28 +92,61 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 
             var result = new List<string>();
 
-            // Solo podrá incluirse este campo si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta
-            // (considerándose “01” - IVA) y será obligatorio.
+            // Solo podrá incluirse este campo si Impuesto = “01” (IVA), “02” (IPSI), “03” (IGIC)
+            // o no se cumplimenta (considerándose “01” - IVA).
 
             if (_DetalleDesglose.ClaveRegimenSpecified &&
                 _DetalleDesglose.Impuesto != Impuesto.IVA &&
+                _DetalleDesglose.Impuesto != Impuesto.IPSI &&
                 _DetalleDesglose.Impuesto != Impuesto.IGIC) 
             {
 
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                    $" Solo podrá incluirse ClaveRegimen si Impuesto = “01” (IVA), “03” (IGIC)" +
+                    $" Solo podrá incluirse ClaveRegimen si Impuesto = “01” (IVA), “02” (IPSI), “03” (IGIC)" +
                     $" o no se cumplimenta (considerándose “01” - IVA).");
 
             }
 
             if (!_DetalleDesglose.ClaveRegimenSpecified &&
                 (_DetalleDesglose.Impuesto == Impuesto.IVA ||
+                _DetalleDesglose.Impuesto == Impuesto.IPSI ||
                 _DetalleDesglose.Impuesto == Impuesto.IGIC))
             {
 
                 result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                    $" ClaveRegimen obligatorio si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta" +
+                    $" ClaveRegimen obligatorio si Impuesto = “01” (IVA), “02” (IPSI), “03” (IGIC) o no se cumplimenta" +
                     $" (considerándose “01” - IVA).");
+
+            }
+
+            // Si Impuesto = “02” (IPSI), el valor de ClaveRegimen deberá estar cumplimentado y deberá contener cualquiera de estas claves:
+            // ✓ 01 Operación de régimen general.
+            // ✓ 08 Operaciones sujetas al IGIC / IVA(Impuesto General Indirecto Canario / Impuesto sobre el Valor Añadido).
+            // ✓ 11 Operaciones de arrendamiento de local de negocio.
+            // ✓ 18 Operaciones recogidas en el artículo 73. 4 y 5 de la Ordenanza fiscal IPSI. (Sólo Ceuta).
+            // ✓ 19 Operaciones interiores exentas.
+            // ✓ 20 Régimen estimación objetiva.
+
+            if (_DetalleDesglose.ClaveRegimenSpecified &&
+               _DetalleDesglose.Impuesto == Impuesto.IPSI)
+            {
+
+                var ipsiClaveRegimen = new ClaveRegimen[6] 
+                { 
+                    ClaveRegimen.RegimenGeneral,                                // 01 Operación de régimen general.
+                    ClaveRegimen.IpsiIgic,                                      // 08 Operaciones sujetas al IGIC / IVA(Impuesto General Indirecto Canario / Impuesto sobre el Valor Añadido).
+                    ClaveRegimen.ArrendamientoLocalNecocio,                     // 11 Operaciones de arrendamiento de local de negocio.
+                    ClaveRegimen.RecEquivPeqEmp,                                // 18 Operaciones recogidas en el artículo 73. 4 y 5 de la Ordenanza fiscal IPSI. (Sólo Ceuta).
+                    ClaveRegimen.RegimenEspecialAgriculturaArt25Ley19_1994,     // 19 Operaciones interiores exentas.
+                    ClaveRegimen.RegimenSimplificado                            // 20 Régimen estimación objetiva.
+                };
+
+                var ipsiNotAllowed = Array.IndexOf(ipsiClaveRegimen, _DetalleDesglose.ClaveRegimen) == -1;
+
+                if(ipsiNotAllowed)
+                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                        $" Si Impuesto = “02” (IPSI), el valor de ClaveRegimen deberá estar cumplimentado y deberá contener cualquiera de estas claves:" +
+                        $" '01', '08', '11', '18', '19' o '20'.");
 
             }
 

@@ -91,8 +91,7 @@ namespace VeriFactu.Xml.Factu.Alta
         R4,
 
         /// <summary>
-        /// Factura Rectificativa en facturas simplificadas. Factura
-        /// emitida en sustitución de facturas simplificadas facturadas y declaradas
+        /// Factura Rectificativa en facturas simplificadas.
         /// </summary>
         R5
 

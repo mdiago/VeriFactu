@@ -295,7 +295,8 @@ namespace VeriFactu.Business
 
                 }
 
-                detalleDesglose.ClaveRegimenSpecified = (detalleDesglose.Impuesto == Impuesto.IVA || detalleDesglose.Impuesto == Impuesto.IGIC);
+                detalleDesglose.ClaveRegimenSpecified = (detalleDesglose.Impuesto == Impuesto.IVA || 
+                    detalleDesglose.Impuesto == Impuesto.IPSI || detalleDesglose.Impuesto == Impuesto.IGIC);
 
                 desglose.Add(detalleDesglose);
 
