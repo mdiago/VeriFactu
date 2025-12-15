@@ -381,6 +381,9 @@
     <Compile Include="..\..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonComma.cs">
       <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonComma.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonExcluded.cs">
+      <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonExcluded.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonFalse.cs">
       <Link>Src\Net\Rest\Json\Parser\Lexer\Tokens\JsonFalse.cs</Link>
     </Compile>

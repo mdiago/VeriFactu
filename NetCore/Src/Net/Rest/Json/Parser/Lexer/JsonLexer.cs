@@ -80,7 +80,9 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer
             { 't',      typeof(JsonTrue)},
             { 'f',      typeof(JsonFalse)},
             { 'n',      typeof(JsonNull)},
-
+            { ' ',      typeof(JsonExcluded)},
+            { '\r',     typeof(JsonExcluded)},
+            { '\n',     typeof(JsonExcluded)},
         };
 
         /// <summary>
@@ -126,10 +128,15 @@ namespace VeriFactu.Net.Rest.Json.Parser.Lexer
                 var ch = jsonText[position];
                 var token = GetFromChar(ch, position);
 
-                if (token.Length > 0)
-                    _Tokens.Add(token);
-                else
-                    throw new ArgumentException($"Unknown character '{jsonText[position]}'.");
+                if (!token.Excluded)
+                {
+
+                    if (token.Length > 0)
+                        _Tokens.Add(token);
+                    else
+                        throw new ArgumentException($"Unknown character '{jsonText[position]}'.");
+
+                }
 
                 position += token.Length;
 

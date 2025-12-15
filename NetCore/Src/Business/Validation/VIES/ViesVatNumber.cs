@@ -37,9 +37,11 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
+using VeriFactu.Net.Rest.Json.Parser;
 
 namespace VeriFactu.Business.Validation.VIES
 {
@@ -196,18 +198,22 @@ namespace VeriFactu.Business.Validation.VIES
             var number = vatNumber.Substring(2, vatNumber.Length - 2);
 
             var json = "{\"countryCode\": \""+ country + "\",\"vatNumber\": \""+ number + "\"}";
-            string valid = null;
 
             using (WebClient webClient = new WebClient()) 
             {
 
                 webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                string response = webClient.UploadString(UrlValidate, json);
-                valid = Regex.Match(response, @"(?<=\Wvalid\W\s*:\s*)\w+").Value;
+                string responseJson = webClient.UploadString(UrlValidate, json);
+
+                var jsonParser = new JsonParser(responseJson);
+                var result = jsonParser.GetResult();
+
+                if ((result as IDictionary<string, object>).ContainsKey("valid"))
+                    return result.valid;
+                else 
+                    throw new Exception($"Respuesta errónea del servidor de validación:\n{responseJson}");
 
             }
-
-            return (valid == "true");
 
         }
 

@@ -225,7 +225,7 @@ namespace VeriFactu.Net.Rest.Json.Parser
 
         /// <summary>
         /// Devuelve el resultado de la deserialización
-        /// de la cadena JSON.
+        /// de la cadena JSON en un objeto dinámico.
         /// </summary>
         /// <returns>resultado de la deserialización
         /// de la cadena JSON.</returns>

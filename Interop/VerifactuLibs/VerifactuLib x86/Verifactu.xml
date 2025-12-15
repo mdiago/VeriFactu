@@ -5121,7 +5121,7 @@
         <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParser.GetResult">
             <summary>
             Devuelve el resultado de la deserialización
-            de la cadena JSON.
+            de la cadena JSON como un objeto dinámico.
             </summary>
             <returns>resultado de la deserialización
             de la cadena JSON.</returns>
@@ -5191,7 +5191,7 @@
         <member name="M:VeriFactu.Net.Rest.Json.Parser.JsonParserReader.GetResult">
             <summary>
             Devuelve el resultado de la deserialización
-            de la cadena JSON.
+            de la cadena JSON en un objeto dinámico.
             </summary>
             <returns>resultado de la deserialización
             de la cadena JSON.</returns>
@@ -5284,6 +5284,26 @@
             </summary>
         </member>
         <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonComma.#ctor(VeriFactu.Net.Rest.Json.Parser.Lexer.JsonLexer,System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="jsonLexer">Analizador léxico.</param>
+            <param name="start">Posición del inicio del
+            fragmento de texto dentro de la cadena completa JSON.</param>
+        </member>
+        <member name="T:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded">
+            <summary>
+            Fragmento obtenido del análisis léxico de una cadena
+            JSON que representa un espacio.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded.Excluded">
+            <summary>
+            Indica si el token se debe excvluir de la
+            serialización.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded.#ctor(VeriFactu.Net.Rest.Json.Parser.Lexer.JsonLexer,System.Int32)">
             <summary>
             Constructor.
             </summary>
@@ -5506,6 +5526,12 @@
         <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Length">
             <summary>
             Longitud de la cadena de texto.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Excluded">
+            <summary>
+            Indica si el token se debe excvluir de la
+            serialización.
             </summary>
         </member>
         <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Value">
@@ -8918,8 +8944,7 @@
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.TipoFactura.R5">
             <summary>
-            Factura Rectificativa en facturas simplificadas. Factura
-            emitida en sustitución de facturas simplificadas facturadas y declaradas
+            Factura Rectificativa en facturas simplificadas.
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.TipoRectificativa">
