@@ -203,15 +203,27 @@ namespace VeriFactu.Business.Validation.VIES
             {
 
                 webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                string responseJson = webClient.UploadString(UrlValidate, json);
 
-                var jsonParser = new JsonParser(responseJson);
-                var result = jsonParser.GetResult();
+                try
+                {
 
-                if ((result as IDictionary<string, object>).ContainsKey("valid"))
-                    return result.valid;
-                else 
-                    throw new Exception($"Respuesta errónea del servidor de validación:\n{responseJson}");
+                    string responseJson = webClient.UploadString(UrlValidate, json);
+
+                    var jsonParser = new JsonParser(responseJson);
+                    var result = jsonParser.GetResult();
+
+                    if ((result as IDictionary<string, object>).ContainsKey("valid"))
+                        return result.valid;
+                    else
+                        throw new Exception($"Respuesta errónea del servidor de validación:\n{responseJson}");
+
+                }                
+                catch (WebException ex)
+                {
+
+                    throw new Exception("Error realizando la petición http.", ex);
+
+                }
 
             }
 

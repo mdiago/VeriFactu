@@ -126,7 +126,7 @@ namespace VeriFactu.Net.Rest.Json.Parser
 
             }
 
-            while (_CurrentIndex < _Tokens.Count)
+            while (_CurrentIndex < _Tokens.Count - 1)
             {
                 
                 var keyToken = _Tokens[++_CurrentIndex];
