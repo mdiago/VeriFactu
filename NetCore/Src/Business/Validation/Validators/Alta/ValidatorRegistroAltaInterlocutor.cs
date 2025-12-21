@@ -139,7 +139,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                         $" y no coincide con los dos primeros dígitos del identificador '{_Interlocutor.IDOtro.ID.Substring(0,2)}'.");
 
                 // Validación contra censo VIES
-                var isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(_Interlocutor.IDOtro.ID);
+                bool isValidViesVatNumber = false;
+
+                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA)
+                    isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(_Interlocutor.IDOtro.ID);
 
                 // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
                 // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
