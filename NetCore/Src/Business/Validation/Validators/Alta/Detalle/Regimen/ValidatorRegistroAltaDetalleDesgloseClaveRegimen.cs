@@ -39,8 +39,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using VeriFactu.NoVeriFactu.Signature.Xades.Props;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
