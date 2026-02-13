@@ -88,12 +88,15 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+
             var result = new List<string>();
 
             // Si CalificacionOperacion es “S2”, TipoFactura solo puede ser “F1”, “F3”, “R1”, “R2”, “R3” y “R4”.            
 
             if (_DetalleDesglose.CalificacionOperacion == CalificacionOperacion.S2 && _IsSimplificada)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.4.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                       $"Si CalificacionOperacion es “S2”, TipoFactura solo puede ser “F1”, “F3”, “R1”, “R2”, “R3” y “R4”.");
 
             var tipoImpositivo = XmlParser.ToDecimal(_DetalleDesglose.TipoImpositivo);
@@ -108,12 +111,12 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
 
                 // TipoImpositivo = 0 obligatoriamente. (No se admite que vaya vacío o que el campo no exista).
                 if (string.IsNullOrEmpty(_DetalleDesglose.TipoImpositivo) || tipoImpositivo != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.4.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $"Cuando CalificacionOperacion sea “S2” TipoImpositivo = 0. (No se admite que vaya vacío o que el campo no exista).");
 
                 // CuotaRepercutida = 0 obligatoriamente. (No se admite que vaya vacío o que el campo no exista).
                 if (string.IsNullOrEmpty(_DetalleDesglose.CuotaRepercutida) || cuotaRepercutida != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.4.2] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $"Cuando CalificacionOperacion sea “S2” CuotaRepercutida = 0. (No se admite que vaya vacío o que el campo no exista).");
 
             }
@@ -129,22 +132,22 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
             {               
 
                 if (tipoImpositivo != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.4.3] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
                             $" no se puede informar TipoImpositivo.");
 
                 if (cuotaRepercutida != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.4.4] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
                             $" no se puede informar CuotaRepercutida.");                
 
                 if (tipoImpositivoRE != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.4.5] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
                          $" no se puede informar TipoRecargoEquivalencia”.");
 
                 if (cuotaRepercutidaRE != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.4.6] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $"Si CalificacionOperacion es = “N1/N2” e Impuesto = ”01” (IVA) o no se cumplimenta (considerándose “01” - IVA)" +
                          $" no se puede informar CuotaRecargoEquivalencia.");
 

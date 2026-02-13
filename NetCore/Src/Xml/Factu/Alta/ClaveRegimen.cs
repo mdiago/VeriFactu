@@ -170,7 +170,13 @@ namespace VeriFactu.Xml.Factu.Alta
         /// L8B: Operaciones sujetas al IPSI
         /// </summary>
         [XmlEnum("20")]
-        RegimenSimplificado = 20
+        RegimenSimplificado = 20,
+
+        /// <summary>
+        /// L8B: Régimen simplificado IPSI
+        /// </summary>
+        [XmlEnum("21")]
+        RegimenSimplificadoIpsi = 21
 
     }
 

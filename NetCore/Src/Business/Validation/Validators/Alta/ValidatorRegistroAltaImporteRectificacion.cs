@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 6. Agrupación ImporteRectificacion
@@ -85,7 +87,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 // Obligatorio si TipoRectificativa = “S”
                 // 1118 = Si la factura es de tipo rectificativa por sustitución el bloque ImporteRectificacion es obligatorio.
                 if (importeRectificacion == null)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    result.Add($"[3.1.3-6.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" Obligatorio informar el bloque ImporteRectificacion si TipoRectificativa = 'S'.");
 
             }
@@ -95,7 +97,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 // Sólo deberá incluirse esta agrupación si el campo TipoRectificativa = "S".
                 // 1119 = Si la factura no es de tipo rectificativa por sustitución el bloque ImporteRectificacion no debe tener valor.
                 if (importeRectificacion != null)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    result.Add($"[3.1.3-6.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" Sólo deberá incluirse el bloque ImporteRectificacion si el campo TipoRectificativa = 'S'.");
 
             }

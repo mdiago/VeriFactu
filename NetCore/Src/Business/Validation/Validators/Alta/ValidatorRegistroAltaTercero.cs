@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 12. Agrupación Tercero
@@ -81,12 +83,19 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             if (_RegistroAlta.Tercero != null && _RegistroAlta.EmitidaPorTerceroODestinatarioSpecified &&
                 _RegistroAlta.EmitidaPorTerceroODestinatario != EmitidaPorTerceroODestinatario.T)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-12.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Tercero sólo podrá cumplimentarse si EmitidaPorTerceroODestinatario es “T”.");
 
             // Validaciones de ID
-            if(_RegistroAlta.Tercero != null)
-                result.AddRange(new ValidatorRegistroAltaInterlocutor(_Envelope, _RegistroAlta, _RegistroAlta.Tercero, "Tercero").GetErrors());
+            if (_RegistroAlta.Tercero != null)
+            {
+
+                var errors = new ValidatorRegistroAltaInterlocutor(_Envelope, _RegistroAlta, _RegistroAlta.Tercero, "Tercero").GetErrors();
+
+                foreach (var error in errors)
+                    result.Add($"[3.1.3-12.1] {error}");
+
+            }
 
             return result;
 

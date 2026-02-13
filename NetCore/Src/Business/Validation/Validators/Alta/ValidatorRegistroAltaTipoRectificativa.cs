@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 3. TipoRectificativa
@@ -81,13 +83,13 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // “R4” o “R5”
 
             if (!_IsRectificativa && _RegistroAlta.TipoRectificativaSpecified)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-3.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                    $" Solo podrá incluirse el campo TipoRectificativa si el valor del campo TipoFactura es igual a “R1”, “R2”, “R3”," +
                    $" “R4” o “R5”.");
 
             // Campo obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
             if (_IsRectificativa && !_RegistroAlta.TipoRectificativaSpecified)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-3.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                    $" Campo TipoRectificativa obligatorio si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
 
             return result;

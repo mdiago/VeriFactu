@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 9.FacturaSinIdentifDestinatarioArt61d
@@ -80,7 +82,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // Sólo se podrá rellenar con “S” si TipoFactura=”F2” o “R5”.
 
             if (_RegistroAlta.FacturaSinIdentifDestinatarioArt61d == "S" && !_IsSimplificada)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-9.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad FacturaSinIdentifDestinatarioArt61d sólo se puede rellenar" +
                         $" con “S” si TipoFactura=”F2” o “R5”.");
 

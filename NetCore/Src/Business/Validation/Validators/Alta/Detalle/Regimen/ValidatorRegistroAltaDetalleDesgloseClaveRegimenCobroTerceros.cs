@@ -87,6 +87,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+            //          15.6 ClaveRegimen 
+
             var result = new List<string>();
 
             // 1205 = Si ClaveRegimen es 10 CalificacionOperacion tiene que ser N1, TipoFactura F1 y Destinatarios estar identificada mediante NIF.
@@ -101,18 +105,18 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             {
 
                 if (_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.N1)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.7.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “10”" +
                         $" CalificacionOperacion tiene que ser “N1” y siempre debe ir relleno.");
 
                 if (_RegistroAlta.TipoFactura != TipoFactura.F1)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.7.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “10”" +
                         $" TipoFactura tiene que ser “F1”.");
 
                 foreach (var destinatario in _RegistroAlta.Destinatarios) 
                     if(string.IsNullOrEmpty(destinatario.NIF))
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                        result.Add($"[3.1.3-15.6.7.2] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                             $" Cuando ClaveRegimen sea igual a “10”" +
                             $" El destinatario {destinatario} tiene que estar identificado mediante NIF.");
 

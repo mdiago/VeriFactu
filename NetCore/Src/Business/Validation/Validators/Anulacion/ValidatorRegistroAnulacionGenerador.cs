@@ -74,14 +74,16 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.4 Validaciones de negocio de la agrupación RegistroAnulacion en el bloque RegistroFactura.
+
             var result = new List<string>();
 
-            // 2. Agrupación Generador
+            // 3. Agrupación Generador
 
             // Si se informa esta agrupación, debe haberse informado el campo GeneradoPor.
 
             if (_RegistroAnulacion.Generador != null &&string.IsNullOrEmpty(_RegistroAnulacion.GeneradoPor))
-                result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
+                result.Add($"[3.1.4-3.0] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                     $" {_RegistroAnulacion.GeneradoPor}: Si se informa la agrupación Generador, deberá informarse el campo GeneradoPor.");
 
             
@@ -93,7 +95,7 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
 
                 // Si el valor de GeneradoPor es igual a “E”, debe estar relleno el campo NIF en el generador.
                 if (_RegistroAnulacion.GeneradoPor == "E" && string.IsNullOrEmpty(_RegistroAnulacion.Generador.NIF))
-                    result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
+                    result.Add($"[3.1.4-3.1] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                         $" {_RegistroAnulacion.GeneradoPor}: Si el valor de GeneradoPor es igual a “E”, debe estar relleno el campo NIF en el generador.");
 
                 // Si el valor de GeneradoPor es igual a “D”, cuando el Generador se identifique a través del
@@ -102,7 +104,7 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
                     _RegistroAnulacion.Generador?.IDOtro?.CodigoPais == CodigoPais.ES &&
                     _RegistroAnulacion.Generador?.IDOtro?.IDType != IDType.PASAPORTE &&
                     _RegistroAnulacion.Generador?.IDOtro?.IDType != IDType.NO_CENSADO)
-                    result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
+                    result.Add($"[3.1.4-3.2] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                         $" {_RegistroAnulacion.GeneradoPor}: Si el valor de GeneradoPor es igual a “D”, cuando el Generador se identifique a través del" +
                         $" bloque IDOtro y CodigoPais sea 'ES', se validará que el campo IDType sea “03” o “07”.");
 
@@ -113,12 +115,12 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
                     // Si se identifica a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03”.
                     if (_RegistroAnulacion.Generador?.IDOtro?.CodigoPais == CodigoPais.ES &&
                         _RegistroAnulacion.Generador?.IDOtro?.IDType != IDType.PASAPORTE)
-                        result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
+                        result.Add($"[3.1.4-3.3] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                         $" {_RegistroAnulacion.GeneradoPor}: Si se identifica a través de la agrupación IDOtro y CodigoPais sea 'ES', se validará que el campo IDType sea “03”.");
 
                     // No se admite el tipo de identificación IDType “07” (“No censado”).
                     if (_RegistroAnulacion.Generador?.IDOtro?.IDType != IDType.NO_CENSADO)
-                        result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
+                        result.Add($"[3.1.4-3.4] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                         $" {_RegistroAnulacion.GeneradoPor}: No se admite el tipo de identificación IDType “07” (“No censado”).");
 
                 }

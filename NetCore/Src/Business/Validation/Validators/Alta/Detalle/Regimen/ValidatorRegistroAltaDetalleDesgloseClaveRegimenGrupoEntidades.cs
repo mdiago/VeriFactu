@@ -89,6 +89,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+            //          15.6 ClaveRegimen 
+
             var result = new List<string>();
 
             // 1202 = Si ClaveRegimen es 06 TipoFactura no puede ser F2, F3, R5 y BaseImponibleACoste debe estar cumplimentado.
@@ -102,14 +106,14 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             {
 
                 if (Array.IndexOf(new TipoFactura[] { TipoFactura.F2, TipoFactura.F3, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.4.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “06”" +
                         $" el TipoFactura debe ser distinto de “F2”, “F3”, “R5”.");
 
                 var baseImponibleACoste = XmlParser.ToDecimal(_DetalleDesglose.BaseImponibleACoste);
 
                 if(baseImponibleACoste == 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.4.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “06”" +
                         $" campo BaseImponibleACoste deberá estar cumplimentado.");
             }

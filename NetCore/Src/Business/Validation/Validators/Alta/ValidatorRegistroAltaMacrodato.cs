@@ -75,6 +75,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 10. Macrodato
@@ -83,13 +85,13 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             if (Math.Abs(XmlParser.ToDecimal(_RegistroAlta.ImporteTotal)) > 100000000m && 
                 (_RegistroAlta.Macrodato == null || _RegistroAlta.Macrodato == "N"))
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-10.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" El campo Macrodato debe contener el valor 'S' obligatoriamente" +
                         $" si ImporteTotal >= |100.000.000,00| (valor absoluto).");
 
             // 1138 = El campo Macrodato solo debe ser informado con valor S si el valor de ImporteTotal es igual o superior a +-100.000.000
             if (Math.Abs(XmlParser.ToDecimal(_RegistroAlta.ImporteTotal)) < 100000000m && _RegistroAlta?.Macrodato == "S")
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-10.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" El campo Macrodato solo debe ser informado con valor S si el valor de ImporteTotal es igual o superior a +-100.000.000.");
 
             return result;

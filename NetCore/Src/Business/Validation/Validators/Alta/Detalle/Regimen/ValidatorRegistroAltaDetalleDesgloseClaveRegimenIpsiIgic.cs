@@ -87,6 +87,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+            //          15.6 ClaveRegimen 
+
             var result = new List<string>();
 
             // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA):
@@ -97,7 +101,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             {
 
                 if (_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.N2)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.6.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “08”" +
                         $" CalificacionOperacion tiene que ser “N2” y siempre debe ir relleno.");
 

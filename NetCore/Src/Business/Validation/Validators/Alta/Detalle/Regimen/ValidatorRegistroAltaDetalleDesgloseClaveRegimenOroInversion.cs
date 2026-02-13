@@ -87,6 +87,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+            //          15.6 ClaveRegimen 
+
             var result = new List<string>();
 
             // 1201 = Si ClaveRegimen es 04 CalificacionOperacion sólo puede ser Operación Sujeta y No exenta - Con inversión del sujeto pasivo (S2) o bien OperacionExenta.
@@ -99,7 +103,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             {
 
                 if (!(_DetalleDesglose.CalificacionOperacion == CalificacionOperacion.S2 || _DetalleDesglose.OperacionExentaSpecified))
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.3.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “04”, CalificacionOperacion solo" +
                         $" puede ser “S2” o bien OperacionExenta.");
 

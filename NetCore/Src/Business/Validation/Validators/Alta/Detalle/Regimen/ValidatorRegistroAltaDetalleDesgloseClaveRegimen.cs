@@ -88,6 +88,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+
             var result = new List<string>();
 
             // Solo podrá incluirse este campo si Impuesto = “01” (IVA), “02” (IPSI), “03” (IGIC)
@@ -99,7 +102,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 _DetalleDesglose.Impuesto != Impuesto.IGIC) 
             {
 
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.6.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                     $" Solo podrá incluirse ClaveRegimen si Impuesto = “01” (IVA), “02” (IPSI), “03” (IGIC)" +
                     $" o no se cumplimenta (considerándose “01” - IVA).");
 
@@ -111,7 +114,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 _DetalleDesglose.Impuesto == Impuesto.IGIC))
             {
 
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.6.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                     $" ClaveRegimen obligatorio si Impuesto = “01” (IVA), “02” (IPSI), “03” (IGIC) o no se cumplimenta" +
                     $" (considerándose “01” - IVA).");
 
@@ -142,7 +145,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 var ipsiNotAllowed = Array.IndexOf(ipsiClaveRegimen, _DetalleDesglose.ClaveRegimen) == -1;
 
                 if(ipsiNotAllowed)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.2] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Si Impuesto = “02” (IPSI), el valor de ClaveRegimen deberá estar cumplimentado y deberá contener cualquiera de estas claves:" +
                         $" '01', '08', '11', '18', '19' o '20'.");
 
@@ -170,6 +173,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 {ClaveRegimen.ArrendamientoLocalNecocio,    new ValidatorRegistroAltaDetalleDesgloseClaveRegimenArrendamientoLocalNecocio(_Envelope, _RegistroAlta, _DetalleDesglose) },
                 // 15.6.9 ClaveRegimen 14. IVA pendiente AAPP.
                 {ClaveRegimen.ObraPteDevengoAdmonPublica,   new ValidatorRegistroAltaDetalleDesgloseClaveRegimenObraPteDevengoAdmonPublica(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.10 ClaveRegimen 20 (IGIC). Operaciones sujetas al IPSI. 
+                {ClaveRegimen.RegimenSimplificado,   new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado(_Envelope, _RegistroAlta, _DetalleDesglose) },
+                // 15.6.11 ClaveRegimen 21 (IGIC). Régimen simplificado. 
+                {ClaveRegimen.RegimenSimplificadoIpsi,   new ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi(_Envelope, _RegistroAlta, _DetalleDesglose) }
             };
 
             if(_DetalleDesglose.ClaveRegimenSpecified)

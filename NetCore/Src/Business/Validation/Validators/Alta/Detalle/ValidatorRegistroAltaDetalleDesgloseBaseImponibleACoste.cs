@@ -88,6 +88,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+
             var result = new List<string>();
 
             // El campo BaseImponibleACoste solo puede estar cumplimentado si la
@@ -98,7 +101,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                 (_DetalleDesglose.BaseImponibleACoste != null && XmlParser.ToDecimal(_DetalleDesglose.BaseImponibleACoste) != 0)) 
             {
 
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.2.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                        $"El campo BaseImponibleACoste solo puede estar cumplimentado si la" +
                        $"ClaveRegimen es = “06” o Impuesto = “02” (IPSI)o Impuesto = “05” (Otros).");
 

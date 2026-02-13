@@ -75,7 +75,11 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
+
+            // 16. CuotaTotal
 
             // Se validará que sea igual a Ʃ (CuotaRepercutida + CuotaRecargoEquivalencia) de todas
             // las líneas de detalle de desglose.En caso contrario se devolverá un aviso de error
@@ -100,7 +104,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 var cuotaTotal = XmlParser.ToDecimal(_RegistroAlta.CuotaTotal);
 
                 if (Math.Abs(cuotaTotal - total) > 10)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    result.Add($"[3.1.3-16.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" Ʃ (CuotaRepercutida + CuotaRecargoEquivalencia)" +
                         $" debe ser igual a CuotaTotal +/ -10,00 euros.");
 

@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 2. RechazoPrevio
@@ -80,7 +82,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // Solo podrá incluirse el campo RechazoPrevio con valor “X” si se ha
             // informado el campo Subsanacion y tiene el valor “S”.
             if (_RegistroAlta.RechazoPrevio == RechazoPrevio.X && _RegistroAlta.Subsanacion != "S")
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-2.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Solo podrá incluirse el campo RechazoPrevio con valor “X” si se" +
                     $" ha informado el campo Subsanacion y tiene el valor “S”.");
 
@@ -88,7 +90,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // informa el campo Subsanación o éste tiene el valor “N”
             if (_RegistroAlta.RechazoPrevio == RechazoPrevio.S &&
                 (string.IsNullOrEmpty(_RegistroAlta.Subsanacion) || _RegistroAlta.Subsanacion == "N"))
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-2.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" No podrá informarse el campo RechazoPrevio con valor “S” si no se" +
                     $" informa el campo Subsanación o éste tiene el valor “N”.");
 

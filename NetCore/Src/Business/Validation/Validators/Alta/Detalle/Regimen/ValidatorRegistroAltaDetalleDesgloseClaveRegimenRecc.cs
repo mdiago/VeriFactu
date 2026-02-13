@@ -88,6 +88,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+            //          15.6 ClaveRegimen 
+
             var result = new List<string>();
 
             // 1203 = Si ClaveRegimen es 07 OperacionExenta no puede ser E2, E3, E4 y E5 o CalificacionOperacion no puede ser S2, N1, N2.
@@ -101,12 +105,12 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             {
 
                 if (Array.IndexOf(new CalificacionOperacion[] { CalificacionOperacion.S1, CalificacionOperacion.S2, CalificacionOperacion.N1, CalificacionOperacion.N2 }, _DetalleDesglose.CalificacionOperacion) != -1)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.5.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “07”" +
                         $" CalificacionOperacion no puede ser “S2”, “N1”, “N2”.");
 
                 if (Array.IndexOf(new CausaExencion[] { CausaExencion.E2, CausaExencion.E3, CausaExencion.E4, CausaExencion.E5 }, _DetalleDesglose.OperacionExenta) != -1)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.6.5.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “07”" +
                         $" OperacionExenta no puede ser “E2”, “E3”, “E4” y “E5”.");
             }

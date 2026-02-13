@@ -88,6 +88,9 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+
             var result = new List<string>();
 
             // Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA), el valor 
@@ -96,7 +99,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                 (_DetalleDesglose.OperacionExenta == CausaExencion.E7 || _DetalleDesglose.OperacionExenta == CausaExencion.E8))
             {
 
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.5.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                      $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA), el valor" +
                      $" de OperacionExenta deberá estar contenido en lista L10 (No inlcuye 'E7' ni 'E8').");
 
@@ -116,7 +119,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                 _DetalleDesglose.OperacionExenta == CausaExencion.E3))) 
             {
 
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.5.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                      $" Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA)," +
                      $" y ClaveRegimen es igual a “01”, no pueden marcarse los valores de OperacionExenta “E2” y “E3”.");
 
@@ -136,24 +139,24 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
             { 
             
                 if(tipoImpositivo != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.5.2] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
                          $" informar el campo TipoImpositivo.");
 
                 if (cuotaRepercutida != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.5.3] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
                          $" informar el campo CuotaRepercutida.");
 
 
                 if (tipoImpositivoRE != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.5.4] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
                          $" informar el campo TipoRecargoEquivalencia.");
 
 
                 if (cuotaRepercutidaRE != 0)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                    result.Add($"[3.1.3-15.5.5] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
                          $" informar el campo CuotaRecargoEquivalencia.");
 
@@ -163,7 +166,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
             if (_DetalleDesglose.OperacionExentaSpecified && 
                 (_DetalleDesglose.CalificacionOperacion == CalificacionOperacion.N1 || 
                 _DetalleDesglose.CalificacionOperacion == CalificacionOperacion.N2))
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                result.Add($"[3.1.3-15.5.6] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                          $" Si el campo OperacionExenta está cumplimentado con cualquier valor de la lista L10 no se puede" +
                          $" establecer CalificacionOperacion como no sujeta ('N1' o 'N2').");
 
@@ -179,7 +182,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                 {
 
                     if(_RegistroAlta.Destinatarios[0].IDOtro == null || _RegistroAlta.Destinatarios[0].NIF != null)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                        result.Add($"[3.1.3-15.5.1.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                              $" Si Impuesto = “01” (IVA) o no se cumplimenta (considerándose “01” - IVA) y, si OperacionExenta es igual a “E5”" +
                              $" sólo deberá existir la agrupación IDOtro en el bloque “Destinatario”.");
 

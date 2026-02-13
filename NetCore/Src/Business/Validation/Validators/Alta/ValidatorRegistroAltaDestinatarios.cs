@@ -74,6 +74,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 13. Agrupación Destinatarios
@@ -84,14 +86,14 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             // con al menos un destinatario.
 
             if ((destinatarios == null || destinatarios.Count == 0) && !_IsSimplificada)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-13.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Si TipoFactura es “F1”, “F3”, “R1”, “R2”, “R3” o “R4”, la agrupación" +
                     $" Destinatarios tiene que estar cumplimentada, con al menos un destinatario.");
 
             // Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.
 
             if ((destinatarios != null && destinatarios.Count > 0) && _IsSimplificada)
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-13.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" Si TipoFactura es “F2” o “R5”, la agrupación Destinatarios no puede estar cumplimentada.");
 
             if (destinatarios != null) 
@@ -106,17 +108,32 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     // Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”, se validará que TipoFactura sea “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.
 
                     if (destinatario.IDOtro != null && destinatario.IDOtro.IDType == IDType.NIF_IVA && _IsSimplificada)
-                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                        result.Add($"[3.1.3-13.2] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                             $" El destinatario {destinatario} tiene un error en el TipoFactura. " +
                             $"Cuando se identifique a través del bloque “IDOtro” y IDType sea “02”," +
                             $" el TipoFactura debe ser “F1”, “F3”, “R1”, “R2”, “R3” ó “R4”.");
 
                     // Validaciones de textos
-                    result.AddRange(new ValidatorText("NombreRazon", destinatario.NombreRazon, 120).GetErrors());
-                    result.AddRange(new ValidatorText("NombreRazonRepresentante", destinatario.NombreRazonRepresentante, 120).GetErrors());
 
-                    if (destinatario.IDOtro != null) 
-                        result.AddRange(new ValidatorText("ID", destinatario.IDOtro.ID, 20).GetErrors());
+                    var errors = new ValidatorText("NombreRazon", destinatario.NombreRazon, 120).GetErrors();
+
+                    foreach (var error in errors)
+                        result.Add($"[3.1.3-13.3] {error}");
+
+                    errors = new ValidatorText("NombreRazonRepresentante", destinatario.NombreRazonRepresentante, 120).GetErrors();
+
+                    foreach (var error in errors)
+                        result.Add($"[3.1.3-13.4] {error}");
+
+                    if (destinatario.IDOtro != null)
+                    {
+
+                        errors = new ValidatorText("ID", destinatario.IDOtro.ID, 20).GetErrors();
+
+                        foreach (var error in errors)
+                            result.Add($"[3.1.3-13.5] {error}");                        
+                    
+                    }
 
                 }
 

@@ -74,13 +74,17 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
+
+            // 18. Huella (del registro anterior)
 
             if (_RegistroAlta.Encadenamiento == null ||_RegistroAlta.Encadenamiento.PrimerRegistro == "S")
                 return result;
 
             if (Regex.IsMatch(_RegistroAlta.Encadenamiento.RegistroAnterior.Huella, @"[0-9ABCDEF]{64}"))
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                result.Add($"[3.1.3-18.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" La huella del encadenamiento del registro anterior debe cumplir el formato de salida" +
                     $" del algoritmo SHA-256, siendo de 64 caracteres en hexadecimal y en mayúsculas");
 

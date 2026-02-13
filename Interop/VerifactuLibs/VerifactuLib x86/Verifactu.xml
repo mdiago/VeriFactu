@@ -2678,6 +2678,54 @@
             </summary>
             <returns>Lista con los errores de un bloque en concreto.</returns>
         </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado">
+            <summary>
+            Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 20 (IGIC). Operaciones sujetas al IPSI.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado._DetalleDesglose">
+            <summary>
+            Interlocutor a validar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta,VeriFactu.Xml.Factu.Alta.DetalleDesglose)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Sobre SOAP envío.</param>
+            <param name="registroAlta"> Registro alta factura.</param>
+            <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificado.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
+        <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi">
+            <summary>
+            Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 21 (IGIC). Régimen simplificado.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi._DetalleDesglose">
+            <summary>
+            Interlocutor a validar.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi.#ctor(VeriFactu.Xml.Soap.Envelope,VeriFactu.Xml.Factu.Alta.RegistroAlta,VeriFactu.Xml.Factu.Alta.DetalleDesglose)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="envelope"> Sobre SOAP envío.</param>
+            <param name="registroAlta"> Registro alta factura.</param>
+            <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        </member>
+        <member name="M:VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen.ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi.GetBlockErrors">
+            <summary>
+            Obtiene los errores de un bloque en concreto.
+            </summary>
+            <returns>Lista con los errores de un bloque en concreto.</returns>
+        </member>
         <member name="T:VeriFactu.Business.Validation.Validators.Alta.Detalle.ValidatorRegistroAltaDetalleDesglose">
             <summary>
             Valida los datos de RegistroAlta Tercero.
@@ -5294,7 +5342,8 @@
         <member name="T:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded">
             <summary>
             Fragmento obtenido del análisis léxico de una cadena
-            JSON que representa un espacio.
+            JSON que representa un carácter a excluir como saltos de línea
+            o espacios entre los pares clave-valor.
             </summary>
         </member>
         <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonExcluded.Excluded">
@@ -5530,7 +5579,7 @@
         </member>
         <member name="P:VeriFactu.Net.Rest.Json.Parser.Lexer.Tokens.JsonToken.Excluded">
             <summary>
-            Indica si el token se debe excvluir de la
+            Indica si el token se debe excluir de la
             serialización.
             </summary>
         </member>
@@ -8361,6 +8410,11 @@
             <summary>
             L8A: Régimen simplificado sólo para IVA ('20').
             L8B: Operaciones sujetas al IPSI
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.RegimenSimplificadoIpsi">
+            <summary>
+            L8B: Régimen simplificado IPSI
             </summary>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.DetalleDesglose">

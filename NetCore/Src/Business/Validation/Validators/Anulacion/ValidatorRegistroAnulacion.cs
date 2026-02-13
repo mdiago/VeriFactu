@@ -109,11 +109,11 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
 
             var result = new List<string>();
 
-            // 1. GeneradoPor
+            // 2. GeneradoPor 
             result.AddRange(new ValidatorRegistroAnulacionGeneradoPor(_Envelope, _RegistroAnulacion).GetErrors());
-            // 2. Agrupación Generador
+            // 3. Agrupación Generador
             result.AddRange(new ValidatorRegistroAnulacionGenerador(_Envelope, _RegistroAnulacion).GetErrors());
-            // 3. Huella (del registro anterior)
+            // 4. Huella (del registro anterior)
             result.AddRange(new ValidatorRegistroAnulacionHuella(_Envelope, _RegistroAnulacion).GetErrors());
 
             // Validaciones de textos

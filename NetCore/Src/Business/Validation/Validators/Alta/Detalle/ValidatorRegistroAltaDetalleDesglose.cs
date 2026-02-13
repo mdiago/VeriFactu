@@ -74,6 +74,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
 

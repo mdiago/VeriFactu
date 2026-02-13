@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+
             var result = new List<string>();
 
             // 4. Agrupación FacturasRectificadas
@@ -83,7 +85,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             {
 
                 if (facturasRecticadas.Length > 1000)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    result.Add($"[3.1.3-4.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                        $" La colección FacturasRectificadas no puede" +
                        $" contener más de 1000 elementos y contiene {facturasRecticadas.Length}”.");
 
@@ -91,7 +93,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 if (!_IsRectificativa)
                 {
                     // Sólo podrá incluirse esta agrupación (no es obligatoria) si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    result.Add($"[3.1.3-4.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La colección FacturasRectificadas sólo puede existir" +
                         $" si TipoFactura es igual a “R1”, “R2”, “R3”, “R4” o “R5”.");
 
@@ -104,7 +106,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     {
 
                         if (facturaRectificada?.IDEmisorFactura != _RegistroAlta?.IDFacturaAlta?.IDEmisorFactura)
-                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                            result.Add($"[3.1.3-4.2] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                                $" El NIF del campo IDEmisorFactura de FacturasRectificada ({facturaRectificada?.IDEmisorFactura}) debe estar" +
                                $" identificado y debe se el mismo que IDEmisorFactura ({_RegistroAlta?.IDFacturaAlta?.IDEmisorFactura}).");
 

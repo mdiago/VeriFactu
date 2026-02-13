@@ -81,7 +81,7 @@ namespace VeriFactu.Business.Validation.Validators
             var registroFactura = registro as RegistroFactura;
 
             if (registroFactura == null)
-                result.Add($"Error en el bloque RegistroFactura: Se ha encontrado un" +
+                result.Add($"[0.0.2-0.0] Error en el bloque RegistroFactura: Se ha encontrado un" +
                     $" elemento de la clase {registro.GetType()} en la colección RegistroFactura" +
                     $". Esta colección sólo admite elementos del tipo RegistroFactura.");
 
@@ -89,7 +89,7 @@ namespace VeriFactu.Business.Validation.Validators
             var registroAnulacion = registroFactura.Registro as RegistroAnulacion;
 
             if (registroAlta == null && registroAnulacion == null)
-                result.Add($"Error en el bloque RegistroFactura.Registro: Se ha encontrado un" +
+                result.Add($"[0.0.2-0.1] Error en el bloque RegistroFactura.Registro: Se ha encontrado un" +
                     $" elemento de la clase {registro.GetType()} en la colección RegistroFactura" +
                     $". Esta colección sólo admite elementos del tipo RegistroAlta o RegistroAnulacion.");
 
@@ -118,28 +118,28 @@ namespace VeriFactu.Business.Validation.Validators
             // El interlocutor en ObligadoEmision sólo puede contener datos en NIF y NombreRazon
             if (interlocutor.NombreRazonRepresentante != null ||
                 interlocutor.NIFRepresentante != null)
-                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}): " +
+                result.Add($"[0.0.2-0.2] Error en el bloque SistemaInformatico ({sistemaInformatico}): " +
                     "Los datos de interlocutor 'NombreRazonRepresentante' y 'NIFRepresentante'" +
                     " no pueden contener valor.");
 
             // Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa, pero es obligatorio que se cumplimente uno de los dos.
             if (sistemaInformatico != null && !string.IsNullOrEmpty(sistemaInformatico.NIF) && sistemaInformatico.IDOtro != null)
-                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                result.Add($"[0.0.2-0.3] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                     $" Si se cumplimenta NIF, no deberá existir la agrupación IDOtro y viceversa");
 
             if (sistemaInformatico != null && string.IsNullOrEmpty(sistemaInformatico.NIF) && sistemaInformatico.IDOtro == null)
-                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                result.Add($"[0.0.2-0.4] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                     $" Es obligatorio que se cumplimente NIF o IDOtro.");
 
             // Falta informar campo obligatorio.: IdSistemaInformatico
             if (sistemaInformatico != null && string.IsNullOrEmpty(sistemaInformatico.IdSistemaInformatico))
-                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                result.Add($"[0.0.2-0.5] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                     $" Falta informar campo obligatorio IdSistemaInformatico.");
 
             // IdSistemaInformatico tiene una longitud máxima de 2 caracteres.
             if (sistemaInformatico != null && !string.IsNullOrEmpty(sistemaInformatico.IdSistemaInformatico) && 
                 sistemaInformatico.IdSistemaInformatico.Length > 2)
-                result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                result.Add($"[0.0.2-0.6] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                     $" El campo obligatorio IdSistemaInformatico tiene una longitud máxima de 2 caracteres.");
 
             if (sistemaInformatico != null && sistemaInformatico.IDOtro != null)
@@ -147,7 +147,7 @@ namespace VeriFactu.Business.Validation.Validators
 
                 // Si el campo IDType = “02” (NIF-IVA), no será exigible el campo CodigoPais.
                 if (sistemaInformatico.IDOtro.IDType != IDType.NIF_IVA)
-                    result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                    result.Add($"[0.0.2-0.7] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                         $"Es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
 
                 var isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(sistemaInformatico.IDOtro.ID);
@@ -156,14 +156,14 @@ namespace VeriFactu.Business.Validation.Validators
                 // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
                 // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
                 if (sistemaInformatico.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
-                    result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                    result.Add($"[0.0.2-0.8] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                         $" Es obligatorio que IDOtro.ID = “{sistemaInformatico.IDOtro.ID}” esté identificado.");
              
 
                 // Si se identifica a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03” o “07”..
                 if (sistemaInformatico.IDOtro.CodigoPais == CodigoPais.ES &&
                     (sistemaInformatico.IDOtro.IDType != IDType.PASAPORTE || sistemaInformatico.IDOtro.IDType != IDType.NO_CENSADO))
-                    result.Add($"Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
+                    result.Add($"[0.0.2-0.9] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                         $" Es obligatorio que para IDOtro.CodigoPais = “{sistemaInformatico.IDOtro.CodigoPais}”" +
                         $" IDOtro.IDType = “03” (PASAPORTE) o IDOtro.IDType = “07” (NO_CENSADO).");
 
@@ -203,7 +203,7 @@ namespace VeriFactu.Business.Validation.Validators
             var result = new List<string>();
 
             if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 10000)
-                result.Add($"La colección RegFactuSistemaFacturacion.RegistroFactura" +
+                result.Add($"[0.0.2-0.10] La colección RegFactuSistemaFacturacion.RegistroFactura" +
                     $" contiene {_RegFactuSistemaFacturacion.RegistroFactura.Count}" +
                     $" elementos cuando sólo está permitido un máximo de 1000.");
 
@@ -221,7 +221,6 @@ namespace VeriFactu.Business.Validation.Validators
         }
 
         #endregion
-
 
     }
 

@@ -37,30 +37,44 @@
     address: info@irenesolutions.com
  */
 
-using System;
+using System.Collections;
 using System.Collections.Generic;
+using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
 using VeriFactu.Xml.Soap;
 
-namespace VeriFactu.Business.Validation.Validators.Alta
+namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
 {
 
     /// <summary>
-    /// Valida los datos de RegistroAlta Cupon.
+    /// Valida los datos de RegistroAlta DetalleDesglose ClaveRegimen 21 (IGIC). Régimen simplificado.
     /// </summary>
-    public class ValidatorRegistroAltaCupon : ValidatorRegistroAlta
+    public class ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi : ValidatorRegistroAlta
     {
+
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// Interlocutor a validar.
+        /// </summary>
+        readonly DetalleDesglose _DetalleDesglose;
+
+        #endregion
 
         #region Construtores de Instancia
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="envelope"> Envelope de envío al
-        /// servicio Verifactu de la AEAT.</param>
-        /// <param name="registroAlta"> Registro de alta del bloque Body.</param>
-        public ValidatorRegistroAltaCupon(Envelope envelope, RegistroAlta registroAlta) : base(envelope, registroAlta)
+        /// <param name="envelope"> Sobre SOAP envío.</param>
+        /// <param name="registroAlta"> Registro alta factura.</param>
+        /// <param name="detalleDesglose"> DetalleDesglose a validar. </param>
+        public ValidatorRegistroAltaDetalleDesgloseClaveRegimenRegimenSimplificadoIpsi(Envelope envelope, RegistroAlta registroAlta,
+            DetalleDesglose detalleDesglose) : base(envelope, registroAlta)
         {
+
+            _DetalleDesglose = detalleDesglose;
+
         }
 
         #endregion
@@ -75,18 +89,19 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         {
 
             // 3.1.3 Validaciones de negocio de la agrupación RegistroAlta en el bloque de RegistroFactura.
+            //      15. Agrupación Desglose / DetalleDesglose. 
+            //          15.6 ClaveRegimen 
 
             var result = new List<string>();
 
-            // 14. Cupon
+            // Si Impuesto = “03” (IGIC), el valor de ClaveRegimen debe estar contenido en la
+            // lista L8B y adicionalmente puede contener el valor “21” (Régimen simplificado). 
 
-            var tiposFacturaCupon = new TipoFactura[] { TipoFactura.R5, TipoFactura.R1 };
-            var isFacturaCupon = Array.IndexOf(tiposFacturaCupon, _RegistroAlta.TipoFactura) != -1;
-
-            // Sólo se podrá rellenar con “S” (no es obligatorio) si TipoFactura = ”R5” o “R1”
-            if(_RegistroAlta.Cupon == "S" && !isFacturaCupon)
-                result.Add($"[3.1.3-14.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                    $" Cupon sólo se podrá rellenar con “S” (no es obligatorio) si TipoFactura = ”R5” o “R1”.");
+            if (_DetalleDesglose.Impuesto != Impuesto.IPSI)
+                    result.Add($"[3.1.3-15.6.11.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
+                             $" Si Impuesto = “03” (IGIC), el valor de ClaveRegimen debe estar contenido en la" +
+                             $" lista L8B y adicionalmente puede contener el valor “21” (Régimen simplificado)." +
+                             $" En este caso el impuesto es distinto de “03” (IGIC).");
 
             return result;
 

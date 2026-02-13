@@ -81,7 +81,7 @@ namespace VeriFactu.Business.Validation.Validators
             var registroFactura = registro as RegistroFactura;
 
             if (registroFactura == null)
-                result.Add($"Error en el bloque RegistroFactura: Se ha encontrado un" +
+                result.Add($"[0.0.1-0.0] Error en el bloque RegistroFactura: Se ha encontrado un" +
                     $" elemento de la clase {registro.GetType()} en la colección RegistroFactura" +
                     $". Esta colección sólo admite elementos del tipo RegistroFactura.");
 
@@ -89,7 +89,7 @@ namespace VeriFactu.Business.Validation.Validators
             var registroAnulacion = registroFactura.Registro as RegistroAnulacion;
 
             if (registroAlta == null && registroAnulacion == null)
-                result.Add($"Error en el bloque RegistroFactura.Registro: Se ha encontrado un" +
+                result.Add($"[0.0.1-0.1] Error en el bloque RegistroFactura.Registro: Se ha encontrado un" +
                     $" elemento de la clase {registro.GetType()} en la colección RegistroFactura" +
                     $". Esta colección sólo admite elementos del tipo RegistroAlta o RegistroAnulacion.");
 
@@ -117,10 +117,12 @@ namespace VeriFactu.Business.Validation.Validators
         public override List<string> GetErrors()
         {
 
+            // 3.1.2 Validaciones de negocio del bloque RegistroFactura.
+
             var result = new List<string>();
 
             if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 10000)
-                result.Add($"La colección RegFactuSistemaFacturacion.RegistroFactura" +
+                result.Add($"[3.1.2-1.0] La colección RegFactuSistemaFacturacion.RegistroFactura" +
                     $" contiene {_RegFactuSistemaFacturacion.RegistroFactura.Count}" +
                     $" elementos cuando sólo está permitido un máximo de 1000.");
 

@@ -101,12 +101,12 @@ namespace VeriFactu.Business.Validation.Validators
                 return result;
 
             if (Text.Length > MaxLength)
-                result.Add($"Error en el bloque {Name}: La longitud del texto es" +
+                result.Add($"[0.0.0-0.0] Error en el bloque {Name}: La longitud del texto es" +
                 $" {Text.Length} cuando la longitud máxima es {MaxLength}.\n('{Text}')");
 
             if(!string.IsNullOrEmpty(Pattern))
                 if(!Regex.IsMatch(Text, Pattern))
-                    result.Add($"Error en el bloque {Name}: El texto debe cumplir" +
+                    result.Add($"[0.0.0-0.1] Error en el bloque {Name}: El texto debe cumplir" +
                     $" con la siguiente expresión regular{Pattern}.\n('{Text}')");
 
             return result;

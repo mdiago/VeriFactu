@@ -74,13 +74,17 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.4 Validaciones de negocio de la agrupación RegistroAnulacion en el bloque RegistroFactura.
+
             var result = new List<string>();
+
+            // 4. Huella (del registro anterior)
 
             if (_RegistroAnulacion.Encadenamiento == null ||_RegistroAnulacion.Encadenamiento.PrimerRegistro == "S")
                 return result;
 
             if (Regex.IsMatch(_RegistroAnulacion.Encadenamiento.RegistroAnterior.Huella, @"[0-9ABCDEF]{64}"))
-                result.Add($"Error en el bloque RegistroAlta ({_RegistroAnulacion}):" +
+                result.Add($"[3.1.4-4.0] Error en el bloque RegistroAlta ({_RegistroAnulacion}):" +
                     $" La huella del encadenamiento del registro anterior debe cumplir el formato de salida" +
                     $" del algoritmo SHA-256, siendo de 64 caracteres en hexadecimal y en mayúsculas");
 

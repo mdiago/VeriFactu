@@ -73,6 +73,8 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
         protected override List<string> GetBlockErrors()
         {
 
+            // 3.1.4 Validaciones de negocio de la agrupación RegistroAnulacion en el bloque RegistroFactura.
+
             var result = new List<string>();
 
             // 1. GeneradoPor
@@ -80,7 +82,7 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
             // Si se informa este campo, deberá informarse la agrupación Generador.
 
             if(!string.IsNullOrEmpty(_RegistroAnulacion.GeneradoPor) && _RegistroAnulacion.Generador == null)
-                result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
+                result.Add($"[3.1.4-2.0] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                     $" Si se informa el campo GeneradoPor, deberá informarse la agrupación Generador.");      
 
             return result;
