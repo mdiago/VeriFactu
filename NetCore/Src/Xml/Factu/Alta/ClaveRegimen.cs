@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System;
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Alta
@@ -124,6 +125,13 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         [XmlEnum("11")]
         ArrendamientoLocalNecocio = 11,
+
+        /// <summary>
+        /// Solo para compatibilidad con SII. No usar en VERI*FACTU.
+        /// </summary>
+        [Obsolete("Solo para compatibilidad con SII. No usar en VERI*FACTU.", false)]
+        [XmlEnum("12")]
+        ArrendamientoLocalNecocioNoRetencion = 12,
 
         /// <summary>
         /// <para> L8A: Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública.</para>
