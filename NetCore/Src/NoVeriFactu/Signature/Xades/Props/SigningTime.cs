@@ -58,7 +58,7 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades.Props
         internal SigningTime(XmlNode parent) : base(parent, "SigningTime")
         {
 
-            XmlElement.InnerText = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss}Z";
+            XmlElement.InnerText = $"{DateTime.UtcNow:yyyy-MM-ddTHH:mm:ss}Z";
 
         }
 
