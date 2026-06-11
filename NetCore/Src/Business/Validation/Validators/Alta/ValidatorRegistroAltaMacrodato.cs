@@ -83,7 +83,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // Campo obligatorio si ImporteTotal >= |100.000.000,00| (valor absoluto).
 
-            if (Math.Abs(XmlParser.ToDecimal(_RegistroAlta.ImporteTotal)) > 100000000m && 
+            if (Math.Abs(XmlParser.ToDecimal(_RegistroAlta.ImporteTotal)) >= 100000000m &&
                 (_RegistroAlta.Macrodato == null || _RegistroAlta.Macrodato == "N"))
                 result.Add($"[3.1.3-10.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" El campo Macrodato debe contener el valor 'S' obligatoriamente" +
