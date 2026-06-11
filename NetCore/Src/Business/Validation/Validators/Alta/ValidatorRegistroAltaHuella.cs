@@ -83,7 +83,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
             if (_RegistroAlta.Encadenamiento == null ||_RegistroAlta.Encadenamiento.PrimerRegistro == "S")
                 return result;
 
-            if (Regex.IsMatch(_RegistroAlta.Encadenamiento.RegistroAnterior.Huella, @"[0-9ABCDEF]{64}"))
+            if (!Regex.IsMatch(_RegistroAlta.Encadenamiento.RegistroAnterior.Huella, @"^[0-9ABCDEF]{64}$"))
                 result.Add($"[3.1.3-18.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                     $" La huella del encadenamiento del registro anterior debe cumplir el formato de salida" +
                     $" del algoritmo SHA-256, siendo de 64 caracteres en hexadecimal y en mayúsculas");
