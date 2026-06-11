@@ -162,7 +162,7 @@ namespace VeriFactu.Business.Validation.Validators
 
                 // Si se identifica a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03” o “07”..
                 if (sistemaInformatico.IDOtro.CodigoPais == CodigoPais.ES &&
-                    (sistemaInformatico.IDOtro.IDType != IDType.PASAPORTE || sistemaInformatico.IDOtro.IDType != IDType.NO_CENSADO))
+                    sistemaInformatico.IDOtro.IDType != IDType.PASAPORTE && sistemaInformatico.IDOtro.IDType != IDType.NO_CENSADO)
                     result.Add($"[0.0.2-0.9] Error en el bloque SistemaInformatico ({sistemaInformatico}):" +
                         $" Es obligatorio que para IDOtro.CodigoPais = “{sistemaInformatico.IDOtro.CodigoPais}”" +
                         $" IDOtro.IDType = “03” (PASAPORTE) o IDOtro.IDType = “07” (NO_CENSADO).");
