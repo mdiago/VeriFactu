@@ -62,6 +62,13 @@ namespace VeriFactu.Common
         /// </summary>
         static readonly Dictionary<string, SingletonByKey<T>> _InstancesLoaded = new Dictionary<string, SingletonByKey<T>>();
 
+        /// <summary>
+        /// Sincroniza el acceso al diccionario de instancias: sin él, dos hilos
+        /// pueden superar a la vez la comprobación de existencia y el segundo
+        /// termina en ArgumentException (o corrompe el diccionario).
+        /// </summary>
+        static readonly object _Lock = new object();
+
         #endregion
 
         #region Construtores de Instancia
@@ -75,8 +82,14 @@ namespace VeriFactu.Common
 
             var tKey = key.Trim();
 
-            Check(tKey);
-            Register(tKey);
+            // lock reentrante: la creación desde GetInstance ya posee el cerrojo
+            lock (_Lock)
+            {
+
+                Check(tKey);
+                Register(tKey);
+
+            }
 
             Key = tKey;
 
@@ -96,10 +109,15 @@ namespace VeriFactu.Common
         protected static SingletonByKey<T> GetInstance(string key)
         {
 
-            if (_InstancesLoaded.ContainsKey(key))
-                return _InstancesLoaded[key];
+            lock (_Lock)
+            {
 
-            return Activator.CreateInstance(typeof(T), new object[] { key }) as SingletonByKey<T>;
+                if (_InstancesLoaded.ContainsKey(key))
+                    return _InstancesLoaded[key];
+
+                return Activator.CreateInstance(typeof(T), new object[] { key }) as SingletonByKey<T>;
+
+            }
 
         }
 

@@ -56,12 +56,15 @@ namespace VeriFactu.Common
         #region Variables Privadas Estáticas
 
         /// <summary>
-        /// Algoritmos de digest disponibles.
+        /// Fábricas de algoritmos de digest disponibles. Se crea una instancia
+        /// nueva por cálculo: HashAlgorithm mantiene estado interno y compartir
+        /// una única instancia entre hilos corrompe los hashes calculados en
+        /// paralelo (la huella de la cadena de bloques).
         /// </summary>
-        static readonly Dictionary<TipoHuella, HashAlgorithm> _HashAlgorithms = new Dictionary<TipoHuella, HashAlgorithm>()
+        static readonly Dictionary<TipoHuella, Func<HashAlgorithm>> _HashAlgorithms = new Dictionary<TipoHuella, Func<HashAlgorithm>>()
         {
 
-            {TipoHuella.Sha256, new SHA256Managed() }
+            {TipoHuella.Sha256, () => SHA256.Create() }
 
         };
 
@@ -74,11 +77,6 @@ namespace VeriFactu.Common
             {"UTF-8", Encoding.UTF8 }
 
         };
-
-        /// <summary>
-        /// Algoritmo de hash.
-        /// </summary>
-        internal static HashAlgorithm HashAlgorithm { get; private set; }
 
         /// <summary>
         /// Encoding del texto de entrada para el hash de hash.
@@ -108,10 +106,27 @@ namespace VeriFactu.Common
                 throw new ArgumentException($"El valor de la variable de configuración 'VeriFactuHashInputEncoding'" +
                     $" no puede ser '{Settings.Current.VeriFactuHashInputEncoding}'.");
 
-            HashAlgorithm = _HashAlgorithms[Settings.Current.VeriFactuHashAlgorithm];
             Encoding = _Encodings[Settings.Current.VeriFactuHashInputEncoding];
 
             Logger = new Logger();
+
+        }
+
+        #endregion
+
+        #region Métodos Internos Estáticos
+
+        /// <summary>
+        /// Calcula el hash de la entrada con el algoritmo configurado,
+        /// usando una instancia nueva por llamada (seguro entre hilos).
+        /// </summary>
+        /// <param name="input">Bytes de entrada.</param>
+        /// <returns>Hash calculado.</returns>
+        internal static byte[] ComputeHash(byte[] input)
+        {
+
+            using (var hashAlgorithm = _HashAlgorithms[Settings.Current.VeriFactuHashAlgorithm]())
+                return hashAlgorithm.ComputeHash(input);
 
         }
 
