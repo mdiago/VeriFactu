@@ -111,7 +111,7 @@ namespace VeriFactu.Xml.Factu
         {
 
             var binInput = GetHashInput();
-            var hash = Utils.HashAlgorithm.ComputeHash(binInput);
+            var hash = Utils.ComputeHash(binInput);
 
             return hash;
 
