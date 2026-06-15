@@ -97,7 +97,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             // Si Impuesto = “03” (IGIC), el valor de ClaveRegimen debe estar contenido en la
             // lista L8B y adicionalmente puede contener el valor “21” (Régimen simplificado). 
 
-            if (_DetalleDesglose.Impuesto != Impuesto.IPSI)
+            if (_DetalleDesglose.Impuesto != Impuesto.IGIC)
                     result.Add($"[3.1.3-15.6.11.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                              $" Si Impuesto = “03” (IGIC), el valor de ClaveRegimen debe estar contenido en la" +
                              $" lista L8B y adicionalmente puede contener el valor “21” (Régimen simplificado)." +
