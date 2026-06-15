@@ -204,19 +204,19 @@ namespace VeriFactu.Business.Validation.NIF
             {
 
                 // Comprobamos duplicados
-                if (result.ContainsKey(item.Nif)) 
+                if (result.ContainsKey(item.Nif))
                 {
 
-                    if (item.Resultado == "IDENTIFICADO" || responseEnvelope.Body.Contribuyentes[0].Resultado == "IDENTIFICADO-REVOCADO") 
+                    if (item.Resultado == "IDENTIFICADO" || item.Resultado == "IDENTIFICADO-REVOCADO")
                         throw new Exception($"El NIF {item.Nif} de {item.Nombre} tiene varios resultados en la respuesta de la AEAT." +
                             $" Uno de ellos da el error: {result[item.Nif]} y otro pasa la validación con Resultado='{item.Resultado}'.");
-                    
-                
-                } 
-                else 
+
+
+                }
+                else
                 {
 
-                    if (item.Resultado != "IDENTIFICADO" && responseEnvelope.Body.Contribuyentes[0].Resultado != "IDENTIFICADO-REVOCADO")
+                    if (item.Resultado != "IDENTIFICADO" && item.Resultado != "IDENTIFICADO-REVOCADO")
                         result.Add(item.Nif, $"Error en la validación del NIF {item.Nif} de {item.Nombre}. Si el NIF es" +
                             $" de una persona física es necesario que conste también el nombre" +
                             $" correcto para poderlo validar.");
