@@ -126,7 +126,14 @@ namespace VeriFactu.Net.Rest.Json.Parser
                 if (isPrimitive)
                 {
 
-                    pInf.SetValue(obj, kvp.Value);
+                    Type propertyType = Nullable.GetUnderlyingType(pInf.PropertyType) ?? pInf.PropertyType;
+
+                    object value = kvp.Value;
+
+                    if (value != null && value.GetType() != propertyType)
+                        value = Convert.ChangeType(value, propertyType);
+
+                    pInf.SetValue(obj, value);
 
                 }
                 else if (pInf.PropertyType.IsEnum)
