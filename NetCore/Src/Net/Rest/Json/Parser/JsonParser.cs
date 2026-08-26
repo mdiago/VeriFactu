@@ -101,7 +101,8 @@ namespace VeriFactu.Net.Rest.Json.Parser
 
             var type = typeof(T);
             var obj = Activator.CreateInstance(type);
-            var primitives = new Type[] { typeof(string), typeof(DateTime), typeof(int), typeof(decimal) };
+            var primitives = new Type[] { typeof(string), typeof(bool), typeof(DateTime), typeof(int), typeof(decimal), typeof(long),
+                typeof(DateTime?), typeof(int?), typeof(decimal?), typeof(long?) };
 
             foreach (var kvp in dynObj)
             {
@@ -133,7 +134,21 @@ namespace VeriFactu.Net.Rest.Json.Parser
                     if (value != null && value.GetType() != propertyType)
                         value = Convert.ChangeType(value, propertyType);
 
-                    pInf.SetValue(obj, value);
+                    if (pInf.CanWrite)
+                    {
+
+                        pInf.SetValue(obj, value);
+
+                    }
+                    else
+                    {
+
+                        var objValue = pInf.GetValue(obj);
+
+                        if (!value.Equals(objValue))
+                            throw new InvalidOperationException($"La propiedad {pInf.Name} no se puede escribir y su valor de entrada {value} es distinto del valor actual {objValue}.");
+
+                    }
 
                 }
                 else if (pInf.PropertyType.IsEnum)
