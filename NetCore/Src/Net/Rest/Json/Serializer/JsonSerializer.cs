@@ -157,7 +157,7 @@ namespace VeriFactu.Net.Rest.Json.Serializer
 
                 var enumItemField = _Value.GetType().GetField($"{value}");
 
-                if (enumItemField != null) 
+                if (enumItemField != null)
                 {
 
                     var xmlEnumAtt = enumItemField.GetCustomAttribute(typeof(XmlEnumAttribute)) as XmlEnumAttribute;
@@ -169,7 +169,13 @@ namespace VeriFactu.Net.Rest.Json.Serializer
 
                     _Serializer = new JsonEnumSerializer(enumValue);
 
-                }                
+                }
+                else 
+                {
+
+                    _Serializer = new JsonEnumSerializer(null);
+
+                }
 
             }
             else 
