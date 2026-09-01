@@ -88,8 +88,8 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
 
             var fechaExpedicion = _RegistroAnulacion?.IDFacturaAnulada?.FechaExpedicion;
 
-            if (string.IsNullOrEmpty(fechaExpedicion) && !Regex.IsMatch(fechaExpedicion, @"\d{2}-\d{2}-\d{4}"))
-                throw new ArgumentException($"Error en el bloque RegistroAlta ({_RegistroAnulacion}):" +
+            if (string.IsNullOrEmpty(fechaExpedicion) || !Regex.IsMatch(fechaExpedicion, @"^\d{2}-\d{2}-\d{4}$"))
+                throw new ArgumentException($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                 $" La propiedad IDFactura.FechaExpedicion tiene que tener un valor con formato dd-mm-yyyy.");
 
             _FechaExpedicion = FromXmlDate(fechaExpedicion);

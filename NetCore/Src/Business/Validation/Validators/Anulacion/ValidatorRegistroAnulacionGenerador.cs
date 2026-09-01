@@ -119,7 +119,7 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
                         $" {_RegistroAnulacion.GeneradoPor}: Si se identifica a través de la agrupación IDOtro y CodigoPais sea 'ES', se validará que el campo IDType sea “03”.");
 
                     // No se admite el tipo de identificación IDType “07” (“No censado”).
-                    if (_RegistroAnulacion.Generador?.IDOtro?.IDType != IDType.NO_CENSADO)
+                    if (_RegistroAnulacion.Generador?.IDOtro?.IDType == IDType.NO_CENSADO)
                         result.Add($"[3.1.4-3.4] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                         $" {_RegistroAnulacion.GeneradoPor}: No se admite el tipo de identificación IDType “07” (“No censado”).");
 

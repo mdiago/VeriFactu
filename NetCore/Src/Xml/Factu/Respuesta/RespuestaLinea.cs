@@ -87,6 +87,16 @@ namespace VeriFactu.Xml.Factu.Respuesta
         /// </summary>
         public string DescripcionErrorRegistro { get; set; }
 
+        /// <summary>
+        /// Información del registro comunicado anteriormente. Solo en el
+        /// caso de que se rechace el registro por duplicado, la AEAT
+        /// devuelve este nodo con los datos del registro ya existente
+        /// en el sistema (identificador de la petición anterior y estado
+        /// en el que se encuentra dicho registro).
+        /// </summary>
+        [XmlElement(Namespace = Namespaces.NamespaceTikR)]
+        public RegistroDuplicado RegistroDuplicado { get; set; }
+
         #endregion
 
         #region Métodos Públicos de Instancia

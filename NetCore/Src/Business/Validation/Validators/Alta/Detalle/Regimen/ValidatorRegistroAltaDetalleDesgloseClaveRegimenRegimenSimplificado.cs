@@ -96,7 +96,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
             // Si Impuesto = “03” (IGIC) y la ClaveRegimen es igual a “20” (Operaciones sujetas al IPSI – Valor adicional L8B),
             // CalificacionOperacion tiene que ser “N2” y siempre debe ir relleno.
 
-            if (_DetalleDesglose.Impuesto == Impuesto.IPSI)
+            if (_DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
                 if(_DetalleDesglose.CalificacionOperacion != CalificacionOperacion.N2)

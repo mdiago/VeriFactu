@@ -83,8 +83,8 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
             if (_RegistroAnulacion.Encadenamiento == null ||_RegistroAnulacion.Encadenamiento.PrimerRegistro == "S")
                 return result;
 
-            if (Regex.IsMatch(_RegistroAnulacion.Encadenamiento.RegistroAnterior.Huella, @"[0-9ABCDEF]{64}"))
-                result.Add($"[3.1.4-4.0] Error en el bloque RegistroAlta ({_RegistroAnulacion}):" +
+            if (!Regex.IsMatch(_RegistroAnulacion.Encadenamiento.RegistroAnterior.Huella, @"^[0-9ABCDEF]{64}$"))
+                result.Add($"[3.1.4-4.0] Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                     $" La huella del encadenamiento del registro anterior debe cumplir el formato de salida" +
                     $" del algoritmo SHA-256, siendo de 64 caracteres en hexadecimal y en mayúsculas");
 

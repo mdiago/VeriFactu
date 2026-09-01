@@ -154,8 +154,8 @@ namespace VeriFactu.Business.Validation.Validators.Anulacion
                 {
 
                     // Si se identifica a través de la agrupación IDOtro y CodigoPais sea "ES", se validará que el campo IDType sea “03” o “07”..
-                    if (_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES && 
-                        (_Interlocutor.IDOtro.IDType != IDType.PASAPORTE || _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO))
+                    if (_Interlocutor.IDOtro.CodigoPais == CodigoPais.ES &&
+                        _Interlocutor.IDOtro.IDType != IDType.PASAPORTE && _Interlocutor.IDOtro.IDType != IDType.NO_CENSADO)
                         result.Add($"Error en el bloque RegistroAnulacion ({_RegistroAnulacion}):" +
                             $" {_Rol} es obligatorio que para IDOtro.CodigoPais = “{_Interlocutor.IDOtro.CodigoPais}”" +
                             $" IDOtro.IDType = “03” (PASAPORTE) o IDOtro.IDType = “07” (NO_CENSADO).");

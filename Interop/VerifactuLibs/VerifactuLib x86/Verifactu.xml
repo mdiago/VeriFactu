@@ -3884,6 +3884,13 @@
             la creación de una clase por clave.
             </summary>
         </member>
+        <member name="F:VeriFactu.Common.SingletonByKey`1._Lock">
+            <summary>
+            Sincroniza el acceso al diccionario de instancias: sin él, dos hilos
+            pueden superar a la vez la comprobación de existencia y el segundo
+            termina en ArgumentException (o corrompe el diccionario).
+            </summary>
+        </member>
         <member name="M:VeriFactu.Common.SingletonByKey`1.#ctor(System.String)">
             <summary>
             Constructor.
@@ -3928,17 +3935,15 @@
         </member>
         <member name="F:VeriFactu.Common.Utils._HashAlgorithms">
             <summary>
-            Algoritmos de digest disponibles.
+            Fábricas de algoritmos de digest disponibles. Se crea una instancia
+            nueva por cálculo: HashAlgorithm mantiene estado interno y compartir
+            una única instancia entre hilos corrompe los hashes calculados en
+            paralelo (la huella de la cadena de bloques).
             </summary>
         </member>
         <member name="F:VeriFactu.Common.Utils._Encodings">
             <summary>
             Codificaciones de texto a binario disponibles.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Common.Utils.HashAlgorithm">
-            <summary>
-            Algoritmo de hash.
             </summary>
         </member>
         <member name="P:VeriFactu.Common.Utils.Encoding">
@@ -3955,6 +3960,14 @@
             <summary>
             Constructor estático clase.
             </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Utils.ComputeHash(System.Byte[])">
+            <summary>
+            Calcula el hash de la entrada con el algoritmo configurado,
+            usando una instancia nueva por llamada (seguro entre hilos).
+            </summary>
+            <param name="input">Bytes de entrada.</param>
+            <returns>Hash calculado.</returns>
         </member>
         <member name="M:VeriFactu.Common.Utils.GetEncodedToHex(System.String)">
             <summary>
@@ -8369,6 +8382,11 @@
         <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.ArrendamientoLocalNecocio">
             <summary>
             Operaciones de arrendamiento de local de negocio ('11').
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.ArrendamientoLocalNecocioNoRetencion">
+            <summary>
+            Solo para compatibilidad con SII. No usar en VERI*FACTU.
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Factu.Alta.ClaveRegimen.ObraPteDevengoAdmonPublica">

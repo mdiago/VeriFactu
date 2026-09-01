@@ -125,7 +125,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                     case 21m:
 
                         // Si TipoImpositivo es 21 sólo se admitirán TipoRecargoEquivalencia = 5,2 ó 1,75.
-                        if (tipoImpositivoRE != 5.2m && tipoImpositivo != 1.75m)
+                        if (tipoImpositivoRE != 5.2m && tipoImpositivoRE != 1.75m)
                             result.Add($"[3.1.3-15.3.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                                 $" Si TipoImpositivo es 21 sólo se admitirán TipoRecargoEquivalencia = 5,2 ó 1,75.");
 
@@ -180,7 +180,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                             result.Add($"[3.1.3-15.3.5] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                                     $" Si TipoImpositivo es 5 sólo se admitirá TipoRecargoEquivalencia = 0.5" +
                                     $" en el periodo igual o anterior a 31-12-2022.");
-                        else if (fechaOperacion.CompareTo(new DateTime(2023, 1, 1)) >= 0 && fechaOperacion.CompareTo(new DateTime(2024, 09, 30)) <= 0)
+                        else if (fechaOperacion.CompareTo(new DateTime(2023, 1, 1)) >= 0 && fechaOperacion.CompareTo(new DateTime(2024, 09, 30)) <= 0 && tipoImpositivoRE != 0.62m)
                             result.Add($"[3.1.3-15.3.6] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                                     $" Si TipoImpositivo es 5 sólo se admitirá TipoRecargoEquivalencia = 0.62" +
                                     $" en el periodo del 01-01-2023 al 30-09-2024.");

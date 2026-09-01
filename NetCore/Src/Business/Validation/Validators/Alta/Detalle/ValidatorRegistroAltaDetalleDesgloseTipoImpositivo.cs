@@ -110,6 +110,11 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
                 // ≥ 1 de octubre de 2024 y ≤ 31 de diciembre de 2024 se admitirá el TipoImpositivo = 2 y el TipoImpositivo = 7,5.
                 var allowedLastRates = fechaOperacion.CompareTo(new DateTime(2024, 10, 1)) >= 0 && fechaOperacion.CompareTo(new DateTime(2024, 12, 31)) <= 0;
 
+                // Las dos ventanas temporales son disjuntas, por lo que basta con
+                // sustituir la lista base por la de la ventana correspondiente.
+                if (allowedFive)
+                    allowedRates = new decimal[] { 0m, 4m, 5m, 10m, 21m };
+
                 if (allowedLastRates)
                     allowedRates = new decimal[] { 0m, 2m, 4m, 7.5m, 10m, 21m };
 

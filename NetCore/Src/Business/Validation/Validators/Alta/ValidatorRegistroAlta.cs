@@ -109,7 +109,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var fechaExpedicion = _RegistroAlta?.IDFacturaAlta?.FechaExpedicion;
 
-            if (string.IsNullOrEmpty(fechaExpedicion) && !Regex.IsMatch(fechaExpedicion, @"\d{2}-\d{2}-\d{4}"))
+            if (string.IsNullOrEmpty(fechaExpedicion) || !Regex.IsMatch(fechaExpedicion, @"^\d{2}-\d{2}-\d{4}$"))
                 throw new ArgumentException($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                 $" La propiedad IDFactura.FechaExpedicion tiene que tener un valor con formato dd-mm-yyyy.");
 

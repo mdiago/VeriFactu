@@ -32,6 +32,15 @@ Para cualquier duda o consulta, puedes escribirnos a **info@irenesolutions.com**
 
 [Irene Solutions](http://www.irenesolutions.com)
 
+## 🙏 Agradecimientos
+
+Aunque VeriFactu es un proyecto desarrollado principalmente desde la parte técnica, su evolución no habría sido posible sin el enfoque práctico y la experiencia del equipo de Wefinz.
+
+Quiero agradecer especialmente a mis compañeros de [Wefinz](https://www.wefinz.com/asesoria/) su asesoramiento continuo en materia mercantil y contable, así como las aportaciones compartidas desde el día a día de la asesoría con empresas y autónomos.
+
+Poder contrastar el desarrollo técnico con la realidad de la gestión contable y fiscal ha sido clave para diseñar una librería más útil, práctica y alineada con las necesidades reales de despachos profesionales, asesorías y software de gestión.
+
+Gracias por compartir conocimiento, criterio y experiencia en cada etapa del proyecto.
 
 ## Quickstart
 

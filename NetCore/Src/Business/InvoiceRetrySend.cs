@@ -142,14 +142,14 @@ namespace VeriFactu.Business
             if (registro == null)
                 throw new Exception($"No se ha encontrado el RegistroAlta / RegistroAnulacion correspondiente a la entrada {this}.");
 
-            var refExt = (registro as RegistroAlta).RefExterna?? (registro as RegistroAnulacion).RefExterna;
+            var refExt = (registro as RegistroAlta)?.RefExterna ?? (registro as RegistroAnulacion)?.RefExterna;
 
             if (string.IsNullOrEmpty(refExt))
                 throw new Exception($"No se ha encontrado el RefExterna correspondiente a la entrada {this}.");
 
             registro.BlockchainLinkID = Convert.ToUInt64(refExt);
 
-            var fechaHoraHusoGenRegistro = (registro as RegistroAlta).OrderedFechaHoraHusoGenRegistro ?? (registro as RegistroAnulacion).OrderedFechaHoraHusoGenRegistro;
+            var fechaHoraHusoGenRegistro = (registro as RegistroAlta)?.OrderedFechaHoraHusoGenRegistro ?? (registro as RegistroAnulacion)?.OrderedFechaHoraHusoGenRegistro;
 
             if (string.IsNullOrEmpty(fechaHoraHusoGenRegistro))
                 throw new Exception($"No se ha encontrado el OrderedFechaHoraHusoGenRegistro correspondiente a la entrada {this}.");

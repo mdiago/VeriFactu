@@ -121,7 +121,7 @@ namespace VeriFactu.Business.Validation.Validators
 
             var result = new List<string>();
 
-            if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 10000)
+            if (_RegFactuSistemaFacturacion.RegistroFactura.Count > 1000)
                 result.Add($"[3.1.2-1.0] La colección RegFactuSistemaFacturacion.RegistroFactura" +
                     $" contiene {_RegFactuSistemaFacturacion.RegistroFactura.Count}" +
                     $" elementos cuando sólo está permitido un máximo de 1000.");
