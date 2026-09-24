@@ -978,6 +978,25 @@
             </summary>
             <param name="invoice">Instancia de factura de entrada en el sistema.</param>
         </member>
+        <member name="T:VeriFactu.Business.InvoiceEntryTI">
+            <summary>
+            Representa una entrada de factura en el
+            sistema con incidencia técnica.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceEntryTI.#ctor(VeriFactu.Business.Invoice)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoice">Instancia de factura de entrada
+            en el sistema con incidencia técnica.</param>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceEntryTI.GetEnvelope">
+            <summary>
+            Genera el sobre SOAP.
+            </summary>
+            <returns>Sobre SOAP.</returns>
+        </member>
         <member name="T:VeriFactu.Business.InvoiceFix">
             <summary>
             Representa una acción de subsanación de un registro
@@ -4043,6 +4062,14 @@
             <summary>
             Constructor estático de la clase Settings.
             </summary>
+        </member>
+        <member name="M:VeriFactu.Config.Settings.GetSerializer">
+            <summary>
+            Construye un serializador XML para la clase Settings con los overrides necesarios
+            para la compatibilidad entre versiones por el cambio derivado de
+            https://github.com/mdiago/VeriFactu/issues/292
+            </summary>
+            <returns>Serializador para Settings.</returns>
         </member>
         <member name="M:VeriFactu.Config.Settings.Get">
             <summary>
