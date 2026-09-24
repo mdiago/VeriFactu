@@ -37,12 +37,15 @@
     address: info@irenesolutions.com
  */
 
+using System.Xml.Serialization;
+
 namespace VeriFactu.Xml.Factu
 {
 
     /// <summary>
     /// Información del sistema informático.
     /// </summary>
+    [XmlType(Namespace = Namespaces.NamespaceSF)]
     public class SistemaInformatico : Interlocutor
     {
 

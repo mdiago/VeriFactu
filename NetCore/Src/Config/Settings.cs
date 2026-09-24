@@ -38,6 +38,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net.NetworkInformation;
@@ -49,6 +50,7 @@ using System.Xml.Serialization;
 using VeriFactu.Common;
 using VeriFactu.DataStore;
 using VeriFactu.Net.Rest;
+using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 
 namespace VeriFactu.Config
@@ -142,6 +144,31 @@ namespace VeriFactu.Config
         #region Métodos Privados Estáticos
 
         /// <summary>
+        /// Construye un serializador XML para la clase Settings con los overrides necesarios
+        /// para la compatibilidad entre versiones por el cambio derivado de
+        /// https://github.com/mdiago/VeriFactu/issues/292
+        /// </summary>
+        /// <returns>Serializador para Settings.</returns>
+        private static XmlSerializer GetSerializer()
+        {
+
+            var overrides = new XmlAttributeOverrides();
+
+            var attributes = new XmlAttributes
+            {
+                XmlType = new XmlTypeAttribute()
+            };
+
+            overrides.Add(
+                typeof(SistemaInformatico),
+                attributes);
+
+            return new XmlSerializer(
+                typeof(Settings),
+                overrides);
+        }
+
+        /// <summary>
         /// Inicia estaticos.
         /// </summary>
         /// <returns>La configuración cargada.</returns>
@@ -152,8 +179,8 @@ namespace VeriFactu.Config
 
             string FullPath = $"{Path}{_PathSep}" + FileName;
 
-            XmlSerializer serializer = new XmlSerializer(_Current.GetType());
-            
+            XmlSerializer serializer = GetSerializer();
+
             if (File.Exists(FullPath))
             {
 
@@ -164,7 +191,7 @@ namespace VeriFactu.Config
             else
             {
 
-                _Current= GetDefault();
+                _Current = GetDefault();
 
             }
 
@@ -475,7 +502,8 @@ namespace VeriFactu.Config
 
             string FullPath = $"{Path}{_PathSep}" + FileName;
 
-            XmlSerializer serializer = new XmlSerializer(Current.GetType());
+            XmlSerializer serializer = GetSerializer();
+
 
             using (StreamWriter w = new StreamWriter(FullPath))
             {
