@@ -909,9 +909,10 @@ namespace VeriFactu.Business
 
             CalculateTotals();
 
-            // Máximo dos decimales
-            var totalTaxAmount = Math.Round(TotalTaxOutput + TotalTaxOutputSurcharge, 2);
-            var totalAmount = Math.Round(TotalAmount, 2);
+            // Máximo dos decimales. Mismo criterio que el desglose: el 5 aleja de cero.
+            // ToEven guardaba 1.005 como 1.00 mientras la línea salía 1.01.
+            var totalTaxAmount = Math.Round(TotalTaxOutput + TotalTaxOutputSurcharge, 2, MidpointRounding.AwayFromZero);
+            var totalAmount = Math.Round(TotalAmount, 2, MidpointRounding.AwayFromZero);
 
             var registroAlta = new RegistroAlta()
             {

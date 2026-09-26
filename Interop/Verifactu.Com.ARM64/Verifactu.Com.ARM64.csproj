@@ -119,6 +119,9 @@
     <Compile Include="..\..\NetCore\Src\Business\InvoiceEntry.cs">
       <Link>Src\Business\InvoiceEntry.cs</Link>
     </Compile>
+    <Compile Include="..\..\NetCore\Src\Business\InvoiceEntryTI.cs">
+      <Link>Src\Business\InvoiceEntryTI.cs</Link>
+    </Compile>
     <Compile Include="..\..\NetCore\Src\Business\InvoiceFix.cs">
       <Link>Src\Business\InvoiceFix.cs</Link>
     </Compile>
