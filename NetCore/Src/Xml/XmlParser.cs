@@ -93,7 +93,8 @@ namespace VeriFactu.Xml
             var local = new DateTime(input.Year, input.Month, input.Day,
                 input.Hour, input.Minute, input.Second, DateTimeKind.Local);
 
-            return local.ToString("yyyy-MM-ddTHH:mm:ssK");
+            // InvariantCulture keeps the Gregorian year. th-TH would write 2567.
+            return local.ToString("yyyy-MM-ddTHH:mm:ssK", CultureInfo.InvariantCulture);
 
         }
 
@@ -105,7 +106,8 @@ namespace VeriFactu.Xml
         /// <returns>Fecha formateada.</returns>
         public static string GetXmlDate(DateTime? date)
         {
-            return (date ?? new DateTime(1, 1, 1)).ToString("dd-MM-yyyy");
+            // InvariantCulture keeps the Gregorian year. th-TH would write 2567.
+            return (date ?? new DateTime(1, 1, 1)).ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
