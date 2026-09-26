@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace VeriFactu.Xml.Factu.Anulacion
@@ -286,6 +287,13 @@ namespace VeriFactu.Xml.Factu.Anulacion
         /// </summary>
         [XmlElement("Huella", Namespace = Namespaces.NamespaceSF, Order = 30)]
         public string OrderedHuella { get; set; }
+
+        /// <summary>
+        /// Firma electrónica del registro.
+        /// </summary>
+        [XmlAnyElement(Name = "Signature", Namespace = Namespaces.NamespaceDs, Order = 31)]
+        public XmlElement Signature { get; set; }
+
 
         #endregion
 

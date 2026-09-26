@@ -37,6 +37,7 @@
     address: info@irenesolutions.com
  */
 
+using System.IO;
 using VeriFactu.Common;
 
 namespace VeriFactu.Business
@@ -92,13 +93,13 @@ namespace VeriFactu.Business
         /// Path del directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public override string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.xml";
+        public override string InvoiceEntryFilePath => Path.Combine(InvoiceEntryPath, $"{InvoiceEntryID}.xml");
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public override string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.xml";   
+        public override string ResponseFilePath => Path.Combine(ResponsesPath, $"{InvoiceEntryID}.xml");
 
         #endregion
 

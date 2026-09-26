@@ -40,6 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Net;
@@ -143,6 +144,9 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         public static void DoExit()
         {
+
+            if (ActiveInvoiceQueue == null)
+                return;
 
             if (ActiveInvoiceQueue.Count > 0)
                 throw new OperationCanceledException($"No se puede finalizar la cola de factura con" +
@@ -285,60 +289,65 @@ namespace VeriFactu.Business.FlowControl
         /// <summary>
         /// Procesa toda la cola emisor a emisor.
         /// </summary>
-        public void Process()
+        /// <param name="certificate">Certificado para la firma.</param>
+        public void Process(X509Certificate2 certificate = null)
         {
 
-            if (_IsWorking)
-                return;             
-
-            // Compruebo el certificado
-            var cert = Wsd.GetCheckedCertificate();
-
-            if (cert == null)
-                Utils.Log("Existe algún problema con el certificado.");
-
-            if(_IsClosing)
-                Utils.Log($"Ejecutando cola con cierre establecido {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
-
-            Exception processException = null;
-
-            lock (_Locker) 
+            lock (_Locker)
             {
+
+                if (_IsWorking)
+                    return;
 
                 _IsWorking = true;
 
+            }
+
+            try
+            {
+
+                // Compruebo el certificado
+                var cert = certificate ?? Wsd.GetCheckedCertificate();
+
+                if (cert == null)
+                    Utils.Log("Existe algún problema con el certificado.");
+
+                if (_IsClosing)
+                    Utils.Log($"Ejecutando cola con cierre establecido {DateTime.Now:yyyy-MM-dd HH:mm:ss}.");
+
                 foreach (KeyValuePair<string, SellerQueue> kvpInvoiceAction in _SellerPendingQueue)
-                {                  
+                {
 
                     try
                     {
 
-                        kvpInvoiceAction.Value.Process();
+                        kvpInvoiceAction.Value.Process(cert);
 
                     }
                     catch (Exception ex)
                     {
 
-                        processException = ex;
+                        Utils.Log($"Error procesando InvoiceQueue: {ex}");
 
-                    }                   
-
-                    if (processException != null)
-                        Utils.Log($"Error procesando InvoiceQueue: {processException}");
+                    }
 
                 }
 
-               
-                _IsWorking = false;
+            }
+            finally
+            {
 
-                if (_IsClosing && ActiveInvoiceQueue.Count == 0)
-                    DoExit();
+                lock (_Locker)
+                    _IsWorking = false;
 
             }
 
-
-
-
+            // Si se ha solicitado el cierre y ya no quedan documentos
+            // pendientes, finalizamos definitivamente la cola.
+            if (_IsClosing &&
+                ActiveInvoiceQueue != null &&
+                ActiveInvoiceQueue.Count == 0)
+                DoExit();
 
         }
 

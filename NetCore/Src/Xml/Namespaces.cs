@@ -81,6 +81,21 @@ namespace VeriFactu.Xml
         public const string NamespaceTikLRRC = NamespacePrefix + "RespuestaConsultaLR.xsd";
 
         /// <summary>
+        /// Espacio de nombres de los registros de eventos.
+        /// </summary>
+        public const string NamespaceSf = NamespacePrefix + "EventosSIF.xsd";
+
+        /// <summary>
+        /// Espacio de nombres de firma digital XML (ds).
+        /// </summary>
+        public const string NamespaceDs = "http://www.w3.org/2000/09/xmldsig#";
+
+        /// <summary>
+        /// Espacio de nombres de firma electrónica avanzada XAdES (xades).
+        /// </summary>
+        public const string NamespaceXades = "http://uri.etsi.org/01903/v1.3.2#";
+
+        /// <summary>
         /// Espacio de nombres web service validación NIF.
         /// </summary>
         public const string NamespaceVNifV2Ent = "http://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/burt/jdit/ws/VNifV2Ent.xsd";
@@ -104,6 +119,15 @@ namespace VeriFactu.Xml
             { "sum",        NamespaceSFLR },
             { "sum1",       NamespaceSF },
             { "con",       NamespaceCon }
+        };
+
+        /// <summary>
+        /// Diccionario de espacios de nombres para los registros de eventos.
+        /// </summary>
+        public static Dictionary<string, string> EventItems = new Dictionary<string, string>()
+        {
+            { "sf", NamespaceSf },
+            { "ds", NamespaceDs }
         };
 
         /// <summary>

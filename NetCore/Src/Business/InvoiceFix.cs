@@ -93,24 +93,24 @@ namespace VeriFactu.Business
         /// <summary>
         /// Path de la factura original en el directorio de facturas.
         /// </summary>
-        public string OriginalInvoiceFilePath => $"{InvoicePostedPath}{EncodedInvoiceID}.xml";
+        public string OriginalInvoiceFilePath => Path.Combine(InvoicePostedPath, $"{EncodedInvoiceID}.xml");
 
         /// <summary>
         /// Path de la factura en el directorio de facturas.
         /// </summary>
-        public override string InvoiceFilePath => $"{InvoicePostedPath}{EncodedInvoiceID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
+        public override string InvoiceFilePath => Path.Combine(InvoicePostedPath, $"{EncodedInvoiceID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml");
 
         /// <summary>
         /// Path de la factura en el directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public override string InvoiceEntryFilePath => $"{InvoiceEntryPath}{InvoiceEntryID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
+        public override string InvoiceEntryFilePath => Path.Combine(InvoiceEntryPath, $"{InvoiceEntryID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml");
 
         /// <summary>
         /// Path del directorio de archivado de los datos de la
         /// cadena.
         /// </summary>
-        public override string ResponseFilePath => $"{ResponsesPath}{InvoiceEntryID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
+        public override string ResponseFilePath => Path.Combine(ResponsesPath, $"{InvoiceEntryID}.SUB.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml");
 
         #endregion
 

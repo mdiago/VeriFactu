@@ -133,15 +133,14 @@ namespace VeriFactu.Business.Operations
         /// Si no existe lo crea.
         /// </summary>
         /// <param name="dir">Ruta al directorio.</param>
-        /// <returns>Ruta al directorio con el separador
-        /// de directorio de sistema añadido al final.</returns>
+        /// <returns>Ruta al directorio.</returns> 
         internal string GetDirPath(string dir)
         {
 
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            return $"{dir}{Path.DirectorySeparatorChar}";
+            return dir;
 
         }
 
@@ -157,7 +156,7 @@ namespace VeriFactu.Business.Operations
         internal string GetInvoicePath(string sellerID)
         {
 
-            return GetDirPath($"{Settings.Current.InvoicePath}{sellerID}");
+            return GetDirPath(Path.Combine(Settings.Current.InvoicePath, sellerID));
 
         }
 
@@ -173,7 +172,7 @@ namespace VeriFactu.Business.Operations
         internal string GetInvoicePostedPath(string year)
         {
 
-            return GetDirPath($"{InvoicePath}{year}");
+            return GetDirPath(Path.Combine(InvoicePath, year));
 
         }
 
@@ -197,7 +196,7 @@ namespace VeriFactu.Business.Operations
         internal string GetErrorInvoiceFilePath()
         {
 
-            return $"{InvoicePostedPath}{EncodedInvoiceID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml";
+            return Path.Combine(InvoicePostedPath, $"{EncodedInvoiceID}.ERR.{DateTime.Now:yyyy.MM.dd.HH.mm.ss.ffff}.xml");
 
         }
 
@@ -226,7 +225,7 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Path de la factura en el directorio de facturas.
         /// </summary>
-        public virtual string InvoiceFilePath => $"{InvoicePostedPath}{EncodedInvoiceID}.xml";
+        public virtual string InvoiceFilePath => Path.Combine(InvoicePostedPath, $"{EncodedInvoiceID}.xml");
 
         /// <summary>
         /// Objeto Invoice de la entrada.

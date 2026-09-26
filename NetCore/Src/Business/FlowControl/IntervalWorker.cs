@@ -60,6 +60,11 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         ManualResetEvent _End;
 
+        /// <summary>
+        /// Hilo de trabajo en el que se ejecuta el proceso.
+        /// </summary>
+        Thread _Thread;
+
         #endregion
 
         #region Private Methods
@@ -112,7 +117,8 @@ namespace VeriFactu.Business.FlowControl
             try
             {
                 _End = new ManualResetEvent(false);
-                new Thread(Process).Start();
+                _Thread = new Thread(Process);
+                _Thread.Start();
             }
             catch (Exception ex)
             {
@@ -127,15 +133,26 @@ namespace VeriFactu.Business.FlowControl
         /// </summary>
         public void End()
         {
+
             try
             {
+
+                if (_End == null)
+                    return;
+
                 _End.Set();
+
+                if (_Thread != null &&
+                    Thread.CurrentThread != _Thread)
+                    _Thread.Join();
+
             }
             catch (Exception ex)
             {
                 Utils.Log($"Error IntervalWorker.End:\n{ex.Message}");
                 Debug.Print($"Error IntervalWorker.End:\n{ex.Message}");
             }
+
         }
 
         #endregion

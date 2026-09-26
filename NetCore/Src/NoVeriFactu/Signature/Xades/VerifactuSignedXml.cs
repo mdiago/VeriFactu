@@ -141,17 +141,20 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades
         }
 
         /// <summary>
-        /// Obtiene el valor de la propiedad privada 'm_context' de la 
+        /// Obtiene el valor de la propiedad privada de contexto de la
         /// clase madre 'SignedXml' utilizando reflection.
         /// </summary>
-        /// <returns>Valor de la propiedad privada 'm_context' de la 
+        /// <returns>Valor de la propiedad privada de contexto de la
         /// clase madre 'SignedXml'.</returns>
         private XmlElement GetContext()
         {
 
             Type t = typeof(SignedXml);
-            FieldInfo m = t.GetField("m_context", BindingFlags.NonPublic | BindingFlags.Instance);
-            return m.GetValue(this) as XmlElement;
+
+            FieldInfo m = t.GetField("m_context",BindingFlags.NonPublic | BindingFlags.Instance)?? 
+                t.GetField("_context", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            return m?.GetValue(this) as XmlElement;
 
         }
 

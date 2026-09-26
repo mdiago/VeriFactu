@@ -49,6 +49,7 @@ using VeriFactu.NoVeriFactu.Signature.Xades;
 using VeriFactu.NoVeriFactu.Signature.Xades.Props;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
+using VeriFactu.Xml.Factu.Evento;
 
 namespace VeriFactu.NoVeriFactu.Signature
 {
@@ -226,15 +227,20 @@ namespace VeriFactu.NoVeriFactu.Signature
         /// </summary>
         /// <param name="xmlDocument">Documento xml a firmar.</param>
         /// <param name="name">Nombre elemento.</param>
+        /// <param name="prefix">Prefijo espacio de nombres.</param>
+        /// <param name="ns">Espacio de nombres.</param>
+        /// <param name="signatureParentName"> Parámetro opcional con el nombre
+        /// del elemento donde debe insertarse la firma.Si no se facilita incluirá
+        /// Signature como hijo del elemento raíz</param>
         /// <returns>Datos binarios xml firmado.</returns>
-        private byte[] Sign(XmlDocument xmlDocument, string name = "RegistroAlta")
+        private byte[] Sign(XmlDocument xmlDocument, string name, string prefix, string ns, string signatureParentName = null)
         {
 
             xmlDocument.PreserveWhitespace = true;
 
             var signedXml = GetVerifactuSignedXml(xmlDocument);
 
-            var rootTmp = new RootTmp(xmlDocument, name);
+            var rootTmp = new RootTmp(xmlDocument, name, prefix, ns);
 
             rootTmp.SignatureTmp.Object.QualifyingProperties.SignatureId = signedXml.SignatureId;
             rootTmp.SignatureTmp.Object.QualifyingProperties.SignedProperties.SignatureId = signedXml.SignatureId;
@@ -258,7 +264,25 @@ namespace VeriFactu.NoVeriFactu.Signature
                     elem.Prefix = "ds";
 
             // Append the element to the XML document.
-            xmlDocument.DocumentElement.AppendChild(xmlDocument.ImportNode(xmlDigitalSignature, true));
+
+            XmlNode signatureParent = xmlDocument.DocumentElement;
+
+            if (!string.IsNullOrEmpty(signatureParentName))
+            {
+
+                var nodes = xmlDocument.GetElementsByTagName(
+                    signatureParentName,
+                    ns);
+
+                if (nodes.Count != 1)
+                    throw new InvalidOperationException(
+                        $"No se ha encontrado un único elemento '{signatureParentName}'.");
+
+                signatureParent = nodes[0];
+
+            }
+
+            signatureParent.AppendChild(xmlDocument.ImportNode(xmlDigitalSignature, true));
 
             if (xmlDocument.FirstChild is XmlDeclaration)
                 xmlDocument.RemoveChild(xmlDocument.FirstChild);
@@ -302,13 +326,6 @@ namespace VeriFactu.NoVeriFactu.Signature
         public byte[] Sign(Registro registro)
         {
 
-#if !LE_461 && !LE_472 && !LE_480
-
-            throw new NotImplementedException("La funcionalidad de firma sólo" +
-                " está disponible para proyectos .NET Framework 4.6.1 o 4.7.2 o 4.8");
-
-#endif
-
             var name = registro.GetType().Name;
 
             var nms = new Dictionary<string, string>()
@@ -322,7 +339,31 @@ namespace VeriFactu.NoVeriFactu.Signature
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(System.Text.Encoding.UTF8.GetString(xml));            
 
-            return Sign(xmlDocument, name);
+            return Sign(xmlDocument, name, "sum1", Namespaces.NamespaceSF);
+
+        }
+
+        /// <summary>
+        /// Devuelve los datos binarios de una cadena con el documentos xml de
+        /// entrada firmado.
+        /// </summary>
+        /// <param name="registro">Registro a firmar.</param>
+        /// <returns>XML firmado.</returns>
+        public byte[] Sign(RegistroEvento registro)
+        {
+
+            var nms = new Dictionary<string, string>()
+            {
+                { "sf", Namespaces.NamespaceSf },
+                { "ds", Namespaces.NamespaceDs }
+            };
+
+            var xml = new XmlParser().GetBytes(registro, nms);
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(System.Text.Encoding.UTF8.GetString(xml));
+
+            return Sign(xmlDocument, "RegistroEvento", "sf", Namespaces.NamespaceSf, "Evento");
 
         }
 

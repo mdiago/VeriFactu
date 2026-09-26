@@ -39,6 +39,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -52,6 +54,39 @@
   <ItemGroup>
     <Compile Include="..\NetCore\Src\Blockchain\Blockchain.cs">
       <Link>Src\Blockchain\Blockchain.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventAuditAnomaly.cs">
+      <Link>Src\Business\Events\EventAuditAnomaly.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventAuditResult.cs">
+      <Link>Src\Business\Events\EventAuditResult.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventAuditService.cs">
+      <Link>Src\Business\Events\EventAuditService.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventData.cs">
+      <Link>Src\Business\Events\EventData.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventEntry.cs">
+      <Link>Src\Business\Events\EventEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventFactory.cs">
+      <Link>Src\Business\Events\EventFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventQueue.cs">
+      <Link>Src\Business\Events\EventQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventRecordAuditAnomaly.cs">
+      <Link>Src\Business\Events\EventRecordAuditAnomaly.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventRecordAuditResult.cs">
+      <Link>Src\Business\Events\EventRecordAuditResult.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventSummaryResult.cs">
+      <Link>Src\Business\Events\EventSummaryResult.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\Events\EventSummaryService.cs">
+      <Link>Src\Business\Events\EventSummaryService.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Business\FlowControl\IntervalWorker.cs">
       <Link>Src\Business\FlowControl\IntervalWorker.cs</Link>
@@ -77,8 +112,14 @@
     <Compile Include="..\NetCore\Src\Business\InvoiceEntry.cs">
       <Link>Src\Business\InvoiceEntry.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Business\InvoiceEntryTI.cs">
+      <Link>Src\Business\InvoiceEntryTI.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Business\InvoiceFix.cs">
       <Link>Src\Business\InvoiceFix.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Business\InvoicePeriodReq.cs">
+      <Link>Src\Business\InvoicePeriodReq.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Business\InvoiceRetrySend.cs">
       <Link>Src\Business\InvoiceRetrySend.cs</Link>
@@ -293,6 +334,9 @@
     <Compile Include="..\NetCore\Src\Business\Validation\VIES\ViesVatNumber.cs">
       <Link>Src\Business\Validation\VIES\ViesVatNumber.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\Common\Chain.cs">
+      <Link>Src\Common\Chain.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Common\Exceptions\ClearPostException.cs">
       <Link>Src\Common\Exceptions\ClearPostException.cs</Link>
     </Compile>
@@ -329,6 +373,18 @@
     <Compile Include="..\NetCore\Src\DataStore\DocumentSet.cs">
       <Link>Src\DataStore\DocumentSet.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\EventPeriodExport.cs">
+      <Link>Src\DataStore\EventPeriodExport.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\EventPeriodExportFile.cs">
+      <Link>Src\DataStore\EventPeriodExportFile.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\InvoicePeriodExport.cs">
+      <Link>Src\DataStore\InvoicePeriodExport.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\DataStore\InvoicePeriodExportFile.cs">
+      <Link>Src\DataStore\InvoicePeriodExportFile.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\DataStore\PeriodBox.cs">
       <Link>Src\DataStore\PeriodBox.cs</Link>
     </Compile>
@@ -340,6 +396,9 @@
     </Compile>
     <Compile Include="..\NetCore\Src\DataStore\Seller.cs">
       <Link>Src\DataStore\Seller.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\EventChain\EventChain.cs">
+      <Link>Src\EventChain\EventChain.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Net\Rest\Api.cs">
       <Link>Src\Net\Rest\Api.cs</Link>
@@ -487,6 +546,9 @@
     </Compile>
     <Compile Include="..\NetCore\Src\NoVeriFactu\Signature\Ms\Utils.cs">
       <Link>Src\NoVeriFactu\Signature\Ms\Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\NoVeriFactu\Signature\SignatureVerifier.cs">
+      <Link>Src\NoVeriFactu\Signature\SignatureVerifier.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\NoVeriFactu\Signature\Signer.cs">
       <Link>Src\NoVeriFactu\Signature\Signer.cs</Link>
@@ -674,6 +736,9 @@
     <Compile Include="..\NetCore\Src\VeriFactuEndPointPrefixes.cs">
       <Link>Src\VeriFactuEndPointPrefixes.cs</Link>
     </Compile>
+    <Compile Include="..\NetCore\Src\VeriFactuEnvironment.cs">
+      <Link>Src\VeriFactuEnvironment.cs</Link>
+    </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Alta\CalificacionOperacion.cs">
       <Link>Src\Xml\Factu\Alta\CalificacionOperacion.cs</Link>
     </Compile>
@@ -772,6 +837,69 @@
     </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Encadenamiento.cs">
       <Link>Src\Xml\Factu\Encadenamiento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\DatosPropiosEvento.cs">
+      <Link>Src\Xml\Factu\Evento\DatosPropiosEvento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\DeteccionAnomaliasRegEvento.cs">
+      <Link>Src\Xml\Factu\Evento\DeteccionAnomaliasRegEvento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\DeteccionAnomaliasRegFacturacion.cs">
+      <Link>Src\Xml\Factu\Evento\DeteccionAnomaliasRegFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\Encadenamiento.cs">
+      <Link>Src\Xml\Factu\Evento\Encadenamiento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\Evento.cs">
+      <Link>Src\Xml\Factu\Evento\Evento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\EventoAnterior.cs">
+      <Link>Src\Xml\Factu\Evento\EventoAnterior.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\ExportacionRegEventoPeriodo.cs">
+      <Link>Src\Xml\Factu\Evento\ExportacionRegEventoPeriodo.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\ExportacionRegFacturacionPeriodo.cs">
+      <Link>Src\Xml\Factu\Evento\ExportacionRegFacturacionPeriodo.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\IDFacturaExpedida.cs">
+      <Link>Src\Xml\Factu\Evento\IDFacturaExpedida.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\IDFacturaExpedidaHuella.cs">
+      <Link>Src\Xml\Factu\Evento\IDFacturaExpedidaHuella.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\IDOtro.cs">
+      <Link>Src\Xml\Factu\Evento\IDOtro.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\LanzamientoProcesoDeteccionAnomaliasRegEvento.cs">
+      <Link>Src\Xml\Factu\Evento\LanzamientoProcesoDeteccionAnomaliasRegEvento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\LanzamientoProcesoDeteccionAnomaliasRegFacturacion.cs">
+      <Link>Src\Xml\Factu\Evento\LanzamientoProcesoDeteccionAnomaliasRegFacturacion.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\PersonaFisicaJuridica.cs">
+      <Link>Src\Xml\Factu\Evento\PersonaFisicaJuridica.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\PersonaFisicaJuridicaES.cs">
+      <Link>Src\Xml\Factu\Evento\PersonaFisicaJuridicaES.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\RegEvento.cs">
+      <Link>Src\Xml\Factu\Evento\RegEvento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\RegistroEvento.cs">
+      <Link>Src\Xml\Factu\Evento\RegistroEvento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\ResumenEventos.cs">
+      <Link>Src\Xml\Factu\Evento\ResumenEventos.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\SistemaInformatico.cs">
+      <Link>Src\Xml\Factu\Evento\SistemaInformatico.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\TipoEvento.cs">
+      <Link>Src\Xml\Factu\Evento\TipoEvento.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCore\Src\Xml\Factu\Evento\TipoEventoAgr.cs">
+      <Link>Src\Xml\Factu\Evento\TipoEventoAgr.cs</Link>
     </Compile>
     <Compile Include="..\NetCore\Src\Xml\Factu\Fault\detail.cs">
       <Link>Src\Xml\Factu\Fault\detail.cs</Link>
@@ -882,8 +1010,8 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="Doc\Help\VeriFactu.chm" />
-    <None Include="Doc\Legal\Declaracion Responsable v1.0.4-alpha.docx" />
-    <None Include="Doc\Legal\Declaracion Responsable v1.0.4-alpha.pdf" />
+    <None Include="Doc\Legal\Declaracion Responsable v1.0.68-release.docx" />
+    <None Include="Doc\Legal\Declaracion Responsable v1.0.68-release.pdf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

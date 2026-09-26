@@ -74,8 +74,10 @@ namespace VeriFactu.NoVeriFactu.Signature.Xades.Props
         /// </summary>
         /// <param name="parent">Nodo padre.</param>
         /// <param name="name">Nombre elemento.</param>
-        internal RootTmp(XmlDocument parent, string name = "RegistroAlta") : base(parent, name, "sum1",
-            "https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd", true)
+        /// <param name="prefix">Prefijo espacio de nombres.</param>
+        /// <param name="ns">Espacio de nombres.</param>
+        internal RootTmp(XmlDocument parent, string name, string prefix, string ns) :
+            base(parent, name, prefix, ns, true)
         {
 
             SignatureTmp = new SignatureTmp(XmlElement);

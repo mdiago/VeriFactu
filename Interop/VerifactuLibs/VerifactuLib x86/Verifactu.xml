@@ -6,17 +6,7 @@
     <members>
         <member name="T:VeriFactu.Blockchain.Blockchain">
             <summary>
-            Representa una cadena de bloques.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Blockchain.Blockchain._CsvSeparator">
-            <summary>
-            Separador para los archivos csv.
-            </summary>
-        </member>
-        <member name="F:VeriFactu.Blockchain.Blockchain._Locker">
-            <summary>
-            Bloqueo para thread safe.
+            Representa una cadena de registros de facturación.
             </summary>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.#cctor">
@@ -30,15 +20,15 @@
             </summary>
             <param name="sellerID">Vendedor al que pertenece la cadena de bloques.</param>
         </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.GetBlockchainPath(System.String)">
+        <member name="M:VeriFactu.Blockchain.Blockchain.GetChainDir(System.String)">
             <summary>
             Devuelve la ruta de almacenamiento de la cadena
-            de bloques.
+            de registros de facturación.
             </summary>
             <param name="sellerID">Emisor al que pertenece la
-            cadena de bloques a gestionar.</param>
+            cadena de registros de facturación a gestionar.</param>
             <returns>Ruta de almacenamiento de la cadena
-            de bloques.</returns>
+            de registros de facturación.</returns>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.GetEncadenamiento">
             <summary>
@@ -60,19 +50,13 @@
             </summary>
             <exception cref="T:System.InvalidOperationException">Se lanza si no se encuentra el último eslabón.</exception>
         </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.Write(System.Collections.Generic.List{System.String})">
+        <member name="M:VeriFactu.Blockchain.Blockchain.GetVarFileLine">
             <summary>
-            Escribe los datos de la cadena en disco.
+            Devuelve un texto con los datos necesarios para restaurar.
             </summary>
-            <param name="csvLines">Líneas a escribir en el csv de control.</param>
+            <returns> Texto con los datos necesarios para restaurar.</returns>
         </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.WriteVar">
-            <summary>
-            Almacena los datos del último elemento de la cadena
-            en disco.
-            </summary>
-        </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.GetControFilelLine">
+        <member name="M:VeriFactu.Blockchain.Blockchain.GetControlFileLine">
             <summary>
             Devuelve un texto para el archivo csv de control
             representando la inserción en la cadena de bloques
@@ -80,89 +64,21 @@
             </summary>
             <returns>Linea de archivo csv</returns>
         </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.WriteData(System.Collections.Generic.List{System.String})">
+        <member name="M:VeriFactu.Blockchain.Blockchain.GetDeleteDisabled">
             <summary>
-            Añade los datos del último elemento al archivo de control
-            de la cadena.
+            True si está desactivada la eliminación en la cadena.
             </summary>
-            <param name="csvLines">Líneas de control a incluir en el
-            archivo csv de control.</param>
         </member>
-        <member name="M:VeriFactu.Blockchain.Blockchain.RestorePreviousData(System.String,System.String)">
+        <member name="M:VeriFactu.Blockchain.Blockchain.RestoreCurrent(System.String[])">
             <summary>
-            Recupera los datos del archivo de la cadena de bloques previo
-            a la inserción del último elemento.
+            Restaura el último registro de la cadena a partir de los
+            datos almacenados en el archivo de variables.
             </summary>
-            <param name="blockchainDataFileName">Archivo de datos a restaurar.</param>
-            <param name="blockchainDataPreviousFileName">Copia anterior utilizada para restaurar.</param>
-            <exception cref="T:System.InvalidOperationException">Se lanza si no se encuentra archivo previo a restaurar.</exception>
+            <param name="values">Valores almacenados.</param>
         </member>
         <member name="P:VeriFactu.Blockchain.Blockchain.Initialized">
             <summary>
             Indica si el sistema de cadena de bloques está inicializado.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.SellerID">
-            <summary>
-            Identificador del vendedor.
-            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
-            En caso de no existir, se puede utilizar el número DUNS 
-            o cualquier otro identificador acordado.
-            </summary>        
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.CurrentID">
-            <summary>
-            Identificador del último eslabón de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.CurrentTimeStamp">
-            <summary>
-            Momento de generación del último eslabón de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.Current">
-            <summary>
-            Último elemento de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.PreviousID">
-            <summary>
-            Identificador del penúltimo eslabón de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.PreviousTimeStamp">
-            <summary>
-            Momento de generación del penúltimo eslabón de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.Previous">
-            <summary>
-            Penúltimo elemento de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainPath">
-            <summary>
-            Path del directorio de archivado de los datos de la
-            cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainVarFileName">
-            <summary>
-            Archivo que almacena el valor de las variables en curso
-            de la cadena.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainDataPreviousFileName">
-            <summary>
-            Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
-            a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
-            con el nombre BlockchainDataFileName antes del registro del último movimiento.
-            </summary>
-        </member>
-        <member name="P:VeriFactu.Blockchain.Blockchain.BlockchainDataFileName">
-            <summary>
-            Archivo que almacena una porción del Blockchain correspondiente
-            a los movimientos de un mes.
             </summary>
         </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Get(System.String)">
@@ -210,6 +126,721 @@
             </summary>
             <returns>Representación textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.Business.Events.EventAuditAnomaly">
+            <summary>
+            Representa una anomalía detectada en un registro
+            de facturación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditAnomaly.Type">
+            <summary>
+            Tipo de anomalía detectada.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditAnomaly.Details">
+            <summary>
+            Información adicional sobre la anomalía.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditAnomaly.Record">
+            <summary>
+            Registro de facturación en el que se ha
+            detectado la anomalía.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventAuditResult">
+            <summary>
+            Representa el resultado de un proceso de detección de anomalías
+            sobre los registros de facturación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditResult.#ctor">
+            <summary>
+            Inicializa una nueva instancia de la clase.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.HashCheckPerformed">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación
+            de integridad de las huellas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.HashProcessed">
+            <summary>
+            Número de registros procesados en la comprobación
+            de integridad de las huellas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.SignatureCheckPerformed">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación
+            de integridad de las firmas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.SignatureProcessed">
+            <summary>
+            Número de registros procesados en la comprobación
+            de integridad de las firmas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.ChainCheckPerformed">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación
+            de trazabilidad de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.ChainProcessed">
+            <summary>
+            Número de registros procesados en la comprobación
+            de trazabilidad de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.DateCheckPerformed">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación
+            de trazabilidad de las fechas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.DateProcessed">
+            <summary>
+            Número de registros procesados en la comprobación
+            de trazabilidad de las fechas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventAuditResult.Anomalies">
+            <summary>
+            Anomalías detectadas durante el proceso.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventAuditService">
+            <summary>
+            Proporciona los procesos de detección de anomalías
+            sobre los registros almacenados.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditInvoices(System.String)">
+            <summary>
+            Realiza los procesos de detección de anomalías sobre los
+            registros de facturación del obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <returns> Resultado del proceso de detección de anomalías.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditEvents(System.String)">
+            <summary>
+            Realiza los procesos de detección de anomalías sobre los eventos.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <returns>Resultado del proceso de detección de anomalías.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditInvoiceHashes(System.String,VeriFactu.Business.Events.EventAuditResult)">
+            <summary>
+            Comprueba la integridad de las huellas de los registros
+            de facturación del obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="result"> Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditInvoiceChain(System.String,VeriFactu.Business.Events.EventAuditResult)">
+            <summary>
+            Comprueba la trazabilidad de la cadena de registros
+            de facturación del obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="result"> Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditEventHashes(System.String,EventRecordAuditResult)">
+            <summary>
+            Comprueba la integridad de las huellas de los registros
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="result"> Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetInvoiceSellers">
+            <summary>
+            Obtiene los identificadores de los obligados a la emisión.
+            </summary>
+            <returns> Identificadores de los obligados a la emisión.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetInvoiceSellerName(System.String)">
+            <summary>
+            Obtiene el nombre o razón social del obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <returns> Nombre o razón social del obligado a la emisión</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetInvoiceFiles(System.String)">
+            <summary>
+            Obtiene los archivos de registros de facturación
+            almacenados para un obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <returns>
+            Archivos de registros de facturación.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetEventFiles(System.String)">
+            <summary>
+            Obtiene la lista de archivos de registro de eventos de un contribuyente.
+            </summary>
+            <param name="sellerID"> Id. del emisor.</param>
+            <returns> Lista de archivos de registro de eventos de un contribuyente.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetEventRecords(System.String)">
+            <summary>
+            Obtiene los registros de evento almacenados para un obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Id. del emisor.</param>
+            <returns> Los registros de evento almacenados para un obligado a la emisión.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetInvoiceRecords(System.String)">
+            <summary>
+            Obtiene los registros de facturación almacenados para un obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Id. del emisor.</param>
+            <returns>Registros de facturación almacenados para un obligado a la emisión.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.VerifyHash(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Comprueba la integridad de la huella de un registro
+            de facturación.
+            </summary>
+            <param name="registro">
+            Registro a comprobar.
+            </param>
+            <returns>
+            True si la huella es válida; false en caso contrario.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.GetBlockchainLinkID(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Obtiene el identificador del eslabón de la cadena.
+            </summary>
+            <param name="registro">
+            Registro de alta o anulación.
+            </param>
+            <returns>
+            Identificador del eslabón de la cadena.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditInvoiceSignatures(System.String,VeriFactu.Business.Events.EventAuditResult)">
+            <summary>
+            Comprueba la integridad de las firmas electrónicas de los
+            registros de facturación del obligado a la emisión.
+            </summary>
+            <param name="sellerID">
+            Identificador del obligado a la emisión.
+            </param>
+            <param name="result">
+            Resultado del proceso de detección de anomalías.
+            </param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditInvoiceDates(System.String,VeriFactu.Business.Events.EventAuditResult)">
+            <summary>
+            Comprueba la integridad de las fechas de los
+            registros de facturación del obligado a la emisión.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="result"> Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditEventSignatures(System.String,EventRecordAuditResult)">
+            <summary>
+            Comprueba la integridad de las firmas electrónicas de los eventos.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="result"> Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditEventChain(System.String,EventRecordAuditResult)">
+            <summary>
+            Comprueba la cadena de eventos 
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="result"> Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventAuditService.AuditEventDates(System.String,EventRecordAuditResult)">
+            <summary>
+            Comprueba la integridad de las fechas de los
+            registros de evento del obligado a la emisión.
+            </summary>
+            <param name="sellerID">Identificador del obligado a la emisión.</param>
+            <param name="result">Resultado del proceso de detección de anomalías.</param>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventEntry">
+            <summary>
+            Representa una entrada pendiente de procesamiento
+            en la cola de eventos SIF.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.IsEventAnomalyDetection">
+            <summary>
+            Indica que la entrada representa la ejecución del proceso
+            de detección de anomalías sobre los registros de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.IsEventSummary">
+            <summary>
+            Indica que la entrada representa la generación
+            del resumen de eventos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventEntry.#ctor(VeriFactu.Xml.Factu.Evento.TipoEvento,System.String,System.String,VeriFactu.Xml.Factu.Evento.DatosPropiosEvento,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="tipoEvento">Tipo de evento.</param>
+            <param name="sellerID">Identificador del emisor.</param>
+            <param name="sellerName">Nombre o razón social del emisor.</param>
+            <param name="datosPropiosEvento">Datos propios del evento.</param>
+            <param name="otrosDatosEvento">Otros datos del evento.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventEntry.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Crea una entrada para ejecutar una operación interna
+            sobre los registros de evento.
+            </summary>
+            <param name="sellerID">Identificador del emisor.</param>
+            <param name="sellerName">Nombre o razón social del emisor.</param>
+            <param name="isEventSummary">
+            Indica si la operación corresponde a la generación
+            del resumen de eventos.
+            </param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventEntry.#ctor(System.String,System.String)">
+            <summary>
+            Crea una entrada para ejecutar el proceso de detección
+            de anomalías sobre los registros de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.TipoEvento">
+            <summary>
+            Tipo de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.SellerID">
+            <summary>
+            Identificador del emisor al que corresponde el evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.SellerName">
+            <summary>
+            Nombre o razón social del emisor al que corresponde el evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.DatosPropiosEvento">
+            <summary>
+            Datos propios del evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventEntry.OtrosDatosEvento">
+            <summary>
+            Otros datos asociados al evento.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventFactory">
+            <summary>
+            Factoría para la creación de eventos SIF.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.GetInvoiceRecordReference(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Obtiene la identificación y huella de un registro
+            de facturación.
+            </summary>
+            <param name="record">Registro de facturación.</param>
+            <returns>
+            Identificación y huella del registro de facturación.
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            Se produce cuando el registro no contiene los datos
+            identificativos de la factura.
+            </exception>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateStartInvoiceAnomalyDetection(System.String,System.String,VeriFactu.Business.Events.EventAuditResult)">
+            <summary>
+            Crea un evento de lanzamiento del proceso de detección de anomalías
+            en los registros de facturación.
+            </summary>
+            <param name="sellerID">Identificador del obligado a la emisión.</param>
+            <param name="sellerName">Nombre o razón social del obligado a la emisión.</param>
+            <param name="result">Resultado del proceso de detección de anomalías.</param>
+            <returns>
+            Evento de lanzamiento del proceso de detección de anomalías
+            en los registros de facturación.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateInvoiceAnomalyDetection(System.String,System.String,VeriFactu.Business.Events.EventAuditAnomaly)">
+            <summary>
+            Crea un evento de detección de una anomalía
+            en un registro de facturación.
+            </summary>
+            <param name="sellerID">Identificador del obligado a la emisión.</param>
+            <param name="sellerName">Nombre o razón social del obligado a la emisión.</param>
+            <param name="anomaly">Anomalía detectada.</param>
+            <returns>Evento de detección de anomalía.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateStartEventAnomalyDetection(System.String,System.String,EventRecordAuditResult)">
+            <summary>
+            Crea un evento de lanzamiento del proceso de detección de anomalías
+            en los registros de evento.
+            </summary>
+            <param name="sellerID">Identificador del obligado a la emisión.</param>
+            <param name="sellerName">Nombre o razón social del obligado a la emisión.</param>
+            <param name="result">Resultado del proceso de detección de anomalías.</param>
+            <returns>
+            Evento de lanzamiento del proceso de detección de anomalías
+            en los registros de evento.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateEventAnomalyDetection(System.String,System.String,EventRecordAuditAnomaly)">
+            <summary>
+            Crea un evento de detección de una anomalía
+            en un registro de evento.
+            </summary>
+            <param name="sellerID">Identificador del obligado a la emisión.</param>
+            <param name="sellerName">Nombre o razón social del obligado a la emisión.</param>
+            <param name="anomaly">Anomalía detectada.</param>
+            <returns>Evento de detección de anomalía.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateEventSummary(System.String,System.String,VeriFactu.Business.Events.EventSummaryResult)">
+            <summary>
+            Crea un evento resumen de eventos.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="sellerName"> Nombre o razón social del obligado a la emisión.</param>
+            <param name="result"> Resultado del cálculo del resumen de eventos.</param>
+            <returns>Evento resumen de eventos.</returns>
+            <exception cref="T:System.ArgumentNullException"> Se produce cuando no se ha especificado el resultado.</exception>
+            <exception cref="T:System.InvalidOperationException"> Se produce cuando no existen eventos que incluir en el resumen.</exception>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateInvoicePeriodExport(System.String,System.String,VeriFactu.DataStore.InvoicePeriodExport)">
+            <summary>
+            Crea un evento de exportación de registros de facturación de un periodo.
+            </summary>
+            <param name="sellerID"> Identificador del obligado a la emisión.</param>
+            <param name="sellerName"> Nombre o razón social del obligado a la emisión.</param>
+            <param name="export">Exportación de registros de un emisor/periodo.</param>
+            <returns>Evento exportación.</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateInvoicePeriodExportData(VeriFactu.DataStore.InvoicePeriodExport)">
+            <summary>
+            Crea los datos propios del evento de exportación de registros
+            de facturación de un periodo.
+            </summary>
+            <param name="export">Exportación realizada.</param>
+            <returns>Datos propios del evento.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.CreateEventPeriodExportData(VeriFactu.DataStore.EventPeriodExport)">
+            <summary>
+            Crea los datos propios del evento de exportación de registros
+            de evento de un periodo.
+            </summary>
+            <param name="export">Exportación realizada.</param>
+            <returns>Datos propios del evento.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.GetEventRecordReference(VeriFactu.Xml.Factu.Evento.Evento)">
+            <summary>
+            Obtiene los datos identificativos de un registro de evento.
+            </summary>
+            <param name="evento">Registro de evento.</param>
+            <returns>Datos identificativos del registro de evento.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventFactory.Create(VeriFactu.Xml.Factu.Evento.TipoEvento,System.String,System.String,VeriFactu.Xml.Factu.Evento.DatosPropiosEvento,System.String)">
+            <summary>
+            Crea un evento SIF.
+            </summary>
+            <param name="tipoEvento">Tipo de evento.</param>
+            <param name="sellerID">NIF del obligado a la emisión.</param>
+            <param name="sellerName">Nombre o razón social del obligado a la emisión.</param>
+            <param name="datosPropiosEvento">Datos propios del evento.</param>
+            <param name="otrosDatosEvento">Otros datos del evento.</param>
+            <returns>Evento SIF.</returns>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventQueue">
+            <summary>
+            Gestiona en segundo plano la generación y registro
+            de eventos SIF.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue.SummaryPeriodHours">
+            <summary>
+            Duración en horas del periodo de generación
+            del resumen de eventos.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue._PendingQueue">
+            <summary>
+            Cola de eventos pendientes de procesamiento.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue._Locker">
+            <summary>
+            Bloqueo para acceso thread safe a la cola.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue._IsWorking">
+            <summary>
+            Indica si la cola se está procesando.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue._IsClosing">
+            <summary>
+            Indica si la cola se está cerrando.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue._SummaryPeriodStart">
+            <summary>
+            Momento de inicio del periodo actual de resumen
+            de eventos.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.Events.EventQueue._SummaryPending">
+            <summary>
+            Indica que existe un ciclo periódico de resumen
+            pendiente de procesamiento.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.#cctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventQueue.Initialized">
+            <summary>
+            Indica que la cola de eventos ha sido inicializada.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventQueue.ActiveEventQueue">
+            <summary>
+            Cola de eventos activa en el sistema.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventQueue.Count">
+            <summary>
+            Número de eventos pendientes de procesamiento.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.Exit">
+            <summary>
+            Solicita la finalización de la cola de eventos.
+            El cierre se realizará una vez procesados todos
+            los eventos pendientes.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.AddStartupEvents">
+            <summary>
+            Añade los eventos correspondientes al inicio del sistema
+            para todos los emisores existentes.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.ExportInvoicePeriod(System.String,System.String,System.String,System.String)">
+            <summary>
+            Exporta los registros de facturación de un periodo y registra
+            el evento de exportación correspondiente.
+            </summary>
+            <param name="sellerID">Emisor de las facturas.</param>
+            <param name="sellerName">Nombre del emisor.</param>
+            <param name="period">Periodo a exportar.</param>
+            <param name="zipFilePath">Archivo ZIP de destino.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.ExportEventPeriod(System.String,System.String,System.String,System.String)">
+            <summary>
+            Exporta los registros de evento de un periodo y registra
+            el evento de exportación correspondiente.
+            </summary>
+            <param name="sellerID">Identificador del emisor.</param>
+            <param name="sellerName">Nombre del emisor.</param>
+            <param name="period">Periodo a exportar.</param>
+            <param name="zipFilePath">Ruta del archivo ZIP de destino.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.AddOtherEvent(System.String,System.String,System.String)">
+            <summary>
+            Registra un evento voluntario del sistema informático.
+            </summary>
+            <param name="sellerID">Identificador del emisor.</param>
+            <param name="sellerName">Nombre del emisor.</param>
+            <param name="otrosDatosEvento">Descripción del evento.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.DoExit">
+            <summary>
+            Finaliza definitivamente la cola de eventos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.Process(VeriFactu.Business.Events.EventEntry)">
+            <summary>
+            Procesa un evento pendiente.
+            </summary>
+            <param name="entry">Entrada de evento a procesar.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.ProcessEvent(VeriFactu.Business.Events.EventEntry)">
+            <summary>
+            Genera, encadena, firma y almacena un evento.
+            </summary>
+            <param name="entry">Entrada de evento a procesar.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.ProcessEventAnomalyDetection(VeriFactu.Business.Events.EventEntry)">
+            <summary>
+            Ejecuta el proceso de detección de anomalías
+            sobre los registros de evento.
+            </summary>
+            <param name="entry">Representa una entrada pendiente de
+            procesamiento en la cola de eventos SIF.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.ProcessEventSummary(VeriFactu.Business.Events.EventEntry)">
+            <summary>
+            Genera el resumen de eventos correspondiente al periodo
+            transcurrido desde el último resumen.
+            </summary>
+            <param name="entry">
+            Entrada pendiente de procesamiento en la cola de eventos SIF.
+            </param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.CheckEventSummary">
+            <summary>
+            Comprueba si ha transcurrido el periodo establecido
+            para generar un resumen de eventos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.Add(VeriFactu.Xml.Factu.Evento.TipoEvento,System.String,System.String,VeriFactu.Xml.Factu.Evento.DatosPropiosEvento,System.String)">
+            <summary>
+            Añade un evento a la cola de procesamiento.
+            </summary>
+            <param name="tipoEvento">Tipo de evento.</param>
+            <param name="sellerID">Identificador del emisor.</param>
+            <param name="sellerName">Nombre o razón social del emisor.</param>
+            <param name="datosPropiosEvento">Datos propios del evento.</param>
+            <param name="otrosDatosEvento">Otros datos del evento.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.AddInvoiceAnomalyDetection(System.String,System.String)">
+            <summary>
+            Ejecuta el proceso de detección de anomalías sobre los registros
+            de facturación y añade a la cola los eventos resultantes.
+            </summary>
+            <param name="sellerID">
+            Identificador del obligado a la emisión.
+            </param>
+            <param name="sellerName">
+            Nombre o razón social del obligado a la emisión.
+            </param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.AddEventAnomalyDetection(System.String,System.String)">
+            <summary>
+            Añade a la cola el proceso de detección de anomalías
+            sobre los registros de evento.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.AddEventSummary(System.String,System.String)">
+            <summary>
+            Añade a la cola la generación de un resumen de eventos.
+            </summary>
+            <param name="sellerID">
+            Identificador del obligado a la emisión.
+            </param>
+            <param name="sellerName">
+            Nombre o razón social del obligado a la emisión.
+            </param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventQueue.Execute">
+            <summary>
+            Proceso a ejecutar periódicamente entre
+            intervalos.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventSummaryResult">
+            <summary>
+            Datos correspondientes al registro resumen de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.Events">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo
+            el primer y último registro, el número total de registros, el importe total de impuestos y el importe total.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.FirstInvoiceRecord">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo
+            el primer y último registro, el número total de registros, el importe total de impuestos y el importe total.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.LastInvoiceRecord">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo el último.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.InvoiceRegistrations">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo el número total de registros.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.TotalTaxAmount">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo el importe total de impuestos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.TotalAmount">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo el importe total.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.Events.EventSummaryResult.InvoiceCancellations">
+            <summary>
+            Resumen de los registros de facturación generados, incluyendo el número total de registros cancelados.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventSummaryResult.#ctor">
+            <summary>
+            Inicializa una nueva instancia de la clase <see cref="T:VeriFactu.Business.Events.EventSummaryResult"/>.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Business.Events.EventSummaryService">
+            <summary>
+            Servicio para obtener el resumen de eventos de un vendedor.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventSummaryService.AddInvoiceSummary(System.String,System.Collections.Generic.IList{VeriFactu.Xml.Factu.Evento.Evento},VeriFactu.Business.Events.EventSummaryResult)">
+            <summary>
+            Agrega el resumen de facturación al resultado del resumen de eventos.
+            </summary>
+            <param name="sellerID">Id. del vendedor.</param>
+            <param name="events">Eventos.</param>
+            <param name="result">Resultado del resumen de eventos.</param>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventSummaryService.GetLastInvoiceLinkID(System.Collections.Generic.IList{VeriFactu.Xml.Factu.Evento.Evento},System.Collections.Generic.IList{VeriFactu.Xml.Factu.Registro})">
+            <summary>
+            Obtiene el ID de enlace de blockchain del último registro
+            de facturación incluido en un resumen anterior.
+            </summary>
+            <param name="events">Eventos.</param>
+            <param name="records">Registros de facturación.</param>
+            <returns> ID de enlace de blockchain del último registro de facturación
+            incluido en un resumen anterior. Cero si no existe ninguno.</returns>
+            <exception cref="T:System.InvalidOperationException">
+            Se produce cuando un resumen anterior identifica un registro
+            de facturación que no puede localizarse.
+            </exception>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventSummaryService.IsSameInvoiceRecord(VeriFactu.Xml.Factu.Registro,VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella)">
+            <summary>
+            Determina si un registro de facturación es el mismo
+            que un registro de referencia.
+            </summary>
+            <param name="record">Registro a comparar.</param>
+            <param name="reference">Registro de referencia.</param>
+            <returns> True si ambos identifican el mismo registro de facturación.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.Events.EventSummaryService.GetSummary(System.String)">
+            <summary>
+            Obtiene el resumen de eventos de un vendedor.
+            </summary>
+            <param name="sellerID">Id. del vendedor.</param>
+            <returns>Resumen de eventos del vendedor.</returns>
+        </member>
         <member name="T:VeriFactu.Business.FlowControl.IntervalWorker">
             <summary>
             Clase para ejecutar en un hilo de fondo
@@ -220,6 +851,11 @@
             <summary>
             Utilizado para esperar el intervalo determinado,
             y para finalizar definitivamente el hilo de trabajo.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.FlowControl.IntervalWorker._Thread">
+            <summary>
+            Hilo de trabajo en el que se ejecuta el proceso.
             </summary>
         </member>
         <member name="M:VeriFactu.Business.FlowControl.IntervalWorker.Process">
@@ -296,12 +932,13 @@
             <param name="certificate">Certificado para la petición.</param>
             <returns>Devuelve La respuesta de la AEAT al envío.</returns>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction},System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Contabiliza los elementos a envíar eliminándolos de la cola
             de envío y devolviendolos en una lista.
             </summary>
             <param name="invoiceActions">Lista de elementos a contabilizar.</param>
+            <param name="certificate">Certificado para la firma.</param>
             <returns>Lista de los elementos a contabilizar.</returns>
         </member>
         <member name="M:VeriFactu.Business.FlowControl.InvoiceBatch.ProcessReponse(VeriFactu.Xml.Factu.Respuesta.RespuestaRegFactuSistemaFacturacion,System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
@@ -429,10 +1066,11 @@
             intervalos.
             </summary>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.InvoiceQueue.Process">
+        <member name="M:VeriFactu.Business.FlowControl.InvoiceQueue.Process(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Procesa toda la cola emisor a emisor.
             </summary>
+            <param name="certificate">Certificado para la firma.</param>
         </member>
         <member name="T:VeriFactu.Business.FlowControl.SellerQueue">
             <summary>
@@ -501,7 +1139,7 @@
             </summary>
             <param name="sellerID">Vendedor al que pertenece la cola de proceso.</param>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction}@)">
+        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Post(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction}@,System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Contabiliza los elementos a envíar eliminándolos de la cola
             de envío y devolviendolos en una lista.
@@ -514,13 +1152,15 @@
             envíos normales dándoles prioridad, que coincida en la cola
             un momento de envío en el que únicamente existan reenvíos; En
             este momento será cuando se envíen estos registros.</param>
+            <param name="certificate">Certificado para la firma.</param>
             <returns>Lista de los elementos contabilizados.</returns>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Send(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
+        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Send(System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction},System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Envío el lote de facturas a la AEAT.
             </summary>
             <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+            <param name="certificate">Certificado para la firma.</param>
             <returns>Devuelve La respuesta de la AEAT al envío.</returns>
         </member>
         <member name="M:VeriFactu.Business.FlowControl.SellerQueue.ProcessReponse(VeriFactu.Xml.Factu.Respuesta.RespuestaRegFactuSistemaFacturacion,System.Collections.Generic.List{VeriFactu.Business.Operations.InvoiceAction})">
@@ -553,11 +1193,11 @@
             </summary>
             <param name="invoiceAction">Acción de registro a añadir.</param>
         </member>
-        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Process">
+        <member name="M:VeriFactu.Business.FlowControl.SellerQueue.Process(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Procesa toda la cola emisor a emisor.
             </summary>
-            <returns>Lista de los elementos procesados.</returns>
+            <param name="certificate">Certificado para la firma.</param>
         </member>
         <member name="M:VeriFactu.Business.FlowControl.SellerQueue.ToString">
             <summary>
@@ -978,6 +1618,25 @@
             </summary>
             <param name="invoice">Instancia de factura de entrada en el sistema.</param>
         </member>
+        <member name="T:VeriFactu.Business.InvoiceEntryTI">
+            <summary>
+            Representa una entrada de factura en el
+            sistema con incidencia técnica.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceEntryTI.#ctor(VeriFactu.Business.Invoice)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="invoice">Instancia de factura de entrada
+            en el sistema con incidencia técnica.</param>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceEntryTI.GetEnvelope">
+            <summary>
+            Genera el sobre SOAP.
+            </summary>
+            <returns>Sobre SOAP.</returns>
+        </member>
         <member name="T:VeriFactu.Business.InvoiceFix">
             <summary>
             Representa una acción de subsanación de un registro
@@ -1025,6 +1684,72 @@
             </summary>
             <returns>Lista con los errores encontrados.</returns>
         </member>
+        <member name="T:VeriFactu.Business.InvoicePeriodReq">
+            <summary>
+            Representa un envío por requerimiento de facturas al sistema VERI*FACTU de la AEAT.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Business.InvoicePeriodReq._InvoicePeriod">
+            <summary>
+            Registros de facturación correspondientes al periodo requerido.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Business.InvoicePeriodReq.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID">Identificador del vendedor.</param>        
+            <param name="period">Periodo requerido por la AEAT.</param>
+        </member>
+        <member name="M:VeriFactu.Business.InvoicePeriodReq.GetEnvelope(System.Collections.Generic.List{VeriFactu.Xml.Factu.Registro},System.String,System.Boolean)">
+            <summary>
+            Genera el sobre correspondiente a un lote de registros
+            de facturación.
+            </summary>
+            <param name="records">Registros de facturación a remitir.</param>
+            <param name="refRequirement">Referencia del requerimiento de la AEAT.</param>
+            <param name="isLast">Indica si se trata del último envío del requerimiento.</param>
+            <returns>Sobre a remitir a la AEAT.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.InvoicePeriodReq.GetSellerName">
+            <summary>
+            Obtiene el nombre o razón social del obligado a la emisión
+            de los registros de facturación del periodo.
+            </summary>
+            <returns>Nombre o razón social del obligado a la emisión.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.InvoicePeriodReq.Send(System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Remite a la AEAT los registros de facturación correspondientes
+            al periodo requerido.
+            </summary>
+            <param name="refRequirement">Referencia del requerimiento de la AEAT.</param>
+            <param name="certificate">Certificado para la petición.</param>
+            <returns>Respuestas devueltas por la AEAT para cada uno de los envíos realizados.</returns>
+        </member>
+        <member name="M:VeriFactu.Business.InvoicePeriodReq.GetXml(System.String)">
+            <summary>
+            Obtiene el xml correspondiente a la remisión por requerimiento
+            sin realizar el envío a la AEAT.
+            </summary>
+            <param name="refRequirement">Referencia del requerimiento de la AEAT.</param>
+            <returns>Xml correspondiente a la remisión por requerimiento.</returns>
+        </member>
+        <member name="P:VeriFactu.Business.InvoicePeriodReq.SellerID">
+            <summary>
+            Identificador del vendedor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoicePeriodReq.Period">
+            <summary>
+            Periodo requerido por la AEAT.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Business.InvoicePeriodReq.SellerName">
+            <summary>
+            Nombre o razón social del obligado a la emisión.
+            </summary>
+        </member>
         <member name="T:VeriFactu.Business.InvoiceRetrySend">
             <summary>
             Representa una acción de reenvío por fallo técnico
@@ -1051,7 +1776,7 @@
             </summary>
             <returns>Sobre SOAP.</returns>
         </member>
-        <member name="M:VeriFactu.Business.InvoiceRetrySend.SaveBlockchainChanges">
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.SaveBlockchainChanges(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Actualiza los datos tras la incorporación del registro
             a la cadena de bloques.
@@ -1059,6 +1784,8 @@
             <para> 2. Guarda el registro en disco en el el directorio de registros emitidos.</para>
             <para> 3. Establece Posted = true.</para>
             </summary>
+            <param name="certificate">Certificado para la firma.</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:VeriFactu.Business.InvoiceRetrySend.ProcessResponse(VeriFactu.Xml.Soap.Envelope)">
             <summary>
@@ -1173,8 +1900,7 @@
             Si no existe lo crea.
             </summary>
             <param name="dir">Ruta al directorio.</param>
-            <returns>Ruta al directorio con el separador
-            de directorio de sistema añadido al final.</returns>
+            <returns>Ruta al directorio.</returns> 
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionData.GetInvoicePath(System.String)">
             <summary>
@@ -1524,13 +2250,14 @@
             sido procesada de la AEAT.
             </summary>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendXmlBytes(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendXmlBytes(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509Certificate2,System.Boolean)">
             <summary>
             Envía un xml en formato binario a la AEAT.
             </summary>
             <param name="xml">Archivo xml en formato binario a la AEAT.</param>
-            <param name="op"> Acción para el webservice.</param>
+            <param name="op">Acción para el webservice.</param>
             <param name="certificate">Certificado para la petición.</param>
+            <param name="isRequirement">Indica si el envío se realiza por requerimiento.</param>
             <returns>Devuelve las respuesta de la AEAT.</returns>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionMessage.SendEnvelope(VeriFactu.Xml.Soap.Envelope,System.String,System.Security.Cryptography.X509Certificates.X509Certificate2)">
@@ -1592,7 +2319,7 @@
             </summary>
             <param name="invoice">Instancia de factura de entrada en el sistema.</param>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.Post">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.Post(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Contabiliza una entrada.
             <para> 1. Incluye el registro en la cadena de bloques.</para>
@@ -1600,8 +2327,9 @@
             <para> 3. Guarda el registro en disco en el el directorio de registros emitidos.</para>
             <para> 4. Establece Posted = true.</para>
             </summary>
+            <param name="certificate">Certificado para la firma.</param>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.SaveBlockchainChanges">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.SaveBlockchainChanges(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Actualiza los datos tras la incorporación del registro
             a la cadena de bloques.
@@ -1609,6 +2337,8 @@
             <para> 2. Guarda el registro en disco en el el directorio de registros emitidos.</para>
             <para> 3. Establece Posted = true.</para>
             </summary>
+            <param name="certificate">Certificado para la firma.</param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
         <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.ClearPost">
             <summary>
@@ -1617,10 +2347,11 @@
             y marcando los archivos relacionados como erróneos.
             </summary>
         </member>
-        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.ExecutePost">
+        <member name="M:VeriFactu.Business.Operations.InvoiceActionPost.ExecutePost(System.Security.Cryptography.X509Certificates.X509Certificate2)">
             <summary>
             Ejecuta la contabilización del registro.
             </summary>
+            <param name="certificate">Certificado para la firma.</param>
             <returns>Si todo funciona correctamente devuelve null.
             En caso contrario devuelve una excepción con el error.</returns>
         </member>
@@ -3724,6 +4455,191 @@
             incluyendo el código de país.</param>
             <returns>True si es válido y false en caso contario.</returns>
         </member>
+        <member name="T:VeriFactu.Common.Chain`2">
+            <summary>
+            Clase base para la gestión de una cadena de elementos,
+            manteniendo el elemento actual y el inmediatamente anterior.
+            </summary>
+            <typeparam name="TChain">Tipo concreto de la cadena.</typeparam>
+            <typeparam name="TItem">Tipo de los elementos de la cadena.</typeparam>
+        </member>
+        <member name="F:VeriFactu.Common.Chain`2._Locker">
+            <summary>
+            Bloqueo para thread safe.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Common.Chain`2._CsvSeparator">
+            <summary>
+            Separador para los archivos csv.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.Locker">
+            <summary>
+            Objeto utilizado para sincronizar las operaciones sobre la cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID">Vendedor al que pertenece la cadena.</param>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.GetChainPath(System.String)">
+            <summary>
+            Devuelve la ruta de almacenamiento de la cadena
+            de bloques.
+            </summary>
+            <param name="sellerID">Emisor al que pertenece la
+            cadena a gestionar.</param>
+            <returns>Ruta de almacenamiento de la cadena
+            de bloques.</returns>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.SellerID">
+            <summary>
+            Identificador del vendedor.
+            Debe utilizarse el identificador fiscal si existe (NIF, VAT Number...).
+            En caso de no existir, se puede utilizar el número DUNS 
+            o cualquier otro identificador acordado.
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.ChainPath">
+            <summary>
+            Path del directorio de archivado de los datos de la
+            cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.ChainVarFileName">
+            <summary>
+            Archivo que almacena el valor de las variables en curso
+            de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.ChainDataPreviousFileName">
+            <summary>
+            Archivo copia de seguridad que almacena una porción del Blockchain correspondiente
+            a los movimientos de un mes excepto el último movimiento. Es la copia del archivo
+            con el nombre BlockchainDataFileName antes del registro del último movimiento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.ChainDataFileName">
+            <summary>
+            Archivo que almacena una porción del Blockchain correspondiente
+            a los movimientos de un mes.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.CurrentID">
+            <summary>
+            Identificador del último eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.CurrentTimeStamp">
+            <summary>
+            Momento de generación del último eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.Current">
+            <summary>
+            Último elemento de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.PreviousID">
+            <summary>
+            Identificador del penúltimo eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.PreviousTimeStamp">
+            <summary>
+            Momento de generación del penúltimo eslabón de la cadena.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Common.Chain`2.Previous">
+            <summary>
+            Penúltimo elemento de la cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.SaveCurrent">
+            <summary>
+            Guarda el estado actual de la cadena como estado anterior.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.RestorePrevious">
+            <summary>
+            Restaura el estado anterior de la cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.GetChainDir(System.String)">
+            <summary>
+            Devuelve la ruta de almacenamiento de la cadena
+            de bloques.
+            </summary>
+            <param name="sellerID">Emisor al que pertenece la
+            cadena a gestionar.</param>
+            <returns>Ruta de almacenamiento de la cadena
+            de bloques.</returns>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.GetControlFileLine">
+            <summary>
+            Devuelve un texto para el archivo csv de control
+            representando la inserción en la cadena
+            con los datos necesarios.
+            </summary>
+            <returns>Linea de archivo csv</returns>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.GetDeleteDisabled">
+            <summary>
+            True si está desactivada la eliminación en la cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.GetVarFileLine">
+            <summary>
+            Devuelve un texto con los datos necesarios para restaurar
+            el último elemento de la cadena.
+            </summary>
+            <returns>Linea del archivo de variables.</returns>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.RestoreCurrent(System.String[])">
+            <summary>
+            Restaura el último elemento de la cadena a partir de los
+            datos almacenados en el archivo de variables.
+            </summary>
+            <param name="values">Valores almacenados.</param>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.WriteData(System.Collections.Generic.List{System.String})">
+            <summary>
+            Añade los datos del último elemento al archivo de control
+            de la cadena.
+            </summary>
+            <param name="csvLines">Líneas de control a incluir en el
+            archivo csv de control.</param>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.WriteVar">
+            <summary>
+            Almacena los datos del último elemento de la cadena
+            en disco.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.Write(System.Collections.Generic.List{System.String})">
+            <summary>
+            Escribe los datos de la cadena en disco.
+            </summary>
+            <param name="csvLines">Líneas a escribir en el csv de control.</param>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.ReadVar">
+            <summary>
+            Recupera de disco el estado actual de la cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Common.Chain`2.RestorePreviousData(System.String,System.String)">
+            <summary>
+            Recupera el archivo de datos de la cadena previo a la
+            inserción del último elemento.
+            </summary>
+            <param name="dataFileName">Archivo de datos a restaurar.</param>
+            <param name="dataPreviousFileName">Copia anterior utilizada para restaurar.</param>
+            <exception cref="T:System.InvalidOperationException">
+            Se lanza si no se encuentra el archivo previo a restaurar.
+            </exception>
+        </member>
         <member name="T:VeriFactu.Common.Exceptions.ClearPostException">
             <summary>
             Representa una excepción en la descontabilización
@@ -3961,6 +4877,23 @@
             Constructor estático clase.
             </summary>
         </member>
+        <member name="M:VeriFactu.Common.Utils.GetXmlEnumValue(System.Enum)">
+            <summary>
+            Obtiene el valor XML asociado a un valor enumerado.
+            </summary>
+            <param name="value">Valor enumerado.</param>
+            <returns>
+            Valor definido mediante <see cref="T:System.Xml.Serialization.XmlEnumAttribute"/>.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.Common.Utils.GetEnumFromXmlValue(System.Type,System.String)">
+            <summary>
+            Obtiene un valor enumerado a partir de su valor XML.
+            </summary>
+            <param name="enumType">Tipo enumerado.</param>
+            <param name="value">Valor XML.</param>
+            <returns>Valor enumerado correspondiente.</returns>
+        </member>
         <member name="M:VeriFactu.Common.Utils.ComputeHash(System.Byte[])">
             <summary>
             Calcula el hash de la entrada con el algoritmo configurado,
@@ -3968,6 +4901,30 @@
             </summary>
             <param name="input">Bytes de entrada.</param>
             <returns>Hash calculado.</returns>
+        </member>
+        <member name="M:VeriFactu.Common.Utils.DeserializeRegistro``1(System.Xml.XmlElement)">
+            <summary>
+            Deserializa un registro de facturación a partir de un elemento XML.
+            </summary>
+            <typeparam name="T"> Tipo a deserializar.</typeparam>
+            <param name="element"> Elemento xml.</param>
+            <returns> Objeto deserializado.</returns>
+        </member>
+        <member name="M:VeriFactu.Common.Utils.GetRecord(System.String)">
+            <summary>
+            Obtiene el registro de facturación de alta o anulación
+            almacenado en un archivo XML del modo VERI*FACTU (como sobre SOAP entero) o
+            no VERI*FACTU como registro firmado.
+            </summary>
+            <param name="filePath"> Ruta del archivo XML.</param>
+            <returns> Registro de facturación almacenado.</returns>
+        </member>
+        <member name="M:VeriFactu.Common.Utils.GetEventRecord(System.String)">
+            <summary>
+            Obtiene el registro de evento almacenado en un archivo XML.
+            </summary>
+            <param name="filePath"> Ruta del archivo XML.</param>
+            <returns> Registro de evento almacenado.</returns>
         </member>
         <member name="M:VeriFactu.Common.Utils.GetEncodedToHex(System.String)">
             <summary>
@@ -3998,11 +4955,6 @@
             Configuración.
             </summary>
         </member>
-        <member name="F:VeriFactu.Config.Settings._PathSep">
-            <summary>
-            Path separator win="\" and linux ="/".
-            </summary>
-        </member>
         <member name="F:VeriFactu.Config.Settings._Current">
             <summary>
             Configuración actual.
@@ -4015,7 +4967,12 @@
         </member>
         <member name="F:VeriFactu.Config.Settings._BlockchainPath">
             <summary>
-            Ruta al directorio de la cadena de bloques.
+            Ruta al directorio de la cadena de bloques de registros de facturación.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Config.Settings._EventChainPath">
+            <summary>
+            Ruta al directorio de la cadena de bloques de eventos.
             </summary>
         </member>
         <member name="F:VeriFactu.Config.Settings.DefaultNumberFormatInfo">
@@ -4039,10 +4996,41 @@
             inicializado.
             </summary>
         </member>
+        <member name="F:VeriFactu.Config.Settings.EventChainInitialized">
+            <summary>
+            Indicador de si el sistema de cadena de eventos está
+            inicializado.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Config.Settings.EventQueueInitialized">
+            <summary>
+            Indicador de si la cola de eventos está
+            inicializada.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Config.Settings.#cctor">
             <summary>
             Constructor estático de la clase Settings.
             </summary>
+        </member>
+        <member name="M:VeriFactu.Config.Settings.GetDefaultPath">
+            <summary>
+            Devuelve la ruta por defecto de configuración según el sistema operativo.
+            </summary>
+            <returns> Ruta por defecto de configuración según el sistema operativo.</returns>
+        </member>
+        <member name="M:VeriFactu.Config.Settings.CheckDirectories">
+            <summary>
+            Aseguro existencia de directorios de trabajo.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Config.Settings.GetSerializer">
+            <summary>
+            Construye un serializador XML para la clase Settings con los overrides necesarios
+            para la compatibilidad entre versiones por el cambio derivado de
+            https://github.com/mdiago/VeriFactu/issues/292
+            </summary>
+            <returns>Serializador para Settings.</returns>
         </member>
         <member name="M:VeriFactu.Config.Settings.Get">
             <summary>
@@ -4098,10 +5086,21 @@
             envío realizado a la AEAT mediante el VERI*FACTU.
             </summary>
         </member>
+        <member name="P:VeriFactu.Config.Settings.EventPath">
+            <summary>
+            Ruta al directorio que actuará como almacén de eventos.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Config.Settings.BlockchainPath">
             <summary>
             Ruta al directorio que actuará como almacén
             de las distintas cadenas de bloques por emisor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.EventChainPath">
+            <summary>
+            Ruta al directorio que actuará como almacén
+            de las distintas cadenas de bloques de eventos por emisor.
             </summary>
         </member>
         <member name="P:VeriFactu.Config.Settings.InvoicePath">
@@ -4147,6 +5146,12 @@
         <member name="P:VeriFactu.Config.Settings.VeriFactuEndPointPrefix">
             <summary>
             EndPoint del web service de la AEAT para envío registros alta y anulación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.VeriFactuEndPointReqPrefix">
+            <summary>
+            EndPoint del web service de la AEAT para remisión de registros
+            de facturación por requerimiento.
             </summary>
         </member>
         <member name="P:VeriFactu.Config.Settings.VeriFactuEndPointValidatePrefix">
@@ -4196,18 +5201,27 @@
         <member name="P:VeriFactu.Config.Settings.DisableBlockchainDelete">
             <summary>
             En entornos de elevada concurrencia la funcionalidad
-            de deshacer la inserción en la cadena de bloques
+            de deshacer la inserción en la cadena de registros de facturación
             provoca problemas.
             </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.DisableEventChainDelete">
+            <summary>
+            En entornos de elevada concurrencia la funcionalidad
+            de deshacer la inserción en la cadena de eventos
+            provoca problemas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Config.Settings.IsNotVerifactu">
+            <summary>
+            Indica si el sistema funciona en modo NO VERI*FACTU.
+            Si el valor es nulo o vacío, el sistema funciona
+            en modo VERI*FACTU.
+            </summary>        
         </member>
         <member name="M:VeriFactu.Config.Settings.Save">
             <summary>
             Guarda la configuración en curso actual.
-            </summary>
-        </member>
-        <member name="M:VeriFactu.Config.Settings.CheckDirectories">
-            <summary>
-            Aseguro existencia de directorios de trabajo.
             </summary>
         </member>
         <member name="M:VeriFactu.Config.Settings.SetConfigFileName(System.String)">
@@ -4215,6 +5229,11 @@
             Esteblece el archivo de configuración con el cual trabajar.
             </summary>
             <param name="fileName">Nombre del archivo de configuración a utilizar.</param>
+        </member>
+        <member name="M:VeriFactu.Config.Settings.End">
+            <summary>
+            Finaliza los procesos en segundo plano iniciados por la configuración.
+            </summary>
         </member>
         <member name="T:VeriFactu.DataStore.Document">
             <summary>
@@ -4409,6 +5428,341 @@
             </summary>
             <returns>Representación textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.DataStore.EventPeriodExport">
+            <summary>
+            Exportación de los registros de eventos correspondientes
+            a un periodo.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.EventPeriodExport.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID">Emisor.</param>
+            <param name="period">Periodo de generación.</param>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.SellerID">
+            <summary>
+            Emisor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.Period">
+            <summary>
+            Periodo exportado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.CsvDir">
+            <summary>
+            Directorio que contiene la cadena de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.CsvFile">
+            <summary>
+            Archivo CSV que contiene la cadena de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.CsvLines">
+            <summary>
+            Líneas de la cadena de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.EventPeriodExportFiles">
+            <summary>
+            Archivos de eventos incluidos en la exportación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.First">
+            <summary>
+            Primer evento incluido en la exportación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.Last">
+            <summary>
+            Último evento incluido en la exportación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.Start">
+            <summary>
+            Fecha y hora inicial del periodo exportado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.End">
+            <summary>
+            Fecha y hora final del periodo exportado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExport.Events">
+            <summary>
+            Número de registros de eventos exportados.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.EventPeriodExport.ExportToZip(System.String)">
+            <summary>
+            Exporta los registros de eventos a un archivo ZIP.
+            </summary>
+            <param name="zipFilePath"> Ruta del archivo ZIP de destino.</param>
+        </member>
+        <member name="T:VeriFactu.DataStore.EventPeriodExportFile">
+            <summary>
+            Registro de evento incluido en una exportación de periodo.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.EventPeriodExportFile.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID">Emisor.</param>
+            <param name="csvLine"> Línea correspondiente de la cadena de eventos.</param>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExportFile.EventChainLinkID">
+            <summary>
+            Identificador del eslabón de la cadena de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExportFile.Created">
+            <summary>
+            Fecha y hora de generación del evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExportFile.EventFilePath">
+            <summary>
+            Ruta del archivo XML del evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.EventPeriodExportFile.Event">
+            <summary>
+            Evento almacenado.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.DataStore.InvoicePeriodExport">
+            <summary>
+            Exporta las facturas de un periodo.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.DataStore.InvoicePeriodExport._Locker">
+            <summary>
+            Bloqueo para thread safe.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.DataStore.InvoicePeriodExport._CsvSeparator">
+            <summary>
+            Separador para los archivos csv.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.CsvDir">
+            <summary>
+            Directorio donde se almacenan los bloques de la
+            cadena del emisor determinado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.CsvFile">
+            <summary>
+            Archivo csv de la cadena de bloques del emisor
+            para un periodo determinado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.CsvLines">
+            <summary>
+            Líneas del archivo CSV.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExport.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID"> Emisor facturas.</param>
+            <param name="period"> Periodo emisión.</param>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExport.GetCsvLines(System.String)">
+            <summary>
+            Devuelve las líneas de un archivo csv.
+            </summary>
+            <param name="csvFile">Ruta al archivo csv.</param>
+            <returns>Líneas del archivo csv.</returns>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExport.SetSumProps">
+            <summary>
+            Establece el valor de TotalTaxAmount y TotalAmount.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.SellerID">
+            <summary>
+            Emisor facturas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.Period">
+            <summary>
+            Periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.InvoicePeriodExportFiles">
+            <summary>
+            Obtiene la lista de archivos de facturas del periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.Start">
+            <summary>
+            Fecha creación primera factura del periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.End">
+            <summary>
+            Fecha creación última factura del periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.First">
+            <summary>
+            Primer archivo de facturas del periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.Last">
+             <summary>
+            ´Último archivo de facturas del periodo.
+             </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.Registrations">
+            <summary>
+            Número de registros de alta.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.Cancellations">
+            <summary>
+            Número de registros de anulación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.TotalTaxAmount">
+            <summary>
+            Total de la cuota soportada del conjunto de registros de alta
+            del periodo sin tener en cuenta los registros de anulación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExport.TotalAmount">
+            <summary>
+            Total de la importe total del conjunto de registros de alta
+            del periodo sin tener en cuenta los registros de anulación.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExport.ExportToZip(System.String)">
+            <summary>
+            Exporta las facturas del periodo a un archivo ZIP.
+            </summary>
+            <param name="zipFilePath">Ruta del archivo comprimido a guardar.</param>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExport.ToString">
+            <summary>
+            Representación en cadena de la instancia.
+            </summary>
+            <returns>Representación en cadena de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.DataStore.InvoicePeriodExportFile">
+            <summary>
+            Representa un archivo de exportación de facturas de un periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.CsvLine">
+            <summary>
+            Línea CSV que representa el archivo de exportación de facturas de un periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.CsvLineValues">
+            <summary>
+            Valores de la línea CSV que representan el archivo de exportación de facturas de un periodo.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExportFile.#ctor(System.String)">
+            <summary>
+            Crea una nueva instancia de la clase InvoicePeriodExportFile a partir de una línea CSV.
+            </summary>
+            <param name="csvLine"></param>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExportFile.GetInvoiceFilePath(System.String)">
+            <summary>
+            Busca el archivo de factura en el directorio del emisor y año de la factura a partir del ID de factura codificado.
+            </summary>
+            <param name="encodedInvoiceID">ID de factura codificado.</param>
+            <returns>Ruta archivo encontrado</returns>
+            <exception cref="T:System.Exception"> No encontrado el archivo.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"> Más de un archivo encontrado.</exception>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExportFile.GetMatchInvoiceFilePath(System.String[])">
+            <summary>
+            Selecciona de entre una lista de archivos el que tiene la referencia
+            que se corresponde con el id de la cadena de bloques.
+            </summary>
+            <param name="files"> Matriz de archivos.</param>
+            <returns> Ruta del archivo que se corresponde.</returns>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExportFile.GetBlockchainLinkID(System.String)">
+            <summary>
+            Recupera el ID del enlace de la cadena de bloques a partir de un archivo XML.
+            </summary>
+            <param name="xmlPath">Ruta al archivo xml.</param>
+            <returns> Id. del enlace.</returns>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.BlockchainLinkID">
+            <summary>
+            Obtiene el ID del enlace de la cadena de bloques a partir de la línea CSV.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.InvoiceSellerDir">
+            <summary>
+            Directorio de almacenamiento de facturas del emisor.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.InvoiceSellerYearDir">
+            <summary>
+            Directorio de almacenamiento de facturas del emisor
+            para el año de la factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.HashTextInput">
+            <summary>
+            Obtiene el ID del periodo de facturación a partir de la línea CSV.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.InvoiceID">
+            <summary>
+            Número factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.SellerID">
+            <summary>
+            Id. emisor factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.InvoiceDate">
+            <summary>
+            Fecha factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.Created">
+            <summary>
+            Fecha creacion.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.InvoiceFilePath">
+            <summary>
+            Ruta al archivo de factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.IsInvoiceCancellation">
+            <summary>
+            Indicador de anulación.
+            Es true si se trata de una anulación
+            de factura.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.DataStore.InvoicePeriodExportFile.Record">
+            <summary>
+            Registro del archivo de factura.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.DataStore.InvoicePeriodExportFile.ToString">
+            <summary>
+            Representacion textual de la instancia.
+            </summary>
+            <returns>Representacion textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.DataStore.PeriodBox">
             <summary>
             Representa un bandeja de entrada o salida de documentos del sistema.
@@ -4590,6 +5944,117 @@
             Representación textual de la instancia.
             </summary>
             <returns>Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.EventChain.EventChain">
+            <summary>
+            Representa una cadena de registros de eventos.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.#cctor">
+            <summary>
+            Constructor estático.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID"> Vendedor al que pertenece la cadena de eventos.</param>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.GetChainDir(System.String)">
+            <summary>
+            Devuelve la ruta de almacenamiento de la cadena
+            de eventos.
+            </summary>
+            <param name="sellerID">Emisor al que pertenece la
+            cadena de eventos a gestionar.</param>
+            <returns>Ruta de almacenamiento de la cadena
+            de eventos.</returns>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.GetDeleteDisabled">
+            <summary>
+            True si está desactivada la eliminación en la cadena.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.GetControlFileLine">
+            <summary>
+            Devuelve un texto para el archivo csv de control
+            representando la inserción en la cadena de eventos
+            con los datos necesarios.
+            </summary>
+            <returns>Linea de archivo csv</returns>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.GetVarFileLine">
+            <summary>
+            Devuelve un texto con los datos necesarios para restaurar.
+            </summary>
+            <returns> Texto con los datos necesarios para restaurar.</returns>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.RestoreCurrent(System.String[])">
+            <summary>
+            Restaura el último registro de la cadena a partir de los
+            datos almacenados en el archivo de variables.
+            </summary>
+            <param name="values">Valores almacenados.</param>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.GetEncadenamiento">
+            <summary>
+            Devuelve un encadenamiento con el último elemento
+            de la cadena.
+            </summary>
+            <returns>Encadenamiento con el último elemento
+            de la cadena.</returns>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.Insert(VeriFactu.Xml.Factu.Evento.Evento)">
+            <summary>
+            Inserta un eslabón en la cadena.
+            </summary>
+            <param name="evento"> Evento a encadenar.</param>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.Remove">
+            <summary>
+            Elimina el último elemento de la cadena restaurando el anterior.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.EventChain.EventChain.Initialized">
+            <summary>
+            Indica si el sistema de cadena de eventos está inicializado.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.LoadEventChainsFromDisk">
+            <summary>
+            Carga todas las cadenas de eventos.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            Se lanza si EventChainPath no es un directorio válido.
+            </exception>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.Get(System.String)">
+            <summary>
+            Devuelve la instancia correspondiente a la cadena de eventos
+            de un emisor.
+            </summary>
+            <param name="sellerID">Id. del emisor.</param>
+            <returns>Cadena de eventos del emisor.</returns>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.Add(VeriFactu.Xml.Factu.Evento.Evento)">
+            <summary>
+            Añade un evento a la cadena.
+            </summary>
+            <param name="evento">Evento a añadir.</param>
+            <exception cref="T:System.Exception">
+            Si no se puede añadir el evento a la cadena.
+            </exception>
+        </member>
+        <member name="M:VeriFactu.EventChain.EventChain.Delete(VeriFactu.Xml.Factu.Evento.Evento)">
+            <summary>
+            Elimina el último evento añadido a la cadena.
+            </summary>
+            <param name="evento">Evento a eliminar.
+            Sólo puede eliminarse el último elemento añadido.</param>
+            <exception cref="T:System.InvalidOperationException">
+            Si se intenta eliminar un evento que no es el último.
+            </exception>
         </member>
         <member name="T:VeriFactu.Net.Rest.Api">
             <summary>
@@ -6019,6 +7484,72 @@
             <returns>Devuelve el certificado de la 
             configuración para las comunicaciones.</returns>
         </member>
+        <member name="T:VeriFactu.Net.Core.Src.Xml.Factu.Evento.IDOtro">
+            <summary>
+            Identificador de persona física o jurídica distinto del NIF.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Core.Src.Xml.Factu.Evento.IDOtro.CodigoPais">
+            <summary>
+            Código del país asociado al identificador.
+            Valor esperado:
+            <para>Código de país según ISO 3166-1 alfa-2. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Core.Src.Xml.Factu.Evento.IDOtro.CodigoPaisSpecified">
+            <summary>
+            Con true se serializa el dato, con false no.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Core.Src.Xml.Factu.Evento.IDOtro.IDType">
+            <summary>
+            Tipo de identificador de la persona física o jurídica.
+            Valores esperados:
+            <para>"02": NIF-IVA. </para>
+            <para>"03": Pasaporte. </para>
+            <para>"04": ID en el país de residencia. </para>
+            <para>"05": Certificado de residencia. </para>
+            <para>"06": Otro documento probatorio. </para>
+            <para>"07": No censado. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Core.Src.Xml.Factu.Evento.IDOtro.ID">
+            <summary>
+            Identificador de la persona física o jurídica.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 20 caracteres. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Net.Core.Src.Xml.Factu.Evento.IDOtro.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.NoVeriFactu.Signature.SignatureVerifier">
+            <summary>
+            Verificador de firmas electrónicas XML.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.SignatureVerifier.Verify(System.Byte[])">
+            <summary>
+            Comprueba la firma electrónica de un documento XML.
+            </summary>
+            <param name="xml">
+            Documento XML firmado.
+            </param>
+            <returns>
+            True si la firma es válida; false en caso contrario.
+            </returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.SignatureVerifier.HasSignature(System.Byte[])">
+            <summary>
+            Devuelve true si el documento XML contiene una firma electrónica, false en caso contrario.
+            </summary>
+            <param name="xml"> Xml a analizar.</param>
+            <returns>Devuelve true si el documento XML contiene una firma electrónica, false en caso contrario.</returns>
+        </member>
         <member name="T:VeriFactu.NoVeriFactu.Signature.Signer">
             <summary>
             Clase responsable de la firma de ficheros de 
@@ -6094,13 +7625,18 @@
             <returns>Referencia a incluir en la firma con la propiedades
             adicionales al documento de entrada a firmar.</returns>
         </member>
-        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(System.Xml.XmlDocument,System.String)">
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(System.Xml.XmlDocument,System.String,System.String,System.String,System.String)">
             <summary>
             Devuelve los datos binarios de una cadena con el documentos xml de
             entrada firmado.
             </summary>
             <param name="xmlDocument">Documento xml a firmar.</param>
             <param name="name">Nombre elemento.</param>
+            <param name="prefix">Prefijo espacio de nombres.</param>
+            <param name="ns">Espacio de nombres.</param>
+            <param name="signatureParentName"> Parámetro opcional con el nombre
+            del elemento donde debe insertarse la firma.Si no se facilita incluirá
+            Signature como hijo del elemento raíz</param>
             <returns>Datos binarios xml firmado.</returns>
         </member>
         <member name="P:VeriFactu.NoVeriFactu.Signature.Signer.Certificate">
@@ -6109,6 +7645,14 @@
             </summary>
         </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Devuelve los datos binarios de una cadena con el documentos xml de
+            entrada firmado.
+            </summary>
+            <param name="registro">Registro a firmar.</param>
+            <returns>XML firmado.</returns>
+        </member>
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Signer.Sign(VeriFactu.Xml.Factu.Evento.RegistroEvento)">
             <summary>
             Devuelve los datos binarios de una cadena con el documentos xml de
             entrada firmado.
@@ -6555,12 +8099,14 @@
             Representa el bloque Object a incluir en la firma.
             </summary>
         </member>
-        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.#ctor(System.Xml.XmlDocument,System.String)">
+        <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.#ctor(System.Xml.XmlDocument,System.String,System.String,System.String)">
             <summary>
             Constructor.
             </summary>
             <param name="parent">Nodo padre.</param>
             <param name="name">Nombre elemento.</param>
+            <param name="prefix">Prefijo espacio de nombres.</param>
+            <param name="ns">Espacio de nombres.</param>
         </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.Props.RootTmp.GetDataObject">
             <summary>
@@ -6881,10 +8427,10 @@
         </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.GetContext">
             <summary>
-            Obtiene el valor de la propiedad privada 'm_context' de la 
+            Obtiene el valor de la propiedad privada de contexto de la
             clase madre 'SignedXml' utilizando reflection.
             </summary>
-            <returns>Valor de la propiedad privada 'm_context' de la 
+            <returns>Valor de la propiedad privada de contexto de la
             clase madre 'SignedXml'.</returns>
         </member>
         <member name="M:VeriFactu.NoVeriFactu.Signature.Xades.VerifactuSignedXml.BuildDigestedReferences">
@@ -8225,6 +9771,16 @@
             Prefijo del endpoint de producción.
             </summary>
         </member>
+        <member name="F:VeriFactu.VeriFactuEndPointPrefixes.TestReq">
+            <summary>
+            Prefijo del endpoint de pruebas para remisión por requerimiento.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.VeriFactuEndPointPrefixes.ProdReq">
+            <summary>
+            Prefijo del endpoint de producción para remisión por requerimiento.
+            </summary>
+        </member>
         <member name="F:VeriFactu.VeriFactuEndPointPrefixes.TestValidate">
             <summary>
             Prefijo del endpoint de pruebas de validación.
@@ -8234,6 +9790,41 @@
             <summary>
             Prefijo del endpoint de producción de validación.
             </summary>
+        </member>
+        <member name="T:VeriFactu.VeriFactuEnvironment">
+            <summary>
+            Proporciona la configuración global del entorno de VeriFactu.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.VeriFactuEnvironment._Locker">
+            <summary>
+            Bloqueo para thread safe.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.VeriFactuEnvironment._Path">
+            <summary>
+            Directorio de trabajo de la aplicación.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.VeriFactuEnvironment._Locked">
+            <summary>
+            Para indicar si la configuración del entorno ha sido bloqueada y no puede modificarse.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.VeriFactuEnvironment.Path">
+            <summary>
+            Obtiene o establece la ruta base utilizada por VeriFactu.
+            Esta propiedad únicamente puede establecerse una vez y antes
+            de que el entorno de VeriFactu haya sido inicializado.
+            </summary>
+            <returns>Ruta de configuración de VeriFactu.</returns>
+        </member>
+        <member name="M:VeriFactu.VeriFactuEnvironment.GetPathAndLock">
+            <summary>
+            Obtiene la ruta configurada y bloquea el entorno impidiendo
+            posteriores modificaciones.
+            </summary>
+            <returns>Ruta configurada o null si no se ha establecido.</returns>
         </member>
         <member name="T:VeriFactu.Xml.Factu.Alta.CalificacionOperacion">
             <summary>
@@ -8953,6 +10544,11 @@
             <para>Alfanumérico (64)</para>
             </summary>
         </member>
+        <member name="P:VeriFactu.Xml.Factu.Alta.RegistroAlta.Signature">
+            <summary>
+            Firma electrónica del registro.
+            </summary>
+        </member>
         <member name="M:VeriFactu.Xml.Factu.Alta.RegistroAlta.SetExternKey">
             <summary>
             Asigna la clave externa que vincula la factura con
@@ -9242,6 +10838,11 @@
             de facturación. Dicho contenido se detallará en la documentación
             correspondiente en la sede electrónica de la AEAT (documento de huella...).</para>
             <para>Alfanumérico (64)</para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Anulacion.RegistroAnulacion.Signature">
+            <summary>
+            Firma electrónica del registro.
             </summary>
         </member>
         <member name="M:VeriFactu.Xml.Factu.Anulacion.RegistroAnulacion.SetExternKey">
@@ -11425,6 +13026,1095 @@
             </summary>
             <returns> Representación textual de la instancia.</returns>
         </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.DatosPropiosEvento">
+            <summary>
+            Datos específicos asociados al tipo de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DatosPropiosEvento.DatosEvento">
+            <summary>
+            Datos específicos correspondientes al tipo de evento.
+            Valores esperados:
+            <para>Para el tipo de evento "03": <see cref="T:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion"/>. </para>
+            <para>Para el tipo de evento "04": <see cref="T:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegFacturacion"/>. </para>
+            <para>Para el tipo de evento "05": <see cref="T:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento"/>. </para>
+            <para>Para el tipo de evento "06": <see cref="T:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegEvento"/>. </para>
+            <para>Para el tipo de evento "08": <see cref="T:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo"/>. </para>
+            <para>Para el tipo de evento "09": <see cref="T:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo"/>. </para>
+            <para>Para el tipo de evento "10": <see cref="T:VeriFactu.Xml.Factu.Evento.ResumenEventos"/>. </para>
+            <para>Solo puede contener uno de los tipos indicados. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.DatosPropiosEvento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegEvento">
+            <summary>
+            Datos de una anomalía detectada en los registros de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegEvento.TipoAnomalia">
+            <summary>
+            Tipo de anomalía detectada.
+            Valores esperados:
+            <para>"01": Integridad-huella. </para>
+            <para>"02": Integridad-firma. </para>
+            <para>"03": Integridad - Otros. </para>
+            <para>"04": Trazabilidad-cadena-registro - Reg. no primero pero con reg. anterior no anotado o inexistente. </para>
+            <para>"05": Trazabilidad-cadena-registro - Reg. no último pero con reg. posterior no anotado o inexistente. </para>
+            <para>"06": Trazabilidad-cadena-registro - Otros. </para>
+            <para>"07": Trazabilidad-cadena-huella - Huella del reg. no se corresponde con la 'huella del reg. anterior' almacenada en el registro posterior. </para>
+            <para>"08": Trazabilidad-cadena-huella - Campo 'huella del reg. anterior' no se corresponde con la huella del reg. anterior. </para>
+            <para>"09": Trazabilidad-cadena-huella - Otros. </para>
+            <para>"10": Trazabilidad-cadena - Otros. </para>
+            <para>"11": Trazabilidad-fechas - Fecha-hora anterior a la fecha del reg. anterior. </para>
+            <para>"12": Trazabilidad-fechas - Fecha-hora posterior a la fecha del reg. posterior. </para>
+            <para>"13": Trazabilidad-fechas - Reg. con fecha-hora de generación posterior a la fecha-hora actual del sistema. </para>
+            <para>"14": Trazabilidad-fechas - Otros. </para>
+            <para>"15": Trazabilidad - Otros. </para>
+            <para>"90": Otros. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegEvento.OtrosDatosAnomalia">
+            <summary>
+            Información adicional sobre la anomalía detectada.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 100 caracteres. </para>
+            <para>Propiedad opcional. </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegEvento.RegistroEventoAnomalo">
+            <summary>
+            Identificación del registro de evento en el que se ha detectado la anomalía.
+            Valor esperado:
+            <para>Datos identificativos del registro de evento anómalo. </para>
+            <para>Propiedad opcional. </para>
+            </summary>        
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegEvento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegFacturacion">
+            <summary>
+            Datos de una anomalía detectada en los registros de facturación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegFacturacion.TipoAnomalia">
+            <summary>
+            Tipo de anomalía detectada.
+            Valores esperados:
+            <para>"01": Integridad-huella. </para>
+            <para>"02": Integridad-firma. </para>
+            <para>"03": Integridad - Otros. </para>
+            <para>"04": Trazabilidad-cadena-registro - Reg. no primero pero con reg. anterior no anotado o inexistente. </para>
+            <para>"05": Trazabilidad-cadena-registro - Reg. no último pero con reg. posterior no anotado o inexistente. </para>
+            <para>"06": Trazabilidad-cadena-registro - Otros. </para>
+            <para>"07": Trazabilidad-cadena-huella - Huella del reg. no se corresponde con la 'huella del reg. anterior' almacenada en el registro posterior. </para>
+            <para>"08": Trazabilidad-cadena-huella - Campo 'huella del reg. anterior' no se corresponde con la huella del reg. anterior. </para>
+            <para>"09": Trazabilidad-cadena-huella - Otros. </para>
+            <para>"10": Trazabilidad-cadena - Otros. </para>
+            <para>"11": Trazabilidad-fechas - Fecha-hora anterior a la fecha del reg. anterior. </para>
+            <para>"12": Trazabilidad-fechas - Fecha-hora posterior a la fecha del reg. posterior. </para>
+            <para>"13": Trazabilidad-fechas - Reg. con fecha-hora de generación posterior a la fecha-hora actual del sistema. </para>
+            <para>"14": Trazabilidad-fechas - Otros. </para>
+            <para>"15": Trazabilidad - Otros. </para>
+            <para>"90": Otros. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegFacturacion.OtrosDatosAnomalia">
+            <summary>
+            Información adicional sobre la anomalía detectada.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 100 caracteres. </para>
+            <para>Propiedad opcional. </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegFacturacion.RegistroFacturacionAnomalo">
+            <summary>
+            Identificación del registro de facturación en el que se ha detectado la anomalía.
+            Valor esperado:
+            <para>Datos identificativos de la factura expedida asociada al registro de facturación anómalo. </para>
+            <para>Propiedad opcional. </para>
+            </summary>        
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.DeteccionAnomaliasRegFacturacion.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.Encadenamiento">
+            <summary>
+            Encadenamiento del registro de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Encadenamiento.PrimerEvento">
+            <summary>
+            Indicador de que se trata del primer registro de evento.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 1 carácter. </para>
+            <para>Esta propiedad y EventoAnterior son excluyentes. </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Encadenamiento.EventoAnterior">
+            <summary>
+            Datos necesarios para realizar el encadenamiento con el registro de evento anterior.
+            Valor esperado:
+            <para>Tipo, fecha y hora de generación y huella del registro de evento anterior. </para>
+            <para>Esta propiedad y PrimerEvento son excluyentes. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.Encadenamiento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.Evento">
+            <summary>
+            Datos de un evento.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.Evento.GetHashTextInput">
+            <summary>
+            Obtiene la cadena de texto utilizada para el cálculo de la huella
+            del registro de evento.
+            </summary>
+            <returns>Cadena de texto utilizada para el cálculo de la huella.</returns>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.SistemaInformatico">
+            <summary>
+            Datos identificativos del sistema informático que genera el registro de evento.
+            Valor esperado:
+            <para>Información de la persona o entidad productora, identificación del sistema, versión y número de instalación. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.ObligadoEmision">
+            <summary>
+            Datos identificativos del obligado a expedir la factura.
+            Valor esperado:
+            <para>Nombre o razón social y NIF del obligado a la emisión. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.EmitidaPorTerceroODestinatario">
+            <summary>
+            Indica si la factura ha sido expedida materialmente por el destinatario o por un tercero.
+            Valores esperados:
+            <para>"D": Destinatario. </para>
+            <para>"T": Tercero. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.EmitidaPorTerceroODestinatarioSpecified">
+            <summary>
+            Con true se serializa el dato, con false no.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.TerceroODestinatario">
+            <summary>
+            Datos identificativos del tercero o destinatario que ha expedido materialmente la factura.
+            Valor esperado:
+            <para>Nombre o razón social y NIF o identificador alternativo del tercero o destinatario. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.FechaHoraHusoGenEvento">
+            <summary>
+            Fecha, hora y huso horario de generación del registro de evento.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.TipoEvento">
+            <summary>
+            Tipo de evento.
+            Valores esperados:
+            <para>"01": Inicio del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"02": Fin del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"03": Lanzamiento del proceso de detección de anomalías en los registros de facturación. </para>
+            <para>"04": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de facturación. </para>
+            <para>"05": Lanzamiento del proceso de detección de anomalías en los registros de evento. </para>
+            <para>"06": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de evento. </para>
+            <para>"07": Restauración de copia de seguridad, cuando ésta se gestione desde el propio sistema informático de facturación. </para>
+            <para>"08": Exportación de registros de facturación generados en un periodo. </para>
+            <para>"09": Exportación de registros de evento generados en un periodo. </para>
+            <para>"10": Registro resumen de eventos. </para>
+            <para>"90": Otros tipos de eventos a registrar voluntariamente por la persona o entidad productora del sistema informático. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.DatosPropiosEvento">
+            <summary>
+            Datos específicos asociados al tipo de evento.
+            Valor esperado:
+            <para>Datos propios correspondientes al tipo de evento generado. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.OtrosDatosEvento">
+            <summary>
+            Información adicional relativa al evento.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 100 caracteres. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.Encadenamiento">
+            <summary>
+            Datos de encadenamiento del registro de evento.
+            Valor esperado:
+            <para>Indicador de primer evento o datos identificativos del evento anterior. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.TipoHuella">
+            <summary>
+            Tipo de huella utilizada para el registro de evento.
+            Valores esperados:
+            <para>"01": SHA-256. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.HuellaEvento">
+            <summary>
+            Huella del registro de evento.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 64 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.Signature">
+            <summary>
+            Firma electrónica del registro de evento.
+            Valor esperado:
+            <para>Elemento Signature conforme al estándar XMLDSig. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.EventChainLinkID">
+            <summary>
+            Id. del eslabón en la cadena de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.Evento.ExternKey">
+            <summary>
+            Referencia externa.
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.Evento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.EventoAnterior">
+            <summary>
+            Datos identificativos del evento anterior.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.EventoAnterior.TipoEvento">
+            <summary>
+            Tipo de evento.
+            Valores esperados:
+            <para>"01": Inicio del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"02": Fin del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"03": Lanzamiento del proceso de detección de anomalías en los registros de facturación. </para>
+            <para>"04": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de facturación. </para>
+            <para>"05": Lanzamiento del proceso de detección de anomalías en los registros de evento. </para>
+            <para>"06": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de evento. </para>
+            <para>"07": Restauración de copia de seguridad, cuando ésta se gestione desde el propio sistema informático de facturación. </para>
+            <para>"08": Exportación de registros de facturación generados en un periodo. </para>
+            <para>"09": Exportación de registros de evento generados en un periodo. </para>
+            <para>"10": Registro resumen de eventos. </para>
+            <para>"90": Otros tipos de eventos a registrar voluntariamente por la persona o entidad productora del sistema informático. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.EventoAnterior.FechaHoraHusoGenEvento">
+            <summary>
+            Fecha, hora y huso horario de generación del evento anterior.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.EventoAnterior.HuellaEvento">
+            <summary>
+            Huella del registro de evento anterior.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 64 caracteres. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.EventoAnterior.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo">
+            <summary>
+            Datos de una exportación de registros de evento
+            correspondientes a un periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.FechaHoraHusoInicioPeriodoExport">
+            <summary>
+            Fecha, hora y huso horario de inicio del periodo de exportación.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.FechaHoraHusoFinPeriodoExport">
+            <summary>
+            Fecha, hora y huso horario de fin del periodo de exportación.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.RegistroEventoInicialPeriodo">
+            <summary>
+            Identificación del primer registro de evento incluido en el periodo de exportación.
+            Valor esperado:
+            <para>Tipo de evento, fecha y hora del evento y huella del registro de evento. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.RegistroEventoFinalPeriodo">
+            <summary>
+            Identificación del último registro de evento incluido en el periodo de exportación.
+            Valor esperado:
+            <para>Tipo de evento, fecha y hora del evento y huella del registro de evento. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.NumeroDeRegEventoExportados">
+            <summary>
+            Número de registros de evento exportados.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 7 dígitos. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.RegEventoExportadosDejanDeConservarse">
+            <summary>
+            Indica si los registros de evento exportados dejan de conservarse
+            en el sistema informático.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.ExportacionRegEventoPeriodo.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo">
+            <summary>
+            Datos de una exportación de registros de facturación
+            correspondientes a un periodo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.FechaHoraHusoInicioPeriodoExport">
+            <summary>
+            Fecha, hora y huso horario de inicio del periodo de exportación.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.FechaHoraHusoFinPeriodoExport">
+            <summary>
+            Fecha, hora y huso horario de fin del periodo de exportación.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.RegistroFacturacionInicialPeriodo">
+            <summary>
+            Identificación y huella del primer registro de facturación incluido
+            en el periodo de exportación.
+            Valor esperado:
+            <para>Identificación de la factura expedida y huella del registro de facturación. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.RegistroFacturacionFinalPeriodo">
+            <summary>
+            Identificación y huella del último registro de facturación incluido
+            en el periodo de exportación.
+            Valor esperado:
+            <para>Identificación de la factura expedida y huella del registro de facturación. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.NumeroDeRegistrosFacturacionAltaExportados">
+            <summary>
+            Número de registros de facturación de alta exportados.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 9 dígitos. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.SumaCuotaTotalAlta">
+            <summary>
+            Suma de las cuotas totales de los registros de facturación
+            de alta exportados.
+            Valor esperado:
+            <para>Número con signo opcional, de 1 a 12 dígitos enteros y hasta 2 decimales. </para>
+            <para>El separador decimal esperado es ".". </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.SumaImporteTotalAlta">
+            <summary>
+            Suma de los importes totales de los registros de facturación
+            de alta exportados.
+            Valor esperado:
+            <para>Número con signo opcional, de 1 a 12 dígitos enteros y hasta 2 decimales. </para>
+            <para>El separador decimal esperado es ".". </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.NumeroDeRegistrosFacturacionAnulacionExportados">
+            <summary>
+            Número de registros de facturación de anulación exportados.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 9 dígitos. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.RegistrosFacturacionExportadosDejanDeConservarse">
+            <summary>
+            Indica si los registros de facturación exportados dejan de conservarse
+            en el sistema informático.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.ExportacionRegFacturacionPeriodo.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.IDFacturaExpedida">
+            <summary>
+            Datos de identificación de una factura expedida.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedida.IDEmisorFactura">
+            <summary>
+            NIF del obligado a expedir la factura.
+            Valor esperado:
+            <para>NIF con una longitud de 9 caracteres. </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedida.NumSerieFactura">
+            <summary>
+            Número y, en su caso, serie de la factura.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 60 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedida.FechaExpedicionFactura">
+            <summary>
+            Fecha de expedición de la factura.
+            Valor esperado:
+            <para>Fecha en formato DD-MM-YYYY. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.IDFacturaExpedida.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella">
+            <summary>
+            Datos de identificación y huella de una factura expedida.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella.IDEmisorFactura">
+            <summary>
+            NIF del obligado a expedir la factura.
+            Valor esperado:
+            <para>NIF con una longitud de 9 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella.NumSerieFactura">
+            <summary>
+            Número y, en su caso, serie de la factura.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 60 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella.FechaExpedicionFactura">
+            <summary>
+            Fecha de expedición de la factura.
+            Valor esperado:
+            <para>Fecha en formato DD-MM-YYYY. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella.Huella">
+            <summary>
+            Huella del registro de facturación.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 64 caracteres. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.IDFacturaExpedidaHuella.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento">
+            <summary>
+            Datos del lanzamiento del proceso de detección de anomalías
+            en los registros de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.RealizadoProcesoSobreIntegridadHuellasRegEvento">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la integridad
+            de las huellas de los registros de evento.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.NumeroDeRegistrosEventoProcesadosSobreIntegridadHuellas">
+            <summary>
+            Número de registros de evento procesados en la comprobación
+            de la integridad de las huellas.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 5 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.RealizadoProcesoSobreIntegridadFirmasRegEvento">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la integridad
+            de las firmas de los registros de evento.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.NumeroDeRegistrosEventoProcesadosSobreIntegridadFirmas">
+            <summary>
+            Número de registros de evento procesados en la comprobación
+            de la integridad de las firmas.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 5 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.RealizadoProcesoSobreTrazabilidadCadenaRegEvento">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la trazabilidad
+            de la cadena de los registros de evento.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.NumeroDeRegistrosEventoProcesadosSobreTrazabilidadCadena">
+            <summary>
+            Número de registros de evento procesados en la comprobación
+            de la trazabilidad de la cadena.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 5 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.RealizadoProcesoSobreTrazabilidadFechasRegEvento">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la trazabilidad
+            de las fechas de los registros de evento.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.NumeroDeRegistrosEventoProcesadosSobreTrazabilidadFechas">
+            <summary>
+            Número de registros de evento procesados en la comprobación
+            de la trazabilidad de las fechas.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 5 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegEvento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion">
+            <summary>
+            Datos del lanzamiento del proceso de detección de anomalías
+            en los registros de facturación.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.RealizadoProcesoSobreIntegridadHuellasRegFacturacion">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la integridad
+            de las huellas de los registros de facturación.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.NumeroDeRegistrosFacturacionProcesadosSobreIntegridadHuellas">
+            <summary>
+            Número de registros de facturación procesados en la comprobación
+            de la integridad de las huellas.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 7 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.RealizadoProcesoSobreIntegridadFirmasRegFacturacion">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la integridad
+            de las firmas de los registros de facturación.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.NumeroDeRegistrosFacturacionProcesadosSobreIntegridadFirmas">
+            <summary>
+            Número de registros de facturación procesados en la comprobación
+            de la integridad de las firmas.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 7 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.RealizadoProcesoSobreTrazabilidadCadenaRegFacturacion">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la trazabilidad
+            de la cadena de los registros de facturación.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.NumeroDeRegistrosFacturacionProcesadosSobreTrazabilidadCadena">
+            <summary>
+            Número de registros de facturación procesados en la comprobación
+            de la trazabilidad de la cadena.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 7 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.RealizadoProcesoSobreTrazabilidadFechasRegFacturacion">
+            <summary>
+            Indica si se ha realizado el proceso de comprobación de la trazabilidad
+            de las fechas de los registros de facturación.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.NumeroDeRegistrosFacturacionProcesadosSobreTrazabilidadFechas">
+            <summary>
+            Número de registros de facturación procesados en la comprobación
+            de la trazabilidad de las fechas.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 7 dígitos. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.LanzamientoProcesoDeteccionAnomaliasRegFacturacion.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridica">
+            <summary>
+            Datos de una persona física o jurídica española o extranjera.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridica.NombreRazon">
+            <summary>
+            Nombre y apellidos o razón social de la persona física o jurídica.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 120 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridica.NIF">
+            <summary>
+            NIF de la persona física o jurídica.
+            Valor esperado:
+            <para>NIF con una longitud de 9 caracteres. </para>
+            <para>Esta propiedad e IDOtro son excluyentes. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridica.IDOtro">
+            <summary>
+            Identificación de la persona física o jurídica mediante un identificador distinto del NIF.
+            Valor esperado:
+            <para>Identificador compuesto por código de país, tipo de identificador e identificador. </para>
+            <para>Esta propiedad y NIF son excluyentes. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridica.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridicaES">
+            <summary>
+            Datos de una persona física o jurídica española con NIF asociado.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridicaES.NombreRazon">
+            <summary>
+            Nombre y apellidos o razón social del obligado a la emisión.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 120 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridicaES.NIF">
+            <summary>
+            NIF del obligado a la emisión.
+            Valor esperado:
+            <para>NIF con una longitud de 9 caracteres. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.PersonaFisicaJuridicaES.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.RegEvento">
+            <summary>
+            Datos identificativos de un registro de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.RegEvento.TipoEvento">
+            <summary>
+            Tipo de evento.
+            Valores esperados:
+            <para>"01": Inicio del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"02": Fin del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"03": Lanzamiento del proceso de detección de anomalías en los registros de facturación. </para>
+            <para>"04": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de facturación. </para>
+            <para>"05": Lanzamiento del proceso de detección de anomalías en los registros de evento. </para>
+            <para>"06": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de evento. </para>
+            <para>"07": Restauración de copia de seguridad, cuando ésta se gestione desde el propio sistema informático de facturación. </para>
+            <para>"08": Exportación de registros de facturación generados en un periodo. </para>
+            <para>"09": Exportación de registros de evento generados en un periodo. </para>
+            <para>"10": Registro resumen de eventos. </para>
+            <para>"90": Otros tipos de eventos a registrar voluntariamente por la persona o entidad productora del sistema informático. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.RegEvento.FechaHoraHusoEvento">
+            <summary>
+            Fecha, hora y huso horario del evento.
+            Valor esperado:
+            <para>Fecha y hora en formato ISO 8601: YYYY-MM-DDThh:mm:ssTZD. </para>
+            <para>Ejemplo: 2024-01-01T19:20:30+01:00. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.RegEvento.HuellaEvento">
+            <summary>
+            Huella del registro de evento.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 64 caracteres. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.RegEvento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.RegistroEvento">
+            <summary>
+            Registro de evento.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.RegistroEvento.IDVersion">
+            <summary>
+            Identificador de la versión del esquema utilizado.
+            Valores esperados:
+            <para>"1.0": Versión 1.0 del esquema de registros de evento. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.RegistroEvento.Evento">
+            <summary>
+            Datos del registro de evento.
+            Valor esperado:
+            <para>Información correspondiente al evento generado por el sistema informático. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.RegistroEvento.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.ResumenEventos">
+            <summary>
+            Datos correspondientes al registro resumen de eventos.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.TipoEvento">
+            <summary>
+            Resumen del número de eventos generados, agrupados por tipo.
+            Valor esperado:
+            <para>Uno o más tipos de evento con el número de eventos generados de cada tipo. </para>
+            <para>Se admiten entre 1 y 20 elementos. </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.RegistroFacturacionInicialPeriodo">
+            <summary>
+            Identificación y huella del primer registro de facturación del periodo.
+            Valor esperado:
+            <para>Identificación de la factura expedida y huella del registro de facturación. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.RegistroFacturacionFinalPeriodo">
+            <summary>
+            Identificación y huella del último registro de facturación del periodo.
+            Valor esperado:
+            <para>Identificación de la factura expedida y huella del registro de facturación. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.NumeroDeRegistrosFacturacionAltaGenerados">
+            <summary>
+            Número de registros de facturación de alta generados durante el periodo.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 6 dígitos. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.SumaCuotaTotalAlta">
+            <summary>
+            Suma de las cuotas totales de los registros de facturación
+            de alta generados durante el periodo.
+            Valor esperado:
+            <para>Número con signo opcional, de 1 a 12 dígitos enteros y hasta 2 decimales. </para>
+            <para>El separador decimal esperado es ".". </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.SumaImporteTotalAlta">
+            <summary>
+            Suma de los importes totales de los registros de facturación
+            de alta generados durante el periodo.
+            Valor esperado:
+            <para>Número con signo opcional, de 1 a 12 dígitos enteros y hasta 2 decimales. </para>
+            <para>El separador decimal esperado es ".". </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.ResumenEventos.NumeroDeRegistrosFacturacionAnulacionGenerados">
+            <summary>
+            Número de registros de facturación de anulación generados durante el periodo.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 6 dígitos. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.ResumenEventos.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.SistemaInformatico">
+            <summary>
+            Información del sistema informático.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.NombreRazon">
+            <summary>
+            Nombre y apellidos o razón social de la persona o entidad productora del sistema informático.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 120 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.NIF">
+            <summary>
+            NIF de la persona o entidad productora del sistema informático.
+            Valor esperado:
+            <para>NIF con una longitud de 9 caracteres. </para>
+            <para>Esta propiedad e IDOtro son excluyentes. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.IDOtro">
+            <summary>
+            Identificación de la persona o entidad productora del sistema informático mediante un identificador distinto del NIF.
+            Valor esperado:
+            <para>Identificador compuesto por código de país, tipo de identificador e identificador. </para>
+            <para>Esta propiedad y NIF son excluyentes. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.NombreSistemaInformatico">
+            <summary>
+            Nombre del sistema informático.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 30 caracteres. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.IdSistemaInformatico">
+            <summary>
+            Identificador del sistema informático.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 2 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.Version">
+            <summary>
+            Versión del sistema informático.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 50 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.NumeroInstalacion">
+            <summary>
+            Número de instalación del sistema informático.
+            Valor esperado:
+            <para>Texto con una longitud máxima de 100 caracteres. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.TipoUsoPosibleSoloVerifactu">
+            <summary>
+            Indica si el sistema informático puede funcionar exclusivamente como VERI*FACTU.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            <para>Propiedad opcional. </para>
+            </summary>        
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.TipoUsoPosibleMultiOT">
+            <summary>
+            Indica si el sistema informático permite ser utilizado por más de un obligado tributario.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.SistemaInformatico.IndicadorMultiplesOT">
+            <summary>
+            Indica si la instalación del sistema informático es utilizada por múltiples obligados tributarios.
+            Valores esperados:
+            <para>"S": Sí. </para>
+            <para>"N": No. </para>
+            <para>Propiedad opcional. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.SistemaInformatico.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.TipoEvento">
+            <summary>
+            Tipo de evento.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.InicioNoVerifactu">
+            <summary>
+            Inicio del funcionamiento del sistema informático como NO VERI*FACTU.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.FinNoVerifactu">
+            <summary>
+            Fin del funcionamiento del sistema informático como NO VERI*FACTU.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.LanzamientoDeteccionAnomaliasRegFacturacion">
+            <summary>
+            Lanzamiento del proceso de detección de anomalías
+            en los registros de facturación.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.DeteccionAnomaliasRegFacturacion">
+            <summary>
+            Detección de anomalías en los registros de facturación.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.LanzamientoDeteccionAnomaliasRegEvento">
+            <summary>
+            Lanzamiento del proceso de detección de anomalías
+            en los registros de evento.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.DeteccionAnomaliasRegEvento">
+            <summary>
+            Detección de anomalías en los registros de evento.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.RestauracionCopiaSeguridad">
+            <summary>
+            Restauración de copia de seguridad.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.ExportacionRegFacturacionPeriodo">
+            <summary>
+            Exportación de registros de facturación generados en un periodo.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.ExportacionRegEventoPeriodo">
+            <summary>
+            Exportación de registros de evento generados en un periodo.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.ResumenEventos">
+            <summary>
+            Registro resumen de eventos.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Factu.Evento.TipoEvento.Otros">
+            <summary>
+            Otros tipos de eventos registrados voluntariamente.
+            </summary>
+        </member>
+        <member name="T:VeriFactu.Xml.Factu.Evento.TipoEventoAgr">
+            <summary>
+            Agrupación de eventos por tipo.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.TipoEventoAgr.TipoEvento">
+            <summary>
+            Tipo de evento.
+            Valores esperados:
+            <para>"01": Inicio del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"02": Fin del funcionamiento del sistema informático como «NO VERI*FACTU». </para>
+            <para>"03": Lanzamiento del proceso de detección de anomalías en los registros de facturación. </para>
+            <para>"04": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de facturación. </para>
+            <para>"05": Lanzamiento del proceso de detección de anomalías en los registros de evento. </para>
+            <para>"06": Detección de anomalías en la integridad, inalterabilidad y trazabilidad de registros de evento. </para>
+            <para>"07": Restauración de copia de seguridad, cuando ésta se gestione desde el propio sistema informático de facturación. </para>
+            <para>"08": Exportación de registros de facturación generados en un periodo. </para>
+            <para>"09": Exportación de registros de evento generados en un periodo. </para>
+            <para>"10": Registro resumen de eventos. </para>
+            <para>"90": Otros tipos de eventos a registrar voluntariamente por la persona o entidad productora del sistema informático. </para>
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Xml.Factu.Evento.TipoEventoAgr.NumeroDeEventos">
+            <summary>
+            Número de eventos generados del tipo indicado.
+            Valor esperado:
+            <para>Cadena numérica de 1 a 4 dígitos. </para>
+            </summary>
+        </member>
+        <member name="M:VeriFactu.Xml.Factu.Evento.TipoEventoAgr.ToString">
+            <summary>
+            Representación textual de la instancia.
+            </summary>
+            <returns> Representación textual de la instancia.</returns>
+        </member>
         <member name="T:VeriFactu.Xml.Factu.Fault.detail">
             <summary>
             Detalle del error.
@@ -12326,6 +15016,21 @@
             Espacio de nombres RespuestaConsultaLR (tikLRRC)
             </summary>
         </member>
+        <member name="F:VeriFactu.Xml.Namespaces.NamespaceSf">
+            <summary>
+            Espacio de nombres de los registros de eventos.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Namespaces.NamespaceDs">
+            <summary>
+            Espacio de nombres de firma digital XML (ds).
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Namespaces.NamespaceXades">
+            <summary>
+            Espacio de nombres de firma electrónica avanzada XAdES (xades).
+            </summary>
+        </member>
         <member name="F:VeriFactu.Xml.Namespaces.NamespaceVNifV2Ent">
             <summary>
             Espacio de nombres web service validación NIF.
@@ -12344,6 +15049,11 @@
         <member name="F:VeriFactu.Xml.Namespaces.Items">
             <summary>
             Diccionario de espacios de nombres.
+            </summary>
+        </member>
+        <member name="F:VeriFactu.Xml.Namespaces.EventItems">
+            <summary>
+            Diccionario de espacios de nombres para los registros de eventos.
             </summary>
         </member>
         <member name="F:VeriFactu.Xml.Namespaces.NifItems">
@@ -12616,6 +15326,138 @@
             <typeparam name="T">Tipo a deserializar.</typeparam>
             <param name="xml">XNL de una instancia del tipo.</param>
             <returns>Objeto del tipo obtenido del texto XML.</returns>
+        </member>
+        <member name="T:EventData">
+            <summary>
+            Datos para el almacenamiento de un evento SIF.
+            </summary>
+        </member>
+        <member name="P:EventData.SellerID">
+            <summary>
+            Identificador del emisor.
+            </summary>
+        </member>
+        <member name="P:EventData.Evento">
+            <summary>
+            Evento fuente.
+            </summary>
+        </member>
+        <member name="P:EventData.EventPath">
+            <summary>
+            Ruta de la carpeta donde se almacenan los eventos
+            del emisor.
+            </summary>
+        </member>
+        <member name="P:EventData.EventYearPath">
+            <summary>
+            Ruta de la carpeta donde se almacenan los eventos
+            correspondientes al año del evento.
+            </summary>
+        </member>
+        <member name="P:EventData.EventFilePath">
+            <summary>
+            Ruta del archivo XML del evento.
+            </summary>
+        </member>
+        <member name="M:EventData.#ctor(System.String,VeriFactu.Xml.Factu.Evento.Evento)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="sellerID"> Identificador del emisor.</param>
+            <param name="evento"> Evento fuente.</param>
+        </member>
+        <member name="M:EventData.GetDirPath(System.String)">
+            <summary>
+            Devuelve el path de un directorio.
+            Si no existe lo crea.
+            </summary>
+            <param name="dir">Ruta al directorio.</param>
+            <returns>Ruta al directorio.</returns>
+        </member>
+        <member name="M:EventData.GetEventPath">
+            <summary>
+            Devuelve la ruta de almacenamiento de eventos
+            para un emisor en concreto.
+            </summary>
+            <returns>Ruta de almacenamiento de eventos.</returns>
+        </member>
+        <member name="M:EventData.GetEventYearPath">
+            <summary>
+            Devuelve la ruta de almacenamiento de eventos
+            para el año del evento.
+            </summary>
+            <returns>Ruta de almacenamiento de eventos
+            para el año correspondiente.</returns>
+        </member>
+        <member name="T:EventRecordAuditAnomaly">
+            <summary>
+            Representa una anomalía detectada en un registro de evento.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditAnomaly.Type">
+            <summary>
+            Tipo de anomalía detectada.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditAnomaly.Details">
+            <summary>
+            Descripción detallada de la anomalía detectada.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditAnomaly.Record">
+            <summary>
+            Registro de evento asociado a la anomalía detectada.
+            </summary>
+        </member>
+        <member name="T:EventRecordAuditResult">
+            <summary>
+            Resultado de la auditoría de un registro de evento.
+            </summary>
+        </member>
+        <member name="M:EventRecordAuditResult.#ctor">
+            <summary>
+            Inicializa una nueva instancia de la clase.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.HashCheckPerformed">
+            <summary>
+             Indica si se ha realizado la comprobación de hash.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.HashProcessed">
+            <summary>
+             Indica el número de registros procesados durante la comprobación de hash.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.SignatureCheckPerformed">
+            <summary>
+            Indica si se ha realizado la comprobación de firma.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.SignatureProcessed">
+            <summary>
+            Indica el número de registros procesados durante la comprobación de firma.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.ChainCheckPerformed">
+            <summary>
+            Indica si se ha realizado la comprobación de cadena.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.ChainProcessed">
+            <summary>
+            Indica el número de registros procesados durante la comprobación de cadena.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.DateCheckPerformed">
+            <summary>
+             Indica si se ha realizado la comprobación de fecha.
+            </summary>
+        </member>
+        <member name="P:EventRecordAuditResult.DateProcessed">
+            <summary>
+            Indica el número de registros procesados durante la comprobación de fecha.
+            </summary>
         </member>
         <member name="T:Verifactu.IVfInvoice">
             <summary>

@@ -44,6 +44,7 @@ using VeriFactu.Common.Exceptions;
 using VeriFactu.Config;
 using VeriFactu.Net;
 using VeriFactu.Xml.Factu;
+using VeriFactu.NoVeriFactu.Signature;
 
 namespace VeriFactu.Business.Operations
 {
@@ -89,14 +90,15 @@ namespace VeriFactu.Business.Operations
         /// <para> 3. Guarda el registro en disco en el el directorio de registros emitidos.</para>
         /// <para> 4. Establece Posted = true.</para>
         /// </summary>
-        internal virtual void Post()
+        /// <param name="certificate">Certificado para la firma.</param>
+        internal virtual void Post(X509Certificate2 certificate)
         {
 
             // Añadimos el registro de alta (1)
             BlockchainManager.Add(Registro);
 
             // Actualizamos datos (2,3,4)
-            SaveBlockchainChanges();
+            SaveBlockchainChanges(certificate);
 
         }
 
@@ -107,7 +109,9 @@ namespace VeriFactu.Business.Operations
         /// <para> 2. Guarda el registro en disco en el el directorio de registros emitidos.</para>
         /// <para> 3. Establece Posted = true.</para>
         /// </summary>
-        internal virtual void SaveBlockchainChanges() 
+        /// <param name="certificate">Certificado para la firma.</param>
+        /// <exception cref="InvalidOperationException"></exception>
+        internal virtual void SaveBlockchainChanges(X509Certificate2 certificate)
         {
 
             if (Registro.BlockchainLinkID == 0)
@@ -118,9 +122,23 @@ namespace VeriFactu.Business.Operations
                 throw new InvalidOperationException($"La operación {this}" +
                     $" ya está contabilizada.");
 
+            if (!string.IsNullOrEmpty(Settings.Current.IsNotVerifactu))
+            {
 
-            // Regeneramos el Xml
-            Xml = GetXml();
+                // En NO VERI*FACTU almacenamos el registro firmado.
+                var signer = new NoVeriFactu.Signature.Signer(certificate);
+
+                Xml = signer.Sign(Registro);
+
+            }
+            else
+            {
+
+                // En VERI*FACTU regeneramos el Xml con la información
+                // de blockchain actualizada.
+                Xml = GetXml();
+
+            }
 
             // Guardamos el xml
             File.WriteAllBytes(InvoiceFilePath, Xml);
@@ -176,13 +194,14 @@ namespace VeriFactu.Business.Operations
         /// <summary>
         /// Ejecuta la contabilización del registro.
         /// </summary>
+        /// <param name="certificate">Certificado para la firma.</param>
         /// <returns>Si todo funciona correctamente devuelve null.
         /// En caso contrario devuelve una excepción con el error.</returns>
-        internal void ExecutePost()
+        internal void ExecutePost(X509Certificate2 certificate = null)
         {
 
-            // Compruebo el certificado
-            var cert = Wsd.GetCheckedCertificate();
+            // Obtengo el certificado a utilizar.
+            var cert = certificate ?? Wsd.GetCheckedCertificate();
 
             if (cert == null)
                 throw new Exception("Existe algún problema con el certificado.");
@@ -195,7 +214,7 @@ namespace VeriFactu.Business.Operations
                 try
                 {
 
-                    Post();                   
+                    Post(cert);                   
 
                 }
                 catch (Exception ex)
@@ -238,13 +257,29 @@ namespace VeriFactu.Business.Operations
                 throw new InvalidOperationException("El objeto InvoiceEntry sólo" +
                     " puede llamar al método Save() una vez.");
 
+            // Determinamos una única vez el certificado a utilizar.
+            var cert = certificate ?? Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
+
             Exception sendException = null;
 
-            ExecutePost();
+            ExecutePost(cert);
+
+            // En NO VERI*FACTU el registro se almacena localmente
+            // y no se remite a la AEAT.
+            if (!string.IsNullOrEmpty(Settings.Current.IsNotVerifactu))
+            {
+
+                IsSaved = true;
+                return;
+
+            }
 
             try
             {
-                ExecuteSend(certificate);
+                ExecuteSend(cert);
                 ProcessResponse();
             }
             catch (Exception ex)

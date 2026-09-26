@@ -40,8 +40,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
+using VeriFactu.Net;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Respuesta;
 
@@ -152,9 +154,16 @@ namespace VeriFactu.Business.FlowControl
         /// envíos normales dándoles prioridad, que coincida en la cola
         /// un momento de envío en el que únicamente existan reenvíos; En
         /// este momento será cuando se envíen estos registros.</param>
+        /// <param name="certificate">Certificado para la firma.</param>
         /// <returns>Lista de los elementos contabilizados.</returns>
-        private List<InvoiceAction> Post(out List<InvoiceAction> invoiceRetrySends)
+        private List<InvoiceAction> Post(out List<InvoiceAction> invoiceRetrySends, X509Certificate2 certificate)
         {
+
+            // Compruebo el certificado
+            var cert = certificate ?? Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
 
             Utils.Log($"Ejecutando por cola ({SellerID}) tras tiempo espera en segundos:" +
                 $" {_CurrentWaitSecods} desde {_LastProcessMoment} hasta {AllowedFrom}");
@@ -239,7 +248,7 @@ namespace VeriFactu.Business.FlowControl
 
             // Actualizo los cambios
             for (int i = 0; i < invoiceActions.Count; i++)
-                invoiceActions[i].SaveBlockchainChanges();
+                invoiceActions[i].SaveBlockchainChanges(cert);
 
             Utils.Log($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
             Debug.Print($"Finalizada actualización de datos de la cadena de bloques en {invoiceActions.Count} elementos {DateTime.Now}");
@@ -252,15 +261,22 @@ namespace VeriFactu.Business.FlowControl
         /// Envío el lote de facturas a la AEAT.
         /// </summary>
         /// <param name="invoiceActions">Lista de acciones para registros de factura.</param>
+        /// <param name="certificate">Certificado para la firma.</param>
         /// <returns>Devuelve La respuesta de la AEAT al envío.</returns>
-        private RespuestaRegFactuSistemaFacturacion Send(List<InvoiceAction> invoiceActions)
+        private RespuestaRegFactuSistemaFacturacion Send(List<InvoiceAction> invoiceActions, X509Certificate2 certificate = null)
         {
+
+            // Compruebo el certificado
+            var cert = certificate ?? Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
 
             Utils.Log($"Enviando datos a la AEAT {SellerID} de {invoiceActions.Count} elementos {DateTime.Now}");
             Debug.Print($"Enviando datos a la AEAT {SellerID} de {invoiceActions.Count} elementos {DateTime.Now}");
 
             var sender = new InvoiceBatch();
-            var respuesta = sender.Send(invoiceActions);
+            var respuesta = sender.Send(invoiceActions, cert);
 
             _LastProcessMoment = DateTime.Now;
 
@@ -346,9 +362,15 @@ namespace VeriFactu.Business.FlowControl
         /// <summary>
         /// Procesa toda la cola emisor a emisor.
         /// </summary>
-        /// <returns>Lista de los elementos procesados.</returns>
-        internal void Process()
+        /// <param name="certificate">Certificado para la firma.</param>
+        internal void Process(X509Certificate2 certificate = null)
         {
+
+            // Compruebo el certificado
+            var cert = certificate ?? Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
 
             if (!IsAllowedFrom && !IsAllowedMaxRecordNumber)
                 return;
@@ -362,7 +384,7 @@ namespace VeriFactu.Business.FlowControl
             // Reenvíos a devolver a la cola
             List<InvoiceAction> invoiceRetrySends;
 
-            var postedInvoiceActions = Post(out invoiceRetrySends);
+            var postedInvoiceActions = Post(out invoiceRetrySends, cert);
 
             if (invoiceRetrySends.Count > 0)
             {               
@@ -381,7 +403,7 @@ namespace VeriFactu.Business.FlowControl
             try
             {
 
-                aeatResponse = Send(postedInvoiceActions);
+                aeatResponse = Send(postedInvoiceActions, cert);
 
             }
             catch (Exception ex) 

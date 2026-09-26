@@ -201,7 +201,7 @@ namespace VeriFactu.DataStore
         /// Ruta a la bandeja. Por defecto la bandeja de salida
         /// de registros.
         /// </summary>
-        public virtual string EnvelopeDir => $"{Settings.Current.OutboxPath}{SellerID}{Path.DirectorySeparatorChar}{PeriodID}{Path.DirectorySeparatorChar}";
+        public virtual string EnvelopeDir => Path.Combine(Settings.Current.OutboxPath, SellerID, PeriodID);
 
         /// <summary>
         /// Vendedor o emisor de facturas al que 

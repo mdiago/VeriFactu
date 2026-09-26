@@ -138,7 +138,7 @@ namespace VeriFactu.DataStore
         /// Ruta a la bandeja. Por defecto la bandeja de salida
         /// de registros.
         /// </summary>
-        public override string EnvelopeDir => $"{Settings.Current.InboxPath}{SellerID}{Path.DirectorySeparatorChar}{PeriodID}{Path.DirectorySeparatorChar}"; 
+        public override string EnvelopeDir => Path.Combine(Settings.Current.InboxPath, SellerID, PeriodID);
 
         #endregion
 

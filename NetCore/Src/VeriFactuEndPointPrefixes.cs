@@ -60,6 +60,16 @@ namespace VeriFactu
         public const string Prod = "https://www1.agenciatributaria.gob.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP";
 
         /// <summary>
+        /// Prefijo del endpoint de pruebas para remisión por requerimiento.
+        /// </summary>
+        public const string TestReq = "https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/RequerimientoSOAP";
+
+        /// <summary>
+        /// Prefijo del endpoint de producción para remisión por requerimiento.
+        /// </summary>
+        public const string ProdReq = "https://www1.agenciatributaria.gob.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/RequerimientoSOAP";
+
+        /// <summary>
         /// Prefijo del endpoint de pruebas de validación.
         /// </summary>
         public const string TestValidate = "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR";

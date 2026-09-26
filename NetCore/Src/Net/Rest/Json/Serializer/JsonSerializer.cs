@@ -40,7 +40,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml.Serialization;
+using VeriFactu.Common;
 
 namespace VeriFactu.Net.Rest.Json.Serializer
 {
@@ -159,27 +159,9 @@ namespace VeriFactu.Net.Rest.Json.Serializer
             if (pInf.PropertyType.IsEnum)
             {
 
-                var enumItemField = _Value.GetType().GetField($"{value}");
+                var enumValue = Utils.GetXmlEnumValue((Enum)_Value);
 
-                if (enumItemField != null)
-                {
-
-                    var xmlEnumAtt = enumItemField.GetCustomAttribute(typeof(XmlEnumAttribute)) as XmlEnumAttribute;
-
-                    string enumValue = null;
-
-                    if (xmlEnumAtt != null)
-                        enumValue = xmlEnumAtt.Name;
-
-                    _Serializer = new JsonEnumSerializer(enumValue);
-
-                }
-                else 
-                {
-
-                    _Serializer = new JsonEnumSerializer(null);
-
-                }
+                _Serializer = new JsonEnumSerializer(enumValue);
 
             }
             else 

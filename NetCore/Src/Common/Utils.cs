@@ -39,10 +39,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using VeriFactu.Config;
 using VeriFactu.Xml.Factu;
+using VeriFactu.Xml.Factu.Alta;
+using VeriFactu.Xml.Factu.Anulacion;
+using VeriFactu.Xml.Factu.Evento;
 
 namespace VeriFactu.Common
 {
@@ -117,6 +124,54 @@ namespace VeriFactu.Common
         #region Métodos Internos Estáticos
 
         /// <summary>
+        /// Obtiene el valor XML asociado a un valor enumerado.
+        /// </summary>
+        /// <param name="value">Valor enumerado.</param>
+        /// <returns>
+        /// Valor definido mediante <see cref="XmlEnumAttribute"/>.
+        /// </returns>
+        internal static string GetXmlEnumValue(Enum value)
+        {
+
+            if (value == null)
+                return null;
+
+            var field = value.GetType().GetField(value.ToString());
+
+            if (field == null)
+                return null;
+
+            var attribute = field.GetCustomAttribute<XmlEnumAttribute>();
+
+            return attribute?.Name;
+
+        }
+
+        /// <summary>
+        /// Obtiene un valor enumerado a partir de su valor XML.
+        /// </summary>
+        /// <param name="enumType">Tipo enumerado.</param>
+        /// <param name="value">Valor XML.</param>
+        /// <returns>Valor enumerado correspondiente.</returns>
+        internal static object GetEnumFromXmlValue(Type enumType, string value)
+        {
+
+            foreach (var field in enumType.GetFields())
+            {
+
+                var attribute = field.GetCustomAttribute<XmlEnumAttribute>();
+
+                if (attribute?.Name == value)
+                    return field.GetValue(null);
+
+            }
+
+            throw new ArgumentException(
+                $"No existe un valor XML '{value}' para el enumerado {enumType.Name}.");
+
+        }
+
+        /// <summary>
         /// Calcula el hash de la entrada con el algoritmo configurado,
         /// usando una instancia nueva por llamada (seguro entre hilos).
         /// </summary>
@@ -127,6 +182,138 @@ namespace VeriFactu.Common
 
             using (var hashAlgorithm = _HashAlgorithms[Settings.Current.VeriFactuHashAlgorithm]())
                 return hashAlgorithm.ComputeHash(input);
+
+        }
+
+        /// <summary>
+        /// Deserializa un registro de facturación a partir de un elemento XML.
+        /// </summary>
+        /// <typeparam name="T"> Tipo a deserializar.</typeparam>
+        /// <param name="element"> Elemento xml.</param>
+        /// <returns> Objeto deserializado.</returns>
+        internal static T DeserializeRegistro<T>(XmlElement element)
+        {
+
+            var serializer = new XmlSerializer(typeof(T));
+
+            using (var reader = new XmlNodeReader(element))
+                return (T)serializer.Deserialize(reader);
+
+        }
+
+
+        /// <summary>
+        /// Obtiene el registro de facturación de alta o anulación
+        /// almacenado en un archivo XML del modo VERI*FACTU (como sobre SOAP entero) o
+        /// no VERI*FACTU como registro firmado.
+        /// </summary>
+        /// <param name="filePath"> Ruta del archivo XML.</param>
+        /// <returns> Registro de facturación almacenado.</returns>
+        internal static Registro GetRecord(string filePath)
+        {
+
+            var document = new XmlDocument();
+
+            document.PreserveWhitespace = true;
+            document.Load(filePath);
+
+            if (document.DocumentElement == null)
+                throw new InvalidOperationException($"No se ha encontrado un documento XML válido en '{filePath}'.");
+
+            Registro record;
+
+            switch (document.DocumentElement.LocalName)
+            {
+
+                case "Envelope":
+
+                    // Formato VERI*FACTU: el registro está contenido
+                    // dentro del sobre SOAP.
+                    var envelope = new Xml.Soap.Envelope(filePath);
+
+                    var registroFacturacion = envelope.Body?.Registro as RegFactuSistemaFacturacion;
+
+                    if (registroFacturacion == null ||
+                        registroFacturacion.RegistroFactura == null ||
+                        registroFacturacion.RegistroFactura.Count != 1)
+                        throw new InvalidOperationException(
+                            $"No se ha encontrado un único registro de facturación en '{filePath}'.");
+
+                    record = registroFacturacion.RegistroFactura[0].Registro as Registro;
+
+                    break;
+
+                case "RegistroAlta":
+
+                    // Formato NO VERI*FACTU.
+                    record = DeserializeRegistro<RegistroAlta>(document.DocumentElement);
+
+                    break;
+
+                case "RegistroAnulacion":
+
+                    // Formato NO VERI*FACTU.
+                    record = DeserializeRegistro<RegistroAnulacion>(document.DocumentElement);
+
+                    break;
+
+                default:
+
+                    throw new InvalidOperationException($"Formato de registro de facturación no reconocido en '{filePath}'.");
+
+            }
+
+            if (record == null)
+                throw new InvalidOperationException($"No se ha encontrado un registro de facturación válido" +
+                    $" en '{filePath}'.");
+
+            // Restituimos los valores de las propiedades auxiliares utilizadas
+            // para mantener el orden de serialización XML.
+            record.Huella =
+                (record as RegistroAlta)?.OrderedHuella ??
+                (record as RegistroAnulacion)?.OrderedHuella;
+
+            record.FechaHoraHusoGenRegistro =
+                (record as RegistroAlta)?.OrderedFechaHoraHusoGenRegistro ??
+                (record as RegistroAnulacion)?.OrderedFechaHoraHusoGenRegistro;
+
+            record.Encadenamiento =
+                (record as RegistroAlta)?.OrderedEncadenamiento ??
+                (record as RegistroAnulacion)?.OrderedEncadenamiento;
+
+            record.IDFactura =
+                (record as RegistroAlta)?.IDFacturaAlta ??
+                (record as RegistroAnulacion)?.IDFacturaAnulada;
+
+            return record;
+
+        }
+
+        /// <summary>
+        /// Obtiene el registro de evento almacenado en un archivo XML.
+        /// </summary>
+        /// <param name="filePath"> Ruta del archivo XML.</param>
+        /// <returns> Registro de evento almacenado.</returns>
+        internal static Evento GetEventRecord(string filePath)
+        {
+
+            var serializer =
+                new XmlSerializer(typeof(RegistroEvento));
+
+            using (var stream = File.OpenRead(filePath))
+            {
+                var registro =
+                    (RegistroEvento)serializer.Deserialize(stream);
+
+                var evento = registro.Evento;
+
+                evento.EventChainLinkID =
+                    Convert.ToUInt64(
+                        Path.GetFileNameWithoutExtension(filePath));
+
+                return evento;
+
+            }
 
         }
 

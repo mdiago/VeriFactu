@@ -45,6 +45,7 @@ using System.Security.Cryptography.X509Certificates;
 using VeriFactu.Business.Operations;
 using VeriFactu.Common;
 using VeriFactu.Common.Exceptions;
+using VeriFactu.Net;
 using VeriFactu.Xml;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Fault;
@@ -178,8 +179,8 @@ namespace VeriFactu.Business.FlowControl
 
             ResponseEnvelope = envelopeRespuesta;
 
-            File.WriteAllBytes($"{first.InvoiceEntryPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", xml);
-            File.WriteAllText($"{first.ResponsesPath}{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml", response);
+            File.WriteAllBytes(Path.Combine(first.InvoiceEntryPath, $"{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml"), xml);
+            File.WriteAllText(Path.Combine(first.ResponsesPath, $"{first.InvoiceEntryID}.{last.InvoiceEntryID}.xml"), response);
 
             var respuesta = (envelopeRespuesta.Body.Registro as RespuestaRegFactuSistemaFacturacion);
 
@@ -204,8 +205,9 @@ namespace VeriFactu.Business.FlowControl
         /// de envío y devolviendolos en una lista.
         /// </summary>
         /// <param name="invoiceActions">Lista de elementos a contabilizar.</param>
+        /// <param name="certificate">Certificado para la firma.</param>
         /// <returns>Lista de los elementos a contabilizar.</returns>
-        private List<InvoiceAction> Post(List<InvoiceAction> invoiceActions)
+        private List<InvoiceAction> Post(List<InvoiceAction> invoiceActions, X509Certificate2 certificate)
         {
 
             var registros = new List<Registro>();
@@ -222,7 +224,7 @@ namespace VeriFactu.Business.FlowControl
 
             // Actualizo los cambios
             for (int i = 0; i < invoiceActions.Count; i++)
-                invoiceActions[i].SaveBlockchainChanges();
+                invoiceActions[i].SaveBlockchainChanges(certificate);
 
             return invoiceActions;
 
@@ -351,8 +353,14 @@ namespace VeriFactu.Business.FlowControl
         public Dictionary<string, InvoiceAction> Save(X509Certificate2 certificate = null)
         {
 
-            var postedInvoiceActions = Post(_InvoiceActions);
-            var aeatResponse = Send(postedInvoiceActions, certificate);
+            // Compruebo el certificado
+            var cert = certificate ?? Wsd.GetCheckedCertificate();
+
+            if (cert == null)
+                throw new Exception("Existe algún problema con el certificado.");
+
+            var postedInvoiceActions = Post(_InvoiceActions, cert);
+            var aeatResponse = Send(postedInvoiceActions, cert);
             return ProcessReponse(aeatResponse, postedInvoiceActions);
 
         }
