@@ -339,6 +339,69 @@ namespace VeriFactu.Blockchain
         }
 
         /// <summary>
+        /// Añade un registro a la cadena de bloques únicamente si no se encuentra
+        /// ya incluido en el archivo de control correspondiente a su período
+        /// de generación.
+        /// </summary>
+        /// <param name="registro">Registro a comprobar y, en su caso, añadir.</param>
+        /// <returns>
+        /// True si el registro ha sido añadido a la cadena; false si ya existía.
+        /// </returns>
+        public bool AddIfNotExists(Registro registro)
+        {
+
+            if (registro == null)
+                throw new ArgumentNullException(nameof(registro));
+
+            if (string.IsNullOrEmpty(registro.FechaHoraHusoGenRegistro))
+                throw new InvalidOperationException(
+                    "El registro no contiene FechaHoraHusoGenRegistro.");
+
+            if (string.IsNullOrEmpty(registro.Huella))
+                throw new InvalidOperationException(
+                    "El registro no contiene Huella.");
+
+            lock (Locker)
+            {
+
+                var created = XmlParser.ToDate(registro.FechaHoraHusoGenRegistro);
+
+                var csvFile = Path.Combine(
+                    ChainPath,
+                    $"{created:yyyyMM}.csv");
+
+                if (File.Exists(csvFile))
+                {
+
+                    foreach (var line in File.ReadLines(csvFile))
+                    {
+
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
+                        var values = line.Split(_CsvSeparator);
+
+                        if (values.Length < 3)
+                            continue;
+
+                        if (Convert.ToUInt64(values[0]) == registro.BlockchainLinkID &&
+                            values[2] == registro.Huella)
+                            return false;
+
+                    }
+
+                }
+
+                Insert(registro);
+                Write();
+
+                return true;
+
+            }
+
+        }
+
+        /// <summary>
         /// Añade una lista de elementos a la cadena de bloques.
         /// </summary>
         /// <param name="registros">Registros a añadir.</param>

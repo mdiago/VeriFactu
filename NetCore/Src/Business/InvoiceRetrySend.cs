@@ -238,6 +238,20 @@ namespace VeriFactu.Business
 
         }
 
+        /// <summary>
+        /// Contabiliza el reenvío evitando incorporar nuevamente a la cadena
+        /// un registro que ya se encuentre incluido en ella.
+        /// </summary>
+        /// <param name="certificate">Certificado para la firma.</param>
+        internal override void Post(X509Certificate2 certificate)
+        {
+
+            BlockchainManager.AddIfNotExists(Registro);
+
+            SaveBlockchainChanges(certificate);
+
+        }
+
         #endregion
 
         #region Propiedades Públicas de Instancia
