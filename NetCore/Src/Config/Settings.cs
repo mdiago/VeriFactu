@@ -360,7 +360,7 @@ namespace VeriFactu.Config
                 SkipNifAeatValidation = true,
                 SkipViesVatNumberValidation = true,
                 LoggingEnabled = false,
-                DisableBlockchainDelete = false,
+                DisableBlockchainDelete = true,
                 DisableEventChainDelete = true
             };
 

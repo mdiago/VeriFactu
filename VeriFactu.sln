@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verifactu.Com.ARM64", "Inte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interop", "Interop", "{B87892EF-3834-4A61-ADB6-79CA0ED59E93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeriFactu.Tests", "Tests\VeriFactu.Tests.csproj", "{A1B108DA-5FA9-4B0B-A52C-D274B43322B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{89317C7A-770B-4293-976B-F9BE449765C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89317C7A-770B-4293-976B-F9BE449765C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89317C7A-770B-4293-976B-F9BE449765C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B108DA-5FA9-4B0B-A52C-D274B43322B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B108DA-5FA9-4B0B-A52C-D274B43322B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B108DA-5FA9-4B0B-A52C-D274B43322B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B108DA-5FA9-4B0B-A52C-D274B43322B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
