@@ -162,6 +162,13 @@ namespace VeriFactu.Business
 
             registro.FechaHoraHusoGenRegistro = fechaHoraHusoGenRegistro;
 
+            var huella = (registro as RegistroAlta)?.OrderedHuella ?? (registro as RegistroAnulacion)?.OrderedHuella;
+
+            if (string.IsNullOrEmpty(huella))
+                throw new Exception($"No se ha encontrado el OrderedHuella correspondiente a la entrada {this}.");
+
+            registro.Huella = huella;
+
             // Establecemos el valor de Registro
             Registro = registro;
 
@@ -247,7 +254,6 @@ namespace VeriFactu.Business
         {
 
             BlockchainManager.AddIfNotExists(Registro);
-
             SaveBlockchainChanges(certificate);
 
         }
