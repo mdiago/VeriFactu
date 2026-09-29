@@ -48,7 +48,7 @@ namespace VeriFactu.NoVeriFactu.Signature
     /// <summary>
     /// Verificador de firmas electrónicas XML.
     /// </summary>
-    internal static class SignatureVerifier
+    public static class SignatureVerifier
     {
 
         #region Métodos Públicos Estáticos
@@ -62,7 +62,7 @@ namespace VeriFactu.NoVeriFactu.Signature
         /// <returns>
         /// True si la firma es válida; false en caso contrario.
         /// </returns>
-        internal static bool Verify(byte[] xml)
+        public static bool Verify(byte[] xml)
         {
 
             var document = new XmlDocument();
