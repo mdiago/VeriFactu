@@ -103,6 +103,17 @@
             <param name="registro">Registro a añadir.</param>
             <exception cref="T:System.Exception">Si no se puede añadir el eslabón en la cadena.</exception>
         </member>
+        <member name="M:VeriFactu.Blockchain.Blockchain.AddIfNotExists(VeriFactu.Xml.Factu.Registro)">
+            <summary>
+            Añade un registro a la cadena de bloques únicamente si no se encuentra
+            ya incluido en el archivo de control correspondiente a su período
+            de generación.
+            </summary>
+            <param name="registro">Registro a comprobar y, en su caso, añadir.</param>
+            <returns>
+            True si el registro ha sido añadido a la cadena; false si ya existía.
+            </returns>
+        </member>
         <member name="M:VeriFactu.Blockchain.Blockchain.Add(System.Collections.Generic.List{VeriFactu.Xml.Factu.Registro})">
             <summary>
             Añade una lista de elementos a la cadena de bloques.
@@ -1395,6 +1406,13 @@
             CuotaRecargoRectificado para rectificativas por sustitución 'S'.
             </summary>
         </member>
+        <member name="P:VeriFactu.Business.Invoice.Parameters">
+            <summary>
+            Parámetros en forma key1=value1&amp;key2=value2
+            para incluir información adicional en referencia a la
+            factura.
+            </summary>
+        </member>
         <member name="P:VeriFactu.Business.Invoice.RegistroAltaSource">
             <summary>
             RegistroAlta a partir del cual se ha creado la factura, en el
@@ -1601,6 +1619,13 @@
             CuotaRecargoRectificado para rectificativas por sustitución 'S'.
             </summary>
         </member>
+        <member name="P:VeriFactu.Business.InvoiceData.Parameters">
+            <summary>
+            Parámetros en forma key1=value1&amp;key2=value2
+            para incluir información adicional en referencia a la
+            factura.
+            </summary>        
+        </member>
         <member name="M:VeriFactu.Business.InvoiceData.ToString">
             <summary>
             Representación textual de la instancia.
@@ -1792,6 +1817,13 @@
             Procesa y guarda respuesta de la AEAT al envío.
             </summary>
             <param name="envelope">Sobre con la respuesta de la AEAT.</param>
+        </member>
+        <member name="M:VeriFactu.Business.InvoiceRetrySend.Post(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+            Contabiliza el reenvío evitando incorporar nuevamente a la cadena
+            un registro que ya se encuentre incluido en ella.
+            </summary>
+            <param name="certificate">Certificado para la firma.</param>
         </member>
         <member name="P:VeriFactu.Business.InvoiceRetrySend.OriginalInvoiceFilePath">
             <summary>

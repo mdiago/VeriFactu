@@ -425,7 +425,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// En estos casos, deberá indicarse tal circunstancia en el registro. </para>
         /// <para>Alfanumérico(15)</para>
         /// </summary>
-        [XmlElement("NumRegistroAcuerdoFacturacion", Namespace = Namespaces.NamespaceSFLR, Order = 27)]
+        [XmlElement("NumRegistroAcuerdoFacturacion", Namespace = Namespaces.NamespaceSF, Order = 27)]
         public string NumRegistroAcuerdoFacturacion { get; set; }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace VeriFactu.Xml.Factu.Alta
         /// cumplimiento del reglamento</para>
         /// <para>Alfanumérico (16)</para>
         /// </summary>
-        [XmlElement("IdAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSFLR, Order = 28)]
+        [XmlElement("IdAcuerdoSistemaInformatico", Namespace = Namespaces.NamespaceSF, Order = 28)]
         public string IdAcuerdoSistemaInformatico { get; set; }
 
         /// <summary>
