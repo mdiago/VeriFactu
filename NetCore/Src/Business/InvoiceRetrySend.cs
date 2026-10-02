@@ -162,6 +162,13 @@ namespace VeriFactu.Business
 
             registro.FechaHoraHusoGenRegistro = fechaHoraHusoGenRegistro;
 
+            var huella = (registro as RegistroAlta)?.OrderedHuella ?? (registro as RegistroAnulacion)?.OrderedHuella;
+
+            if (string.IsNullOrEmpty(huella))
+                throw new Exception($"No se ha encontrado el OrderedHuella correspondiente a la entrada {this}.");
+
+            registro.Huella = huella;
+
             // Establecemos el valor de Registro
             Registro = registro;
 
@@ -235,6 +242,19 @@ namespace VeriFactu.Business
 
             if (notCorrectoOAceptado && File.Exists(OriginalInvoiceFilePath))
                 File.Move(OriginalInvoiceFilePath, GetErrorInvoiceFilePath());
+
+        }
+
+        /// <summary>
+        /// Contabiliza el reenvío evitando incorporar nuevamente a la cadena
+        /// un registro que ya se encuentre incluido en ella.
+        /// </summary>
+        /// <param name="certificate">Certificado para la firma.</param>
+        internal override void Post(X509Certificate2 certificate)
+        {
+
+            BlockchainManager.AddIfNotExists(Registro);
+            SaveBlockchainChanges(certificate);
 
         }
 
