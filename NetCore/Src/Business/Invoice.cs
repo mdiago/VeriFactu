@@ -863,6 +863,30 @@ namespace VeriFactu.Business
         }
 
         /// <summary>
+        /// Parámetros en forma key1=value1&amp;key2=value2
+        /// para incluir información adicional en referencia a la
+        /// factura.
+        /// </summary>
+        public string Parameters
+        {
+
+            get
+            {
+
+                return _InvoiceData.Parameters;
+
+            }
+            set
+            {
+
+                _InvoiceData.Parameters = value;
+
+            }
+
+        }
+
+
+        /// <summary>
         /// RegistroAlta a partir del cual se ha creado la factura, en el
         /// caso de que la instancia se haya creado a partir de un registro
         /// de alta.

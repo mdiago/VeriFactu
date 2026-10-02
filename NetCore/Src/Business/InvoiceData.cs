@@ -194,6 +194,13 @@ namespace VeriFactu.Business
         /// </summary>
         public decimal RectificationTaxAmountSurcharge { get; set; }
 
+        /// <summary>
+        /// Parámetros en forma key1=value1&amp;key2=value2
+        /// para incluir información adicional en referencia a la
+        /// factura.
+        /// </summary>        
+        public string Parameters { get; set; }
+
         #endregion     
 
         #region Métodos Públicos de Instancia
