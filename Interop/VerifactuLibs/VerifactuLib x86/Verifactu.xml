@@ -6105,7 +6105,13 @@
         </member>
         <member name="P:VeriFactu.Net.Rest.Api.EndPointCreate">
             <summary>
-            Endpoint creación de factruas.
+            Endpoint creación de facturas.
+            </summary>
+        </member>
+        <member name="P:VeriFactu.Net.Rest.Api.EndPointCreateTI">
+            <summary>
+            Endpoint creación de facturas por
+            incidencia técnica externa API.
             </summary>
         </member>
         <member name="P:VeriFactu.Net.Rest.Api.EndPointCancel">
@@ -6192,6 +6198,16 @@
         <member name="M:VeriFactu.Net.Rest.ApiClient.Create(VeriFactu.Business.Invoice)">
             <summary>
             Crea un registro de alta mediante el API.
+            </summary>
+            <param name="invoice">Factura a remitir de alta.</param>
+            <returns>Resultado llamada API.</returns>
+        </member>
+        <member name="M:VeriFactu.Net.Rest.ApiClient.CreateTI(VeriFactu.Business.Invoice)">
+            <summary>
+            Crea un registro de alta con incidencia técnica
+            marcada como 'S' mediante el API.
+            A utilizar cuando ha ocurrido una incidencia
+            técnica externa al API y se desea remitir la factura de alta.
             </summary>
             <param name="invoice">Factura a remitir de alta.</param>
             <returns>Resultado llamada API.</returns>

@@ -70,9 +70,15 @@ namespace VeriFactu.Net.Rest
         #region Propiedades Públicas de Instancia
 
         /// <summary>
-        /// Endpoint creación de factruas.
+        /// Endpoint creación de facturas.
         /// </summary>
         public string EndPointCreate { get; set; }
+
+        /// <summary>
+        /// Endpoint creación de facturas por
+        /// incidencia técnica externa API.
+        /// </summary>
+        public string EndPointCreateTI { get; set; }
 
         /// <summary>
         /// Endpoint anulación de factruas.

@@ -345,6 +345,7 @@ namespace VeriFactu.Config
                 Api = new Api() 
                 {
                     EndPointCreate = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/Create",
+                    EndPointCreateTI = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/CreateTI",
                     EndPointCancel = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/Cancel",
                     EndPointGetQrCode = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetQrCode",
                     EndPointGetSellers = "https://facturae.irenesolutions.com:8050/Kivu/Taxes/Verifactu/Invoices/GetSellers",

@@ -139,6 +139,21 @@ namespace VeriFactu.Net.Rest
         }
 
         /// <summary>
+        /// Crea un registro de alta con incidencia técnica
+        /// marcada como 'S' mediante el API.
+        /// A utilizar cuando ha ocurrido una incidencia
+        /// técnica externa al API y se desea remitir la factura de alta.
+        /// </summary>
+        /// <param name="invoice">Factura a remitir de alta.</param>
+        /// <returns>Resultado llamada API.</returns>
+        public static ExpandoObject CreateTI(Invoice invoice)
+        {
+
+            return Post(invoice, Api.EndPointCreateTI);
+
+        }
+
+        /// <summary>
         /// Crea un registro de alta de subsanación mediante el API.
         /// </summary>
         /// <param name="invoice">Factura a remitir de alta como subsanación.</param>
