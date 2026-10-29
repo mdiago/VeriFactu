@@ -173,6 +173,9 @@ namespace VeriFactu.Business.Validation.VIES
         public static bool ValidateStructure(string vatNumber)
         {
 
+            if (string.IsNullOrWhiteSpace(vatNumber) || vatNumber.Length < 3)
+                return false;
+
             var country = vatNumber.Substring(0, 2);
             var number = vatNumber.Substring(2, vatNumber.Length - 2);
 
@@ -193,6 +196,9 @@ namespace VeriFactu.Business.Validation.VIES
         /// <returns>True si es válido y false en caso contario.</returns>
         public static bool Validate(string vatNumber) 
         {
+
+            if (string.IsNullOrWhiteSpace(vatNumber) || vatNumber.Length < 3)
+                return false;
 
             var country = vatNumber.Substring(0, 2);
             var number = vatNumber.Substring(2, vatNumber.Length - 2);

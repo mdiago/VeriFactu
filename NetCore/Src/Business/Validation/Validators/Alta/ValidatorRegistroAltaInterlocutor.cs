@@ -129,34 +129,56 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" {_Rol} es obligatorio que se cumplimente CodigoPais con IDOtro.IDType != “02”.");
 
-                // Si el campo IDType = “02” (NIF-IVA), en caso de valor en CodigoPais.
-                // El campo CodigoPais indicado no coincide con los dos primeros dígitos del identificador.
-                // Excluímos Grecia: https://github.com/mdiago/VeriFactu/issues/240
-                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && _Interlocutor.IDOtro.CodigoPaisSpecified && 
-                    !_Interlocutor.IDOtro.ID.StartsWith($"{_Interlocutor.IDOtro.CodigoPais}")&& _Interlocutor.IDOtro.CodigoPais != CodigoPais.GR)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" {_Rol} El campo CodigoPais indicado en el interlocutor {_Interlocutor} es '{_Interlocutor.IDOtro.CodigoPais}'" +
-                        $" y no coincide con los dos primeros dígitos del identificador '{_Interlocutor.IDOtro.ID.Substring(0,2)}'.");
-
-                // Validación contra censo VIES
-                bool isValidViesVatNumber = false;
-
                 if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA)
-                    isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation ? true : ViesVatNumber.Validate(_Interlocutor.IDOtro.ID);
+                {
 
-                // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
-                // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
-                // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
-                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" {_Rol} es obligatorio que IDOtro.ID = “{_Interlocutor.IDOtro.ID}” esté identificado.");
+                    var idOtro = _Interlocutor.IDOtro;
 
-                // Validación estructura nota (1).
-                isValidViesVatNumber = ViesVatNumber.ValidateStructure(_Interlocutor.IDOtro.ID);
+                    // Validación estructura nota (1).
+                    var estructuraValida = ViesVatNumber.ValidateStructure(idOtro.ID);
 
-                if (_Interlocutor.IDOtro.IDType == IDType.NIF_IVA && !isValidViesVatNumber)
-                    result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                        $" {_Rol} El valor del campo ID es incorrecto. IDOtro.ID = “{_Interlocutor.IDOtro.ID}”.");
+                    if (!estructuraValida)
+                    {
+
+                        result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                            $" {_Rol} El valor del campo ID es incorrecto." +
+                            $" IDOtro.ID = “{idOtro.ID}”.");
+
+                    }
+                    else
+                    {
+
+                        // Si el campo IDType = “02” (NIF-IVA), en caso de valor en CodigoPais.
+                        // El campo CodigoPais indicado no coincide con los dos primeros dígitos del identificador.
+                        // Excluímos Grecia: https://github.com/mdiago/VeriFactu/issues/240
+                        if (idOtro.CodigoPaisSpecified &&
+                            idOtro.CodigoPais != CodigoPais.GR &&
+                            !idOtro.ID.StartsWith(
+                                $"{idOtro.CodigoPais}",
+                                System.StringComparison.Ordinal))
+                        {
+
+                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                                $" {_Rol} El campo CodigoPais indicado en el interlocutor" +
+                                $" {_Interlocutor} es '{idOtro.CodigoPais}'" +
+                                $" y no coincide con el prefijo del identificador '{idOtro.ID}'.");
+
+                        }
+
+                        // Validación contra censo VIES
+                        bool isValidViesVatNumber = Settings.Current.SkipViesVatNumberValidation || ViesVatNumber.Validate(idOtro.ID);
+
+                        // Cuando el tercero se identifique a través de la agrupación IDOtro e IDType sea “02”,
+                        // se validará que el campo identificador ID se ajuste a la estructura de NIF-IVA de
+                        // alguno de los Estados Miembros y debe estar identificado. Ver nota (1).
+                        if (!isValidViesVatNumber)
+                            result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                                $" {_Rol} es obligatorio que IDOtro.ID" +
+                                $" = “{idOtro.ID}” esté identificado.");
+
+                    }
+
+                }
 
                 if (_AllowNoCensado) 
                 {
