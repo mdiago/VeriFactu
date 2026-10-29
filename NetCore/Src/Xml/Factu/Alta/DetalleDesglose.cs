@@ -48,6 +48,17 @@ namespace VeriFactu.Xml.Factu.Alta
     public class DetalleDesglose
     {
 
+        #region Variables Privadas de Instancia
+
+        /// <summary>
+        /// <para>Clave que identificará el tipo de régimen del
+        /// impuesto o una operación con trascendencia tributaria.</para>
+        /// </summary>   
+        ClaveRegimen _ClaveRegimen;
+
+        #endregion
+
+
         #region Construtores de Instancia
 
         /// <summary>
@@ -55,9 +66,6 @@ namespace VeriFactu.Xml.Factu.Alta
         /// </summary>
         public DetalleDesglose()
         {
-
-            ClaveRegimenSpecified = true;
-
         }
 
         #endregion
@@ -104,7 +112,24 @@ namespace VeriFactu.Xml.Factu.Alta
         /// <para>19: L8B: Operaciones interiores exentas por aplicación artículo 25 Ley 19/1994.</para>
         /// <para>20: Régimen simplificado IVA. Régimen simplificado sólo para IVA.</para>
         /// </summary>
-        public ClaveRegimen ClaveRegimen { get; set; }
+        public ClaveRegimen ClaveRegimen
+        {
+
+            get 
+            { 
+                
+                return _ClaveRegimen; 
+            
+            }
+            set
+            {
+
+                _ClaveRegimen = value;
+                ClaveRegimenSpecified = true;
+
+            }
+
+        }
 
         /// <summary>
         ///  Con true se serializa el dato, con false no.
