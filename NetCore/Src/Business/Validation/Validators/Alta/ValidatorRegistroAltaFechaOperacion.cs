@@ -88,7 +88,10 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                     result.Add($"[3.1.3-7.0] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La FechaOperacion ({_FechaOperacion:yyyy-MM-dd}) no debe ser inferior a la fecha actual menos veinte años.");
 
-                if ((_FechaOperacion ?? DateTime.Now).Year > DateTime.Now.Year)
+                var yearOperacion = (_FechaOperacion ?? DateTime.Now).Year;
+                var maxYear = DateTime.Now.Year + 1;
+
+                if (yearOperacion > maxYear)
                     result.Add($"[3.1.3-7.1] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La FechaOperacion ({_FechaOperacion:yyyy-MM-dd}) no debe ser superior al año siguiente de la fecha actual.");
 
