@@ -39,7 +39,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using VeriFactu.Business.Validation.Validators.Alta.Detalle;
 using VeriFactu.Xml.Factu;
 using VeriFactu.Xml.Factu.Alta;
@@ -77,6 +76,29 @@ namespace VeriFactu.Business.Validation.Validators.Alta
         protected DateTime _FechaExpedicion;
 
         /// <summary>
+        /// Indica si la fecha de expedición es válida.
+        /// </summary>
+        protected bool _FechaExpedicionValida;
+
+        /// <summary>
+        /// Indica si FechaOperacion es válida o no se ha informado.
+        /// </summary>
+        protected bool _FechaOperacionValida;
+
+        /// <summary>
+        /// Fecha utilizada para las reglas temporales del desglose.
+        /// Si FechaOperacion está informada pero es inválida,
+        /// no se sustituye por la fecha de expedición.
+        /// </summary>
+        protected DateTime? FechaAplicable =>
+            !_FechaOperacionValida
+                ? null
+                : _FechaOperacion ??
+                    (_FechaExpedicionValida
+                        ? (DateTime?)_FechaExpedicion
+                        : null);
+
+        /// <summary>
         /// Indicador de si la factura es rectificativa.
         /// </summary>
         protected bool _IsRectificativa = false;
@@ -104,16 +126,24 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var fechaOperacion = _RegistroAlta?.FechaOperacion;
 
-            if (!string.IsNullOrEmpty(fechaOperacion))
-                _FechaOperacion = FromXmlDate(fechaOperacion);
+            // FechaOperacion es opcional.
+            // Si se informa, debe tener formato y calendario válidos.
+            _FechaOperacionValida = string.IsNullOrEmpty(fechaOperacion);
+
+            if (!_FechaOperacionValida)
+            {
+
+                _FechaOperacionValida = TryFromXmlDate(fechaOperacion, out var parsedOperacion);
+
+                if (_FechaOperacionValida)
+                    _FechaOperacion = parsedOperacion;
+
+            }
 
             var fechaExpedicion = _RegistroAlta?.IDFacturaAlta?.FechaExpedicion;
 
-            if (string.IsNullOrEmpty(fechaExpedicion) || !Regex.IsMatch(fechaExpedicion, @"^\d{2}-\d{2}-\d{4}$"))
-                throw new ArgumentException($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
-                $" La propiedad IDFactura.FechaExpedicion tiene que tener un valor con formato dd-mm-yyyy.");
-
-            _FechaExpedicion = FromXmlDate(fechaExpedicion);
+            // La fecha de expedición es obligatoria.
+            _FechaExpedicionValida = TryFromXmlDate(fechaExpedicion, out _FechaExpedicion);
 
             _IsRectificativa = Array.IndexOf(new TipoFactura[]{ TipoFactura.R1, TipoFactura.R2,
                 TipoFactura.R3, TipoFactura.R4, TipoFactura.R5 }, _RegistroAlta.TipoFactura) != -1;

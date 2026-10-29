@@ -103,7 +103,13 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle
 
                 // Si FechaOperacion (FechaExpedicionFactura de la agrupación IDFactura si no se informa FechaOperacion)
                 // ≥ 1 de julio de 2022 y ≤ 30 de septiembre de 2024 se admitirá TipoImpositivo = 5.
-                var fechaOperacion = _FechaOperacion ?? _FechaExpedicion;
+
+                var fechaAplicable = FechaAplicable;
+
+                if (!fechaAplicable.HasValue)
+                    return result;
+
+                var fechaOperacion = fechaAplicable.Value;
                 var allowedFive = fechaOperacion.CompareTo(new DateTime(2022, 7, 1)) >= 0 && fechaOperacion.CompareTo(new DateTime(2024, 9, 30)) <= 0;
 
                 // Si FechaOperacion (FechaExpedicionFactura de la agrupación IDFactura si no se informa FechaOperacion)

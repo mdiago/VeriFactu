@@ -103,7 +103,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
-                if (_FechaOperacion == null || (_FechaOperacion??_FechaExpedicion).CompareTo(_FechaExpedicion) < 0)
+                if (string.IsNullOrEmpty(_RegistroAlta.FechaOperacion) | (_FechaOperacion.HasValue && _FechaExpedicionValida && _FechaOperacion.Value.CompareTo(_FechaExpedicion) < 0)) 
                     result.Add($"[3.1.3-15.6.9.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “14”" +
                         $" FechaOperacion, campo de cumplimentación obligatoria y posterior a fecha de expedición.");

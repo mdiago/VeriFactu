@@ -80,6 +80,11 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             // 7. FechaOperacion
 
+            if (!_FechaOperacionValida)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    $" La propiedad FechaOperacion tiene que tener" +
+                    $" un valor de fecha válido con formato dd-MM-yyyy.");
+
             if (_FechaOperacion != null)
             {
 
@@ -98,7 +103,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 // Error 1146
                 // Sólo se permite que la fecha de expedicion de la factura sea anterior a la fecha operación si los detalles del desglose son ClaveRegimen 14 o 15 e Impuesto 01, 03 o vacío.
 
-                if (_FechaExpedicion.CompareTo(_FechaOperacion) < 0) 
+                if (_FechaExpedicionValida && _FechaExpedicion.CompareTo(_FechaOperacion) < 0)
                 {
 
                     var detalles = _RegistroAlta.Desglose;

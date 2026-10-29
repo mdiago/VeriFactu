@@ -39,6 +39,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using VeriFactu.Business.Operations;
 using VeriFactu.Business.Validation.Validators;
 using VeriFactu.Xml.Factu;
@@ -121,6 +122,25 @@ namespace VeriFactu.Business.Validation
             var day = Convert.ToInt32(xmlDate.Substring(0, 2));
 
             return new DateTime(year, month, day);
+
+        }
+
+        /// <summary>
+        /// Intenta interpretar una fecha XML con formato dd-MM-yyyy
+        /// y calendario gregoriano, sin lanzar excepciones.
+        /// </summary>
+        /// <param name="xmlDate">Fecha XML.</param>
+        /// <param name="date">Fecha interpretada, si es válida.</param>
+        /// <returns>True si el formato y la fecha son válidos.</returns>
+        protected static bool TryFromXmlDate(string xmlDate, out DateTime date)
+        {
+
+            return DateTime.TryParseExact(
+                xmlDate,
+                "dd-MM-yyyy",
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out date);
 
         }
 

@@ -80,6 +80,11 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
             var result = new List<string>();
 
+            if (!_FechaExpedicionValida)
+                result.Add($"Error en el bloque RegistroAlta ({_RegistroAlta}):" +
+                    $" La propiedad IDFactura.FechaExpedicion tiene que tener" +
+                    $" un valor de fecha válido con formato dd-MM-yyyy.");
+
             // 1. Agrupación IDFactura
 
             var nifEmisorFactura = $"{_RegistroAlta?.IDFacturaAlta?.IDEmisorFactura}";
@@ -103,7 +108,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 // La FechaExpedicionFactura no podrá ser superior a la fecha actual.
                 var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-                if (_FechaExpedicion.CompareTo(now) > 0)
+                if (_FechaExpedicionValida && _FechaExpedicion.CompareTo(now) > 0)
                     result.Add($"[3.1.3-1.2] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad IDFactura.FechaExpedicion {_FechaExpedicion:yyyy-MM-dd}" +
                         $" no puede ser mayor que la fecha actual {now:yyyy-MM-dd}.");
@@ -113,12 +118,12 @@ namespace VeriFactu.Business.Validation.Validators.Alta
 
                 var minFechaExpedicion = new DateTime(2024, 10, 28);
 
-                if (_FechaExpedicion.CompareTo(minFechaExpedicion) < 0)
+                if (_FechaExpedicionValida && _FechaExpedicion.CompareTo(minFechaExpedicion) < 0)
                     result.Add($"[3.1.3-1.3] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad IDFactura.FechaExpedicion {_FechaExpedicion:yyyy-MM-dd}" +
                         $" no puede ser inferior del {minFechaExpedicion:yyyy-MM-dd}.");
 
-                if (_FechaOperacion != null)
+                if (_FechaExpedicionValida && _FechaOperacion != null)
                 {
 
                     // Si Impuesto = “01” (IVA), “03” (IGIC) o no se cumplimenta (considerándose “01” - IVA),
@@ -165,7 +170,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta
                 }
 
                 // no permitiéndose la existencia de los siguientes caracteres: “ (ASCII 34), ‘ (ASCII 39),  < (ASCII 60), > (ASCII 62), = (ASCII 61)
-                if (Regex.IsMatch(numSerie, @"[<>""'=]+"))
+                if (!string.IsNullOrEmpty(numSerie) && Regex.IsMatch(numSerie, @"[<>""'=]+"))
                     result.Add($"[3.1.3-1.7] Error en el bloque RegistroAlta ({_RegistroAlta}):" +
                         $" La propiedad IDFactura.NumSerie contiene carácteres no permitidos (<>\"'=).\n('{numSerie}').");
 
