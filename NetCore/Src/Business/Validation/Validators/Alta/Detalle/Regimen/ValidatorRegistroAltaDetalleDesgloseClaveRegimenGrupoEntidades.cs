@@ -110,12 +110,6 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                         $" Cuando ClaveRegimen sea igual a “06”" +
                         $" el TipoFactura debe ser distinto de “F2”, “F3”, “R5”.");
 
-                var baseImponibleACoste = XmlParser.ToDecimal(_DetalleDesglose.BaseImponibleACoste);
-
-                if(baseImponibleACoste == 0)
-                    result.Add($"[3.1.3-15.6.4.1] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
-                        $" Cuando ClaveRegimen sea igual a “06”" +
-                        $" campo BaseImponibleACoste deberá estar cumplimentado.");
             }
 
             return result;
