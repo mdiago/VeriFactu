@@ -104,7 +104,7 @@ namespace VeriFactu.Business.Validation.Validators.Alta.Detalle.Regimen
                 _DetalleDesglose.Impuesto == Impuesto.IGIC)
             {
 
-                if (Array.IndexOf(new CalificacionOperacion[] { CalificacionOperacion.S1, CalificacionOperacion.S2, CalificacionOperacion.N1, CalificacionOperacion.N2 }, _DetalleDesglose.CalificacionOperacion) != -1)
+                if (Array.IndexOf(new CalificacionOperacion[] { CalificacionOperacion.S2, CalificacionOperacion.N1, CalificacionOperacion.N2 }, _DetalleDesglose.CalificacionOperacion) != -1)
                     result.Add($"[3.1.3-15.6.5.0] Error en el bloque RegistroAlta ({_RegistroAlta}) en el detalle {_DetalleDesglose}:" +
                         $" Cuando ClaveRegimen sea igual a “07”" +
                         $" CalificacionOperacion no puede ser “S2”, “N1”, “N2”.");
