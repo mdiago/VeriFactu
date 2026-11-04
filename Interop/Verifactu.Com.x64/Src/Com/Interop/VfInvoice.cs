@@ -388,9 +388,21 @@ namespace Verifactu
             result.RectificationItems = _RectificationItems;
 
             if (_TaxItemSubstitution != null)
+            {
+
                 if (string.IsNullOrEmpty(InvoiceType) || InvoiceType[0] != 'R')
                     throw new ArgumentException("Para poder establecer la sustitución de una factura, " +
                         "el tipo de factura debe ser rectificativa.");
+
+                // Los importes rectificados tienen que viajar aquí, en el objeto de negocio:
+                // GetRegistroAlta() ya construye el bloque ImporteRectificacion a partir de
+                // ellos. Si se establecen más tarde (en Send(), después de construir el
+                // InvoiceEntry) el constructor de InvoiceEntry ya ha validado y lanza.
+                result.RectificationTaxBase = _TaxItemSubstitution.TaxBase;
+                result.RectificationTaxAmount = _TaxItemSubstitution.TaxAmount;
+                result.RectificationTaxAmountSurcharge = _TaxItemSubstitution.TaxAmountSurcharge;
+
+            }
 
             return result;
 
